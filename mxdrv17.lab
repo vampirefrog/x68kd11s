@@ -1,0 +1,414 @@
+*********************************************
+*
+*  Label file for mxdrv17.x
+*
+*********************************************
+000000	DSF
+000004	DSF
+00000c	P
+000024	P
+00002a	DR
+00006a	P	L_0A
+000070	P	L_0B
+000076	P	L_FadeOut
+00007e	P
+000080	P	L_SetChannelMask
+000086	P	L_GetOPMBuf
+00008e	P	L_11
+00009a	P
+00009e	P	L_GetPlaybackFlags
+0000aa	P	L_SetIgnoreKeys
+0000b4	P	L_14
+0000bc	P	L_15
+0000c6	P	L_16
+0000d4	P	L_17
+0000dc	P
+0000fc	P
+000108	P
+000112	P
+000120	P
+000126	P
+000134	P
+00015e	P
+000164	P
+000174	P
+00018c	P
+0001a0	P
+0001b6	P
+0001ca	P
+0001d6	P
+0001ee	P
+0001fa	P	L_GetPCMBuf
+000202	P	L_19
+00020a	P	L_1A
+000214	P
+000216	P
+000222	P
+00024a	P
+000250	P
+00025a	P
+00025e	P
+000260	P
+000266	P
+00026e	P	L_1B
+00027e	P
+0002aa	P
+0002ac	P
+0002c0	P
+0002c2	P
+0002ce	P
+0002d0	P
+0002d8	P
+0002e4	P
+0002ec	P	L_1C
+00032c	P
+000342	P
+000366	P
+000368	P
+00037a	P
+0003b6	P
+0003b8	P
+0003ca	P
+0003da	P
+0003dc	P
+0003ea	P
+0003f6	P
+0003f8	P
+00040e	P
+000416	P
+000424	P
+000426	P
+00042c	P
+00043e	P
+000440	P
+000446	P
+000454	P
+00045a	P
+00045e	P
+000462	P
+000466	P
+00046a	P	L_1D
+000486	P	L_1E
+000496	P
+0004b4	P
+0004c0	P
+0004e6	P	L_1F
+0004ec	P	L_0D
+000510	P
+000518	P
+00052e	P
+000534	P
+000552	P
+000554	P
+00056a	P
+000596	P
+00059a	P	L_FREE
+0005b2	P
+0005b4	P	L_SETMDX
+0005c4	P
+0005d6	P	L_SETPDX
+0005e8	P
+0005f8	P
+000610	P
+000612	P
+000624	P
+00062a	P
+000630	P
+000636	P	L_STOP
+00063e	P	StopPlayback
+000664	P
+00066a	P
+00067a	P
+00067e	P
+000694	P
+0006c0	P	L_PAUSE
+0006c4	P	PausePlayback
+0006ca	P
+0006f0	P
+000706	P
+00070c	P
+000714	P	L_CONT
+00071e	P
+000742	P
+000756	P	EnableTimerIRQ
+000760	P
+000766	P
+00077a	P
+000788	P
+0007b6	P	L_PLAY
+0007bc	P	L_PlayWithMask
+0007c0	P	StartPlay
+0007ee	P
+0007f4	P
+000834	P
+00083c	P
+000848	P
+000866	P
+0008d4	P
+000910	P
+000916	P
+00094c	P
+000958	P	L_ERROR
+00095a	P
+00095c	P	L_GetMDXTitle
+000968	P
+00096e	P
+00097a	P	L_GetPDXFilename
+000986	P
+00098c	P
+000998	P
+00099c	P	L_OPMINT
+0009b8	P
+0009be	P
+0009ee	P
+0009fa	P
+000a04	P
+000a12	P
+000a18	P
+000a26	P
+000a50	P
+000a56	P
+000a66	P
+000adc	P
+000aec	P
+000afc	P
+000b04	P
+000b0a	P
+000b16	P
+000b20	P
+000b4a	P
+000b56	P
+000b6c	P
+000b82	P
+000b92	DW
+000b9c	P
+000bae	P
+000bbe	P
+000bc4	P
+000bca	P
+000bd0	P
+000bd4	P
+000bd8	P
+000be4	P
+000bec	P
+000bfa	P
+000c0c	P
+000c22	P
+000c34	P
+000c40	P
+000c44	P
+000c66	P
+000c9e	P
+000cb4	P
+000cbe	P
+000cca	P
+000cce	P
+000cda	P
+000cdc	P	SetOPMPitch
+000d02	P
+000d04	P
+000d22	P
+000d24	DB	OPMNoteTable
+000d84	P	LoadVoice
+000dbc	P
+000dca	P
+000dd2	P
+000dde	P
+000df4	P
+000df6	DB	CarrierSlot
+000dfe	P	SetOPMVolume
+000e0e	P
+000e16	P
+000e18	P
+000e20	P
+000e22	P
+000e28	P	WriteTL
+000e3e	P
+000e4a	P
+000e4e	P
+000e54	P
+000e56	DB	VolumeTable
+000e66	P	WritePan
+000e7c	P
+000e7e	P	SetPCMVolume
+000e92	P
+000eb2	P
+000ed8	P
+000edc	P
+000ef4	P
+000f26	P
+000f28	P
+000f78	P
+000f84	P
+000f8a	P
+000f8e	P
+000fb8	P
+000fba	DB	PCMVolumeTable
+000fe6	P
+000ff6	P	SendKeyOff
+001012	P
+00103a	P
+00103c	P
+001048	P
+001050	P
+00106a	P
+00107c	P
+001086	P
+001092	P
+001094	P	AdvanceLFODelay
+0010a6	P
+0010b2	P
+0010b4	P
+0010be	P
+0010d2	P
+0010d4	P
+0010e8	P
+0010ea	P
+0010fe	P
+001100	P
+001114	P
+001116	P
+001120	P
+001136	P
+001138	P
+00114c	P
+00114e	P
+001162	P
+001164	P
+001178	P
+00117a	P
+001190	DUF
+001192	P
+00119e	P
+0011ac	P
+0011b4	P
+0011ce	P
+0011d4	P	InitChannel
+0011dc	P
+001216	P
+001224	P
+001226	P
+00122e	P
+001240	P
+001252	RW	CommandFuncs
+001292	P	SetTempoCommandFunc
+0012a6	P	WriteOPMCommandFunc
+0012be	P	SetVoiceCommandFunc
+0012e6	P	PanCommandFunc
+00131c	P	VolumeCommandFunc
+001328	P	VolumeDownCommandFunc
+001330	P
+001344	P	VolumeUpCommandFunc
+001364	P	SetNoteLengthCommandFunc
+00136a	P	SetLegatoCommandFunc
+001372	P	RepeatStartCommandFunc
+001376	P	RepeatEndCommandFunc
+00139a	P	RepeatEscapeCommandFunc
+0013ba	P	DetuneCommandFunc
+0013c6	P	PortamentoCommandFunc
+0013dc	P	PerformanceEndCommandFunc
+0013e6	P
+001440	P	InitFadeout
+001442	P	EndPlayCommand
+001492	P	KeyOnDelayCommandFunc
+001498	P	SyncSendCommandFunc
+0014b0	P	SyncWaitCommandFunc
+0014dc	P	SetNoiseFreqCommandFunc
+0014fc	P	PitchModulationCommandFunc
+001536	P
+001562	P
+001576	P
+001588	DUF
+001590	P	AmplitudeModulationCommandFunc
+0015d0	P
+0015e4	P
+0015f6	DUF
+0015fe	P	OPMLFOCommandFunc
+001656	P	SetLFOKeyOnDelayCommandFunc
+00165c	P	EnablePCM8CommandFunc
+001694	P	FadeOutCommandFunc
+0016aa	RW	FadeOutFuncs
+0016b8	P	EnableFadeout
+0016c6	P	AdvanceChannel
+0016e2	P
+0016fa	P
+00176e	P
+00177a	P
+001782	P
+00178a	P
+0017a0	P
+0017ac	P
+0017b4	P	L_WRITEOPM
+0017e4	P
+0017ea	P	EntryPoint
+001872	P
+001888	P
+001890	P
+001892	P	ParseCmdLineArgs
+00189e	P
+0018b8	P
+0018da	P
+0018e2	P
+0018e8	P
+0018fc	P
+001904	P
+001912	P
+00191c	P
+00192a	P
+00193c	P
+00194a	P
+00195a	P
+00195c	P
+001966	P
+001972	P
+001974	P
+001992	P
+001994	P	PrintNotLoaded
+00199a	P	PrintAlreadyLoaded
+0019a0	P	PrintInsufficientMemory
+0019a6	P	PrintHelp
+0019aa	P
+0019b2	DUF	EndPlayBytes
+0019b5	DS	VersionString
+001a15	DS	HelpString
+001b14	DSF	InsufficientMemoryString
+001b2e	DSF	MXDRVReleasedString
+001b45	DS	MXDRVAlreadyLoadedString
+001b68	DSF	MXDRVNotLoadedString
+001b87	DS	CouldNotReleaseString
+001ba6	DU
+001bb4	DU	pcm_work_area
+001bc4	DU
+001df4	DU	pcm8_enable
+001df6	DU	chanel_sync_wait
+001e06	DW
+001e08	DB	disable_timer_writes
+001e0a	DB	ignore_keys
+001e0c	DU	opm_tempo
+001e0e	DU
+001e12	DB	paused
+001e13	DB	ended
+001e14	DB	fadeout_offset
+001e17	DU	fadeout_enable
+001e19	DB
+001e1a	DW	channel_enable
+001e1c	DW	channel_mask
+001e1e	DU
+001e24	DL
+001e28	DL
+001e2c	DL
+001e30	DL
+001e34	DL	mdx_data
+001e38	DL	pdx_data
+001e3c	DU
+001f3c	DU
+00220c	DU
+002218	DL	mdx_title
+00221C	DL	pdx_filename
+002220	DL	mdx_size
+002224	DL	pdx_size
+002228	DL	voice_data
+00222c	DL	pdx_sample_indices
+00223c	DU
+002246	DW	loop_count
+002248	DU

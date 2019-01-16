@@ -8,8 +8,8 @@
 ;  Data size    000000 byte(s)
 ;  Bss  size    000000 byte(s)
 ;  3198 Labels
-;  Code Generate date Wed Jan 16 03:26:45 2019
-;  Commandline dis  -b2 -h -m68030 -m68882 -zfe0000,ff0038 -q -p --exclude-fefunc-mac -Tiplrom30.tab -giplrom30.lab --overwrite iplrom30.dat
+;  Code Generate date Wed Jan 16 05:57:43 2019
+;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0038 -q -p --exclude-fefunc-mac -Tiplrom30.tab -giplrom30.lab --overwrite iplrom30.dat
 ;          DIS version 3.16
 ;=============================================
 

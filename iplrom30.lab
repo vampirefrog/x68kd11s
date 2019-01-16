@@ -1,12 +1,12 @@
-
-
-*
-*
+*********************************************
 *
 *	DIS version 3.14
+*
 *  Label file for iplrom30.dat
+*
 *********************************************
-*********************************************
+
+
 1000000	DU
 fe0000	P
 fe0004	P
@@ -1851,7 +1851,7 @@ ff8746	P	Call_B_VERIFY
 ff8770	P
 ff87ac	P
 ff87b0	P
-ff87b8	DUF
+ff87b8	P
 ff87be	P	Call_B_READDI
 ff8848	P	Call_B_DSKINI
 ff888c	P	Call_B_DRVSNS
