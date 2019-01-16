@@ -8,7 +8,7 @@
 ;  Data size    00021c byte(s)
 ;  Bss  size    004204 byte(s)
 ;  124 Labels
-;  Code Generate date Wed Jan 16 19:02:41 2019
+;
 ;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmxp.lab --overwrite mxp.x mxp.s
 ;          DIS version 3.16
 ;=============================================

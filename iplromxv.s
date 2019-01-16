@@ -8,7 +8,7 @@
 ;  Data size    000000 byte(s)
 ;  Bss  size    000000 byte(s)
 ;  4751 Labels
-;  Code Generate date Wed Jan 16 18:39:50 2019
+;
 ;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q -p --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite iplromxv.dat iplromxv.s
 ;          DIS version 3.16
 ;=============================================

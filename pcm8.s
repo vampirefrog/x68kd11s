@@ -8,7 +8,7 @@
 ;  Data size    000000 byte(s)
 ;  Bss  size    000000 byte(s)
 ;  966 Labels
-;  Code Generate date Wed Jan 16 19:02:41 2019
+;
 ;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gpcm8.lab --overwrite pcm8.x pcm8.s
 ;          DIS version 3.16
 ;=============================================
