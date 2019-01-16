@@ -7,7 +7,7 @@
 ;  Text size    001746 byte(s)
 ;  Data size    000000 byte(s)
 ;  Bss  size    000698 byte(s)
-;  333 Labels
+;  356 Labels
 ;
 ;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmxdrv16.lab --overwrite mxdrv16.x mxdrv16.s
 ;          DIS version 3.16
@@ -25,9 +25,9 @@ L000000:
 	.dc.b	'EX16'
 L000004:
 	.dc.b	'mxdrv206'
-L00000c:
+Trap4Handler:
 	movem.l	d1-d7/a0-a6,-(sp)
-	lea.l	(L001da2,pc),a5
+	lea.l	(WorkAreaEnd,pc),a5
 	and.w	#$001f,d0
 	add.w	d0,d0
 	move.w	(Trap4CallTable,pc,d0.w),d0
@@ -99,7 +99,9 @@ L_11:
 	rts
 
 L000098:
-	.dc.b	$10,$10,$4e,$75
+	move.b	(a0),d0
+	rts
+
 L_GetPlaybackFlags:
 	move.b	(-$03fa,a5),-(sp)
 	move.w	(sp)+,d0
@@ -188,7 +190,7 @@ L000166:
 	trap	#2
 	clr.b	(-$0418,a5)
 L000176:
-	lea.l	($182a,pc),a0
+	lea.l	(UnknownVar4,pc),a0
 	move.b	(a0),d2
 	moveq.l	#$12,d1
 	tst.b	(-$03f9,a5)
@@ -198,7 +200,7 @@ L000176:
 L00018a:
 	bsr.w	L000d36
 	bsr.w	L000e9a
-	move.w	($181e,pc),d0
+	move.w	(UnknownVar7,pc),d0
 	btst.l	d7,d0
 	bne.s	L00019e
 	bsr.w	L000922
@@ -213,7 +215,7 @@ L00019e:
 L0001b4:
 	bsr.w	L000d36
 	bsr.w	L000e9a
-	move.w	($17f4,pc),d0
+	move.w	(UnknownVar7,pc),d0
 	btst.l	d7,d0
 	bne.s	L0001c8
 	bsr.w	L000922
@@ -358,16 +360,19 @@ L000314:
 	andi.w	#$0003,d0
 	lsr.l	#2,d1
 	swap.w	d1
+L00032c:
 	swap.w	d1
+L00032e:
 	move.l	(a1)+,(a0)+
-	dbra.w	d1,$0000032e
+	dbra.w	d1,L00032e
 	swap.w	d1
-	dbra.w	d1,$0000032c
+	dbra.w	d1,L00032c
 	tst.w	d0
 	beq.s	L000346
 	subq.w	#1,d0
+L000340:
 	move.b	(a1)+,(a0)+
-	dbra.w	d0,$00000340
+	dbra.w	d0,L000340
 L000346:
 	st.b	(a2)
 	moveq.l	#$00,d0
@@ -410,11 +415,12 @@ L00039a:
 	moveq.l	#$07,d3
 	moveq.l	#$00,d2
 	moveq.l	#$08,d1
+L0003b0:
 	bsr.w	L0013aa
 	move.b	d2,(a0)+
 	move.b	d2,(a1)+
 	addq.b	#1,d2
-	dbra.w	d3,$000003b0
+	dbra.w	d3,L0003b0
 	movea.l	#$00e88000,a0
 	andi.b	#$f7,($0009,a0)
 	andi.b	#$f7,($0015,a0)
@@ -428,10 +434,11 @@ L_PAUSE:
 L0003e0:
 	moveq.l	#$07,d7
 	lea.l	($16ee,pc),a6
+L0003e6:
 	moveq.l	#$7f,d0
 	bsr.w	L000ae4
 	lea.l	($0050,a6),a6
-	dbra.w	d7,$000003e6
+	dbra.w	d7,L0003e6
 	movea.l	($0088),a0
 	move.l	(-$0008,a0),d0
 	cmp.l	#$50434d34,d0		;'PCM4'
@@ -454,9 +461,10 @@ L_CONT:
 	clr.b	(-$03fa,a5)
 	moveq.l	#$07,d7
 	lea.l	($16ae,pc),a6
+L000426:
 	bsr.w	L000aba
 	lea.l	($0050,a6),a6
-	dbra.w	d7,$00000426
+	dbra.w	d7,L000426
 	movea.l	($0088),a0
 	move.l	(-$0008,a0),d0
 	cmp.l	#$50434d34,d0		;'PCM4'
@@ -545,11 +553,12 @@ L0004ee:
 	movea.l	($0010,a5),a0
 	bra.s	L000532
 
+L00052a:
 	tst.l	(a0)
 	beq.w	L_ERROR
 	adda.l	(a0),a0
 L000532:
-	dbra.w	d1,$0000052a
+	dbra.w	d1,L00052a
 	adda.w	($0004,a0),a0
 	move.l	a0,($0020,a5)
 L00053e:
@@ -610,8 +619,9 @@ L0005c2:
 L0005f2:
 	lea.l	(-$0416,a5),a0
 	moveq.l	#$0f,d0
+L0005f8:
 	clr.b	(a0)+
-	dbra.w	d0,$000005f8
+	dbra.w	d0,L0005f8
 	clr.b	($0026,a5)
 	moveq.l	#$00,d2
 	moveq.l	#$01,d1
@@ -644,11 +654,12 @@ L_GetMDXTitle:
 	movea.l	($000c,a5),a0
 	bra.s	L000650
 
+L00064a:
 	tst.w	(a0)
 	beq.s	L00067a
 	adda.w	(a0),a0
 L000650:
-	dbra.w	d1,$0000064a
+	dbra.w	d1,L00064a
 	adda.w	($0006,a0),a0
 	move.l	a0,d0
 	rts
@@ -659,11 +670,12 @@ L_GetPDXFilename:
 	movea.l	($0010,a5),a0
 	bra.s	L00066e
 
+L000668:
 	tst.l	(a0)
 	beq.s	L00067a
 	adda.l	(a0),a0
 L00066e:
-	dbra.w	d1,$00000668
+	dbra.w	d1,L000668
 	adda.w	($0006,a0),a0
 	move.l	a0,d0
 	rts
@@ -688,7 +700,7 @@ L00067e:
 L0006a0:
 	andi.w	#$faff,sr
 	movem.l	d0-d7/a0-a5,-(sp)
-	lea.l	(L001da2,pc),a5
+	lea.l	(WorkAreaEnd,pc),a5
 	st.b	($0039,a5)
 	tst.b	(-$03fa,a5)
 	bne.w	L000748
@@ -747,7 +759,7 @@ L000738:
 	trap	#2
 	clr.b	(-$0418,a5)
 L000748:
-	lea.l	($1258,pc),a0
+	lea.l	(UnknownVar4,pc),a0
 	move.b	(a0),d2
 	moveq.l	#$12,d1
 	tst.b	(-$0402,a5)
@@ -896,7 +908,7 @@ L0008ac:
 L0008b6:
 	bsr.w	L000d36
 	bsr.w	L000e9a
-	move.w	($10f2,pc),d0
+	move.w	(UnknownVar7,pc),d0
 	btst.l	d7,d0
 	bne.s	L0008c8
 	bsr.s	L000922
@@ -911,7 +923,7 @@ L0008c8:
 L0008de:
 	bsr.w	L000d36
 	bsr.w	L000e9a
-	move.w	($10ca,pc),d0
+	move.w	(UnknownVar7,pc),d0
 	btst.l	d7,d0
 	bne.s	L0008f0
 	bsr.s	L000922
@@ -1036,11 +1048,13 @@ LoadVoice:
 	moveq.l	#$40,d1			;'@'
 	add.b	($0018,a6),d1
 	moveq.l	#$03,d0
+L000a78:
 	move.b	(a0)+,d2
 	bsr.w	L0013aa
 	addq.b	#8,d1
-	dbra.w	d0,$00000a78
+	dbra.w	d0,L000a78
 	moveq.l	#$03,d0
+L000a86:
 	move.b	(a0)+,d2
 	lsr.b	#1,d3
 	bcc.s	L000a8e
@@ -1048,12 +1062,13 @@ LoadVoice:
 L000a8e:
 	bsr.w	L0013aa
 	addq.b	#8,d1
-	dbra.w	d0,$00000a86
+	dbra.w	d0,L000a86
 	moveq.l	#$0f,d0
+L000a9a:
 	move.b	(a0)+,d2
 	bsr.w	L0013aa
 	addq.b	#8,d1
-	dbra.w	d0,$00000a9a
+	dbra.w	d0,L000a9a
 	st.b	($0023,a6)
 	bset.b	#$02,($0017,a6)
 L000ab0:
@@ -1090,6 +1105,7 @@ L000ae4:
 	move.b	#$60,d1			;'`'
 	add.b	($0018,a6),d1
 	moveq.l	#$03,d4
+L000afc:
 	move.b	(a0)+,d2
 	lsr.b	#1,d3
 	bcc.s	L000b0e
@@ -1100,7 +1116,7 @@ L000b0a:
 	bsr.w	L0013aa
 L000b0e:
 	addq.b	#8,d1
-	dbra.w	d4,$00000afc
+	dbra.w	d4,L000afc
 L000b14:
 	rts
 
@@ -1306,7 +1322,6 @@ L000d20:
 L000d2e:
 	moveq.l	#$67,d0			;'g'
 	moveq.l	#$00,d1
-L000d32:
 	trap	#15
 	rts
 
@@ -2028,7 +2043,7 @@ Start:
 	DOS	_SUPER
 	pea.l	(L001577,pc)
 	DOS	_PRINT
-	lea.l	(L001da2,pc),a5
+	lea.l	(WorkAreaEnd,pc),a5
 	move.w	#$0001,(-$03fa,a5)
 	clr.l	(-$0404,a5)
 	move.l	($0008,a0),(-$065c,a5)
@@ -2049,7 +2064,7 @@ Start:
 	suba.l	a0,a0
 	move.l	($0090,a0),(a5)
 	move.l	($010c,a0),($0004,a5)
-	lea.l	(L00000c,pc),a1
+	lea.l	(Trap4Handler,pc),a1
 	move.l	a1,($0090,a0)
 	lea.l	(L000000,pc),a1
 	suba.l	a1,a4
@@ -2220,13 +2235,33 @@ L001726:
 	.bss
 
 L001746:
-	.ds.b	580
-L00198a:
-	.ds.b	64
+	.ds.b	2
+UnknownArray1:
+	.ds.b	16
+UnknownVar1:
+	.ds.b	562
+UnknownVar2:
+	.ds.b	22
+UnknownVar3:
+	.ds.b	2
+UnknownVar4:
+	.ds.b	6
+UnknownVar5:
+	.ds.b	3
+UnknownVar6:
+	.ds.b	7
+UnknownVar7:
+	.ds.b	24
 L0019ca:
-	.ds.b	984
-L001da2:
-	.ds.b	60
+	.ds.b	6
+OPMBufPtr:
+	.ds.b	256
+WorkArea:
+	.ds.b	722
+WorkAreaEnd:
+	.ds.b	46
+UnknownArray2:
+	.ds.b	14
 L001dde:
 
 	.end	Start
