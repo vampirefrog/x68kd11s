@@ -8,7 +8,7 @@
 ;  Data size    000000 byte(s)
 ;  Bss  size    0006a2 byte(s)
 ;  449 Labels
-;  Code Generate date Wed Jan 16 06:56:24 2019
+;  Code Generate date Wed Jan 16 23:09:59 2019
 ;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmxdrv17.lab --overwrite mxdrv17.x mxdrv17.s
 ;          DIS version 3.16
 ;=============================================
@@ -31,45 +31,45 @@ L00000c:
 	cmp.b	#$20,d0			;' '
 	bcc.s	L000024
 	add.w	d0,d0
-	move.w	(L00002a,pc,d0.w),d0
-	jsr	(L00002a,pc,d0.w)
+	move.w	(TrapCallTable,pc,d0.w),d0
+	jsr	(TrapCallTable,pc,d0.w)
 L000024:
 	movem.l	(sp)+,d1-d7/a0-a6
 	rte
 
-L00002a:
-	.dc.w	L_FREE-L00002a
-	.dc.w	L_ERROR-L00002a
-	.dc.w	L_SETMDX-L00002a
-	.dc.w	L_SETPDX-L00002a
-	.dc.w	L_PLAY-L00002a
-	.dc.w	L_STOP-L00002a
-	.dc.w	L_PAUSE-L00002a
-	.dc.w	L_CONT-L00002a
-	.dc.w	L_GetMDXTitle-L00002a
-	.dc.w	L_GetPDXFilename-L00002a
-	.dc.w	L_0A-L00002a
-	.dc.w	L_0B-L00002a
-	.dc.w	L_FadeOut-L00002a
-	.dc.w	L_0D-L00002a
-	.dc.w	L_SetChannelMask-L00002a
-	.dc.w	L_PlayWithMask-L00002a
-	.dc.w	L_GetOPMBuf-L00002a
-	.dc.w	L_11-L00002a
-	.dc.w	L_GetPlaybackFlags-L00002a
-	.dc.w	L_SetIgnoreKeys-L00002a
-	.dc.w	L_14-L00002a
-	.dc.w	L_15-L00002a
-	.dc.w	L_16-L00002a
-	.dc.w	L_17-L00002a
-	.dc.w	L_GetPCMBuf-L00002a
-	.dc.w	L_19-L00002a
-	.dc.w	L_1A-L00002a
-	.dc.w	L_1B-L00002a
-	.dc.w	L_1C-L00002a
-	.dc.w	L_1D-L00002a
-	.dc.w	L_1E-L00002a
-	.dc.w	L_1F-L00002a
+TrapCallTable:
+	.dc.w	L_FREE-TrapCallTable
+	.dc.w	L_ERROR-TrapCallTable
+	.dc.w	L_SETMDX-TrapCallTable
+	.dc.w	L_SETPDX-TrapCallTable
+	.dc.w	L_PLAY-TrapCallTable
+	.dc.w	L_STOP-TrapCallTable
+	.dc.w	L_PAUSE-TrapCallTable
+	.dc.w	L_CONT-TrapCallTable
+	.dc.w	L_GetMDXTitle-TrapCallTable
+	.dc.w	L_GetPDXFilename-TrapCallTable
+	.dc.w	L_0A-TrapCallTable
+	.dc.w	L_0B-TrapCallTable
+	.dc.w	L_FadeOut-TrapCallTable
+	.dc.w	L_0D-TrapCallTable
+	.dc.w	L_SetChannelMask-TrapCallTable
+	.dc.w	L_PlayWithMask-TrapCallTable
+	.dc.w	L_GetOPMBuf-TrapCallTable
+	.dc.w	L_11-TrapCallTable
+	.dc.w	L_GetPlaybackFlags-TrapCallTable
+	.dc.w	L_SetIgnoreKeys-TrapCallTable
+	.dc.w	L_14-TrapCallTable
+	.dc.w	L_15-TrapCallTable
+	.dc.w	L_16-TrapCallTable
+	.dc.w	L_17-TrapCallTable
+	.dc.w	L_GetPCMBuf-TrapCallTable
+	.dc.w	L_19-TrapCallTable
+	.dc.w	L_1A-TrapCallTable
+	.dc.w	L_1B-TrapCallTable
+	.dc.w	L_1C-TrapCallTable
+	.dc.w	L_1D-TrapCallTable
+	.dc.w	L_1E-TrapCallTable
+	.dc.w	L_1F-TrapCallTable
 L_0A:
 	move.b	d1,(-$03f8,a5)
 	rts
@@ -2520,7 +2520,7 @@ L0017e4:
 	move.b	d2,($09da)
 	rts
 
-EntryPoint:
+Start:
 	clr.l	-(sp)
 	DOS	_SUPER
 	pea.l	(VersionString,pc)
@@ -2812,4 +2812,4 @@ loop_count:
 	.ds.w	1
 L002248:
 
-	.end	EntryPoint
+	.end	Start
