@@ -4,6 +4,8 @@
 *
 *********************************************
 000000	DSF
+
+
 000004	DSF
 00000c	P
 000024	P
@@ -292,46 +294,87 @@
 001240	P
 001252	RW	CommandFuncs
 001292	P	SetTempoCommandFunc
+0012a4 P
 0012a6	P	WriteOPMCommandFunc
+0012ba P
 0012be	P	SetVoiceCommandFunc
+0012cc P
+0012d0 P
+0012e0 P
 0012e6	P	PanCommandFunc
+001302 P
+00130c P
+001310 P
 00131c	P	VolumeCommandFunc
 001328	P	VolumeDownCommandFunc
 001330	P
+00133a P
+00133c P
 001344	P	VolumeUpCommandFunc
+001350 P
+00135a P
+00135c P
 001364	P	SetNoteLengthCommandFunc
 00136a	P	SetLegatoCommandFunc
 001372	P	RepeatStartCommandFunc
 001376	P	RepeatEndCommandFunc
+001396 P
+001398 P
 00139a	P	RepeatEscapeCommandFunc
+0013b8 P
 0013ba	P	DetuneCommandFunc
 0013c6	P	PortamentoCommandFunc
 0013dc	P	PerformanceEndCommandFunc
 0013e6	P
+001410 P
+001416 P
+00142e P
+00143e P
+00143e P
+00143e P
 001440	P	InitFadeout
 001442	P	EndPlayCommand
+001472 P
+001480 P
+001490 P
 001492	P	KeyOnDelayCommandFunc
 001498	P	SyncSendCommandFunc
+0014ae P
 0014b0	P	SyncWaitCommandFunc
+0014c8 P
+0014d0 P
 0014dc	P	SetNoiseFreqCommandFunc
+0014ee P
 0014fc	P	PitchModulationCommandFunc
 001536	P
+001552 P
+00155e P
 001562	P
 001576	P
 001588	DUF
 001590	P	AmplitudeModulationCommandFunc
+0015c6 P
+0015cc P
 0015d0	P
 0015e4	P
 0015f6	DUF
 0015fe	P	OPMLFOCommandFunc
+001614 P
+001640 P
+00164a P
 001656	P	SetLFOKeyOnDelayCommandFunc
 00165c	P	EnablePCM8CommandFunc
+00167c P
+001692 P
 001694	P	FadeOutCommandFunc
 0016aa	RW	FadeOutFuncs
 0016b8	P	EnableFadeout
 0016c6	P	AdvanceChannel
 0016e2	P
 0016fa	P
+001706 P
+00170e P
+001724 P
 00176e	P
 00177a	P
 001782	P
