@@ -1,0 +1,3 @@
+ff25a8
+	dc.w {peek.w(pc)+$ff0000},"-$ff0000"
+end[224]
