@@ -25,7 +25,7 @@ L000000:
 	.dc.b	'EX17'
 L000004:
 	.dc.b	'mxdrv206'
-L00000c:
+Trap4Handler:
 	movem.l	d1-d7/a0-a6,-(sp)
 	lea.l	(L00220c,pc),a5
 	cmp.b	#$20,d0			;' '
@@ -2549,7 +2549,7 @@ Start:
 	suba.l	a0,a0
 	move.l	($0090,a0),(a5)
 	move.l	($010c,a0),($0004,a5)
-	lea.l	(L00000c,pc),a1
+	lea.l	(Trap4Handler,pc),a1
 	move.l	a1,($0090,a0)
 	lea.l	(L000000,pc),a1
 	suba.l	a1,a4

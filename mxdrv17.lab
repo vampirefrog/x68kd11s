@@ -7,7 +7,7 @@
 
 
 000004	DSF
-00000c	P
+00000c	P	Trap4Handler
 000024	P
 00002a	DR	TrapCallTable
 00006a	P	L_0A
