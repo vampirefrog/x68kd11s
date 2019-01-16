@@ -8,8 +8,8 @@
 ;  Data size    000000 byte(s)
 ;  Bss  size    000000 byte(s)
 ;  966 Labels
-;  Code Generate date Wed Jan 16 05:57:43 2019
-;  Commandline dis  -b2 -h -m68000 --sp -q -p -gpcm8.lab --overwrite pcm8.x pcm8.s
+;  Code Generate date Wed Jan 16 19:02:41 2019
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gpcm8.lab --overwrite pcm8.x pcm8.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -26,9 +26,9 @@ Start:
 Trap2Handler:
 	ori.w	#$0700,sr
 	movem.l	d1-d7/a0-a6,-(sp)
-	cmpi.w	#$0030,d0
+	cmpi.w	#$0030,d0		;'0'
 	bcs.s	OutputFuncs
-	cmpi.w	#$0070,d0
+	cmpi.w	#$0070,d0		;'p'
 	bcs.s	UnknownFunc
 	cmpi.w	#$00a0,d0
 	bcc.w	L0000be
@@ -110,6 +110,7 @@ L0000f6:
 	move.b	d1,(L001961)
 	pea.l	($0000)
 	bra.w	L001a02
+
 L000104:
 	moveq.l	#$00,d0
 	movem.l	(sp)+,d1-d7/a0-a6
@@ -151,6 +152,7 @@ L000138:
 	move.w	d1,(L001b84+$000002)
 	move.w	d1,(L001ba8+$000002)
 	bra.w	L00021e
+
 L00016a:
 	.dc.w	$f8ff,$f9ff,$faff,$fbff
 	.dc.w	$fcff,$fdff,$feff,$ffff
@@ -161,6 +163,7 @@ L00017a:
 L000182:
 	move.b	d1,(L001945)
 	bra.s	L00019c
+
 L00018a:
 	tst.w	d1
 	bmi.s	L0001c8
@@ -183,6 +186,7 @@ L0001c8:
 	moveq.l	#$00,d0
 	move.b	(L001948,pc),d0
 	bra.s	L00021e
+
 L0001d0:
 	.dc.b	$00,$00,$00,$00,$01,$02,$00,$02
 	.dc.b	$02
@@ -194,12 +198,15 @@ L0001e2:
 	.dc.b	$ff,$00
 L0001ec:
 	bra.s	L00021c
+
 L0001ee:
 	st.b	(L001942)
 	bra.s	L00021c
+
 L0001f6:
 	sf.b	(L001942)
 	bra.s	L00021c
+
 L0001fe:
 	tst.w	d0
 	bmi.s	L000268
@@ -223,9 +230,11 @@ L000224:
 	addq.w	#2,d1
 	sne.b	(L001949)
 	bra.s	L00021c
+
 L000232:
 	not.b	(L001949)
 	bra.s	L00021c
+
 L00023a:
 	cmpi.w	#$0008,d1
 	bhi.s	L00024a
@@ -236,15 +245,18 @@ L00024a:
 	moveq.l	#$08,d0
 	sub.w	(L00194c,pc),d0
 	bra.s	L00021e
+
 L000252:
 	subq.w	#2,d1
 	beq.s	L000260
 	addq.w	#2,d1
 	sne.b	(L00194b)
 	bra.s	L00021c
+
 L000260:
 	not.b	(L00194b)
 	bra.s	L00021c
+
 L000268:
 	moveq.l	#$ff,d0
 	move.b	(L001942,pc),d1
@@ -270,7 +282,7 @@ L0002aa:
 	addq.l	#4,a0
 	move.l	(a1)+,(a2)
 	dbra.w	d1,L0002aa
-	move.b	#$40,(Start)
+	move.b	#$40,(Start)		;'@'
 	moveq.l	#$00,d1
 	move.w	d1,($0c32)
 	IOCS	_ADPCMMOD
@@ -278,6 +290,7 @@ L0002aa:
 	DOS	_MFREE
 	addq.l	#4,sp
 	bra.w	L00021c
+
 VectorOverrides:
 	.dc.b	$00,$00,$05,$80
 	.dc.l	Override_ADPCMOUT
@@ -490,6 +503,7 @@ L000556:
 	beq.s	L00058e
 	move.l	#$ff000000,(L00195c)
 	bra.s	L00058e
+
 L00058a:
 	bsr.w	L0007e4
 L00058e:
@@ -552,6 +566,7 @@ L00060a:
 	beq.s	L000660
 	move.l	#$ff000000,(L00195c)
 	bra.s	L000660
+
 L00065c:
 	bsr.w	L0007e4
 L000660:
@@ -615,6 +630,7 @@ L0006ea:
 	beq.s	L000734
 	move.l	#$ff000000,(L00195c)
 	bra.s	L000734
+
 L000730:
 	bsr.w	L0007e4
 L000734:
@@ -692,9 +708,9 @@ L0007e4:
 	move.l	#L00157a,($000c,a5)
 	move.w	#$0004,($000a,a5)
 	move.l	#L00157a,($001c,a5)
-	move.w	#$002c,($001a,a5)
+	move.w	#$002c,($001a,a5)	;','
 	move.l	#$00e92003,($0014,a5)
-	move.b	#$32,($0005,a5)
+	move.b	#$32,($0005,a5)		;'2'
 	move.b	#$c8,($0007,a5)
 	move.b	#$02,($00e92001)
 	btst.b	#$07,($09da)
@@ -746,6 +762,7 @@ L00089c:
 	bne.s	L0008be
 	ori.b	#$08,d7
 	bra.s	L0008c2
+
 L0008be:
 	or.b	($001f,a6),d7
 L0008c2:
@@ -795,11 +812,13 @@ L0008e8:
 L0009c8:
 	pea.l	($0000)
 	bra.w	L001a02
+
 L0009d0:
 	pea.l	($0000)
 	bra.w	L001a78
+
 L0009d8:
-	move.b	#$20,($00e840c7)
+	move.b	#$20,($00e840c7)	;' '
 	move.b	#$88,($00e92003)
 	st.b	(L00195f)
 	moveq.l	#$00,d0
@@ -807,7 +826,7 @@ L0009d8:
 	rte
 
 L0009f6:
-	move.b	#$20,($00e840c7)
+	move.b	#$20,($00e840c7)	;' '
 	move.b	#$88,($00e92003)
 	st.b	(L00195f)
 	moveq.l	#$00,d0
@@ -1133,7 +1152,7 @@ L000e1a:
 	move.l	#L00157a,($001c,a5)
 	move.w	#$0080,($001a,a5)
 	move.l	#$00e92003,($0014,a5)
-	move.b	#$32,($0005,a5)
+	move.b	#$32,($0005,a5)		;'2'
 	move.b	#$c8,($0007,a5)
 	move.b	#$02,($00e92001)
 	movem.l	d0-d1,-(sp)
@@ -1341,6 +1360,7 @@ Override_ADPCMOUT:
 	cmpi.w	#$0500,d1
 	bcc.w	L0014fa
 	bra.s	L001114
+
 L0010f8:
 	tst.l	d2
 	beq.w	L0011cc
@@ -1371,6 +1391,7 @@ L001114:
 	beq.s	L001164
 	move.l	#$ff000000,(L00195c)
 	bra.s	L001164
+
 L001160:
 	bsr.w	L0007e4
 L001164:
@@ -1450,6 +1471,7 @@ Override_ADPCMAOT:
 	cmpi.w	#$0500,d1
 	bcc.w	L0014fa
 	bra.s	L001288
+
 L00126c:
 	tst.l	d2
 	beq.w	L0011cc
@@ -1480,6 +1502,7 @@ L001288:
 	beq.s	L0012d8
 	move.l	#$ff000000,(L00195c)
 	bra.s	L0012d8
+
 L0012d4:
 	bsr.w	L0007e4
 L0012d8:
@@ -1560,6 +1583,7 @@ Override_ADPCMLOT:
 	cmpi.w	#$0500,d1
 	bcc.w	L0014fa
 	bra.s	L001400
+
 L0013ea:
 	tst.b	d1
 	beq.w	L0011cc
@@ -1588,6 +1612,7 @@ L001400:
 	beq.s	L001450
 	move.l	#$ff000000,(L00195c)
 	bra.s	L001450
+
 L00144c:
 	bsr.w	L0007e4
 L001450:
@@ -1619,7 +1644,7 @@ L001474:
 	moveq.l	#$02,d0
 	move.b	d0,(L001963)
 	move.l	a1,(L001966)
-	move.b	#$22,($0c32)
+	move.b	#$22,($0c32)		;'"'
 	movem.l	(sp)+,d1-d7/a0-a6
 	moveq.l	#$00,d0
 	move.w	(sp)+,sr
@@ -1641,20 +1666,23 @@ Override_ADPCMMOD:
 	subq.w	#1,d0
 	beq.w	L000430
 	bra.w	L000482
+
 L0014e4:
 	move.w	d1,d0
 	beq.w	L0009d0
 	subq.w	#1,d0
 	beq.w	L0009f6
 	bra.w	L000a32
+
 L0014f4:
 	move.b	d0,(L001961)
 L0014fa:
 	moveq.l	#$00,d0
 	movem.l	d0-d7/a0-a6,-(sp)
 	bra.w	L001a78
+
 L001504:
-	cmpi.l	#$50434d38,d1
+	cmpi.l	#$50434d38,d1		;'PCM8'
 	bne.s	L001530
 	movem.l	a0-a1,-(sp)
 	lea.l	(PCM8String,pc),a0
@@ -1665,7 +1693,7 @@ L001504:
 	cmpm.l	(a0)+,(a1)+
 	bne.s	L00152c
 	movem.l	(sp)+,a0-a1
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 	move.w	(sp)+,sr
 	rts
 
@@ -1709,8 +1737,7 @@ L001576:
 	rts
 
 L00157a:
-	.dc.b	'àààààààààààààààààààààààààààààààààààààààààààààààààààààààààààà'
-	.dc.b	'àààààààààààààààààààààààààààààààààààààààààààààààààààààààààààà'
+	.dc.b	'àààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààà'
 	.dc.b	'àààààààà'
 L0015fa:
 	.dc.l	L001602
@@ -1825,7 +1852,7 @@ L001994:
 	beq.s	L0019ce
 	move.l	#L00157a,($001c,a5)
 	move.w	#$0080,($001a,a5)
-	move.b	#$48,($0007,a5)
+	move.b	#$48,($0007,a5)		;'H'
 	sf.b	(L00194a)
 L0019ce:
 	move.w	#$ffff,(L001952)
@@ -1841,8 +1868,9 @@ L0019ee:
 	rte
 
 L0019f0:
-	move.w	#$0020,($00e82200)
+	move.w	#$0020,($00e82200)	;' '
 	bra.s	L001994
+
 DMAErrorInterrupt:
 	ori.w	#$0700,sr
 	movem.l	d0-d7/a0-a6,-(sp)
@@ -1855,7 +1883,7 @@ L001a08:
 	move.l	#L00157a,($000c,a5)
 	move.l	#$00e92003,($0014,a5)
 	move.w	#$0080,($000a,a5)
-	move.b	#$32,($0005,a5)
+	move.b	#$32,($0005,a5)		;'2'
 	move.b	#$02,($00e92001)
 	move.b	#$88,($00e92003)
 	moveq.l	#$00,d0
@@ -1875,6 +1903,7 @@ L001a46:
 	move.w	d0,($0c32)
 	move.b	d0,(L00194a)
 	bra.w	L0019ce
+
 L001a74:
 	movem.l	d0-d7/a0-a6,-(sp)
 L001a78:
@@ -1885,7 +1914,7 @@ L001a78:
 	move.l	#L00157a,($000c,a5)
 	move.l	#$00e92003,($0014,a5)
 	move.w	#$0080,($000a,a5)
-	move.b	#$32,($0005,a5)
+	move.b	#$32,($0005,a5)		;'2'
 	move.b	#$02,($00e92001)
 	move.b	#$88,($00e92003)
 	moveq.l	#$00,d0
@@ -1946,8 +1975,8 @@ L001b10:
 	beq.s	L001b96
 	st.b	(a5)
 	move.l	#L00157a,($001c,a5)
-	move.w	#$0030,($001a,a5)
-	move.b	#$48,($0007,a5)
+	move.w	#$0030,($001a,a5)	;'0'
+	move.b	#$48,($0007,a5)		;'H'
 	lea.l	(L001954,pc),a0
 	moveq.l	#$00,d2
 	move.l	#EntryPoint,(a0)+
@@ -1956,14 +1985,15 @@ L001b10:
 L001b84:
 	andi.w	#$fbff,sr
 	bra.w	L002d22
+
 L001b8c:
 	.dc.w	$0000,$000f,$00f0,$f000
 	.dc.w	$8888
 L001b96:
 	st.b	(a5)
 	move.l	a6,($001c,a5)
-	move.w	#$0030,($001a,a5)
-	move.b	#$48,($0007,a5)
+	move.w	#$0030,($001a,a5)	;'0'
+	move.b	#$48,($0007,a5)		;'H'
 L001ba8:
 	andi.w	#$fbff,sr
 	movem.w	(L001b8c,pc),d2/d4-d6/a2
@@ -1984,6 +2014,7 @@ L001bd6:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001bee
+
 L001bdc:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2008,6 +2039,7 @@ L001c02:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001c1a
+
 L001c08:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2033,6 +2065,7 @@ L001c30:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001c48
+
 L001c36:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2058,6 +2091,7 @@ L001c5e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001c76
+
 L001c64:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2084,6 +2118,7 @@ L001c8e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001ca6
+
 L001c94:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2108,6 +2143,7 @@ L001cba:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001cd2
+
 L001cc0:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2133,6 +2169,7 @@ L001ce8:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001d00
+
 L001cee:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2158,6 +2195,7 @@ L001d16:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001d2e
+
 L001d1c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2185,6 +2223,7 @@ L001d48:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001d60
+
 L001d4e:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2209,6 +2248,7 @@ L001d74:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001d8c
+
 L001d7a:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2234,6 +2274,7 @@ L001da2:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001dba
+
 L001da8:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2259,6 +2300,7 @@ L001dd0:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001de8
+
 L001dd6:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2285,6 +2327,7 @@ L001e00:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001e18
+
 L001e06:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2309,6 +2352,7 @@ L001e2c:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001e44
+
 L001e32:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2334,6 +2378,7 @@ L001e5a:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001e72
+
 L001e60:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2359,6 +2404,7 @@ L001e88:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001ea0
+
 L001e8e:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2386,6 +2432,7 @@ L001eba:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001ed2
+
 L001ec0:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2410,6 +2457,7 @@ L001ee6:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001efe
+
 L001eec:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2435,6 +2483,7 @@ L001f14:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001f2c
+
 L001f1a:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2460,6 +2509,7 @@ L001f42:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001f5a
+
 L001f48:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2486,6 +2536,7 @@ L001f72:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001f8a
+
 L001f78:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2510,6 +2561,7 @@ L001f9e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001fb6
+
 L001fa4:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2535,6 +2587,7 @@ L001fcc:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L001fe4
+
 L001fd2:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2560,6 +2613,7 @@ L001ffa:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002012
+
 L002000:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2587,6 +2641,7 @@ L00202c:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002044
+
 L002032:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2611,6 +2666,7 @@ L002058:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002070
+
 L00205e:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2636,6 +2692,7 @@ L002086:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00209e
+
 L00208c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2661,6 +2718,7 @@ L0020b4:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0020cc
+
 L0020ba:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2687,6 +2745,7 @@ L0020e4:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0020fc
+
 L0020ea:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2711,6 +2770,7 @@ L002110:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002128
+
 L002116:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2736,6 +2796,7 @@ L00213e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002156
+
 L002144:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2761,6 +2822,7 @@ L00216c:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002184
+
 L002172:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2788,6 +2850,7 @@ L00219e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0021b6
+
 L0021a4:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2812,6 +2875,7 @@ L0021ca:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0021e2
+
 L0021d0:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2837,6 +2901,7 @@ L0021f8:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002210
+
 L0021fe:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2862,6 +2927,7 @@ L002226:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00223e
+
 L00222c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2888,6 +2954,7 @@ L002256:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00226e
+
 L00225c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2912,6 +2979,7 @@ L002282:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00229a
+
 L002288:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2937,6 +3005,7 @@ L0022b0:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0022c8
+
 L0022b6:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2962,6 +3031,7 @@ L0022de:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0022f6
+
 L0022e4:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -2989,6 +3059,7 @@ L002310:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002328
+
 L002316:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3013,6 +3084,7 @@ L00233c:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002354
+
 L002342:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3038,6 +3110,7 @@ L00236a:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002382
+
 L002370:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3063,6 +3136,7 @@ L002398:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0023b0
+
 L00239e:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3089,6 +3163,7 @@ L0023c8:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0023e0
+
 L0023ce:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3113,6 +3188,7 @@ L0023f4:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00240c
+
 L0023fa:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3138,6 +3214,7 @@ L002422:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00243a
+
 L002428:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3163,6 +3240,7 @@ L002450:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002468
+
 L002456:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3190,6 +3268,7 @@ L002482:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00249a
+
 L002488:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3214,6 +3293,7 @@ L0024ae:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0024c6
+
 L0024b4:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3239,6 +3319,7 @@ L0024dc:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0024f4
+
 L0024e2:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3264,6 +3345,7 @@ L00250a:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002522
+
 L002510:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3290,6 +3372,7 @@ L00253a:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002552
+
 L002540:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3314,6 +3397,7 @@ L002566:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00257e
+
 L00256c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3339,6 +3423,7 @@ L002594:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0025ac
+
 L00259a:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3364,6 +3449,7 @@ L0025c2:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0025da
+
 L0025c8:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3391,6 +3477,7 @@ L0025f4:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00260c
+
 L0025fa:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3415,6 +3502,7 @@ L002620:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002638
+
 L002626:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3440,6 +3528,7 @@ L00264e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002666
+
 L002654:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3465,6 +3554,7 @@ L00267c:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002694
+
 L002682:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3491,6 +3581,7 @@ L0026ac:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0026c4
+
 L0026b2:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3515,6 +3606,7 @@ L0026d8:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0026f0
+
 L0026de:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3540,6 +3632,7 @@ L002706:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00271e
+
 L00270c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3565,6 +3658,7 @@ L002734:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00274c
+
 L00273a:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3592,6 +3686,7 @@ L002766:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00277e
+
 L00276c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3616,6 +3711,7 @@ L002792:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0027aa
+
 L002798:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3641,6 +3737,7 @@ L0027c0:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0027d8
+
 L0027c6:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3666,6 +3763,7 @@ L0027ee:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002806
+
 L0027f4:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3692,6 +3790,7 @@ L00281e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002836
+
 L002824:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3716,6 +3815,7 @@ L00284a:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002862
+
 L002850:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3741,6 +3841,7 @@ L002878:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002890
+
 L00287e:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3766,6 +3867,7 @@ L0028a6:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0028be
+
 L0028ac:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3793,6 +3895,7 @@ L0028d8:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0028f0
+
 L0028de:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3817,6 +3920,7 @@ L002904:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00291c
+
 L00290a:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3842,6 +3946,7 @@ L002932:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L00294a
+
 L002938:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3867,6 +3972,7 @@ L002960:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002978
+
 L002966:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3893,6 +3999,7 @@ L002990:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0029a8
+
 L002996:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3917,6 +4024,7 @@ L0029bc:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L0029d4
+
 L0029c2:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3942,6 +4050,7 @@ L0029ea:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002a02
+
 L0029f0:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3967,6 +4076,7 @@ L002a18:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002a30
+
 L002a1e:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -3994,6 +4104,7 @@ L002a4a:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002a62
+
 L002a50:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4018,6 +4129,7 @@ L002a76:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002a8e
+
 L002a7c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4043,6 +4155,7 @@ L002aa4:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002abc
+
 L002aaa:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4068,6 +4181,7 @@ L002ad2:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002aea
+
 L002ad8:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4094,6 +4208,7 @@ L002b02:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002b1a
+
 L002b08:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4118,6 +4233,7 @@ L002b2e:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002b46
+
 L002b34:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4143,6 +4259,7 @@ L002b5c:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002b74
+
 L002b62:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4168,6 +4285,7 @@ L002b8a:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002ba2
+
 L002b90:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4195,6 +4313,7 @@ L002bbc:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002bd4
+
 L002bc2:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4219,6 +4338,7 @@ L002be8:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002c00
+
 L002bee:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4244,6 +4364,7 @@ L002c16:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002c2e
+
 L002c1c:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4269,6 +4390,7 @@ L002c44:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002c5c
+
 L002c4a:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4295,6 +4417,7 @@ L002c74:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002c8c
+
 L002c7a:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4319,6 +4442,7 @@ L002ca0:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002cb8
+
 L002ca6:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4344,6 +4468,7 @@ L002cce:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002ce6
+
 L002cd4:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4369,6 +4494,7 @@ L002cfc:
 	move.w	(a0)+,d3
 	add.w	(a0)+,d0
 	bra.s	L002d14
+
 L002d02:
 	neg.w	d1
 	cmp.w	(a0)+,d1
@@ -4434,9 +4560,11 @@ L002d74:
 	subq.w	#1,(L001952)
 	bmi.w	L0019ce
 	bra.w	L001982
+
 L002da2:
 	move.w	#$0018,($00e82200)
 	bra.s	L002d58
+
 L002dac:
 	add.l	a3,d0
 	lea.l	(-$00c0,sp),sp
@@ -4458,6 +4586,7 @@ L002dc2:
 	move.l	a1,-(sp)
 	movea.l	($0024,a6),a1
 	bra.s	L002df6
+
 L002de0:
 	move.l	a1,-(sp)
 	movea.l	($0024,a6),a1
@@ -4466,6 +4595,7 @@ L002de0:
 L002dea:
 	movea.l	(sp)+,a1
 	bra.s	L002e20
+
 L002dee:
 	btst.l	#$01,d0
 	bne.s	L002dea
@@ -4487,6 +4617,7 @@ L002e08:
 	movea.l	a5,a0
 	movem.l	d0/d6/a0-a1,(a6)
 	bra.w	L002d70
+
 L002e1c:
 	move.b	#$88,(a5)+
 L002e20:
@@ -4500,9 +4631,10 @@ L002e24:
 	move.l	d0,(a6)
 	move.l	d0,($0004,a6)
 	bra.w	L002d70
+
 L002e3e:
 	bhi.s	L002ea4
-	moveq.l	#$5f,d1
+	moveq.l	#$5f,d1			;'_'
 L002e42:
 	move.w	(a0)+,(a5)+
 	subq.l	#2,d0
@@ -4516,6 +4648,7 @@ L002e42:
 	move.l	a1,-(sp)
 	movea.l	($0024,a6),a1
 	bra.s	L002e76
+
 L002e60:
 	move.l	a1,-(sp)
 	movea.l	($0024,a6),a1
@@ -4524,6 +4657,7 @@ L002e60:
 L002e6a:
 	movea.l	(sp)+,a1
 	bra.s	L002e9e
+
 L002e6e:
 	btst.l	#$01,d0
 	bne.s	L002e6a
@@ -4543,13 +4677,15 @@ L002e76:
 L002e92:
 	dbra.w	d1,L002e42
 	bra.w	L002e08
+
 L002e9a:
 	move.w	(-$0002,a5),(a5)+
 L002e9e:
 	dbra.w	d1,L002e9a
 	bra.s	L002e24
+
 L002ea4:
-	moveq.l	#$5f,d1
+	moveq.l	#$5f,d1			;'_'
 L002ea6:
 	move.b	(a0)+,(a5)+
 	subq.l	#1,d0
@@ -4563,6 +4699,7 @@ L002ea6:
 	move.l	a1,-(sp)
 	movea.l	($0024,a6),a1
 	bra.s	L002eda
+
 L002ec4:
 	move.l	a1,-(sp)
 	movea.l	($0024,a6),a1
@@ -4571,6 +4708,7 @@ L002ec4:
 L002ece:
 	movea.l	(sp)+,a1
 	bra.s	L002ef4
+
 L002ed2:
 	btst.l	#$01,d0
 	bne.s	L002ece
@@ -4585,11 +4723,13 @@ L002eda:
 L002ee8:
 	dbra.w	d1,L002ea6
 	bra.w	L002e08
+
 L002ef0:
 	move.b	(-$0001,a5),(a5)+
 L002ef4:
 	dbra.w	d1,L002ef0
 	bra.w	L002e24
+
 L002efc:
 	lea.l	(L001962,pc),a1
 	move.w	(a1),d6
@@ -4611,11 +4751,12 @@ L002efc:
 	move.w	d0,($000a,a5)
 	move.l	#L00157a,($001c,a5)
 	move.w	#$0080,($001a,a5)
-	move.b	#$32,($0005,a5)
+	move.b	#$32,($0005,a5)		;'2'
 	move.b	#$c8,($0007,a5)
 	move.b	#$01,(a1)
 L002f58:
 	bra.w	L0019ce
+
 L002f5c:
 	move.l	#$00008000,d2
 	sub.l	d2,d0
@@ -4630,12 +4771,13 @@ L002f5c:
 	adda.l	d2,a0
 	move.l	a0,($001c,a5)
 	move.w	d0,($001a,a5)
-	move.b	#$32,($0005,a5)
+	move.b	#$32,($0005,a5)		;'2'
 	move.b	#$c8,($0007,a5)
 	moveq.l	#$00,d0
 	move.l	d0,(L00196a)
 	move.w	d0,(a1)
 	bra.s	L002f58
+
 L002fa0:
 	movea.l	(L001966,pc),a0
 	st.b	(a5)
@@ -4646,7 +4788,7 @@ L002fa0:
 	adda.l	d2,a0
 	move.l	a0,($001c,a5)
 	move.w	d2,($001a,a5)
-	move.b	#$32,($0005,a5)
+	move.b	#$32,($0005,a5)		;'2'
 	move.b	#$c8,($0007,a5)
 	adda.l	d2,a0
 	sub.l	d2,d0
@@ -4654,23 +4796,26 @@ L002fa0:
 	move.l	d0,(L00196a)
 	clr.w	(a1)
 	bra.w	L002f58
+
 L002fe2:
 	st.b	(a5)
 	move.b	#$10,($0007,a5)
 	st.b	(a5)
 	move.l	(L001966,pc),($001c,a5)
 	move.w	(L00196a,pc),($001a,a5)
-	move.b	#$3a,($0005,a5)
+	move.b	#$3a,($0005,a5)		;':'
 	move.b	#$88,($0007,a5)
 	bra.w	L002f58
+
 L003008:
 	st.b	(a5)
 	move.b	#$10,($0007,a5)
 	st.b	(a5)
 	move.l	(L001966,pc),($001c,a5)
-	move.b	#$3e,($0005,a5)
+	move.b	#$3e,($0005,a5)		;'>'
 	move.b	#$88,($0007,a5)
 	bra.w	L002f58
+
 L003028:
 	movea.l	(L001966,pc),a0
 	move.l	(L00196a,pc),d0
@@ -4680,29 +4825,32 @@ L003028:
 	st.b	(a5)
 	move.l	a0,($001c,a5)
 	move.w	d0,($001a,a5)
-	move.b	#$48,($0007,a5)
+	move.b	#$48,($0007,a5)		;'H'
 	moveq.l	#$00,d0
 	move.l	d0,(L00196a)
 	bra.w	L0019ce
+
 L003056:
 	move.l	#$00008000,d2
 	st.b	(a5)
 	move.l	a0,($001c,a5)
 	move.w	d2,($001a,a5)
-	move.b	#$48,($0007,a5)
+	move.b	#$48,($0007,a5)		;'H'
 	adda.l	d2,a0
 	sub.l	d2,d0
 	move.l	a0,(L001966)
 	move.l	d0,(L00196a)
 	clr.w	(a1)
 	bra.w	L0019ce
+
 L003082:
 	st.b	(a5)
 	move.l	#L00157a,($001c,a5)
 	move.w	#$0080,($001a,a5)
-	move.b	#$48,($0007,a5)
+	move.b	#$48,($0007,a5)		;'H'
 	move.b	#$01,(a1)
 	bra.w	L0019ce
+
 L0030a0:
 	swap.w	d6
 	moveq.l	#$0b,d4
@@ -9278,12 +9426,15 @@ L0055ba:
 L005620:
 	lea.l	(Table1,pc),a3
 	bra.s	L005636
+
 L005626:
 	lea.l	(Table2,pc),a3
 	bra.s	L005636
+
 L00562c:
 	lea.l	(Table3,pc),a3
 	bra.s	L005636
+
 L005632:
 	lea.l	(Table4,pc),a3
 L005636:
@@ -10769,26 +10920,33 @@ ErrExitCannotUnlock:
 	bmi.s	ErrExitVectorInUse
 	pea.l	(CannotUnlockString,pc)
 	bra.s	PrintErrAndExit
+
 ErrExitVectorInUse:
 	addq.w	#1,d0
 	bmi.s	ErrExitCannotCancel
 	pea.l	(VectorAlreadyInUseString,pc)
 	bra.s	PrintErrAndExit
+
 ErrExitCannotCancel:
 	pea.l	(CannotCancelString,pc)
 	bra.s	PrintErrAndExit
+
 ErrExitNotLoaded:
 	pea.l	(NotLoadedString,pc)
 	bra.s	PrintErrAndExit
+
 ErrExitPrintHelp:
 	pea.l	(HelpString,pc)
 	bra.s	PrintErrAndExit
+
 ErrExitOutOfMem:
 	pea.l	(OutOfMemoryString,pc)
 	bra.s	PrintErrAndExit
+
 ErrExitAlreadyLoaded:
 	pea.l	(AlreadyLoadedString,pc)
 	bra.s	PrintErrAndExit
+
 ErrExitCouldNotLoad:
 	pea.l	(CouldNotLoadString,pc)
 PrintErrAndExit:
@@ -10804,6 +10962,7 @@ L006594:
 	bmi.s	ErrExitAlreadyLoaded
 	pea.l	(SettingChangedString,pc)
 	bra.s	L006546
+
 L0065a0:
 	bsr.s	CheckPCM8Loaded
 	beq.s	L006594
@@ -10836,14 +10995,14 @@ L0065d4:
 
 CheckPCM8Loaded:
 	movea.l	($0088),a0
-	cmpi.w	#$5043,(-$0008,a0)
+	cmpi.w	#$5043,(-$0008,a0)	;'PC'
 	bne.s	L006614
-	cmpi.b	#$2f,(-$0004,a0)
+	cmpi.b	#$2f,(-$0004,a0)	;'/'
 	bne.s	L006614
 	move.w	(-$0006,a0),d0
-	cmpi.w	#$4d38,d0
+	cmpi.w	#$4d38,d0		;'M8'
 	beq.s	L006614
-	cmpi.w	#$4d34,d0
+	cmpi.w	#$4d34,d0		;'M4'
 L006614:
 	rts
 
@@ -10853,66 +11012,69 @@ ParseCmdlineArgs:
 L00661c:
 	bsr.w	L0067c4
 	beq.w	L0066ca
-	cmpi.b	#$2d,d0
+	cmpi.b	#$2d,d0			;'-'
 	beq.s	L0066a0
-	cmpi.b	#$2f,d0
+	cmpi.b	#$2f,d0			;'/'
 	beq.s	L0066a0
 	andi.b	#$df,d0
-	cmpi.b	#$4d,d0
+	cmpi.b	#$4d,d0			;'M'
 	beq.w	L006780
 	tst.b	(a0)
 	bne.w	L0066c6
-	cmpi.b	#$4f,d0
+	cmpi.b	#$4f,d0			;'O'
 	beq.s	L006678
-	cmpi.b	#$46,d0
+	cmpi.b	#$46,d0			;'F'
 	bne.s	L0066c6
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$4e,d0
+	cmpi.b	#$4e,d0			;'N'
 	beq.s	L006668
-	cmpi.b	#$55,d0
+	cmpi.b	#$55,d0			;'U'
 	bne.s	L0066c6
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$4e,d0
+	cmpi.b	#$4e,d0			;'N'
 	bne.s	L0066c6
 L006668:
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$43,d0
+	cmpi.b	#$43,d0			;'C'
 	bne.s	L0066c6
 L006672:
-	move.b	#$32,(a0)
+	move.b	#$32,(a0)		;'2'
 	bra.s	L00661c
+
 L006678:
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$4e,d0
+	cmpi.b	#$4e,d0			;'N'
 	beq.s	L006698
-	cmpi.b	#$46,d0
+	cmpi.b	#$46,d0			;'F'
 	bne.s	L0066c6
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$46,d0
+	cmpi.b	#$46,d0			;'F'
 	bne.s	L0066c6
 L006692:
-	move.b	#$30,(a0)
+	move.b	#$30,(a0)		;'0'
 	bra.s	L00661c
+
 L006698:
-	move.b	#$31,(a0)
+	move.b	#$31,(a0)		;'1'
 	bra.w	L00661c
+
 L0066a0:
 	move.b	(a2)+,d0
 	andi.b	#$df,d0
-	cmpi.b	#$52,d0
+	cmpi.b	#$52,d0			;'R'
 	beq.s	L0066ce
-	cmpi.b	#$44,d0
+	cmpi.b	#$44,d0			;'D'
 	beq.s	L0066dc
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	beq.w	L006760
-	cmpi.b	#$49,d0
+	cmpi.b	#$49,d0			;'I'
 	beq.s	L006710
-	cmpi.b	#$56,d0
+	cmpi.b	#$56,d0			;'V'
 	beq.s	L00672c
 L0066c6:
 	moveq.l	#$ff,d0
@@ -10934,89 +11096,98 @@ L0066dc:
 	tst.b	($0001,a0)
 	bne.s	L0066c6
 	move.b	(a2)+,d0
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	beq.s	L006708
-	cmpi.b	#$31,d0
+	cmpi.b	#$31,d0			;'1'
 	beq.s	L006708
-	cmpi.b	#$2d,d0
+	cmpi.b	#$2d,d0			;'-'
 	beq.s	L006702
-	cmpi.b	#$2b,d0
+	cmpi.b	#$2b,d0			;'+'
 	beq.s	L006706
 	subq.l	#1,a2
-	moveq.l	#$32,d0
+	moveq.l	#$32,d0			;'2'
 	bra.s	L006708
+
 L006702:
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 	bra.s	L006708
+
 L006706:
-	moveq.l	#$31,d0
+	moveq.l	#$31,d0			;'1'
 L006708:
 	move.b	d0,($0001,a0)
 	bra.w	L00661c
+
 L006710:
 	tst.b	($0003,a0)
 	bne.s	L0066c6
 	move.b	(a2)+,d0
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	bcs.s	L0066c6
-	cmpi.b	#$38,d0
+	cmpi.b	#$38,d0			;'8'
 	bhi.s	L0066c6
 	move.b	d0,($0003,a0)
 	bra.w	L00661c
+
 L00672c:
 	tst.b	($0002,a0)
 	bne.s	L0066c6
 	move.b	(a2)+,d0
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	beq.s	L006758
-	cmpi.b	#$31,d0
+	cmpi.b	#$31,d0			;'1'
 	beq.s	L006758
-	cmpi.b	#$2d,d0
+	cmpi.b	#$2d,d0			;'-'
 	beq.s	L006752
-	cmpi.b	#$2b,d0
+	cmpi.b	#$2b,d0			;'+'
 	beq.s	L006756
 	subq.l	#1,a2
-	moveq.l	#$32,d0
+	moveq.l	#$32,d0			;'2'
 	bra.s	L006758
+
 L006752:
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 	bra.s	L006758
+
 L006756:
-	moveq.l	#$31,d0
+	moveq.l	#$31,d0			;'1'
 L006758:
 	move.b	d0,($0002,a0)
 	bra.w	L00661c
+
 L006760:
 	tst.b	(a0)
 	bne.w	L0066c6
 	move.b	(a2)+,d0
-	subi.b	#$30,d0
+	subi.b	#$30,d0			;'0'
 	beq.w	L006692
 	subq.b	#1,d0
 	beq.w	L006698
 	subq.b	#1,d0
 	beq.w	L006672
 	bra.w	L0066c6
+
 L006780:
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	bne.w	L0066c6
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	bne.w	L0066c6
 	moveq.l	#$df,d0
 	and.b	(a2)+,d0
-	cmpi.b	#$4b,d0
+	cmpi.b	#$4b,d0			;'K'
 	bne.w	L0066c6
-	cmpi.b	#$3a,(a2)+
+	cmpi.b	#$3a,(a2)+		;':'
 	bne.w	L0066c6
 	bsr.s	L0067d6
 	bmi.w	L0066c6
 	lea.l	(L0067c0,pc),a1
 	move.l	d1,(a1)
 	bra.w	L00661c
+
 L0067bc:
 	.dc.b	$00,$00,$00,$00
 L0067c0:
@@ -11024,7 +11195,7 @@ L0067c0:
 L0067c4:
 	move.b	(a2)+,d0
 	beq.s	L0067d4
-	cmpi.b	#$20,d0
+	cmpi.b	#$20,d0			;' '
 	beq.s	L0067c4
 	cmpi.b	#$09,d0
 	beq.s	L0067c4
@@ -11035,25 +11206,26 @@ L0067d6:
 	moveq.l	#$00,d1
 	move.b	(a2)+,d0
 L0067da:
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	bcs.s	L00681a
-	cmpi.b	#$39,d0
+	cmpi.b	#$39,d0			;'9'
 	bhi.s	L0067ec
-	subi.b	#$30,d0
+	subi.b	#$30,d0			;'0'
 	bra.s	L006800
+
 L0067ec:
 	andi.b	#$df,d0
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	bcs.s	L00681a
-	cmpi.b	#$46,d0
+	cmpi.b	#$46,d0			;'F'
 	bhi.s	L00681a
-	subi.b	#$37,d0
+	subi.b	#$37,d0			;'7'
 L006800:
 	lsl.l	#4,d1
 	add.b	d0,d1
 	move.b	(a2)+,d0
 	beq.s	L006814
-	cmpi.b	#$20,d0
+	cmpi.b	#$20,d0			;' '
 	beq.s	L006814
 	cmpi.b	#$09,d0
 	bne.s	L0067da
@@ -11079,7 +11251,7 @@ L00682e:
 	moveq.l	#$00,d1
 	move.b	d2,d1
 	beq.s	L006840
-	sub.b	#$30,d1
+	sub.b	#$30,d1			;'0'
 	move.w	#$7f00,d0
 	trap	#2
 L006840:
@@ -11087,7 +11259,7 @@ L006840:
 	moveq.l	#$00,d1
 	move.b	d2,d1
 	beq.s	L006852
-	sub.b	#$30,d1
+	sub.b	#$30,d1			;'0'
 	move.w	#$7f02,d0
 	trap	#2
 L006852:
@@ -11095,7 +11267,7 @@ L006852:
 	moveq.l	#$00,d1
 	move.b	d2,d1
 	beq.s	L006864
-	sub.b	#$30,d1
+	sub.b	#$30,d1			;'0'
 	move.w	#$7f03,d0
 	trap	#2
 L006864:
@@ -11103,7 +11275,7 @@ L006864:
 	moveq.l	#$00,d1
 	move.b	d2,d1
 	beq.s	L006876
-	sub.b	#$30,d1
+	sub.b	#$30,d1			;'0'
 	move.w	#$7f04,d0
 	trap	#2
 L006876:
@@ -11131,7 +11303,7 @@ L0068ac:
 	move.l	(a2),(a1)+
 	move.l	(a0)+,(a2)
 	dbra.w	d1,L0068ac
-	move.b	#$50,(Start)
+	move.b	#$50,(Start)		;'P'
 	moveq.l	#$00,d0
 	jmp	(L001a74)
 
@@ -11143,7 +11315,7 @@ L0068c6:
 L0068cc:
 	lea.l	(L001682),a0
 	lea.l	(L001882),a1
-	moveq.l	#$30,d1
+	moveq.l	#$30,d1			;'0'
 	moveq.l	#$07,d0
 L0068dc:
 	move.w	#$0004,($001c,a0)
@@ -11155,8 +11327,7 @@ L0068dc:
 	rts
 
 HelloString:
-	.dc.b	'X68k PCM8 polyphonic PCM driver v0.48b (c)1991-93 H.Etoh',$0d
-	.dc.b	$0a,$00
+	.dc.b	'X68k PCM8 polyphonic PCM driver v0.48b (c)1991-93 H.Etoh',$0d,$0a,$00
 HelpString:
 	.dc.b	'égópñ@: PCM8 [option]',$0d,$0a
 	.dc.b	$09,'-R',$09,'âèú',$0d,$0a
@@ -11188,7 +11359,7 @@ OutOfMemoryString:
 Sub006b3e:
 	lea.l	(EntryPoint),a1
 	lea.l	(L006cec,pc),a0
-	moveq.l	#$30,d7
+	moveq.l	#$30,d7			;'0'
 L006b4a:
 	move.w	(a0)+,d1
 	movea.l	a1,a3
@@ -11209,11 +11380,11 @@ L006b52:
 	lea.l	(EntryPoint),a5
 	movea.l	a6,a0
 	movea.l	a5,a3
-	moveq.l	#$30,d2
+	moveq.l	#$30,d2			;'0'
 	moveq.l	#$09,d1
 	lea.l	(L006ccc,pc),a4
 	moveq.l	#$00,d7
-	moveq.l	#$30,d6
+	moveq.l	#$30,d6			;'0'
 L006b8a:
 	moveq.l	#$00,d5
 L006b8c:
@@ -11227,6 +11398,7 @@ L006b8c:
 	moveq.l	#$00,d3
 	movea.l	a5,a2
 	bra.s	L006bb4
+
 L006ba6:
 	cmp.w	d2,d3
 	ble.s	L006bac
@@ -11244,6 +11416,7 @@ L006bb4:
 	bpl.s	L006bca
 	lea.l	($0002,a6),a1
 	bra.s	L006bd6
+
 L006bca:
 	cmp.w	d2,d3
 	ble.s	L006bd0
@@ -11265,9 +11438,9 @@ L006bd6:
 	movea.l	a0,a2
 	movea.l	a1,a4
 	movea.l	sp,a1
-	moveq.l	#$32,d4
+	moveq.l	#$32,d4			;'2'
 	moveq.l	#$00,d1
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 L006c04:
 	move.w	(a0)+,d2
 	move.w	d2,d3
@@ -11288,7 +11461,7 @@ L006c04:
 	movea.l	sp,a1
 	movea.l	a1,a3
 	moveq.l	#$00,d1
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 L006c2e:
 	move.w	(a1)+,(a4)+
 	move.w	(a1)+,d2
@@ -11305,10 +11478,11 @@ L006c40:
 	bpl.s	L006c4c
 	moveq.l	#$00,d5
 	bra.s	L006c54
+
 L006c4c:
-	cmpi.w	#$0031,d5
+	cmpi.w	#$0031,d5		;'1'
 	bcs.s	L006c54
-	moveq.l	#$30,d5
+	moveq.l	#$30,d5			;'0'
 L006c54:
 	move.w	d5,d6
 	add.w	d5,d5

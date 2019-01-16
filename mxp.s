@@ -8,8 +8,8 @@
 ;  Data size    00021c byte(s)
 ;  Bss  size    004204 byte(s)
 ;  124 Labels
-;  Code Generate date Wed Jan 16 05:57:43 2019
-;  Commandline dis  -b2 -h -m68000 --sp -q -p -gmxp.lab --overwrite mxp.x mxp.s
+;  Code Generate date Wed Jan 16 19:02:41 2019
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmxp.lab --overwrite mxp.x mxp.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -105,6 +105,7 @@ L0000ce:
 	tst.l	d0
 	beq.s	L0000fe
 	bra.s	L00012e
+
 L0000de:
 	move.l	(L00099c,pc),d0
 	movea.l	d0,a0
@@ -118,6 +119,7 @@ L0000de:
 	beq.s	L0000ce
 	addq.l	#1,(L00099c)
 	bra.s	L0000c0
+
 L0000fe:
 	moveq.l	#$01,d0
 L000100:
@@ -152,6 +154,7 @@ L00013c:
 	move.b	d0,(a5)
 	andi.l	#$000000ff,d0
 	bra.s	L000100
+
 L000148:
 	link.w	a6,#-$0200
 	movem.l	d7/a4-a5,-(sp)
@@ -180,6 +183,7 @@ L000190:
 	addq.l	#8,sp
 	movea.l	d0,a4
 	bra.s	L0001d8
+
 L00019a:
 	move.l	a4,-(sp)
 	pea.l	(-$0200,a6)
@@ -202,6 +206,7 @@ L00019a:
 	pea.l	(L0008ef,pc)
 	clr.l	-(sp)
 	bra.s	L000190
+
 L0001d8:
 	move.l	a4,d0
 	bne.s	L00019a
@@ -253,6 +258,7 @@ L00023a:
 	move.l	d0,d6
 	lea.l	(L0009a0,pc),a5
 	bra.s	L000262
+
 L00025c:
 	move.l	d7,d0
 	move.b	d0,(a5)+
@@ -274,6 +280,7 @@ L000262:
 	subq.l	#4,d6
 	lea.l	(L000aa0,pc),a5
 	bra.s	L000290
+
 L00028e:
 	subq.l	#1,d6
 L000290:
@@ -311,6 +318,7 @@ L0002d4:
 	beq.s	L0002e4
 	moveq.l	#$00,d0
 	bra.s	L0002e6
+
 L0002e4:
 	moveq.l	#$ff,d0
 L0002e6:
@@ -468,11 +476,11 @@ L00043e:
 L00047c:
 	move.l	($0008,a6),d0
 	movea.l	d0,a0
-	cmpi.b	#$2d,(a0)
+	cmpi.b	#$2d,(a0)		;'-'
 	beq.s	L000494
 	move.l	($0008,a6),d0
 	movea.l	d0,a0
-	cmpi.b	#$2f,(a0)
+	cmpi.b	#$2f,(a0)		;'/'
 	bne.s	L0004e6
 L000494:
 	addq.l	#1,($0008,a6)
@@ -494,18 +502,23 @@ L000494:
 	addq.l	#4,sp
 L0004d2:
 	bra.w	L000584
+
 L0004d6:
 	moveq.l	#$04,d7
 	bra.s	L0004d2
+
 L0004da:
 	moveq.l	#$05,d7
 	bra.s	L0004d2
+
 L0004de:
 	moveq.l	#$06,d7
 	bra.s	L0004d2
+
 L0004e2:
 	moveq.l	#$07,d7
 	bra.s	L0004d2
+
 L0004e6:
 	pea.l	(L000984,pc)
 	move.l	($0008,a6),-(sp)
@@ -679,6 +692,7 @@ L000686:
 	move.b	(a1)+,(a0)+
 	bne.s	L000686
 	bra.s	L000692
+
 L00068e:
 	clr.b	(a0)
 	clr.l	d0
@@ -765,6 +779,7 @@ L000710:
 	bne.s	L000710
 	clr.l	d0
 	bra.s	L000724
+
 L000722:
 	sub.l	d1,d0
 L000724:
@@ -794,6 +809,7 @@ L000748:
 	move.l	a0,d0
 	subq.l	#1,d0
 	bra.s	L000742
+
 L00075c:
 	andi.w	#$7fff,d2
 	bne.s	L000742
@@ -820,8 +836,7 @@ L000780:
 	.dc.l	L00086c
 	.dc.l	L000881
 L000790:
-	.dc.b	'使い方: mxp {<コマンド>|<MDXファイル名> [PDXファイル名]}',$0d
-	.dc.b	$0a
+	.dc.b	'使い方: mxp {<コマンド>|<MDXファイル名> [PDXファイル名]}',$0d,$0a
 	.dc.b	$09,'-p  演奏開始',$0d,$0a
 	.dc.b	$09,'-e  演奏終了',$0d,$0a
 	.dc.b	$09,'-s  演奏中断',$0d,$0a
