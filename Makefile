@@ -19,5 +19,8 @@ mxdrv17.en.s: mxdrv17.s mxdrv17.sed
 %.s: %.x %.lab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -p -o120 -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
 
+mdxp.s: mdxp.r mdxp.lab
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -p -o120 -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
+
 clean:
 	rm -f *.s
