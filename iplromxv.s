@@ -22086,7 +22086,7 @@ Lff287c:
 	bcs.s	Lff28c0
 	cmp.w	#$0034,d2
 	bcc.s	Lff28c4
-	move.l	#$80000000.l,d3
+	move.l	#$80000000,d3
 	cmp.w	#$0020,d2
 	bcc.s	Lff28aa
 	and.l	#$000007ff,d1
@@ -23473,7 +23473,7 @@ Lff3488:
 	moveq.l	#$0f,d7
 Lff348e:
 	move.l	#$635fa931,d2
-	move.l	#$a0000430.l,d3
+	move.l	#$a0000430,d3
 	bsr.w	Lff2ade
 	bcc.s	Lff34c4
 	moveq.l	#$00,d2
@@ -23481,19 +23481,19 @@ Lff348e:
 	bsr.w	Lff2ade
 	bcc.s	Lff34da
 	move.l	#$635fa931,d2
-	move.l	#$a0000430.l,d3
+	move.l	#$a0000430,d3
 	bsr.w	Lff2ce4
 	sub.w	#$000f,d7
 	bra.s	Lff348e
 Lff34c4:
 	move.l	#$635fa931,d2
-	move.l	#$a0000430.l,d3
+	move.l	#$a0000430,d3
 	bsr.w	Lff2dea
 	add.w	#$000f,d7
 	bra.s	Lff348e
 Lff34da:
 	move.l	#$35e620f4,d2
-	move.l	#$8000042d.l,d3
+	move.l	#$8000042d,d3
 	bsr.w	Lff2ade
 	bcc.s	Lff3500
 	move.l	#$20000000,d2
@@ -34097,7 +34097,7 @@ Lffb7a6:
 	rts
 
 Lffb7ae:
-	move.l	#$ffff2228.l,d0
+	move.l	#$ffff2228,d0
 	move.l	d0,d1
 	rts
 
@@ -34139,7 +34139,7 @@ Lffb806:
 	rts
 
 Lffb80e:
-	move.l	#$ffff81a6.l,d0
+	move.l	#$ffff81a6,d0
 	move.l	d0,d1
 	rts
 
@@ -34170,7 +34170,7 @@ Lffb818:
 	cmp.b	#$e0,d1
 	bcs.s	Lffb8b2
 Lffb860:
-	move.l	#$ffff81a6.l,d0
+	move.l	#$ffff81a6,d0
 	bra.w	Lffb8f6
 Lffb86a:
 	move.w	#$0020,d1

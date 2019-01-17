@@ -3520,7 +3520,7 @@ Lfe314e:
 	rts
 
 Lfe3156:
-	move.l	#$80000000.l,d6
+	move.l	#$80000000,d6
 	bra.s	Lfe314e
 Lfe315e:
 	clr.l	d6
@@ -7726,7 +7726,7 @@ Lff2e70:
 	bcs.s	Lff2eb4
 	cmp.w	#$0034,d2
 	bcc.s	Lff2eb8
-	move.l	#$80000000.l,d3
+	move.l	#$80000000,d3
 	cmp.w	#$0020,d2
 	bcc.s	Lff2e9e
 	and.l	#$000007ff,d1
@@ -9113,7 +9113,7 @@ Lff3a7c:
 	moveq.l	#$0f,d7
 Lff3a82:
 	move.l	#$635fa931,d2
-	move.l	#$a0000430.l,d3
+	move.l	#$a0000430,d3
 	bsr.w	Lff30d2
 	bcc.s	Lff3ab8
 	moveq.l	#$00,d2
@@ -9121,19 +9121,19 @@ Lff3a82:
 	bsr.w	Lff30d2
 	bcc.s	Lff3ace
 	move.l	#$635fa931,d2
-	move.l	#$a0000430.l,d3
+	move.l	#$a0000430,d3
 	bsr.w	Lff32d8
 	sub.w	#$000f,d7
 	bra.s	Lff3a82
 Lff3ab8:
 	move.l	#$635fa931,d2
-	move.l	#$a0000430.l,d3
+	move.l	#$a0000430,d3
 	bsr.w	Lff33de
 	add.w	#$000f,d7
 	bra.s	Lff3a82
 Lff3ace:
 	move.l	#$35e620f4,d2
-	move.l	#$8000042d.l,d3
+	move.l	#$8000042d,d3
 	bsr.w	Lff30d2
 	bcc.s	Lff3af4
 	move.l	#$20000000,d2
@@ -20706,7 +20706,7 @@ Lffbcb6:
 	rts
 
 Lffbcbe:
-	move.l	#$ffff2228.l,d0
+	move.l	#$ffff2228,d0
 	move.l	d0,d1
 	rts
 
@@ -20748,7 +20748,7 @@ Lffbd16:
 	rts
 
 Lffbd1e:
-	move.l	#$ffff81a6.l,d0
+	move.l	#$ffff81a6,d0
 	move.l	d0,d1
 	rts
 
@@ -20779,7 +20779,7 @@ Call_AKCONV:
 	cmp.b	#$e0,d1
 	bcs.s	Lffbdc0
 Lffbd70:
-	move.l	#$ffff81a6.l,d0
+	move.l	#$ffff81a6,d0
 	bra.w	Lffbe02
 Lffbd7a:
 	move.w	#$0020,d1
