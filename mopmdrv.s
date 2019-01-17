@@ -4504,7 +4504,7 @@ L003ac0:
 L003ac2:
 	.dc.l	StackBottom
 L003ac6:
-	.dc.b	$00,$01,$00,$00
+	.dc.l	$00010000
 
 	.bss
 

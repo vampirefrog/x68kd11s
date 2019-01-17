@@ -4164,9 +4164,9 @@ Lfe2fba:
 	.dc.b	$53,$50,$00,$50,$43,$00,$43,$43
 	.dc.b	$52,$00,$53,$52,$00,$ff
 Lfe2fd0:
-	.dc.l	$00fe3276
-	.dc.l	$00fe326a
-	.dc.l	$00fe32be
+	.dc.l	$00fe3276,$00fe3270
+	.dc.l	$00fe326a,$00fe325e
+	.dc.l	$00fe32be,$00fe3264
 Lfe2fe8:
 	moveq.l	#$10,d3
 	lea.l	(Lfe3110,pc),a0
@@ -36929,11 +36929,11 @@ Lffd2cc:
 	rts
 
 Lffd2da:
-	.dc.b	$00,$ff,$d2,$fe,$00,$ff,$d3,$06
-	.dc.b	$00,$ff,$d3,$04
+	.dc.l	$00ffd2fe,$00ffd306
+	.dc.l	$00ffd304
 Lffd2e6:
-	.dc.b	$00,$ff,$d3,$08,$00,$ff,$d3,$1e
-	.dc.b	$00,$ff,$d3,$22
+	.dc.l	$00ffd308,$00ffd31e
+	.dc.l	$00ffd322
 Lffd2f2:
 	.dc.b	$00,$ff,$d3,$26,$00,$ff,$d3,$3a
 	.dc.b	$00,$ff,$d3,$40,$52,$80,$e2,$88

@@ -292,19 +292,19 @@ L0002aa:
 	bra.w	L00021c
 
 VectorOverrides:
-	.dc.b	$00,$00,$05,$80
+	.dc.l	$00000580
 	.dc.l	Override_ADPCMOUT
-	.dc.b	$00,$00,$05,$88
+	.dc.l	$00000588
 	.dc.l	Override_ADPCMAOT
-	.dc.b	$00,$00,$05,$90
+	.dc.l	$00000590
 	.dc.l	Override_ADPCMLOT
-	.dc.b	$00,$00,$05,$9c
+	.dc.l	$0000059c
 	.dc.l	Override_ADPCMMOD
-	.dc.b	$00,$00,$01,$a8
+	.dc.l	$000001a8
 	.dc.l	DMAEndInterrupt
-	.dc.b	$00,$00,$01,$ac
+	.dc.l	$000001ac
 	.dc.l	DMAErrorInterrupt
-	.dc.b	$00,$00,$00,$88
+	.dc.l	$00000088
 	.dc.l	Trap2Handler
 L00030a:
 	move.b	(L00195f,pc),d0
@@ -1762,10 +1762,10 @@ L001662:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 L001682:
-	.dc.l	$00000000
-	.dc.l	$00000000
-	.dc.l	$00000000
-	.dc.l	$00000000
+	.dc.l	$00000000,$00000000
+	.dc.l	$00000000,$00000000
+	.dc.l	$00000000,$00000000
+	.dc.l	$00000000,$00000000
 L0016a2:
 	.ds.b	416
 L001842:
@@ -1820,9 +1820,9 @@ L001964:
 L001965:
 	.dc.b	$00
 L001966:
-	.dc.b	$00,$00,$00,$00
+	.dc.l	$00000000
 L00196a:
-	.dc.b	$00,$00,$00,$00
+	.dc.l	$00000000
 L00196e:
 	.dc.b	$03
 L00196f:
@@ -11189,9 +11189,9 @@ L006780:
 	bra.w	L00661c
 
 L0067bc:
-	.dc.b	$00,$00,$00,$00
+	.dc.l	$00000000
 L0067c0:
-	.dc.b	$ff,$ff,$ff,$ff
+	.dc.l	$ffffffff
 L0067c4:
 	move.b	(a2)+,d0
 	beq.s	L0067d4
