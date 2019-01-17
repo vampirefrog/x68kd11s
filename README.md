@@ -12,6 +12,6 @@ Disassemblies of some Sharp X68000 ROMs and Human68k executables.
 * [iplrom30.dat](iplrom30.s) - X68030 IPL ROM
 * [iplromxv.dat](iplromxv.s) - X68000 XVI IPL ROM
 
-Translations are also available. They are implemented via sed scripts.
+Translations are also available. They are implemented via sed scripts, in Shift-JIS encoding.
 
 * [mxdrv17.x english](mxdrv17.en.s) - [sed script](mxdrv17.en.sed)
