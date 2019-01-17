@@ -15,8 +15,8 @@ iplromxv.s: iplromxv.dat iplromxv.lab iplromxv.tab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q -p --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite $< $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
-mxdrv17.en.s: mxdrv17.s mxdrv17.sed
-	sed -f mxdrv17.sed < $< > $@
+mxdrv17.en.s: mxdrv17.s mxdrv17.en.sed
+	sed -f mxdrv17.en.sed < $< > $@
 
 %.s: %.x %.lab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -p -o120 -g$(patsubst %.s,%.lab,$@) --overwrite $< $@

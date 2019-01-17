@@ -14,4 +14,4 @@ Disassemblies of some Sharp X68000 ROMs and Human68k executables.
 
 Translations are also available. They are implemented via sed scripts.
 
-* [mxdrv17.x english](mxdrv17.en.s)
+* [mxdrv17.x english](mxdrv17.en.s) - [sed script](mxdrv17.en.sed)
