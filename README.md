@@ -11,3 +11,7 @@ Disassemblies of some Sharp X68000 ROMs and Human68k executables.
 * [mdxp.r](mdxp.s) - `MuSic Player For Mxdrv  Ver0.09c  97/03/21  byあすかにゃん`
 * [iplrom30.dat](iplrom30.s) - X68030 IPL ROM
 * [iplromxv.dat](iplromxv.s) - X68000 XVI IPL ROM
+
+Translations are also available. They are implemented via sed scripts.
+
+* [mxdrv17.x english](mxdrv17.en.s)
