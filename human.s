@@ -7,7 +7,7 @@
 ;  Text size    00a890 byte(s)
 ;  Data size    0033ea byte(s)
 ;  Bss  size    000000 byte(s)
-;  2660 Labels
+;  2676 Labels
 ;
 ;  Commandline dis  -b2 -h -m68030 --sp -q1 -B -M -p -o120 -ghuman.lab --overwrite human.sys human.s
 ;          DIS version 3.16
@@ -6249,7 +6249,9 @@ L00a678:
 	movem.l	d0-d7/a0-a6,-(sp)
 	moveq.l	#$0b,d2
 	moveq.l	#$5f,d0			;'_'
+L00a680:
 	moveq.l	#$07,d1
+L00a682:
 	btst.b	d1,(a0,d2.w)
 	beq.s	L00a694
 	movem.l	d0-d2/a0-a1,-(sp)
@@ -6258,8 +6260,8 @@ L00a678:
 L00a694:
 	subq.w	#1,d0
 	cmp.w	#$0005,d0
-	dbcs.w	d1,$0000a682
-	dbcs.w	d2,$0000a680
+	dbcs.w	d1,L00a682
+	dbcs.w	d2,L00a680
 	movem.l	(sp)+,d0-d7/a0-a6
 	rts
 
@@ -6357,8 +6359,9 @@ L00a768:
 	move.w	($004c,a0),d0
 	lea.l	($01,a0,d0.w),a0
 	move.w	#$003d,d0		;'='
+L00a774:
 	move.b	(a0)+,(a1)+
-	dbeq.w	d0,$0000a774
+	dbeq.w	d0,L00a774
 	beq.s	L00a77e
 	clr.b	(a1)+
 L00a77e:
@@ -6701,8 +6704,9 @@ L00aa2e:
 	subq.w	#6,d0
 	bcs.s	L00aa58
 	move.w	d0,-(sp)
+L00aa4c:
 	cmpi.w	#$ffff,(a0)+
-	dbeq.w	d0,$0000aa4c
+	dbeq.w	d0,L00aa4c
 	beq.s	L00aa5c
 	addq.l	#2,sp
 L00aa58:
@@ -11042,9 +11046,10 @@ L00d1d6:
 	movea.l	($1c38),a1
 	clr.w	d2
 	move.b	($1c73),d2
+L00d206:
 	bsr.s	L00d222
 	lea.l	($004e,a1),a1
-	dbeq.w	d2,$0000d206
+	dbeq.w	d2,L00d206
 	beq.s	L00d216
 	clr.l	d0
 	bra.s	L00d218
@@ -11061,19 +11066,22 @@ L00d222:
 	lea.l	(-$0050,sp),sp
 	movea.l	sp,a3
 	moveq.l	#$4e,d0			;'N'
+L00d22e:
 	move.b	(a1)+,(a3)+
-	dbeq.w	d0,$0000d22e
+	dbeq.w	d0,L00d22e
 	clr.b	(a3)
 	movea.l	sp,a1
 	pea.l	(a1)
 	bsr.w	L009f32
 	addq.l	#4,sp
 	moveq.l	#$02,d0
+L00d242:
 	cmpm.b	(a1)+,(a2)+
-	dbne.w	d0,$0000d242
+	dbne.w	d0,L00d242
 	bne.s	L00d2a4
 L00d24a:
 	moveq.l	#$07,d0
+L00d24c:
 	move.b	(a1)+,d1
 	cmp.b	(a2)+,d1
 	bne.s	L00d2a4
@@ -11082,7 +11090,7 @@ L00d24a:
 	cmp.b	#$09,d1
 	beq.s	L00d24a
 	cmp.b	#$2e,d1			;'.'
-	dbeq.w	d0,$0000d24c
+	dbeq.w	d0,L00d24c
 	beq.s	L00d28a
 L00d266:
 	move.b	(a1)+,d1
@@ -11104,13 +11112,14 @@ L00d28a:
 	or.b	d0,d1
 	beq.s	L00d2a4
 	moveq.l	#$02,d0
+L00d290:
 	move.b	(a1)+,d1
 	cmp.b	(a2)+,d1
 	bne.s	L00d2a4
 	tst.b	d1
 	beq.s	L00d2a4
 	cmp.b	#$09,d1
-	dbeq.w	d0,$0000d290
+	dbeq.w	d0,L00d290
 	bra.s	L00d24a
 
 L00d2a4:
@@ -11123,8 +11132,9 @@ L00d2ae:
 	lea.l	(-$0080,sp),sp
 	movea.l	sp,a2
 	moveq.l	#$7b,d0			;'{'
+L00d2b8:
 	move.b	(a1)+,(a2)+
-	dbeq.w	d0,$0000d2b8
+	dbeq.w	d0,L00d2b8
 	move.b	#$5c,(-$0001,a2)	;'\'
 	move.b	#$2a,(a2)+		;'*'
 	move.b	#$2e,(a2)+		;'.'
@@ -12066,8 +12076,9 @@ L00db42:
 	subq.l	#4,d0
 	move.l	d0,(a0)+
 	moveq.l	#$0b,d1
+L00db68:
 	move.b	(a2)+,(a0)+
-	dbeq.w	d1,$0000db68
+	dbeq.w	d1,L00db68
 	beq.s	L00db74
 	bra.s	L00db78
 
@@ -13109,10 +13120,11 @@ L00e544:
 	lea.l	($0060,a2),a0
 	movea.l	a4,a1
 	moveq.l	#$0f,d1
+L00e552:
 	move.b	(a0)+,d0
 	beq.s	L00e564
 	cmp.b	(a1)+,d0
-	dbne.w	d1,$0000e552
+	dbne.w	d1,L00e552
 	bne.s	L00e572
 L00e55e:
 	moveq.l	#$e5,d0
@@ -15458,7 +15470,9 @@ L00faee:
 	.dc.l	L00fb36
 	.dc.l	L00fb3e
 L00faf6:
-	.dc.b	'CON     ',$00,$00,$00,$00
+	.dc.b	'CON     '
+L00fafe:
+	.dc.l	$00000000
 L00fb02:
 	.dc.l	L008184
 	.dc.l	L00fad6
@@ -15474,13 +15488,13 @@ L00fb02:
 	.dc.l	L00fae4
 	.dc.l	L00fad6
 L00fb36:
-	move.l	a5,($0000fafe)
+	move.l	a5,(L00fafe)
 	rts
 
 L00fb3e:
 	movem.l	d0/a4-a5,-(sp)
 L00fb42:
-	movea.l	($0000fafe),a5
+	movea.l	(L00fafe),a5
 	lea.l	(L00fb02),a4
 	bra.w	L00fab6
 
@@ -16216,8 +16230,8 @@ L0101f4:
 L0101f8:
 	bsr.s	L01021c
 	tst.b	d0
-L0101fc:
 	beq.s	L010218
+L0101fe:
 	movem.l	a0,-(sp)
 	movea.l	(L012406),a0
 	clr.l	d0
@@ -16518,8 +16532,9 @@ L0104cc:
 	movem.l	d1/d3,-(sp)
 	lea.l	(L0123f0),a0
 	moveq.l	#$15,d1
+L0104d8:
 	cmp.b	(a0)+,d0
-	dbeq.w	d1,$000104d8
+	dbeq.w	d1,L0104d8
 	beq.s	L0104e8
 L0104e0:
 	movem.l	(sp)+,d1/d3
@@ -17062,7 +17077,7 @@ L010a2e:
 L010a40:
 	move.b	d3,(L01098c)
 L010a46:
-	move.l	#$ffffffff,($00010a62)
+	move.l	#$ffffffff,(L010a62)
 	rts
 
 L010a52:
@@ -17070,6 +17085,7 @@ L010a52:
 	.dc.l	L010a66
 	.dc.l	L010a66
 	.dc.l	L010a66
+L010a62:
 	.dc.l	$ffffffff
 L010a66:
 	.dc.w	$0400,$0102,$0001,$00c0
@@ -17234,7 +17250,7 @@ L010bf8:
 L010c0c:
 	move.b	($0001,a5),d0
 	and.w	#$0003,d0
-	lea.l	(-$01b4,pc),a6
+	lea.l	(L010a62,pc),a6
 	adda.w	d0,a6
 	rts
 
@@ -17772,7 +17788,9 @@ L0123dc:
 L0123eb:
 	.dc.b	$cd,$d0,$d3,$d6,$d9
 L0123f0:
-	.dc.b	'cdefghijkl89^7<;=>?T6:'
+	.dc.b	$63,$64,$65,$66,$67,$68,$69,$6a
+	.dc.b	$6b,$6c,$38,$39,$5e,$37,$3c,$3b
+	.dc.b	$3d,$3e,$3f,$54,$36,$3a
 L012406:
 	.dc.l	L01240a
 L01240a:
