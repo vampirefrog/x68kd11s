@@ -9,7 +9,7 @@
 ;  Bss  size    00110a byte(s)
 ;  316 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -ebind.lab --overwrite bind.x bind.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gbind.lab --overwrite bind.x bind.s
 ;          DIS version 3.16
 ;=============================================
 
