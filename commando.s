@@ -27,12 +27,12 @@ L000000:
 	.dc.l	L007482+$001000
 L00000c:
 	.dc.l	$00000a1c
-L000010:
-	bra.s	L000020
+Start:
+	bra.s	Start2
 
 L000012:
 	.dc.b	'Command2.03Hu',$00
-L000020:
+Start2:
 	DOS	_VERNUM
 	cmp.w	#$0332,d0
 	bcs.s	L000038
@@ -9300,4 +9300,4 @@ L007480:
 	.ds.b	2
 L007482:
 
-	.end	L000010
+	.end	Start
