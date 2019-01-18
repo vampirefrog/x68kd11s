@@ -6,7 +6,7 @@ else
 DIS_DEBUG=
 endif
 
-all: iplrom30.s iplromxv.s human.s process.s bind.s mxdrv17.s mxdrv16.s mopmdrv.s pcm8.s mxp.s mdxp.s
+all: iplrom30.s iplromxv.s human.s commando.s cmd.s process.s bind.s mxdrv17.s mxdrv16.s mopmdrv.s pcm8.s mxp.s mdxp.s
 
 translations: mxdrv17.en.s
 
