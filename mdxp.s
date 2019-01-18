@@ -7,9 +7,9 @@
 ;  Text size    00116c byte(s)
 ;  Data size    000000 byte(s)
 ;  Bss  size    000000 byte(s)
-;  202 Labels
+;  203 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmdxp.lab --overwrite mdxp.r mdxp.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gmdxp.lab --overwrite mdxp.r mdxp.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -89,7 +89,8 @@ L000118:
 	bra.s	L000160
 
 L00011e:
-	.dc.b	$10,$22,$10,$27
+	move.b	-(a2),d0
+	move.b	-(sp),d0
 L000122:
 	move.w	($1154,a6),d0
 	cmp.w	#$0002,d0
@@ -419,7 +420,7 @@ L000408:
 L00046a:
 	.dc.b	'Lß`',$00
 L00046e:
-	.dc.b	$61,$00,$03,$e8
+	bsr.w	L000858
 L000472:
 	st.b	($0025,a5)
 	movea.l	($115a,a6),a2
@@ -467,7 +468,7 @@ L000498:
 	jmp	($0002,a0)
 
 L0004fc:
-	.dc.b	$61,$00,$03,$5a
+	bsr.w	L000858
 L000500:
 	move.w	(L001164,pc),d1
 	or.w	(L001162,pc),d1
@@ -839,10 +840,17 @@ L000856:
 	rts
 
 L000858:
-	.dc.b	$0c,$38,$00,$03,$0c,$bc,$65,$12
-	.dc.b	$48,$e7,$e0,$00,$24,$2e,$13,$3a
-	.dc.b	$72,$04,$70,$ac,$4e,$4f,$4c,$df
-	.dc.b	$00,$07,$4e,$75
+	cmpi.b	#$03,($0cbc)
+	bcs.s	L000872
+	movem.l	d0-d2,-(sp)
+	move.l	($133a,a6),d2
+	moveq.l	#$04,d1
+	moveq.l	#$ac,d0
+	trap	#15
+	movem.l	(sp)+,d0-d2
+L000872:
+	rts
+
 L000874:
 	pea.l	($0000)
 	DOS	_MFREE

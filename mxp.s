@@ -9,7 +9,7 @@
 ;  Bss  size    004204 byte(s)
 ;  124 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmxp.lab --overwrite mxp.x mxp.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gmxp.lab --overwrite mxp.x mxp.s
 ;          DIS version 3.16
 ;=============================================
 

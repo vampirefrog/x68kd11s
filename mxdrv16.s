@@ -9,7 +9,7 @@
 ;  Bss  size    000698 byte(s)
 ;  356 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmxdrv16.lab --overwrite mxdrv16.x mxdrv16.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gmxdrv16.lab --overwrite mxdrv16.x mxdrv16.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -379,7 +379,9 @@ L000346:
 	rts
 
 L00034c:
-	.dc.b	$08,$c0,$00,$1f,$4e,$75
+	bset.l	#$1f,d0
+	rts
+
 L_STOP:
 	tst.b	(-$03f4,a5)
 	bne.w	L00026e

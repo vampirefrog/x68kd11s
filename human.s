@@ -7,9 +7,9 @@
 ;  Text size    00a890 byte(s)
 ;  Data size    0033ea byte(s)
 ;  Bss  size    000000 byte(s)
-;  2676 Labels
+;  2677 Labels
 ;
-;  Commandline dis  -b2 -h -m68030 --sp -q1 -B -M -p -o120 -ghuman.lab --overwrite human.sys human.s
+;  Commandline dis  -b2 -h -m68030 --sp -q1 -B -M -o120 -ghuman.lab --overwrite human.sys human.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -13307,9 +13307,9 @@ L00e752:
 	rts
 
 L00e762:
-	.dc.b	$20,$3c
-	.dc.l	L00e018
-	.dc.b	$4e,$75
+	move.l	#L00e018,d0
+	rts
+
 L00e76a:
 	move.l	($1c50),($1c24)
 L00e770:
@@ -17021,6 +17021,7 @@ L01098c:
 L010994:
 	jmp	(L010c1c)
 
+L01099a:
 	jmp	(L010a46)
 
 L0109a0:

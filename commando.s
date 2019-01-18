@@ -9,7 +9,7 @@
 ;  Bss  size    000fa2 byte(s)
 ;  1403 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gcommando.lab --overwrite commando.x commando.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gcommando.lab --overwrite commando.x commando.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -406,7 +406,7 @@ L0004ea:
 	rts
 
 L0004ec:
-	.dc.b	$61,$b4
+	bsr.s	L0004a2
 L0004ee:
 	move.l	#$0000af20,-(sp)
 	bsr.w	L002e1c
@@ -516,7 +516,8 @@ L000624:
 	bra.w	L001ca2
 
 L000632:
-	.dc.b	$60,$00,$00,$fe
+	bra.w	L000732
+
 L000636:
 	cmp.b	#$64,d0			;'d'
 	bne.s	L000646
@@ -1963,7 +1964,9 @@ L0015e8:
 	rts
 
 L0015f0:
-	.dc.b	$70,$ff,$4e,$75
+	moveq.l	#$ff,d0
+	rts
+
 L0015f4:
 	bsr.w	L001d3a
 	sub.b	#$41,d0			;'A'
@@ -2494,8 +2497,11 @@ L001b4c:
 	rts
 
 L001b58:
-	.dc.b	$3f,$3c,$00,$20,$ff,$02,$54,$8f
-	.dc.b	$4e,$75
+	move.w	#$0020,-(sp)		;' '
+	DOS	_PUTCHAR
+	addq.l	#2,sp
+	rts
+
 L001b62:
 	movem.l	d0-d2/a0-a1,-(sp)
 	bsr.s	L001b7c
@@ -9160,7 +9166,7 @@ L0064ae:
 L0064b2:
 	.dc.b	'uuji'
 L0064b6:
-	.dc.b	' Tan'
+	.dc.l	$2054616e
 L0064ba:
 	.dc.b	'aka',$00
 L0064be:

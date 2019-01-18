@@ -9,7 +9,7 @@
 ;  Bss  size    000000 byte(s)
 ;  3198 Labels
 ;
-;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0038 -q -p -B -M --exclude-fefunc-mac -Tiplrom30.tab -giplrom30.lab --overwrite iplrom30.dat iplrom30.s
+;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0038 -q -B -M --exclude-fefunc-mac -Tiplrom30.tab -giplrom30.lab --overwrite iplrom30.dat iplrom30.s
 ;          DIS version 3.16
 ;=============================================
 

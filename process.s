@@ -9,7 +9,7 @@
 ;  Bss  size    004404 byte(s)
 ;  106 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gprocess.lab --overwrite process.x process.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gprocess.lab --overwrite process.x process.s
 ;          DIS version 3.16
 ;=============================================
 

@@ -9,7 +9,7 @@
 ;  Bss  size    0086be byte(s)
 ;  511 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gmopmdrv.lab --overwrite mopmdrv.x mopmdrv.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gmopmdrv.lab --overwrite mopmdrv.x mopmdrv.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -1518,11 +1518,12 @@ L000e58:
 	rts
 
 L000e64:
-	.dc.b	$20,$11,$23,$c0
-	.dc.l	L005252
-	.dc.b	$70,$01,$23,$c0
-	.dc.l	L005256
-	.dc.b	$60,$00,$fd,$a0
+	move.l	(a1),d0
+	move.l	d0,(L005252)
+	moveq.l	#$01,d0
+	move.l	d0,(L005256)
+	bra.w	L000c16
+
 L000e78:
 	clr.l	(L005256)
 	bsr.w	L00160c
@@ -4521,9 +4522,9 @@ L00524a:
 L00524e:
 	.ds.b	4
 L005252:
-	.ds.b	4
+	.ds.l	1
 L005256:
-	.ds.b	4
+	.ds.l	1
 L00525a:
 	.ds.b	4
 L00525e:

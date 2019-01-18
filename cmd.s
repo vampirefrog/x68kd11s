@@ -9,7 +9,7 @@
 ;  Bss  size    001000 byte(s)
 ;  40 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -p -o120 -gcmd.lab --overwrite cmd.x cmd.s
+;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gcmd.lab --overwrite cmd.x cmd.s
 ;          DIS version 3.16
 ;=============================================
 
