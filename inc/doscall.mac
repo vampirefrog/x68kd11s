@@ -91,43 +91,46 @@ _NFILES	equ		$ff4f
 
 .ifdef		__HUMAN_V2__
 
-_SETPDB	equ		$ff50
-_GETPDB	equ		$ff51
-_SETENV	equ		$ff52
-_GETENV	equ		$ff53
+_SETPDB		equ		$ff50
+_GETPDB		equ		$ff51
+_SETENV		equ		$ff52
+_GETENV		equ		$ff53
 _VERIFYG	equ		$ff54
-_COMMON	equ		$ff55
-_RENAME	equ		$ff56
+_COMMON		equ		$ff55
+_RENAME		equ		$ff56
 _FILEDATE	equ		$ff57
 _MALLOC2	equ		$ff58
 _MAKETMP	equ		$ff5a
 _NEWFILE	equ		$ff5b
 _LOCK		equ		$ff5c
-_ASSIGN	equ		$ff5f
-_GETFCB	equ		$ff7c
+_ASSIGN		equ		$ff5f
+_GETFCB		equ		$ff7c
 _S_MALLOC	equ		$ff7d
 _S_MFREE	equ		$ff7e
 _S_PROCESS	equ		$ff7f
 
 .else
 
-_SETPDB	equ		$ff80
-_GETPDB	equ		$ff81
-_SETENV	equ		$ff82
-_GETENV	equ		$ff83
+_SETPDB		equ		$ff80
+_GETPDB		equ		$ff81
+_SETENV		equ		$ff82
+_GETENV		equ		$ff83
 _VERIFYG	equ		$ff84
-_COMMON	equ		$ff85
-_RENAME	equ		$ff86
+_COMMON		equ		$ff85
+_RENAME		equ		$ff86
 _FILEDATE	equ		$ff87
 _MALLOC2	equ		$ff88
 _MAKETMP	equ		$ff8a
 _NEWFILE	equ		$ff8b
 _LOCK		equ		$ff8c
-_ASSIGN	equ		$ff8f
-_GETFCB	equ		$ffac
+_ASSIGN		equ		$ff8f
+_FFLUSH_SET	equ		$ffaa
+_OS_PATCH	equ		$ffab
+_GETFCB		equ		$ffac
 _S_MALLOC	equ		$ffad
 _S_MFREE	equ		$ffae
 _S_PROCESS	equ		$ffaf
+
 
 .endif
 
@@ -138,10 +141,10 @@ _DISKRED	equ		$fff3
 _DISKWRT	equ		$fff4
 _INDOSFLG	equ		$fff5
 _SUPER_JSR	equ		$fff6
-_MEMCPY	equ		$fff7
+_MEMCPY		equ		$fff7
 _OPEN_PR	equ		$fff8
 _KILL_PR	equ		$fff9
-_GET_PR	equ		$fffa
+_GET_PR		equ		$fffa
 _SUSPEND_PR	equ		$fffb
 _SLEEP_PR	equ		$fffc
 _SEND_PR	equ		$fffd
