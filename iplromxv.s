@@ -9,7 +9,7 @@
 ;  Bss  size    000000 byte(s)
 ;  4751 Labels
 ;
-;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q -p --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite iplromxv.dat iplromxv.s
+;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q -p -B -M --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite iplromxv.dat iplromxv.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -41,8 +41,10 @@ Lfe000c:
 	move.l	#Lfe2d3e,($0046,a6)
 	move.l	#Lfe3c64,($0142,a6)
 	bra.s	Lfe006e
+
 Lfe0054:
 	bra.w	Lfe0146
+
 Lfe0058:
 	.dc.w	$4e48
 Lfe005a:
@@ -93,6 +95,7 @@ Lfe0146:
 	bsr.w	Lfe4ada
 	bsr.w	Lfe01f2
 	bra.s	Lfe0146
+
 Lfe016c:
 	rts
 
@@ -120,10 +123,11 @@ Lfe01f6:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe022c
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	bne.s	Lfe0208
 	addq.l	#1,a5
 	bra.s	Lfe01f6
+
 Lfe0208:
 	move.l	a5,($003e,a6)
 	addq.l	#1,a5
@@ -134,10 +138,11 @@ Lfe0208:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe022c
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	bne.s	Lfe022e
 	addq.l	#1,a5
 	bra.s	Lfe01f6
+
 Lfe022c:
 	rts
 
@@ -148,10 +153,12 @@ Lfe022e:
 	bsr.w	Lfe4bc8
 	bsr.w	Lfe4bb8
 	bra.w	Lfe0146
+
 Lfe0248:
 	lea.l	(Lfe026a),a0
 	bsr.w	Lfe4bc8
 	bra.w	Lfe0146
+
 Lfe0256:
 	.dc.b	'Command error at ',$0d,$0a,$00
 Lfe026a:
@@ -170,6 +177,7 @@ Lfe0290:
 	beq.s	Lfe0298
 	addq.l	#4,a0
 	bra.s	Lfe0286
+
 Lfe0298:
 	movea.l	(a0),a4
 	rts
@@ -183,12 +191,12 @@ Lfe029e:
 	pea.l	($0002,a6)
 Lfe02aa:
 	move.b	(a5),d0
-	cmp.b	#$2c,d0
+	cmp.b	#$2c,d0			;','
 	beq.s	Lfe02d4
 	cmpi.w	#$0001,($0000.w,a6)
 	bne.s	Lfe02da
 	bsr.w	Lfe4de2
-	cmp.b	#$4c,d0
+	cmp.b	#$4c,d0			;'L'
 	bne.s	Lfe02da
 	addq.l	#1,a5
 	bsr.w	Lfe4238
@@ -196,10 +204,12 @@ Lfe02aa:
 	add.l	($0002,a6),d6
 	subq.l	#1,d6
 	bra.s	Lfe02e0
+
 Lfe02d4:
 	movea.l	(a7),a0
 	move.l	(a0),d6
 	bra.s	Lfe02e0
+
 Lfe02da:
 	bsr.w	Lfe4238
 	bcs.s	Lfe0306
@@ -210,19 +220,20 @@ Lfe02e0:
 	move.l	a0,(a7)
 	cmpi.w	#$0008,($0000.w,a6)
 	bcc.s	Lfe0306
-	cmpi.b	#$2c,d0
+	cmpi.b	#$2c,d0			;','
 	beq.s	Lfe02fe
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bne.s	Lfe0306
 Lfe02fe:
 	addq.l	#1,a5
 	bsr.w	Lfe4cc2
 	bra.s	Lfe02aa
+
 Lfe0306:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe0316
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	bne.w	Lfe0248
 Lfe0316:
 	addq.l	#4,a7
@@ -256,24 +267,24 @@ Lfe033e:
 Lfe0346:
 	move.b	(a5),d0
 	beq.s	Lfe035e
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.s	Lfe035e
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lfe035c
-	cmp.b	#$39,d0
+	cmp.b	#$39,d0			;'9'
 	bls.s	Lfe03a4
 Lfe035c:
 	rts
 
 Lfe035e:
 	lea.l	($01b8,a6),a1
-	moveq.l	#$30,d2
+	moveq.l	#$30,d2			;'0'
 Lfe0364:
-	moveq.l	#$5a,d0
+	moveq.l	#$5a,d0			;'Z'
 	bsr.w	Lfe4b72
 	move.b	d2,d0
 	bsr.w	Lfe4b72
-	moveq.l	#$3a,d0
+	moveq.l	#$3a,d0			;':'
 	bsr.w	Lfe4b72
 	move.l	(a1)+,d1
 	bsr.w	Lfe4c22
@@ -283,19 +294,19 @@ Lfe0364:
 	bmi.s	Lfe0396
 	movea.l	d0,a0
 	bsr.w	Lfe4bc0
-	moveq.l	#$2e,d0
+	moveq.l	#$2e,d0			;'.'
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4bc8
 Lfe0396:
 	bsr.w	Lfe4bb8
 	addq.b	#1,d2
-	cmp.b	#$39,d2
+	cmp.b	#$39,d2			;'9'
 	bls.s	Lfe0364
 	rts
 
 Lfe03a4:
 	addq.l	#1,a5
-	cmpi.b	#$3d,(a5)
+	cmpi.b	#$3d,(a5)		;'='
 	bne.w	Lfe022e
 	addq.l	#1,a5
 	bsr.w	Lfe4cc2
@@ -315,13 +326,14 @@ Lfe03a4:
 Lfe03da:
 	move.w	#$0002,($016e,a6)
 	bsr.w	Lfe4cc2
-	cmpi.b	#$3f,d0
+	cmpi.b	#$3f,d0			;'?'
 	bne.s	Lfe03f2
 	move.w	#$0001,($016e,a6)
 	bra.s	Lfe0400
+
 Lfe03f2:
 	bsr.w	Lfe4de2
-	cmpi.b	#$50,d0
+	cmpi.b	#$50,d0			;'P'
 	bne.s	Lfe0402
 	clr.w	($016e,a6)
 Lfe0400:
@@ -336,16 +348,20 @@ Lfe0402:
 	move.w	d6,d0
 	bsr.w	Lfe4b72
 	bra.w	Lfe4bb8
+
 Lfe0420:
 	bsr.w	Lfe4bdc
 	bra.w	Lfe4bb8
+
 Lfe0428:
 	move.l	d6,d1
 	bsr.w	Lfe4c22
 	bra.w	Lfe4bb8
+
 Lfe0432:
 	lea.l	(Lfe043a,pc),a0
 	bra.w	Lfe4bc8
+
 Lfe043a:
 	.dc.b	'?',$0d,$0a,$00
 Lfe043e:
@@ -355,14 +371,15 @@ Lfe0440:
 	move.w	#$0001,($016e,a6)
 	bsr.w	Lfe4cc2
 	bsr.w	Lfe4de2
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	bne.s	Lfe045c
 	move.w	#$0002,($016e,a6)
 	bra.s	Lfe046c
+
 Lfe045c:
-	cmpi.b	#$57,d0
+	cmpi.b	#$57,d0			;'W'
 	beq.s	Lfe046c
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	bne.s	Lfe046e
 	clr.w	($016e,a6)
 Lfe046c:
@@ -409,14 +426,15 @@ Lfe04cc:
 	move.w	#$0001,($016e,a6)
 	bsr.w	Lfe4cc2
 	bsr.w	Lfe4de2
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	bne.s	Lfe04e8
 	move.w	#$0002,($016e,a6)
 	bra.s	Lfe04f8
+
 Lfe04e8:
-	cmpi.b	#$57,d0
+	cmpi.b	#$57,d0			;'W'
 	beq.s	Lfe04f8
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	bne.s	Lfe04fa
 	clr.w	($016e,a6)
 Lfe04f8:
@@ -507,11 +525,11 @@ Lfe05b0:
 	rts
 
 Lfe05be:
-	cmpi.b	#$2f,(a5)
+	cmpi.b	#$2f,(a5)		;'/'
 	bne.w	Lfe022e
 	move.b	($0001,a5),d0
 	bsr.w	Lfe4de2
-	cmp.b	#$4e,d0
+	cmp.b	#$4e,d0			;'N'
 	bne.w	Lfe022e
 	addq.l	#2,a5
 	bsr.w	Lfe4bb8
@@ -519,10 +537,11 @@ Lfe05be:
 	bsr.w	Lfe4bc8
 	bsr.w	Lfe4bd2
 	bsr.w	Lfe4de2
-	cmpi.b	#$4e,d0
+	cmpi.b	#$4e,d0			;'N'
 	bne.w	Lfe4bb8
 	bsr.w	Lfe4bb8
 	bra.w	Lfe0146
+
 Lfe05fe:
 	.dc.b	'Y/N ? ',$00,$00
 Lfe0606:
@@ -533,7 +552,7 @@ Lfe060c:
 	rts
 
 Lfe060e:
-	cmpi.b	#$2d,(a5)
+	cmpi.b	#$2d,(a5)		;'-'
 	bne.s	Lfe063a
 	addq.l	#1,a5
 	move.l	($0032,a6),($0002,a6)
@@ -546,6 +565,7 @@ Lfe060e:
 	add.l	($0032,a6),d7
 	move.l	d7,($0002,a6)
 	bra.s	Lfe0662
+
 Lfe063a:
 	move.l	($0032,a6),($0002,a6)
 	bsr.w	Lfe029e
@@ -554,11 +574,12 @@ Lfe063a:
 	bne.s	Lfe0662
 	tst.b	d0
 	beq.s	Lfe065a
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	bne.w	Lfe022e
 Lfe065a:
 	move.l	($0032,a6),($0002,a6)
 	bra.s	Lfe0678
+
 Lfe0662:
 	cmpi.w	#$0001,($0000.w,a6)
 	beq.s	Lfe0678
@@ -566,6 +587,7 @@ Lfe0662:
 	cmp.l	($0002,a6),d7
 	bcs.w	Lfe022e
 	bra.s	Lfe06b2
+
 Lfe0678:
 	move.w	#$0008,($001e,a6)
 	move.l	($0002,a6),d0
@@ -608,7 +630,7 @@ Lfe06ee:
 	tst.l	d0
 	bmi.s	Lfe0704
 	movea.l	d0,a0
-	move.b	#$2e,(a3)+
+	move.b	#$2e,(a3)+		;'.'
 Lfe06fe:
 	move.b	(a0)+,(a3)+
 	bne.s	Lfe06fe
@@ -623,7 +645,7 @@ Lfe0706:
 	bmi.s	Lfe0722
 	movea.l	d0,a0
 	bsr.w	Lfe4bc8
-	move.b	#$3a,d0
+	move.b	#$3a,d0			;':'
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4bb8
 Lfe0722:
@@ -674,10 +696,11 @@ Lfe07b2:
 	movea.l	($013a,a6),a7
 	movea.l	(a7),a5
 	move.w	(a5)+,d1
-	move.b	#$24,d0
+	move.b	#$24,d0			;'$'
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4c28
 	bra.s	Lfe076e
+
 Lfe07d2:
 	.dc.b	' undefined instruction ',$00
 Lfe07ea:
@@ -755,6 +778,7 @@ Lfe087a:
 Lfe0886:
 	bsr.s	Lfe086c
 	bra.s	Lfe0858
+
 Lfe088a:
 	movem.w	d5-d6,-(a7)
 	movea.l	#Lfe1544,a0
@@ -768,17 +792,19 @@ Lfe089e:
 	bne.s	Lfe089e
 	tst.w	d5
 	beq.s	Lfe08ca
-	move.b	#$2e,(-$0001,a3)
+	move.b	#$2e,(-$0001,a3)	;'.'
 	subq.w	#2,d5
 	beq.s	Lfe08b8
 	bcs.s	Lfe08be
-	move.b	#$6c,(a3)+
+	move.b	#$6c,(a3)+		;'l'
 	bra.s	Lfe08c2
+
 Lfe08b8:
-	move.b	#$77,(a3)+
+	move.b	#$77,(a3)+		;'w'
 	bra.s	Lfe08c2
+
 Lfe08be:
-	move.b	#$62,(a3)+
+	move.b	#$62,(a3)+		;'b'
 Lfe08c2:
 	clr.b	(a3)
 Lfe08c4:
@@ -788,10 +814,12 @@ Lfe08c4:
 Lfe08ca:
 	subq.l	#1,a3
 	bra.s	Lfe08c4
+
 Lfe08ce:
 	movea.l	#Lfe08da,a0
 	bsr.w	Lfe4bc8
 	bra.s	Lfe08c2
+
 Lfe08da:
 	.dc.b	'fatal error',$0d,$0a,$00
 Lfe08e8:
@@ -801,7 +829,7 @@ Lfe08e8:
 	rts
 
 Lfe08f2:
-	move.b	#$2c,(a3)+
+	move.b	#$2c,(a3)+		;','
 	bsr.s	Lfe08fc
 	clr.b	(a3)
 	rts
@@ -821,25 +849,26 @@ Lfe090a:
 	.dc.b	$00,$fe,$0a,$8c,$00,$fe,$0a,$ec
 	.dc.b	$00,$fe,$0b,$26,$16,$fc,$00,$44
 Lfe0942:
-	addi.b	#$30,d3
+	addi.b	#$30,d3			;'0'
 	move.b	d3,(a3)+
 	rts
 
 Lfe094a:
-	move.b	#$41,(a3)+
+	move.b	#$41,(a3)+		;'A'
 	bra.s	Lfe0942
+
 Lfe0950:
 	bsr.w	Lfe0b5c
 	bsr.w	Lfe0bb2
 Lfe0958:
-	move.b	#$28,(a3)+
+	move.b	#$28,(a3)+		;'('
 	bsr.s	Lfe094a
-	move.b	#$29,(a3)+
+	move.b	#$29,(a3)+		;')'
 	rts
 
 Lfe0964:
 	bsr.s	Lfe0950
-	move.b	#$2b,(a3)+
+	move.b	#$2b,(a3)+		;'+'
 	rts
 
 Lfe096c:
@@ -847,23 +876,24 @@ Lfe096c:
 	bsr.w	Lfe0b7c
 	sub.l	d1,d0
 	bsr.w	Lfe0bb2
-	move.b	#$2d,(a3)+
+	move.b	#$2d,(a3)+		;'-'
 	bra.s	Lfe0958
+
 Lfe0980:
 	bsr.w	Lfe0b5c
 	move.w	(a5),d1
 	ext.l	d1
 	add.l	d1,d0
 	bsr.w	Lfe0bb2
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	move.w	(a5),d1
 	bsr.w	Lfe4c62
 	move.w	(a5)+,d1
 	ext.l	d1
 	bsr.w	Lfe06ee
-	move.b	#$28,(a3)+
+	move.b	#$28,(a3)+		;'('
 	bsr.s	Lfe094a
-	move.b	#$29,(a3)+
+	move.b	#$29,(a3)+		;')'
 	rts
 
 Lfe09ac:
@@ -878,6 +908,7 @@ Lfe09ac:
 	beq.s	Lfe09cc
 	move.w	(a7)+,d3
 	bra.w	Lfe07b2
+
 Lfe09cc:
 	move.w	d1,d3
 	bclr.l	#$0f,d3
@@ -889,7 +920,7 @@ Lfe09cc:
 	addq.w	#1,d2
 Lfe09e0:
 	movem.w	d2-d3,-(a7)
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	move.l	d1,-(a7)
 	bsr.w	Lfe4c76
 	move.l	(a7)+,d1
@@ -897,17 +928,17 @@ Lfe09e0:
 	ext.l	d1
 	bsr.w	Lfe06ee
 	move.w	($0004,a7),d3
-	move.b	#$28,(a3)+
+	move.b	#$28,(a3)+		;'('
 	bsr.w	Lfe094a
-	move.b	#$2c,(a3)+
+	move.b	#$2c,(a3)+		;','
 	movem.w	(a7)+,d2-d3
 	bsr.w	Lfe08fc
 	btst.l	#$0b,d1
 	beq.s	Lfe0a1e
-	move.b	#$2e,(a3)+
-	move.b	#$6c,(a3)+
+	move.b	#$2e,(a3)+		;'.'
+	move.b	#$6c,(a3)+		;'l'
 Lfe0a1e:
-	move.b	#$29,(a3)+
+	move.b	#$29,(a3)+		;')'
 	addq.l	#2,a7
 	rts
 
@@ -916,10 +947,10 @@ Lfe0a26:
 	move.w	(a5),d0
 	bsr.w	Lfe0bb2
 	move.w	(a5)+,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c62
-	move.b	#$2e,(a3)+
-	move.b	#$77,(a3)+
+	move.b	#$2e,(a3)+		;'.'
+	move.b	#$77,(a3)+		;'w'
 	clr.l	d1
 	move.l	(-$0002,a5),d1
 	bsr.w	Lfe06ee
@@ -929,7 +960,7 @@ Lfe0a4c:
 	move.l	(a5),d0
 	bsr.w	Lfe0bb2
 	move.l	(a5)+,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	move.l	d1,-(a7)
 	bsr.w	Lfe4c5c
 	move.l	(a7)+,d1
@@ -943,11 +974,11 @@ Lfe0a66:
 	add.l	d1,d0
 	bsr.w	Lfe0bb2
 	move.w	(a5)+,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c62
 	movea.l	#Lfe0b57,a1
 	bsr.w	Lfe0b44
-	move.b	#$29,(a3)+
+	move.b	#$29,(a3)+		;')'
 	rts
 
 Lfe0a8c:
@@ -969,27 +1000,27 @@ Lfe0a8c:
 	addq.w	#1,d2
 Lfe0ab8:
 	movem.w	d2-d3,-(a7)
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c76
 	movea.l	#Lfe0b57,a1
 	bsr.s	Lfe0b44
 	movem.w	(a7)+,d2-d3
-	move.b	#$2c,(a3)+
+	move.b	#$2c,(a3)+		;','
 	bsr.w	Lfe08fc
 	btst.l	#$0b,d1
 	beq.s	Lfe0ae6
-	move.b	#$2e,(a3)+
-	move.b	#$6c,(a3)+
+	move.b	#$2e,(a3)+		;'.'
+	move.b	#$6c,(a3)+		;'l'
 Lfe0ae6:
-	move.b	#$29,(a3)+
+	move.b	#$29,(a3)+		;')'
 	rts
 
 Lfe0aec:
-	move.b	#$23,(a3)+
+	move.b	#$23,(a3)+		;'#'
 	cmpi.w	#$0001,d4
 	bne.s	Lfe0b02
 	move.w	(a5)+,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c76
 	rts
 
@@ -997,13 +1028,13 @@ Lfe0b02:
 	cmpi.w	#$0002,d4
 	bhi.s	Lfe0b14
 	move.w	(a5)+,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c62
 	rts
 
 Lfe0b14:
 	move.l	(a5),d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c5c
 	move.l	(a5)+,d1
 	bsr.w	Lfe06ee
@@ -1015,9 +1046,11 @@ Lfe0b26:
 	bcc.s	Lfe0b3e
 	movea.l	#Lfe0b4c,a1
 	bra.s	Lfe0b44
+
 Lfe0b36:
 	movea.l	#Lfe0b50,a1
 	bra.s	Lfe0b44
+
 Lfe0b3e:
 	movea.l	#Lfe0b53,a1
 Lfe0b44:
@@ -1081,24 +1114,25 @@ Lfe0bc0:
 	rts
 
 Lfe0bc2:
-	move.b	#$44,d0
+	move.b	#$44,d0			;'D'
 Lfe0bc6:
-	move.b	#$30,d1
+	move.b	#$30,d1			;'0'
 Lfe0bca:
 	ror.w	#1,d6
 	bcs.s	Lfe0bf0
 Lfe0bce:
 	addq.w	#1,d1
-	cmpi.b	#$38,d1
+	cmpi.b	#$38,d1			;'8'
 	bcs.s	Lfe0bca
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	beq.s	Lfe0be2
-	move.b	#$41,d0
+	move.b	#$41,d0			;'A'
 	bra.s	Lfe0bc6
+
 Lfe0be2:
 	moveq.l	#$03,d0
 Lfe0be4:
-	cmpi.b	#$2f,-(a3)
+	cmpi.b	#$2f,-(a3)		;'/'
 	dbne.w	d0,Lfe0be4
 	addq.l	#1,a3
 	rts
@@ -1108,29 +1142,32 @@ Lfe0bf0:
 	move.b	d1,(a3)+
 	btst.l	#$00,d6
 	bne.s	Lfe0c00
-	move.b	#$2f,(a3)+
+	move.b	#$2f,(a3)+		;'/'
 	bra.s	Lfe0bce
+
 Lfe0c00:
-	cmpi.b	#$37,d1
+	cmpi.b	#$37,d1			;'7'
 	bcc.s	Lfe0bce
-	move.b	#$2d,(a3)+
+	move.b	#$2d,(a3)+		;'-'
 	addq.w	#1,d1
 Lfe0c0c:
 	ror.w	#1,d6
 	btst.l	#$00,d6
 	beq.s	Lfe0c28
 	addq.w	#1,d1
-	cmpi.b	#$38,d1
+	cmpi.b	#$38,d1			;'8'
 	bcs.s	Lfe0c0c
 	move.b	d0,(a3)+
-	move.b	#$37,(a3)+
-	move.b	#$2f,(a3)+
+	move.b	#$37,(a3)+		;'7'
+	move.b	#$2f,(a3)+		;'/'
 	bra.s	Lfe0bce
+
 Lfe0c28:
 	move.b	d0,(a3)+
 	move.b	d1,(a3)+
-	move.b	#$2f,(a3)+
+	move.b	#$2f,(a3)+		;'/'
 	bra.s	Lfe0bce
+
 Lfe0c32:
 	moveq.l	#$0f,d1
 Lfe0c34:
@@ -1139,6 +1176,7 @@ Lfe0c34:
 	dbra.w	d1,Lfe0c34
 	move.w	d0,d6
 	bra.s	Lfe0bc2
+
 Lfe0c40:
 	move.w	d7,d1
 	lsr.w	#8,d1
@@ -1146,11 +1184,11 @@ Lfe0c40:
 	cmpi.w	#$0001,d1
 	bhi.s	Lfe0c5c
 	bne.s	Lfe0c56
-	move.b	#$66,(a3)+
+	move.b	#$66,(a3)+		;'f'
 	rts
 
 Lfe0c56:
-	move.b	#$74,(a3)+
+	move.b	#$74,(a3)+		;'t'
 	rts
 
 Lfe0c5c:
@@ -1257,6 +1295,7 @@ Lfe0d96:
 	bcc.w	Lfe07b2
 	moveq.l	#$0c,d2
 	bra.s	Lfe0db8
+
 Lfe0da8:
 	cmpi.w	#$0001,d2
 	beq.w	Lfe07b2
@@ -1297,6 +1336,7 @@ Lfe0df6:
 	bsr.w	Lfe07ea
 	bsr.w	Lfe08e8
 	bra.s	Lfe0dd8
+
 Lfe0e12:
 	moveq.l	#$0d,d6
 	bsr.w	Lfe088a
@@ -1310,10 +1350,11 @@ Lfe0e12:
 Lfe0e2c:
 	moveq.l	#$02,d5
 	bra.s	Lfe0df6
+
 Lfe0e30:
 	cmpi.w	#$4afc,d7
 	bne.s	Lfe0e42
-	moveq.l	#$48,d6
+	moveq.l	#$48,d6			;'H'
 	clr.w	d5
 	bsr.w	Lfe088a
 	clr.b	(a3)+
@@ -1383,10 +1424,10 @@ Lfe0ede:
 	moveq.l	#$18,d6
 	bsr.w	Lfe088a
 	move.b	#$09,(a3)+
-	move.b	#$23,(a3)+
+	move.b	#$23,(a3)+		;'#'
 	move.w	d7,d1
 	andi.w	#$000f,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c76
 	move.b	#$00,(a3)+
 	rts
@@ -1518,7 +1559,7 @@ Lfe100e:
 	rts
 
 Lfe102e:
-	moveq.l	#$20,d6
+	moveq.l	#$20,d6			;' '
 	move.w	d3,d5
 	addq.w	#1,d5
 	bsr.w	Lfe088a
@@ -1533,7 +1574,7 @@ Lfe1042:
 	cmpi.w	#$0001,d3
 	bhi.s	Lfe108c
 	beq.s	Lfe1066
-	moveq.l	#$21,d6
+	moveq.l	#$21,d6			;'!'
 	bsr.w	Lfe088a
 	bsr.w	Lfe087a
 	bsr.w	Lfe08e8
@@ -1543,7 +1584,7 @@ Lfe1066:
 	bsr.w	Lfe07ea
 	tst.w	d2
 	beq.s	Lfe1080
-	moveq.l	#$22,d6
+	moveq.l	#$22,d6			;'"'
 	bsr.w	Lfe088a
 	bsr.w	Lfe0828
 	moveq.l	#$01,d5
@@ -1551,7 +1592,7 @@ Lfe1066:
 	rts
 
 Lfe1080:
-	moveq.l	#$23,d6
+	moveq.l	#$23,d6			;'#'
 	bsr.w	Lfe088a
 	bsr.w	Lfe08e8
 	rts
@@ -1561,13 +1602,13 @@ Lfe108c:
 	bsr.w	Lfe07ea
 	tst.w	d2
 	bne.s	Lfe10a2
-	moveq.l	#$25,d6
+	moveq.l	#$25,d6			;'%'
 	bsr.w	Lfe088a
 	bsr.w	Lfe08e8
 	rts
 
 Lfe10a2:
-	moveq.l	#$24,d6
+	moveq.l	#$24,d6			;'$'
 	bsr.w	Lfe088a
 	move.w	(a5)+,d6
 	move.b	#$09,(a3)+
@@ -1587,7 +1628,7 @@ Lfe10c6:
 Lfe10d0:
 	cmpi.w	#$0003,d3
 	bne.s	Lfe10e6
-	moveq.l	#$27,d6
+	moveq.l	#$27,d6			;'''
 Lfe10d8:
 	bsr.w	Lfe088a
 	bsr.w	Lfe087a
@@ -1597,13 +1638,14 @@ Lfe10d8:
 Lfe10e6:
 	move.w	d3,d5
 	addq.w	#1,d5
-	moveq.l	#$26,d6
+	moveq.l	#$26,d6			;'&'
 	bra.s	Lfe10d8
+
 Lfe10ee:
 	cmpi.w	#$0002,d3
 	bcs.w	Lfe07b2
 	move.w	d3,d5
-	moveq.l	#$24,d6
+	moveq.l	#$24,d6			;'$'
 	bsr.w	Lfe088a
 	move.w	(a5)+,d6
 	bsr.w	Lfe07ea
@@ -1612,7 +1654,7 @@ Lfe10ee:
 	bsr.w	Lfe0828
 Lfe110e:
 	bsr.w	Lfe08e8
-	move.b	#$2c,(a3)+
+	move.b	#$2c,(a3)+		;','
 	bsr.w	Lfe0bc2
 	clr.b	(a3)+
 	rts
@@ -1624,16 +1666,16 @@ Lfe111e:
 	beq.s	Lfe116e
 	bsr.w	Lfe0808
 	bclr.l	#$02,d3
-	moveq.l	#$29,d6
+	moveq.l	#$29,d6			;')'
 	btst.l	#$08,d7
 	bne.s	Lfe113c
-	moveq.l	#$28,d6
+	moveq.l	#$28,d6			;'('
 Lfe113c:
 	move.w	d3,d5
 	addq.w	#1,d5
 	bsr.w	Lfe088a
 	move.b	#$09,(a3)+
-	move.b	#$23,(a3)+
+	move.b	#$23,(a3)+		;'#'
 	move.w	d2,d1
 	bne.s	Lfe1152
 	moveq.l	#$08,d1
@@ -1652,7 +1694,7 @@ Lfe116e:
 	bsr.w	Lfe07ea
 	cmpi.w	#$0001,d2
 	beq.s	Lfe118e
-	move.b	#$73,(a3)+
+	move.b	#$73,(a3)+		;'s'
 	bsr.w	Lfe0c40
 	bsr.w	Lfe087a
 	move.w	#$0001,d5
@@ -1660,42 +1702,46 @@ Lfe116e:
 	rts
 
 Lfe118e:
-	move.b	#$64,(a3)+
-	move.b	#$62,(a3)+
+	move.b	#$64,(a3)+		;'d'
+	move.b	#$62,(a3)+		;'b'
 	bsr.w	Lfe0c40
 	clr.w	d2
 	bsr.w	Lfe08e8
-	move.b	#$2c,(a3)+
+	move.b	#$2c,(a3)+		;','
 	move.w	(a5)+,d1
 	moveq.l	#$02,d0
 	bra.s	Lfe11f8
+
 Lfe11aa:
-	move.b	#$62,(a3)+
+	move.b	#$62,(a3)+		;'b'
 	move.w	d7,d1
 	andi.w	#$0f00,d1
 	bne.s	Lfe11c0
-	move.b	#$72,(a3)+
-	move.b	#$61,(a3)+
+	move.b	#$72,(a3)+		;'r'
+	move.b	#$61,(a3)+		;'a'
 	bra.s	Lfe11d4
+
 Lfe11c0:
 	cmpi.w	#$0100,d1
 	bne.s	Lfe11d0
-	move.b	#$73,(a3)+
-	move.b	#$72,(a3)+
+	move.b	#$73,(a3)+		;'s'
+	move.b	#$72,(a3)+		;'r'
 	bra.s	Lfe11d4
+
 Lfe11d0:
 	bsr.w	Lfe0c40
 Lfe11d4:
-	move.b	#$2e,(a3)+
+	move.b	#$2e,(a3)+		;'.'
 	tst.b	d7
 	bne.s	Lfe11ea
-	move.b	#$77,(a3)+
+	move.b	#$77,(a3)+		;'w'
 	move.b	#$09,(a3)+
 	move.w	(a5)+,d1
 	moveq.l	#$02,d0
 	bra.s	Lfe11f8
+
 Lfe11ea:
-	move.b	#$73,(a3)+
+	move.b	#$73,(a3)+		;'s'
 	move.b	#$09,(a3)+
 	move.w	d7,d1
 	ext.w	d1
@@ -1704,7 +1750,7 @@ Lfe11f8:
 	ext.l	d1
 	add.l	a5,d1
 	sub.l	d0,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	move.l	d1,-(a7)
 	bsr.w	Lfe4c5c
 	move.l	(a7)+,d1
@@ -1715,13 +1761,13 @@ Lfe11f8:
 Lfe1212:
 	btst.l	#$08,d7
 	bne.w	Lfe07b2
-	moveq.l	#$2a,d6
+	moveq.l	#$2a,d6			;'*'
 	clr.w	d5
 	bsr.w	Lfe088a
 	move.b	#$09,(a3)+
-	move.b	#$23,(a3)+
+	move.b	#$23,(a3)+		;'#'
 	move.w	d7,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c76
 	bsr.w	Lfe0808
 	move.w	d2,d3
@@ -1735,7 +1781,7 @@ Lfe1242:
 	andi.w	#$01f0,d1
 	cmpi.w	#$0100,d1
 	bne.s	Lfe128a
-	moveq.l	#$2b,d6
+	moveq.l	#$2b,d6			;'+'
 Lfe1252:
 	bsr.w	Lfe088a
 	btst.l	#$03,d7
@@ -1759,7 +1805,7 @@ Lfe1272:
 	rts
 
 Lfe128a:
-	moveq.l	#$2c,d6
+	moveq.l	#$2c,d6			;','
 Lfe128c:
 	bsr.w	Lfe0808
 	cmpi.w	#$0003,d3
@@ -1780,7 +1826,7 @@ Lfe12b2:
 	addq.w	#1,d6
 	cmpi.w	#$0007,d3
 	beq.s	Lfe1296
-	moveq.l	#$2e,d6
+	moveq.l	#$2e,d6			;'.'
 Lfe12bc:
 	move.w	d3,d5
 	addq.w	#1,d5
@@ -1806,7 +1852,7 @@ Lfe12e0:
 	rts
 
 Lfe12f8:
-	moveq.l	#$2f,d6
+	moveq.l	#$2f,d6			;'/'
 Lfe12fa:
 	move.w	d7,d1
 	andi.w	#$00c0,d1
@@ -1822,6 +1868,7 @@ Lfe12fa:
 	move.w	d3,d5
 	addq.w	#1,d5
 	bra.w	Lfe1252
+
 Lfe1324:
 	addq.w	#1,d6
 	moveq.l	#$02,d5
@@ -1872,10 +1919,10 @@ Lfe1386:
 	rts
 
 Lfe139e:
-	moveq.l	#$32,d6
+	moveq.l	#$32,d6			;'2'
 Lfe13a0:
 	move.w	d7,d1
-	move.b	#$24,(a3)+
+	move.b	#$24,(a3)+		;'$'
 	bsr.w	Lfe4c62
 	move.b	#$09,(a3)+
 	clr.w	d5
@@ -1891,19 +1938,22 @@ Lfe13b8:
 	beq.s	Lfe13da
 	move.w	d3,d5
 	addq.w	#1,d5
-	moveq.l	#$33,d6
+	moveq.l	#$33,d6			;'3'
 	move.w	d5,d4
 	bsr.w	Lfe088a
 	bra.s	Lfe1376
+
 Lfe13d6:
 	moveq.l	#$03,d5
 	bra.s	Lfe13dc
+
 Lfe13da:
 	moveq.l	#$02,d5
 Lfe13dc:
 	move.w	d5,d4
-	moveq.l	#$34,d6
+	moveq.l	#$34,d6			;'4'
 	bra.w	Lfe1330
+
 Lfe13e4:
 	bsr.w	Lfe0808
 	bclr.l	#$02,d3
@@ -1914,7 +1964,7 @@ Lfe13e4:
 	bsr.w	Lfe07ea
 	cmpi.w	#$0001,d2
 	bne.s	Lfe141a
-	moveq.l	#$35,d6
+	moveq.l	#$35,d6			;'5'
 	bsr.w	Lfe088a
 	moveq.l	#$03,d2
 	bsr.w	Lfe08e8
@@ -1928,7 +1978,7 @@ Lfe141a:
 	bsr.w	Lfe0808
 	move.w	d2,d3
 	clr.w	d2
-	moveq.l	#$36,d6
+	moveq.l	#$36,d6			;'6'
 	bsr.w	Lfe088a
 	bsr.w	Lfe08e8
 Lfe142c:
@@ -1940,24 +1990,25 @@ Lfe1436:
 	move.w	d7,d1
 	clr.w	d5
 	andi.w	#$01f8,d1
-	moveq.l	#$37,d6
+	moveq.l	#$37,d6			;'7'
 	cmpi.w	#$0188,d1
 	beq.s	Lfe1478
 	cmpi.w	#$0140,d1
 	beq.s	Lfe148a
 	cmpi.w	#$0148,d1
 	beq.s	Lfe149c
-	moveq.l	#$38,d6
+	moveq.l	#$38,d6			;'8'
 	bclr.l	#$03,d1
 	cmpi.w	#$0100,d1
 	beq.w	Lfe1252
 	bsr.w	Lfe0808
 	bclr.l	#$02,d3
-	moveq.l	#$39,d6
+	moveq.l	#$39,d6			;'9'
 	cmpi.w	#$0003,d3
 	beq.w	Lfe128c
-	moveq.l	#$3b,d6
+	moveq.l	#$3b,d6			;';'
 	bra.w	Lfe12bc
+
 Lfe1478:
 	bsr.w	Lfe088a
 	bsr.w	Lfe0808
@@ -1965,6 +2016,7 @@ Lfe1478:
 	clr.w	d2
 	bsr.w	Lfe08e8
 	bra.s	Lfe14ac
+
 Lfe148a:
 	bsr.w	Lfe088a
 	bsr.w	Lfe0808
@@ -1972,6 +2024,7 @@ Lfe148a:
 	clr.w	d2
 	bsr.w	Lfe08e8
 	bra.s	Lfe142c
+
 Lfe149c:
 	bsr.w	Lfe088a
 	bsr.w	Lfe0808
@@ -1984,11 +2037,12 @@ Lfe14ac:
 	rts
 
 Lfe14b6:
-	moveq.l	#$3c,d6
+	moveq.l	#$3c,d6			;'<'
 	bra.w	Lfe12fa
+
 Lfe14bc:
 	move.w	d7,d1
-	moveq.l	#$3f,d6
+	moveq.l	#$3f,d6			;'?'
 	andi.w	#$00c0,d1
 	cmpi.w	#$00c0,d1
 	beq.s	Lfe151e
@@ -2011,11 +2065,12 @@ Lfe14dc:
 	bne.s	Lfe14f8
 	moveq.l	#$08,d2
 Lfe14f8:
-	addi.b	#$30,d2
+	addi.b	#$30,d2			;'0'
 	move.b	#$09,(a3)+
-	move.b	#$23,(a3)+
+	move.b	#$23,(a3)+		;'#'
 	move.b	d2,(a3)+
 	bra.s	Lfe1510
+
 Lfe1508:
 	move.w	d2,d3
 	clr.w	d2
@@ -2042,8 +2097,9 @@ Lfe1530:
 	rts
 
 Lfe153e:
-	moveq.l	#$47,d6
+	moveq.l	#$47,d6			;'G'
 	bra.w	Lfe13a0
+
 Lfe1544:
 	.dc.b	$00,$62,$74,$73,$74,$00,$62,$63
 	.dc.b	$68,$67,$00,$62,$63,$6c,$72,$00
@@ -2106,6 +2162,7 @@ Lfe16ee:
 	move.l	a5,d1
 	bsr.w	Lfe4c22
 	bra.s	Lfe171a
+
 Lfe1700:
 	bsr.w	Lfe0724
 	clr.w	d1
@@ -2127,10 +2184,11 @@ Lfe171a:
 	bne.s	Lfe1740
 	move.l	a4,($0036,a6)
 	bra.s	Lfe16ee
+
 Lfe1734:
-	cmpi.b	#$2e,d0
+	cmpi.b	#$2e,d0			;'.'
 	beq.s	Lfe1740
-	cmpi.b	#$3b,d0
+	cmpi.b	#$3b,d0			;';'
 	bne.s	Lfe1746
 Lfe1740:
 	movea.l	($003e,a6),a5
@@ -2140,6 +2198,7 @@ Lfe1746:
 	movea.l	a0,a5
 	bsr.s	Lfe174c
 	bra.s	Lfe16ee
+
 Lfe174c:
 	move.l	a7,($0136,a6)
 	clr.l	($012a,a6)
@@ -2190,8 +2249,8 @@ Lfe179c:
 Lfe182c:
 	lea.l	($029e,a6),a0
 	movea.l	a0,a1
-	move.b	#$3f,(a1)+
-	move.b	#$3f,(a1)+
+	move.b	#$3f,(a1)+		;'?'
+	move.b	#$3f,(a1)+		;'?'
 	clr.b	(a1)+
 	bsr.w	Lfe4bc8
 	bsr.w	Lfe4bb8
@@ -2218,30 +2277,32 @@ Lfe186a:
 	cmpa.l	a1,a2
 	bls.s	Lfe182c
 	bra.s	Lfe1856
+
 Lfe1878:
 	clr.w	d5
-	cmpi.b	#$2e,(a0)+
+	cmpi.b	#$2e,(a0)+		;'.'
 	beq.s	Lfe1888
-	cmpi.b	#$20,-(a0)
+	cmpi.b	#$20,-(a0)		;' '
 	bhi.s	Lfe186a
 	bra.s	Lfe18b6
+
 Lfe1888:
 	addq.w	#1,d5
 	move.b	(a0),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$42,d0
+	cmpi.b	#$42,d0			;'B'
 	beq.s	Lfe18ac
-	cmpi.b	#$53,d0
-	beq.s	Lfe18ac
-	addq.w	#1,d5
-	cmpi.b	#$57,d0
+	cmpi.b	#$53,d0			;'S'
 	beq.s	Lfe18ac
 	addq.w	#1,d5
-	cmpi.b	#$4c,d0
+	cmpi.b	#$57,d0			;'W'
+	beq.s	Lfe18ac
+	addq.w	#1,d5
+	cmpi.b	#$4c,d0			;'L'
 	bne.s	Lfe182c
 Lfe18ac:
 	addq.l	#1,a0
-	cmpi.b	#$20,(a0)
+	cmpi.b	#$20,(a0)		;' '
 	bhi.w	Lfe182c
 Lfe18b6:
 	clr.w	d7
@@ -2299,48 +2360,49 @@ Lfe1918:
 Lfe1922:
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	beq.w	Lfe1aba
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	beq.w	Lfe1aba
-	cmpi.b	#$44,d0
+	cmpi.b	#$44,d0			;'D'
 	beq.w	Lfe1ab2
-	cmpi.b	#$28,d0
+	cmpi.b	#$28,d0			;'('
 	beq.w	Lfe1a20
-	cmpi.b	#$2d,d0
+	cmpi.b	#$2d,d0			;'-'
 	bne.s	Lfe1958
-	cmpi.b	#$28,($0001,a5)
+	cmpi.b	#$28,($0001,a5)		;'('
 	beq.w	Lfe1abe
 Lfe1958:
-	cmpi.b	#$23,d0
+	cmpi.b	#$23,d0			;'#'
 	beq.w	Lfe1ad6
 	movem.l	d2-d7,-(a7)
 	bsr.w	Lfe4226
 	bcs.w	Lfe182c
 	movem.l	(a7)+,d2-d7
 	bsr.w	Lfe4cc2
-	cmpi.b	#$28,d0
+	cmpi.b	#$28,d0			;'('
 	bne.w	Lfe1a86
 	addq.l	#1,a5
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	beq.s	Lfe19ac
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	beq.s	Lfe19ac
-	cmpi.b	#$50,d0
+	cmpi.b	#$50,d0			;'P'
 	bne.w	Lfe182c
 	move.b	($0001,a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$43,d0
+	cmpi.b	#$43,d0			;'C'
 	beq.w	Lfe1a3e
 	bra.w	Lfe182c
+
 Lfe19ac:
 	bsr.w	Lfe1b0e
 	bsr.w	Lfe4cc2
-	cmpi.b	#$29,d0
+	cmpi.b	#$29,d0			;')'
 	beq.s	Lfe1a1a
-	cmpi.b	#$2c,d0
+	cmpi.b	#$2c,d0			;','
 	bne.w	Lfe182c
 Lfe19c2:
 	addq.l	#1,a5
@@ -2348,26 +2410,26 @@ Lfe19c2:
 	move.w	d3,-(a7)
 	clr.w	d4
 	bsr.w	Lfe4de2
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	beq.s	Lfe1a10
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	beq.s	Lfe1a10
 	bsr.w	Lfe1ae8
 Lfe19e0:
-	cmpi.b	#$2e,(a5)
+	cmpi.b	#$2e,(a5)		;'.'
 	bne.s	Lfe1a00
 	addq.l	#1,a5
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$57,d0
+	cmpi.b	#$57,d0			;'W'
 	beq.s	Lfe1a00
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	bne.w	Lfe182c
 	bset.l	#$08,d4
 Lfe1a00:
 	or.w	d3,d4
 	move.w	(a7)+,d3
-	cmpi.b	#$29,(a5)+
+	cmpi.b	#$29,(a5)+		;')'
 	bne.w	Lfe182c
 	moveq.l	#$06,d2
 	rts
@@ -2376,6 +2438,7 @@ Lfe1a10:
 	bsr.w	Lfe1b0e
 	bset.l	#$03,d4
 	bra.s	Lfe19e0
+
 Lfe1a1a:
 	addq.l	#1,a5
 	moveq.l	#$05,d2
@@ -2384,9 +2447,9 @@ Lfe1a1a:
 Lfe1a20:
 	addq.l	#1,a5
 	bsr.w	Lfe1b0e
-	cmpi.b	#$29,(a5)+
+	cmpi.b	#$29,(a5)+		;')'
 	bne.w	Lfe182c
-	cmpi.b	#$2b,(a5)
+	cmpi.b	#$2b,(a5)		;'+'
 	bne.s	Lfe1a3a
 	addq.l	#1,a5
 	moveq.l	#$03,d2
@@ -2399,9 +2462,9 @@ Lfe1a3a:
 Lfe1a3e:
 	addq.l	#2,a5
 	bsr.w	Lfe4cc2
-	cmpi.b	#$2c,d0
+	cmpi.b	#$2c,d0			;','
 	beq.s	Lfe1a6e
-	cmpi.b	#$29,(a5)+
+	cmpi.b	#$29,(a5)+		;')'
 	bne.w	Lfe182c
 Lfe1a52:
 	cmpi.l	#$00008000,d1
@@ -2427,18 +2490,19 @@ Lfe1a76:
 	sub.l	d0,d1
 	sub.l	($0036,a6),d1
 	bra.s	Lfe1a52
+
 Lfe1a86:
 	moveq.l	#$08,d2
-	cmpi.b	#$2e,(a5)
+	cmpi.b	#$2e,(a5)		;'.'
 	bne.s	Lfe1aac
 	addq.l	#1,a5
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	beq.s	Lfe1aac
-	cmpi.b	#$52,d0
+	cmpi.b	#$52,d0			;'R'
 	beq.s	Lfe1a76
-	cmpi.b	#$57,d0
+	cmpi.b	#$57,d0			;'W'
 	bne.w	Lfe182c
 	moveq.l	#$07,d2
 Lfe1aac:
@@ -2458,10 +2522,10 @@ Lfe1aba:
 
 Lfe1abe:
 	addq.l	#1,a5
-	cmpi.b	#$28,(a5)+
+	cmpi.b	#$28,(a5)+		;'('
 	bne.w	Lfe182c
 	bsr.s	Lfe1b0e
-	cmpi.b	#$29,(a5)+
+	cmpi.b	#$29,(a5)+		;')'
 	bne.w	Lfe182c
 	moveq.l	#$04,d2
 	rts
@@ -2477,13 +2541,13 @@ Lfe1ad6:
 Lfe1ae8:
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$44,d0
+	cmpi.b	#$44,d0			;'D'
 	bne.w	Lfe182c
 Lfe1af6:
 	clr.w	d3
 	clr.w	d2
 	move.b	(a5)+,d3
-	subi.b	#$30,d3
+	subi.b	#$30,d3			;'0'
 	bcs.w	Lfe182c
 	cmpi.b	#$07,d3
 	bhi.w	Lfe182c
@@ -2492,12 +2556,12 @@ Lfe1af6:
 Lfe1b0e:
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	bne.s	Lfe1b30
 	addq.l	#1,a5
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$50,d0
+	cmpi.b	#$50,d0			;'P'
 	bne.w	Lfe182c
 	moveq.l	#$07,d3
 	moveq.l	#$01,d2
@@ -2506,7 +2570,7 @@ Lfe1b0e:
 Lfe1b30:
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	bne.w	Lfe182c
 	bsr.s	Lfe1af6
 	moveq.l	#$01,d2
@@ -2569,11 +2633,13 @@ Lfe1bb8:
 Lfe1bba:
 	bsr.s	Lfe1b9c
 	bra.s	Lfe1b88
+
 Lfe1bbe:
 	bsr.s	Lfe1bfe
 Lfe1bc0:
 	bsr.s	Lfe1b48
 	bra.s	Lfe1ba0
+
 Lfe1bc4:
 	bsr.s	Lfe1bfe
 Lfe1bc6:
@@ -2608,7 +2674,7 @@ Lfe1bfc:
 
 Lfe1bfe:
 	bsr.w	Lfe4cc2
-	cmpi.b	#$2c,(a5)+
+	cmpi.b	#$2c,(a5)+		;','
 	bne.w	Lfe182c
 	rts
 
@@ -2674,6 +2740,7 @@ Lfe1c88:
 	cmpi.w	#$0002,d5
 	bhi.s	Lfe1c84
 	bra.s	Lfe1c80
+
 Lfe1c9a:
 	bne.s	Lfe1c9e
 	rts
@@ -2730,11 +2797,13 @@ Lfe1d00:
 	rts
 
 Lfe1d14:
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	bra.s	Lfe1d00
+
 Lfe1d18:
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 	bra.s	Lfe1d00
+
 Lfe1d1c:
 	movem.w	d0-d3,-(a7)
 	move.w	($012a,a6),-(a7)
@@ -2814,27 +2883,33 @@ Lfe1dd0:
 Lfe1dd4:
 	bsr.w	Lfe1b6c
 	bra.s	Lfe1dca
+
 Lfe1dda:
 	bsr.w	Lfe1bfe
 	bsr.w	Lfe1b84
 	bra.s	Lfe1dca
+
 Lfe1de4:
 	bsr.w	Lfe1bfe
 	bsr.w	Lfe1b9c
 	bra.s	Lfe1dca
+
 Lfe1dee:
 	bsr.w	Lfe1bfe
 Lfe1df2:
 	bsr.w	Lfe1bac
 	bra.s	Lfe1dca
+
 Lfe1df8:
 	bsr.w	Lfe1bfe
 	bsr.w	Lfe1bba
 	bra.s	Lfe1dca
+
 Lfe1e02:
 	bsr.w	Lfe1bfe
 	bsr.w	Lfe1bc0
 	bra.s	Lfe1dca
+
 Lfe1e0c:
 	bsr.w	Lfe18ce
 	bcs.s	Lfe1e40
@@ -2908,9 +2983,9 @@ Lfe1ec8:
 Lfe1edc:
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	beq.s	Lfe1eee
-	cmpi.b	#$44,d0
+	cmpi.b	#$44,d0			;'D'
 	bne.s	Lfe1f20
 Lfe1eee:
 	bsr.s	Lfe1f54
@@ -2951,9 +3026,9 @@ Lfe1f20:
 Lfe1f54:
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$44,d0
+	cmpi.b	#$44,d0			;'D'
 	beq.s	Lfe1f68
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	bne.w	Lfe182c
 Lfe1f68:
 	movem.l	d1-d5,-(a7)
@@ -2962,19 +3037,20 @@ Lfe1f68:
 Lfe1f70:
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$44,d0
+	cmpi.b	#$44,d0			;'D'
 	bne.s	Lfe1f82
 	bsr.w	Lfe1ae8
 	bra.s	Lfe1f86
+
 Lfe1f82:
 	bsr.w	Lfe1b0e
 Lfe1f86:
 	asl.w	#3,d2
 	add.w	d2,d3
 	bset.l	d3,d5
-	cmpi.b	#$2d,(a5)
+	cmpi.b	#$2d,(a5)		;'-'
 	beq.s	Lfe1fa4
-	cmpi.b	#$2f,(a5)+
+	cmpi.b	#$2f,(a5)+		;'/'
 	dbne.w	d4,Lfe1f70
 	subq.l	#1,a5
 Lfe1f9c:
@@ -2989,6 +3065,7 @@ Lfe1fa4:
 	bne.s	Lfe1fb6
 	bsr.w	Lfe1ae8
 	bra.s	Lfe1fba
+
 Lfe1fb6:
 	bsr.w	Lfe1b0e
 Lfe1fba:
@@ -3002,10 +3079,11 @@ Lfe1fc8:
 	addq.w	#1,d3
 	cmp.w	d3,d2
 	bcc.s	Lfe1fc8
-	cmpi.b	#$2f,(a5)+
+	cmpi.b	#$2f,(a5)+		;'/'
 	beq.s	Lfe1f70
 	subq.l	#1,a5
 	bra.s	Lfe1f9c
+
 Lfe1fda:
 	bsr.w	Lfe1bc6
 	tst.w	d1
@@ -3018,11 +3096,13 @@ Lfe1ff0:
 	move.w	d1,d3
 	bsr.w	Lfe1d6c
 	bra.w	Lfe1de4
+
 Lfe1ffa:
 	bsr.w	Lfe1bc6
 	bsr.w	Lfe1d6e
 	bsr.w	Lfe1c34
 	bra.w	Lfe1dee
+
 Lfe200a:
 	bsr.w	Lfe1918
 	tst.w	d2
@@ -3038,6 +3118,7 @@ Lfe2020:
 	cmp.w	(a7)+,d2
 	bne.w	Lfe182c
 	bra.w	Lfe1d4e
+
 Lfe2038:
 	bsr.w	Lfe1b6c
 Lfe203c:
@@ -3048,6 +3129,7 @@ Lfe2044:
 	bsr.w	Lfe1c34
 	bsr.w	Lfe1aae
 	bra.w	Lfe1d4e
+
 Lfe2050:
 	movem.l	d3/a5,-(a7)
 	bsr.w	Lfe1914
@@ -3057,10 +3139,12 @@ Lfe2050:
 	bsr.w	Lfe1d4e
 	bset.b	#$00,($012a,a6)
 	bra.w	Lfe1df8
+
 Lfe206e:
 	bsr.w	Lfe1bf0
 	moveq.l	#$01,d5
 	bra.s	Lfe200a
+
 Lfe2076:
 	bsr.w	Lfe1918
 	cmpi.w	#$0001,d2
@@ -3074,7 +3158,7 @@ Lfe2076:
 	bsr.w	Lfe1c34
 Lfe209a:
 	bsr.w	Lfe4cc2
-	cmpi.b	#$2c,(a5)
+	cmpi.b	#$2c,(a5)		;','
 	beq.w	Lfe182c
 	rts
 
@@ -3095,6 +3179,7 @@ Lfe20c6:
 	cmpi.w	#$0008,d3
 	bhi.w	Lfe182c
 	bra.s	Lfe20ae
+
 Lfe20d0:
 	bsr.w	Lfe1918
 	tst.w	d2
@@ -3112,10 +3197,12 @@ Lfe20f4:
 	tst.w	d2
 	beq.w	Lfe1bd4
 	bra.w	Lfe1bf0
+
 Lfe2102:
 	bsr.w	Lfe1d4e
 	bset.b	#$00,($012a,a6)
 	bra.s	Lfe20f4
+
 Lfe210e:
 	bsr.w	Lfe1bc6
 	bsr.w	Lfe1d6e
@@ -3129,27 +3216,32 @@ Lfe210e:
 	beq.w	Lfe1be2
 	bclr.b	#$06,($012b,a6)
 	bra.w	Lfe1bf0
+
 Lfe213e:
 	cmpi.w	#$0009,d2
 	bcc.w	Lfe182c
 	cmpi.w	#$0001,d2
 	beq.w	Lfe182c
 	bra.w	Lfe1c34
+
 Lfe2152:
 	bsr.w	Lfe1dd4
 	bsr.w	Lfe1aae
 	bsr.w	Lfe1d4e
 	bra.w	Lfe1be2
+
 Lfe2162:
 	bsr.w	Lfe1df2
 	bsr.w	Lfe1d6e
 	bra.w	Lfe209a
+
 Lfe216e:
 	bsr.w	Lfe1918
 	bsr.w	Lfe1c34
 	bsr.w	Lfe1d6e
 	bsr.w	Lfe1aae
 	bra.w	Lfe1d4e
+
 Lfe2182:
 	bsr.w	Lfe1918
 	cmpi.w	#$0003,d2
@@ -3161,12 +3253,14 @@ Lfe2182:
 	bne.w	Lfe182c
 	bsr.w	Lfe1d4e
 	bra.w	Lfe1d6e
+
 Lfe21a8:
 	bsr.w	Lfe1ab2
 	bsr.w	Lfe1d4e
 	bsr.w	Lfe1dee
 	bset.b	#$00,($012a,a6)
 	bra.w	Lfe1d6e
+
 Lfe21be:
 	bsr.w	Lfe1918
 	cmpi.w	#$0001,d2
@@ -3195,20 +3289,24 @@ Lfe21f4:
 Lfe2204:
 	move.b	d1,($012b,a6)
 	bra.w	Lfe1bd4
+
 Lfe220c:
 	bsr.w	Lfe1aba
 	or.b	d3,($012b,a6)
 Lfe2214:
 	bra.w	Lfe209a
+
 Lfe2218:
 	bsr.w	Lfe1dc6
 	bra.s	Lfe2214
+
 Lfe221e:
 	bsr.w	Lfe1dc6
 	bsr.w	Lfe1ab6
 	add.w	d3,d3
 	or.b	d3,($012a,a6)
 	bra.w	Lfe1bd4
+
 Lfe2230:
 	bsr.w	Lfe1aba
 	or.b	d3,($012b,a6)
@@ -3239,6 +3337,7 @@ Lfe2276:
 	bsr.w	Lfe1df2
 Lfe227e:
 	bra.w	Lfe209a
+
 Lfe2282:
 	bsr.w	Lfe1bc6
 	cmpi.l	#$0000007f,d1
@@ -3253,10 +3352,12 @@ Lfe229e:
 	bsr.w	Lfe1aae
 	bsr.w	Lfe1d4e
 	bra.w	Lfe1bd4
+
 Lfe22ae:
 	bsr.w	Lfe1bc6
 	move.w	d1,(a4)+
 	bra.s	Lfe227e
+
 Lfe22b6:
 	bsr.w	Lfe1ab2
 	or.b	d3,($012b,a6)
@@ -3264,6 +3365,7 @@ Lfe22b6:
 	beq.s	Lfe22cc
 	bsr.w	Lfe1be2
 	bra.s	Lfe227e
+
 Lfe22cc:
 	cmpi.w	#$0001,d5
 	beq.w	Lfe182c
@@ -3274,12 +3376,14 @@ Lfe22da:
 	asl.w	#6,d0
 	or.b	d0,($012b,a6)
 	bra.s	Lfe227e
+
 Lfe22e2:
 	bsr.w	Lfe1bc6
 	cmpi.w	#$000f,d1
 	bhi.w	Lfe182c
 	or.b	d1,($012b,a6)
 	bra.w	Lfe209a
+
 Lfe22f6:
 	bsr.w	Lfe1918
 	tst.w	d2
@@ -3307,9 +3411,11 @@ Lfe232e:
 	bne.w	Lfe182c
 	bsr.w	Lfe1c34
 	bra.s	Lfe2312
+
 Lfe234a:
 	bsr.w	Lfe1918
 	bra.w	Lfe203c
+
 Lfe2352:
 	cmpi.w	#$0001,d5
 	beq.w	Lfe182c
@@ -3380,10 +3486,12 @@ Lfe2402:
 	cmpi.w	#$0007,d2
 	bcs.w	Lfe182c
 	bra.s	Lfe23cc
+
 Lfe2414:
 	bsr.w	Lfe1bf0
 	bsr.w	Lfe1df2
 	bra.w	Lfe209a
+
 Lfe2420:
 	bsr.w	Lfe1918
 	tst.w	d2
@@ -3402,15 +3510,18 @@ Lfe2444:
 	tst.w	d2
 	beq.w	Lfe1bd4
 	bra.w	Lfe1bf0
+
 Lfe245a:
 	bsr.w	Lfe1d4e
 	bset.b	#$00,($012a,a6)
 	bsr.w	Lfe1914
 	bra.s	Lfe2444
+
 Lfe246a:
 	bsr.w	Lfe1bd4
 	bsr.w	Lfe1dc6
 	bra.w	Lfe209a
+
 Lfe2476:
 	movea.l	($0036,a6),a4
 	bsr.w	Lfe4cc2
@@ -3424,11 +3535,12 @@ Lfe2484:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe24a6
-	cmp.b	#$2c,d0
+	cmp.b	#$2c,d0			;','
 	bne.w	Lfe182c
 	addq.l	#1,a5
 	bsr.w	Lfe4cc2
 	bra.s	Lfe2484
+
 Lfe24a6:
 	move.l	a4,d0
 	addq.l	#1,d0
@@ -3438,9 +3550,9 @@ Lfe24a6:
 	rts
 
 Lfe24b8:
-	cmp.b	#$27,d0
+	cmp.b	#$27,d0			;'''
 	beq.s	Lfe24fa
-	cmp.b	#$22,d0
+	cmp.b	#$22,d0			;'"'
 	beq.s	Lfe24fa
 	bsr.w	Lfe4226
 	bcs.s	Lfe2516
@@ -3452,11 +3564,13 @@ Lfe24b8:
 	beq.s	Lfe24ea
 	move.l	d6,(a4)+
 	bra.s	Lfe24f4
+
 Lfe24de:
 	cmp.l	#$00000100,d6
 	bcc.s	Lfe2516
 	move.b	d6,(a4)+
 	bra.s	Lfe24f4
+
 Lfe24ea:
 	cmp.l	#$00010000,d6
 	bcc.s	Lfe2516
@@ -3602,7 +3716,7 @@ Lfe2521:
 Lfe2899:
 	.dc.b	$00,$4e,$75
 Lfe289c:
-	cmpi.b	#$3d,(a5)
+	cmpi.b	#$3d,(a5)		;'='
 	bne.s	Lfe28d4
 	addq.l	#1,a5
 	bsr.w	Lfe029e
@@ -3619,12 +3733,13 @@ Lfe28c6:
 	bne.s	Lfe290c
 	move.l	($0006,a6),d0
 	bra.s	Lfe28fe
+
 Lfe28d4:
 	bsr.w	Lfe029e
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe28e8
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	bne.w	Lfe022e
 Lfe28e8:
 	tst.w	($0000.w,a6)
@@ -3638,6 +3753,7 @@ Lfe28fe:
 	bne.w	Lfe022e
 	move.l	d0,($0120,a6)
 	bra.s	Lfe2912
+
 Lfe290c:
 	moveq.l	#$ff,d0
 	move.l	d0,($0120,a6)
@@ -3663,6 +3779,7 @@ Lfe2946:
 	lea.l	($000c,a0),a0
 	dbra.w	d1,Lfe293c
 	bra.s	Lfe2954
+
 Lfe2950:
 	subq.w	#1,($0006,a0)
 Lfe2954:
@@ -3684,10 +3801,11 @@ Lfe2954:
 Lfe2996:
 	clr.w	($0170,a6)
 	bra.s	Lfe29a2
+
 Lfe299c:
 	move.w	#$0001,($0170,a6)
 Lfe29a2:
-	cmpi.b	#$3d,(a5)
+	cmpi.b	#$3d,(a5)		;'='
 	bne.s	Lfe29d2
 	addq.l	#1,a5
 	move.l	($0096,a6),($0002,a6)
@@ -3700,6 +3818,7 @@ Lfe29a2:
 	move.l	($0006,a6),d0
 	move.l	d0,($004a,a6)
 	bra.s	Lfe2a08
+
 Lfe29d2:
 	bsr.w	Lfe029e
 	move.w	($0000.w,a6),d0
@@ -3708,11 +3827,12 @@ Lfe29dc:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe29ec
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	bne.w	Lfe022e
 Lfe29ec:
 	move.l	#$00000001,($004a,a6)
 	bra.s	Lfe2a08
+
 Lfe29f6:
 	move.l	($0002,a6),d1
 	cmp.w	#$0001,d0
@@ -3743,6 +3863,7 @@ Lfe2a46:
 	bne.s	Lfe2a2e
 	bsr.w	Lfe2fe8
 	bra.s	Lfe2a2e
+
 Lfe2a58:
 	lea.l	(Lfe2ec8,pc),a0
 	bsr.w	Lfe4bc8
@@ -3759,6 +3880,7 @@ Lfe2a6c:
 	move.l	($0096,a6),($0032,a6)
 	bsr.w	Lfe2fe8
 	bra.w	Lfe0146
+
 Lfe2a98:
 	move.l	($00000024).l,($0142,a6)
 	move.w	(Lfe0058),d0
@@ -3785,6 +3907,7 @@ Lfe2ae0:
 	bne.s	Lfe2af8
 	bsr.s	Lfe2ac0
 	bra.w	Lfe2d76
+
 Lfe2af8:
 	and.w	#$fff0,d0
 	cmp.w	(a0),d0
@@ -3838,15 +3961,15 @@ Lfe2b48:
 	bsr.w	Lfe4bc8
 	bsr.w	Lfe4c22
 	bsr.w	Lfe4bc0
-	move.b	#$28,d0
+	move.b	#$28,d0			;'('
 	bsr.w	Lfe4b72
 	move.w	(a4)+,d1
 	bsr.w	Lfe4c28
-	move.b	#$3b,d0
+	move.b	#$3b,d0			;';'
 	bsr.w	Lfe4b72
 	move.w	(a4)+,d1
 	bsr.w	Lfe4c28
-	move.b	#$29,d0
+	move.b	#$29,d0			;')'
 	bsr.w	Lfe4b72
 Lfe2bd6:
 	rts
@@ -3951,6 +4074,7 @@ Lfe2cf8:
 	lea.l	($000c,a0),a0
 	dbra.w	d1,Lfe2cee
 	bra.s	Lfe2d16
+
 Lfe2d02:
 	addq.w	#1,($0006,a0)
 	move.w	($0006,a0),d1
@@ -4010,6 +4134,7 @@ Lfe2d76:
 	bsr.w	Lfe2fe8
 	movea.l	($003e,a6),a5
 	bra.w	Lfe0146
+
 Lfe2db0:
 	bcc.w	Lfe2e9a
 	bsr.w	Lfe2bf6
@@ -4066,6 +4191,7 @@ Lfe2e3a:
 	bsr.w	Lfe4bb8
 	bsr.w	Lfe2fe8
 	bra.w	Lfe0146
+
 Lfe2e9a:
 	move.w	($0042,a6),sr
 	movea.l	($0136,a6),a7
@@ -4131,6 +4257,7 @@ Lfe2f62:
 	beq.s	Lfe2f6e
 	addq.l	#4,a0
 	bra.s	Lfe2f62
+
 Lfe2f6e:
 	movea.l	(a0),a1
 	jmp	(a1)
@@ -4148,6 +4275,7 @@ Lfe2f86:
 	tst.b	(a0)+
 	bne.s	Lfe2f86
 	bra.s	Lfe2f78
+
 Lfe2f8c:
 	lsl.w	#2,d1
 	movea.l	(Lfe2fd0,pc,d1.w),a1
@@ -4183,6 +4311,7 @@ Lfe2fe8:
 	beq.s	Lfe301e
 	bsr.w	Lfe4bb8
 	bra.s	Lfe3022
+
 Lfe301e:
 	bsr.w	Lfe4bc4
 Lfe3022:
@@ -4215,7 +4344,7 @@ Lfe3062:
 	bmi.s	Lfe3084
 	movea.l	d0,a0
 	bsr.w	Lfe4bc8
-	move.b	#$3a,d0
+	move.b	#$3a,d0			;':'
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4bb8
 Lfe3084:
@@ -4232,15 +4361,15 @@ Lfe3092:
 	beq.s	Lfe30c8
 	bsr.w	Lfe4bc0
 	bsr.w	Lfe4bc0
-	moveq.l	#$3b,d0
+	moveq.l	#$3b,d0			;';'
 	bsr.w	Lfe4b72
 	movea.l	($0200,a6),a0
 	move.l	a0,d1
 	bsr.w	Lfe4c22
-	move.w	#$0028,d0
+	move.w	#$0028,d0		;'('
 	bsr.w	Lfe4b72
 	bsr.s	Lfe30ca
-	move.w	#$0029,d0
+	move.w	#$0029,d0		;')'
 	bsr.w	Lfe4b72
 Lfe30c8:
 	rts
@@ -4257,16 +4386,19 @@ Lfe30ca:
 	beq.s	Lfe30f0
 	move.l	(a0),d1
 	bra.w	Lfe4c22
+
 Lfe30f0:
 	move.w	(a0),d1
 	bra.w	Lfe4c28
+
 Lfe30f6:
 	move.b	(a0),d1
 	bra.w	Lfe4c3c
+
 Lfe30fc:
-	moveq.l	#$3f,d0
+	moveq.l	#$3f,d0			;'?'
 	bsr.w	Lfe4b72
-	moveq.l	#$3f,d0
+	moveq.l	#$3f,d0			;'?'
 	bsr.w	Lfe4b72
 	rts
 
@@ -4333,6 +4465,7 @@ Lfe3174:
 	lea.l	(Lfe31ac,pc),a0
 Lfe318e:
 	bra.w	Lfe4bc8
+
 Lfe3192:
 	.dc.b	'Memory display mode ',$00
 Lfe31a7:
@@ -4342,14 +4475,15 @@ Lfe31ac:
 Lfe31b2:
 	moveq.l	#$08,d2
 	bra.s	Lfe31b8
+
 Lfe31b6:
 	clr.l	d2
 Lfe31b8:
 	addq.l	#1,a5
 	move.b	(a5),d0
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	bcs.w	Lfe022e
-	cmpi.b	#$38,d0
+	cmpi.b	#$38,d0			;'8'
 	bcc.w	Lfe022e
 	andi.w	#$0007,d0
 	move.w	d0,d3
@@ -4375,6 +4509,7 @@ Lfe31de:
 	tst.b	d0
 	beq.s	Lfe3228
 	bra.w	Lfe0432
+
 Lfe320e:
 	movea.l	(a7)+,a5
 Lfe3210:
@@ -4395,9 +4530,9 @@ Lfe322a:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe3258
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.s	Lfe3258
-	cmp.b	#$2c,d0
+	cmp.b	#$2c,d0			;','
 	bne.s	Lfe324a
 	addq.l	#1,a5
 	bsr.w	Lfe4cc2
@@ -4417,15 +4552,19 @@ Lfe3258:
 Lfe325e:
 	moveq.l	#$10,d3
 	bra.w	Lfe31de
+
 Lfe3264:
 	moveq.l	#$12,d3
 	bra.w	Lfe31de
+
 Lfe326a:
 	moveq.l	#$11,d3
 	bra.w	Lfe31de
+
 Lfe3270:
 	moveq.l	#$0f,d3
 	bra.w	Lfe31de
+
 Lfe3276:
 	moveq.l	#$0f,d3
 	btst.b	#$05,($00a0,a6)
@@ -4433,19 +4572,21 @@ Lfe3276:
 	moveq.l	#$11,d3
 Lfe3282:
 	bra.w	Lfe31de
+
 Lfe3286:
 	moveq.l	#$05,d1
 	movea.l	#Lfe32f8,a1
 	move.w	($00a0,a6),d2
 	lsl.b	#3,d2
 	bra.s	Lfe329e
+
 Lfe3296:
 	bsr.w	Lfe4bc4
 	bsr.w	Lfe4bc4
 Lfe329e:
 	move.b	(a1)+,d0
 	bsr.w	Lfe4b72
-	move.b	#$3a,d0
+	move.b	#$3a,d0			;':'
 	bsr.w	Lfe4b72
 	lsl.b	#1,d2
 	move.b	#$18,d0
@@ -4534,10 +4675,10 @@ Lfe3394:
 	cmp.b	#$0f,d3
 	beq.s	Lfe33de
 	bhi.s	Lfe33e4
-	move.b	#$44,d0
+	move.b	#$44,d0			;'D'
 	cmpi.b	#$08,d3
 	bcs.s	Lfe33b0
-	move.b	#$41,d0
+	move.b	#$41,d0			;'A'
 Lfe33b0:
 	bsr.w	Lfe4b72
 	move.b	d3,d0
@@ -4545,7 +4686,7 @@ Lfe33b0:
 	ori.b	#$30,d0
 	bsr.w	Lfe4b72
 Lfe33c2:
-	move.b	#$3a,d0
+	move.b	#$3a,d0			;':'
 	bsr.w	Lfe4b72
 	clr.w	d0
 	move.b	d3,d0
@@ -4558,6 +4699,7 @@ Lfe33c2:
 Lfe33de:
 	lea.l	(Lfe3414,pc),a0
 	bra.s	Lfe33fe
+
 Lfe33e4:
 	move.b	d3,d0
 	lea.l	(Lfe340a,pc),a0
@@ -4570,6 +4712,7 @@ Lfe33e4:
 Lfe33fe:
 	bsr.w	Lfe4bc8
 	bra.s	Lfe33c2
+
 Lfe3404:
 	bsr.w	Lfe3286
 	rts
@@ -4586,14 +4729,15 @@ Lfe3414:
 	move.w	#$0001,($016e,a6)
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	bne.s	Lfe3430
 	clr.w	($016e,a6)
 	bra.s	Lfe3442
+
 Lfe3430:
-	cmpi.b	#$57,d0
+	cmpi.b	#$57,d0			;'W'
 	beq.s	Lfe3442
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	bne.s	Lfe3444
 	move.w	#$0002,($016e,a6)
 Lfe3442:
@@ -4617,26 +4761,28 @@ Lfe3444:
 	subq.w	#1,d0
 	beq.w	Lfe360a
 	bra.w	Lfe3626
+
 Lfe3480:
 	bsr.w	Lfe4cc2
-	cmp.b	#$2c,d0
+	cmp.b	#$2c,d0			;','
 	bne.s	Lfe3490
 	move.l	($0002,a6),d6
 	bra.s	Lfe3498
+
 Lfe3490:
 	bsr.w	Lfe4238
 	bcs.w	Lfe0248
 Lfe3498:
 	move.l	d6,($0002,a6)
 	move.b	(a5)+,d0
-	cmp.b	#$2c,d0
+	cmp.b	#$2c,d0			;','
 	beq.s	Lfe34ac
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bne.w	Lfe0248
 Lfe34ac:
 	bsr.w	Lfe4cc2
 	bsr.w	Lfe4de2
-	cmp.b	#$4c,d0
+	cmp.b	#$4c,d0			;'L'
 	bne.s	Lfe34cc
 	addq.l	#1,a5
 	bsr.w	Lfe4238
@@ -4644,14 +4790,15 @@ Lfe34ac:
 	subq.l	#1,d6
 	add.l	($0002,a6),d6
 	bra.s	Lfe34d4
+
 Lfe34cc:
 	bsr.w	Lfe4238
 	bcs.w	Lfe0248
 Lfe34d4:
 	move.l	d6,($0006,a6)
-	cmpi.b	#$20,(a5)
+	cmpi.b	#$20,(a5)		;' '
 	beq.s	Lfe34e6
-	cmpi.b	#$2c,(a5)
+	cmpi.b	#$2c,(a5)		;','
 	bne.w	Lfe0248
 Lfe34e6:
 	bsr.w	Lfe4cc2
@@ -4663,7 +4810,7 @@ Lfe34e6:
 
 Lfe34fe:
 	bsr.w	Lfe4cc2
-	cmp.b	#$2c,d0
+	cmp.b	#$2c,d0			;','
 	bne.s	Lfe350e
 	addq.l	#1,a5
 	bsr.w	Lfe4cc2
@@ -4673,9 +4820,9 @@ Lfe350e:
 	clr.l	d3
 	tst.b	d0
 	beq.w	Lfe0248
-	cmp.b	#$27,d0
+	cmp.b	#$27,d0			;'''
 	beq.w	Lfe35a6
-	cmp.b	#$22,d0
+	cmp.b	#$22,d0			;'"'
 	beq.s	Lfe35a6
 	move.w	($016e,a6),d0
 	beq.s	Lfe3538
@@ -4683,6 +4830,7 @@ Lfe350e:
 	bhi.s	Lfe3538
 	beq.s	Lfe3588
 	bra.s	Lfe3560
+
 Lfe3538:
 	bsr.w	Lfe4238
 	bcs.w	Lfe0248
@@ -4745,6 +4893,7 @@ Lfe35b6:
 	cmp.w	#$0080,d7
 	bhi.s	Lfe35d2
 	bra.s	Lfe35b6
+
 Lfe35ce:
 	clr.b	(a1)
 	rts
@@ -4753,6 +4902,7 @@ Lfe35d2:
 	lea.l	(Lfe35de,pc),a0
 	bsr.w	Lfe4bc8
 	bra.w	Lfe0146
+
 Lfe35de:
 	.dc.b	'data too long',$0d,$0a,$00
 Lfe35ee:
@@ -4769,9 +4919,11 @@ Lfe35f8:
 Lfe3602:
 	addq.l	#1,d3
 	bra.s	Lfe35ee
+
 Lfe3606:
 	bsr.s	Lfe364e
 	bra.s	Lfe3602
+
 Lfe360a:
 	cmp.l	d4,d3
 	bhi.s	Lfe3642
@@ -4786,9 +4938,11 @@ Lfe3614:
 Lfe361e:
 	addq.l	#2,d3
 	bra.s	Lfe360a
+
 Lfe3622:
 	bsr.s	Lfe364e
 	bra.s	Lfe361e
+
 Lfe3626:
 	cmp.l	d4,d3
 	bhi.s	Lfe3642
@@ -4803,9 +4957,11 @@ Lfe3630:
 Lfe363a:
 	addq.l	#4,d3
 	bra.s	Lfe3626
+
 Lfe363e:
 	bsr.s	Lfe364e
 	bra.s	Lfe363a
+
 Lfe3642:
 	tst.w	($001e,a6)
 	beq.s	Lfe364c
@@ -4830,14 +4986,15 @@ Lfe3672:
 	lea.l	(Lfe367e,pc),a0
 	bsr.w	Lfe4bc8
 	bra.w	Lfe0146
+
 Lfe367e:
 	.dc.b	'size over',$0d,$0a,$00
 Lfe368a:
 	move.b	(a5),d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$49,d0
+	cmpi.b	#$49,d0			;'I'
 	beq.s	Lfe36ac
-	cmpi.b	#$43,d0
+	cmpi.b	#$43,d0			;'C'
 	bne.s	Lfe3700
 	addq.l	#1,a5
 	moveq.l	#$07,d7
@@ -5011,31 +5168,32 @@ Lfe3d64:
 	bsr.w	Lfe0724
 	movea.l	(a7)+,a4
 	bra.s	Lfe3d7a
+
 Lfe3d72:
 	lea.l	(Lfe3ee3,pc),a0
 	bsr.w	Lfe4bc8
 Lfe3d7a:
 	lea.l	(Lfe3ec0,pc),a0
 	bsr.w	Lfe4bc8
-	move.b	#$49,d0
+	move.b	#$49,d0			;'I'
 	btst.b	#$03,($0001,a4)
 	beq.s	Lfe3d92
-	move.b	#$4e,d0
+	move.b	#$4e,d0			;'N'
 Lfe3d92:
 	bsr.w	Lfe4b72
 	movea.l	#Lfe3ed8,a0
 	bsr.w	Lfe4bc8
-	move.b	#$52,d0
+	move.b	#$52,d0			;'R'
 	btst.b	#$04,($0001,a4)
 	bne.s	Lfe3db0
-	move.b	#$57,d0
+	move.b	#$57,d0			;'W'
 Lfe3db0:
 	bsr.w	Lfe4b72
 	movea.l	#Lfe3ede,a0
 	bsr.w	Lfe4bc8
 	move.b	($0001,a4),d0
 	andi.b	#$07,d0
-	addi.b	#$30,d0
+	addi.b	#$30,d0			;'0'
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4bb8
 	move.w	($01fc,a6),-(a7)
@@ -5047,6 +5205,7 @@ Lfe3de8:
 	bsr.w	Lfe3bc2
 	move.l	($0096,a6),($0032,a6)
 	bra.w	Lfe0146
+
 Lfe3df6:
 	move.l	a6,-(a7)
 	movea.l	#$00001000,a6
@@ -5073,6 +5232,7 @@ Lfe3df6:
 	bsr.w	Lfe3bc2
 	move.l	($0096,a6),($0032,a6)
 	bra.w	Lfe0146
+
 Lfe3e5a:
 	.dc.b	$00,$fe,$3b,$d8,$00,$fe,$3b,$e6
 	.dc.b	$00,$fe,$3b,$f8,$00,$fe,$3c,$12
@@ -5115,22 +5275,23 @@ Lfe3f1a:
 Lfe3f1e:
 	move.b	(a5),d0
 	beq.s	Lfe3f6e
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.s	Lfe3f6e
 	addq.l	#1,a5
-	cmp.b	#$2d,d0
+	cmp.b	#$2d,d0			;'-'
 	beq.w	Lfe40f4
 	bsr.w	Lfe4de2
-	cmp.b	#$43,d0
+	cmp.b	#$43,d0			;'C'
 	beq.w	Lfe40f4
-	cmp.b	#$45,d0
+	cmp.b	#$45,d0			;'E'
 	beq.w	Lfe4102
-	cmp.b	#$44,d0
+	cmp.b	#$44,d0			;'D'
 	beq.w	Lfe4106
-	cmp.b	#$52,d0
+	cmp.b	#$52,d0			;'R'
 	beq.s	Lfe3f5a
 	subq.l	#1,a5
 	bra.w	Lfe4024
+
 Lfe3f5a:
 	moveq.l	#$0a,d0
 	lea.l	($00a8,a6),a4
@@ -5153,28 +5314,28 @@ Lfe3f7e:
 Lfe3f88:
 	tst.w	($000a,a4)
 	bmi.s	Lfe4002
-	move.w	#$003a,d0
+	move.w	#$003a,d0		;':'
 	sub.w	($001e,a6),d0
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4bc4
-	move.b	#$64,d0
+	move.b	#$64,d0			;'d'
 	tst.w	($000a,a4)
 	beq.s	Lfe3fac
-	move.b	#$65,d0
+	move.b	#$65,d0			;'e'
 Lfe3fac:
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4bc4
 	move.l	(a4),d1
 	bsr.w	Lfe4c22
-	move.b	#$28,d0
+	move.b	#$28,d0			;'('
 	bsr.w	Lfe4b72
 	move.w	($0006,a4),d1
 	bsr.w	Lfe4c28
-	move.b	#$3b,d0
+	move.b	#$3b,d0			;';'
 	bsr.w	Lfe4b72
 	move.w	($0008,a4),d1
 	bsr.w	Lfe4c28
-	move.b	#$29,d0
+	move.b	#$29,d0			;')'
 	bsr.w	Lfe4b72
 	move.l	(a4),d0
 	bsr.w	Lfe3f1a
@@ -5182,7 +5343,7 @@ Lfe3fac:
 	bmi.s	Lfe3ffe
 	movea.l	d0,a0
 	bsr.w	Lfe4bc0
-	move.b	#$2e,d0
+	move.b	#$2e,d0			;'.'
 	bsr.w	Lfe4b72
 	bsr.w	Lfe4bc8
 Lfe3ffe:
@@ -5199,13 +5360,13 @@ Lfe4024:
 	moveq.l	#$ff,d1
 	clr.w	d0
 	move.b	(a5),d0
-	cmp.w	#$0020,d0
+	cmp.w	#$0020,d0		;' '
 	beq.s	Lfe4046
 	sub.w	#$0030,d0
 	cmp.w	#$000a,d0
 	bcc.s	Lfe4046
 	addq.l	#1,a5
-	cmpi.b	#$20,(a5)
+	cmpi.b	#$20,(a5)		;' '
 	bne.w	Lfe41be
 	move.w	d0,d1
 Lfe4046:
@@ -5281,9 +5442,11 @@ Lfe40f4:
 Lfe40fe:
 	moveq.l	#$ff,d1
 	bra.s	Lfe4150
+
 Lfe4102:
 	moveq.l	#$01,d1
 	bra.s	Lfe4108
+
 Lfe4106:
 	moveq.l	#$00,d1
 Lfe4108:
@@ -5292,14 +5455,15 @@ Lfe410c:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe416c
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.s	Lfe416c
-	cmp.b	#$2a,d0
+	cmp.b	#$2a,d0			;'*'
 	beq.s	Lfe414e
-	cmp.b	#$2c,d0
+	cmp.b	#$2c,d0			;','
 	bne.s	Lfe412a
 	addq.l	#1,a5
 	bra.s	Lfe410c
+
 Lfe412a:
 	move.w	d1,-(a7)
 	bsr.w	Lfe4238
@@ -5312,6 +5476,7 @@ Lfe412a:
 	cmpi.w	#$0008,($0000.w,a6)
 	bcs.s	Lfe410c
 	bra.s	Lfe416c
+
 Lfe414e:
 	addq.l	#1,a5
 Lfe4150:
@@ -5360,14 +5525,17 @@ Lfe41ae:
 Lfe41b8:
 	lea.l	(Lfe4210,pc),a0
 	bra.s	Lfe41c8
+
 Lfe41be:
 	lea.l	(Lfe41d0,pc),a0
 	bra.s	Lfe41c8
+
 Lfe41c4:
 	lea.l	(Lfe41ee,pc),a0
 Lfe41c8:
 	bsr.w	Lfe4bc8
 	bra.w	Lfe0146
+
 Lfe41d0:
 	.dc.b	'Bad breakpoint number (0-9)',$0d,$0a,$00
 Lfe41ee:
@@ -5386,11 +5554,11 @@ Lfe4238:
 Lfe423c:
 	bsr.s	Lfe4294
 	bcs.s	Lfe4292
-	cmpi.b	#$5e,d0
+	cmpi.b	#$5e,d0			;'^'
 	beq.s	Lfe4252
-	cmpi.b	#$7c,d0
+	cmpi.b	#$7c,d0			;'|'
 	beq.s	Lfe4252
-	cmpi.b	#$26,d0
+	cmpi.b	#$26,d0			;'&'
 	bne.s	Lfe4290
 Lfe4252:
 	move.w	d0,-(a7)
@@ -5401,28 +5569,31 @@ Lfe4254:
 	bcs.w	Lfe46f2
 	move.l	(a7)+,d5
 	move.w	(a7)+,d0
-	cmpi.b	#$5e,d0
+	cmpi.b	#$5e,d0			;'^'
 	bne.s	Lfe426c
 	eor.l	d5,d6
 	bra.s	Lfe4278
+
 Lfe426c:
-	cmpi.b	#$26,d0
+	cmpi.b	#$26,d0			;'&'
 	bne.s	Lfe4276
 	and.l	d5,d6
 	bra.s	Lfe4278
+
 Lfe4276:
 	or.l	d5,d6
 Lfe4278:
 	move.b	(a5),d0
-	cmpi.b	#$5e,d0
+	cmpi.b	#$5e,d0			;'^'
 	beq.s	Lfe428c
-	cmpi.b	#$26,d0
+	cmpi.b	#$26,d0			;'&'
 	beq.s	Lfe428c
-	cmpi.b	#$7c,d0
+	cmpi.b	#$7c,d0			;'|'
 	bne.s	Lfe4290
 Lfe428c:
 	move.w	d0,-(a7)
 	bra.s	Lfe4254
+
 Lfe4290:
 	tst.w	d0
 Lfe4292:
@@ -5433,9 +5604,9 @@ Lfe4294:
 	bcs.s	Lfe42a8
 Lfe4298:
 	move.b	(a5)+,d0
-	cmpi.b	#$2b,d0
+	cmpi.b	#$2b,d0			;'+'
 	beq.s	Lfe42aa
-	cmpi.b	#$2d,d0
+	cmpi.b	#$2d,d0			;'-'
 	beq.s	Lfe42ba
 	move.b	-(a5),d0
 Lfe42a8:
@@ -5448,6 +5619,7 @@ Lfe42aa:
 	bcs.w	Lfe46f2
 	add.l	(a7)+,d6
 	bra.s	Lfe4298
+
 Lfe42ba:
 	bsr.w	Lfe4cc2
 	move.l	d6,-(a7)
@@ -5457,16 +5629,17 @@ Lfe42ba:
 	sub.l	d6,d5
 	move.l	d5,d6
 	bra.s	Lfe4298
+
 Lfe42ce:
 	bsr.s	Lfe4332
 	bcs.s	Lfe42e8
 Lfe42d2:
 	move.b	(a5)+,d0
-	cmpi.b	#$2a,d0
+	cmpi.b	#$2a,d0			;'*'
 	beq.s	Lfe42ea
-	cmpi.b	#$2f,d0
+	cmpi.b	#$2f,d0			;'/'
 	beq.s	Lfe4302
-	cmpi.b	#$25,d0
+	cmpi.b	#$25,d0			;'%'
 	beq.s	Lfe431a
 	move.b	-(a5),d0
 Lfe42e8:
@@ -5482,6 +5655,7 @@ Lfe42ea:
 	bsr.w	Lfe45fc
 	move.l	d3,d6
 	bra.s	Lfe42d2
+
 Lfe4302:
 	bsr.w	Lfe4cc2
 	move.l	d6,-(a7)
@@ -5492,6 +5666,7 @@ Lfe4302:
 	bsr.w	Lfe464a
 	move.l	d3,d6
 	bra.s	Lfe42d2
+
 Lfe431a:
 	bsr.w	Lfe4cc2
 	move.l	d6,-(a7)
@@ -5502,14 +5677,15 @@ Lfe431a:
 	bsr.w	Lfe464a
 	move.l	d5,d6
 	bra.s	Lfe42d2
+
 Lfe4332:
 	bsr.w	Lfe4cc2
 	beq.s	Lfe436c
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	beq.s	Lfe436c
-	cmpi.b	#$2d,d0
+	cmpi.b	#$2d,d0			;'-'
 	beq.s	Lfe435a
-	cmpi.b	#$21,d0
+	cmpi.b	#$21,d0			;'!'
 	bne.s	Lfe4372
 	addq.l	#1,a5
 	bsr.w	Lfe4cc2
@@ -5532,25 +5708,25 @@ Lfe436c:
 	rts
 
 Lfe4372:
-	cmpi.b	#$28,d0
+	cmpi.b	#$28,d0			;'('
 	beq.w	Lfe452e
-	cmpi.b	#$22,d0
+	cmpi.b	#$22,d0			;'"'
 	beq.w	Lfe456e
-	cmpi.b	#$27,d0
+	cmpi.b	#$27,d0			;'''
 	beq.w	Lfe456e
 	tst.b	d0
 	beq.s	Lfe43e2
-	cmpi.b	#$5f,d0
+	cmpi.b	#$5f,d0			;'_'
 	beq.w	Lfe45ce
-	cmpi.b	#$24,d0
+	cmpi.b	#$24,d0			;'$'
 	beq.s	Lfe43b6
 	tst.w	($0172,a6)
 	beq.s	Lfe43c8
 	bsr.w	Lfe4d10
 	bcc.w	Lfe4590
-	cmpi.b	#$2e,d0
+	cmpi.b	#$2e,d0			;'.'
 	beq.s	Lfe43e8
-	cmpi.b	#$24,d0
+	cmpi.b	#$24,d0			;'$'
 	bne.s	Lfe43e2
 Lfe43b6:
 	addq.l	#1,a5
@@ -5561,9 +5737,9 @@ Lfe43b6:
 	rts
 
 Lfe43c8:
-	cmpi.b	#$2e,d0
+	cmpi.b	#$2e,d0			;'.'
 	beq.s	Lfe43e8
-	cmpi.b	#$5c,d0
+	cmpi.b	#$5c,d0			;'\'
 	beq.w	Lfe458e
 	bsr.w	Lfe4ce4
 	bcs.s	Lfe43e2
@@ -5606,28 +5782,30 @@ Lfe4426:
 Lfe442c:
 	move.b	(a0),d0
 	bsr.w	Lfe4de2
-	cmp.b	#$41,d0
+	cmp.b	#$41,d0			;'A'
 	beq.s	Lfe4488
-	cmp.b	#$44,d0
+	cmp.b	#$44,d0			;'D'
 	beq.s	Lfe44a0
-	cmp.b	#$50,d0
+	cmp.b	#$50,d0			;'P'
 	beq.s	Lfe4454
-	cmp.b	#$53,d0
+	cmp.b	#$53,d0			;'S'
 	beq.s	Lfe4468
-	cmp.b	#$5a,d0
+	cmp.b	#$5a,d0			;'Z'
 	beq.w	Lfe450c
 	bra.s	Lfe4426
+
 Lfe4454:
 	move.b	($0001,a0),d0
 	bsr.w	Lfe4de2
-	cmp.b	#$43,d0
+	cmp.b	#$43,d0			;'C'
 	bne.s	Lfe4426
 	move.l	($0096,a6),d0
 	bra.s	Lfe44c0
+
 Lfe4468:
 	move.b	($0001,a0),d0
 	bsr.w	Lfe4de2
-	cmp.b	#$50,d0
+	cmp.b	#$50,d0			;'P'
 	bne.s	Lfe4426
 Lfe4476:
 	move.l	($0092,a6),d0
@@ -5635,20 +5813,22 @@ Lfe4476:
 	bne.s	Lfe44c0
 	move.l	($009a,a6),d0
 	bra.s	Lfe44c0
+
 Lfe4488:
 	clr.l	d0
 	move.b	($0001,a0),d0
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	bcs.s	Lfe4426
 	cmp.b	#$07,d0
 	beq.s	Lfe4476
 	bhi.s	Lfe4426
 	addq.l	#8,d0
 	bra.s	Lfe44b6
+
 Lfe44a0:
 	clr.l	d0
 	move.b	($0001,a0),d0
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	bcs.w	Lfe4426
 	cmp.b	#$08,d0
 	bcc.w	Lfe4426
@@ -5663,29 +5843,30 @@ Lfe44c0:
 Lfe44c6:
 	move.b	(a0),d0
 	bsr.w	Lfe4de2
-	cmp.b	#$55,d0
+	cmp.b	#$55,d0			;'U'
 	beq.s	Lfe44da
-	cmp.b	#$53,d0
+	cmp.b	#$53,d0			;'S'
 	bne.w	Lfe4426
 Lfe44da:
 	move.w	d0,d1
 	move.b	($0001,a0),d0
 	bsr.w	Lfe4de2
-	cmp.b	#$53,d0
+	cmp.b	#$53,d0			;'S'
 	bne.w	Lfe4426
 	move.b	($0002,a0),d0
 	bsr.w	Lfe4de2
-	cmp.b	#$50,d0
+	cmp.b	#$50,d0			;'P'
 	bne.w	Lfe4426
 	move.l	($009a,a6),d0
-	cmp.b	#$55,d1
+	cmp.b	#$55,d1			;'U'
 	beq.s	Lfe44c0
 	move.l	($0092,a6),d0
 	bra.s	Lfe44c0
+
 Lfe450c:
 	clr.l	d0
 	move.b	($0001,a0),d0
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	bcs.w	Lfe4426
 	cmp.b	#$0a,d0
 	bcc.w	Lfe4426
@@ -5693,6 +5874,7 @@ Lfe450c:
 	lea.l	($01b8,a6),a0
 	move.l	(a0,d0.w),d0
 	bra.s	Lfe44c0
+
 Lfe452e:
 	tst.w	($0172,a6)
 	beq.s	Lfe4556
@@ -5701,10 +5883,11 @@ Lfe452e:
 	bsr.w	Lfe423c
 	bcs.s	Lfe454e
 	move.l	(a5)+,d0
-	cmpi.b	#$29,d0
+	cmpi.b	#$29,d0			;')'
 	bne.w	Lfe46f2
 	addq.l	#4,a7
 	bra.w	Lfe4cc2
+
 Lfe454e:
 	movea.l	(a7)+,a5
 	ori.b	#$01,ccr
@@ -5715,9 +5898,10 @@ Lfe4556:
 	bsr.w	Lfe423c
 	bcs.s	Lfe456c
 	move.b	(a5)+,d0
-	cmpi.b	#$29,d0
+	cmpi.b	#$29,d0			;')'
 	beq.w	Lfe4cc2
 	bra.w	Lfe46f2
+
 Lfe456c:
 	rts
 
@@ -5734,9 +5918,11 @@ Lfe4578:
 	lsl.l	#8,d6
 	move.b	d0,d6
 	bra.s	Lfe4578
+
 Lfe4588:
 	addq.l	#2,a7
 	bra.w	Lfe4cc2
+
 Lfe458e:
 	addq.l	#1,a5
 Lfe4590:
@@ -5744,27 +5930,31 @@ Lfe4590:
 	bcs.w	Lfe46f2
 	move.l	d1,d6
 	bra.w	Lfe4cc2
+
 Lfe459e:
 	clr.l	d6
 Lfe45a0:
 	move.b	(a5)+,d0
 	bsr.w	Lfe4ce4
 	bcs.s	Lfe45ca
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	bcs.s	Lfe45c0
-	cmpi.b	#$61,d0
+	cmpi.b	#$61,d0			;'a'
 	bcs.s	Lfe45ba
-	sub.b	#$57,d0
+	sub.b	#$57,d0			;'W'
 	bra.s	Lfe45c4
+
 Lfe45ba:
-	subi.b	#$37,d0
+	subi.b	#$37,d0			;'7'
 	bra.s	Lfe45c4
+
 Lfe45c0:
-	subi.b	#$30,d0
+	subi.b	#$30,d0			;'0'
 Lfe45c4:
 	lsl.l	#4,d6
 	or.b	d0,d6
 	bra.s	Lfe45a0
+
 Lfe45ca:
 	move.b	-(a5),d0
 	rts
@@ -5773,20 +5963,22 @@ Lfe45ce:
 	clr.l	d6
 	addq.l	#1,a5
 	move.b	(a5),d0
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	bcs.w	Lfe46f2
-	cmpi.b	#$31,d0
+	cmpi.b	#$31,d0			;'1'
 	bls.s	Lfe45e6
 	bra.w	Lfe46f2
+
 Lfe45e6:
 	move.b	(a5)+,d0
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	bcs.s	Lfe45ca
-	subi.b	#$31,d0
+	subi.b	#$31,d0			;'1'
 	bhi.s	Lfe45ca
 	eori.b	#$10,ccr
 	roxl.l	#1,d6
 	bra.s	Lfe45e6
+
 Lfe45fc:
 	move.l	#$00007fff,d0
 	cmp.l	d0,d3
@@ -5889,6 +6081,7 @@ Lfe4684:
 Lfe46a2:
 	swap.w	d7
 	bra.s	Lfe46a8
+
 Lfe46a6:
 	swap.w	d6
 Lfe46a8:
@@ -5914,6 +6107,7 @@ Lfe46be:
 	lsr.l	#1,d4
 	sub.l	d4,d7
 	bra.s	Lfe46be
+
 Lfe46cc:
 	rol.l	#1,d0
 	cmp.l	d4,d6
@@ -5921,6 +6115,7 @@ Lfe46cc:
 	lsr.l	#1,d4
 	add.l	d4,d7
 	bra.s	Lfe46be
+
 Lfe46d8:
 	move.l	d7,d5
 	bpl.s	Lfe46de
@@ -5935,6 +6130,7 @@ Lfe46e6:
 	lea.l	(Lfe4708,pc),a0
 	bsr.w	Lfe4bc8
 	bra.w	Lfe0146
+
 Lfe46f2:
 	lea.l	(Lfe471b,pc),a0
 	bsr.w	Lfe4bc8
@@ -5942,6 +6138,7 @@ Lfe46f2:
 	bsr.w	Lfe4bc8
 	bsr.w	Lfe4bb8
 	bra.w	Lfe0146
+
 Lfe4708:
 	.dc.b	'Expression error',$0d,$0a,$00
 Lfe471b:
@@ -5957,7 +6154,7 @@ Lfe473c:
 	move.l	d1,d4
 	asl.l	#2,d1
 	add.l	d4,d1
-	subi.b	#$30,d0
+	subi.b	#$30,d0			;'0'
 	ext.w	d0
 	ext.l	d0
 	add.l	d0,d1
@@ -5972,17 +6169,19 @@ Lfe475a:
 	move.w	#$0001,($016e,a6)
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	bne.s	Lfe4772
 	clr.w	($016e,a6)
 	bra.s	Lfe4788
+
 Lfe4772:
-	cmpi.b	#$57,d0
+	cmpi.b	#$57,d0			;'W'
 	beq.s	Lfe4788
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	bne.s	Lfe4786
 	move.w	#$0002,($016e,a6)
 	bra.s	Lfe4788
+
 Lfe4786:
 	move.b	-(a5),d0
 Lfe4788:
@@ -5996,6 +6195,7 @@ Lfe4798:
 	addi.l	#$0000007f,d0
 	move.l	d0,($0006,a6)
 	bra.s	Lfe47b8
+
 Lfe47ac:
 	move.l	($0002,a6),($002a,a6)
 	subq.w	#1,($0000.w,a6)
@@ -6063,6 +6263,7 @@ Lfe4844:
 Lfe4854:
 	bsr.w	Lfe4bb8
 	bra.w	Lfe47d0
+
 Lfe485c:
 	movea.l	a0,a2
 	adda.l	d5,a2
@@ -6082,34 +6283,34 @@ Lfe487c:
 	tst.w	($01e2,a6)
 	bne.s	Lfe4890
 	bsr.w	Lfe4bc4
-	cmpi.w	#$003c,($0022,a6)
+	cmpi.w	#$003c,($0022,a6)	;'<'
 	bcs.s	Lfe487c
 	rts
 
 Lfe4890:
 	bsr.w	Lfe4bc4
-	cmpi.w	#$0023,($0022,a6)
+	cmpi.w	#$0023,($0022,a6)	;'#'
 	bcs.s	Lfe4890
 	rts
 
 Lfe489e:
 	cmp.b	#$f6,d0
 	bcc.s	Lfe48aa
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcc.s	Lfe48ae
 Lfe48aa:
-	move.b	#$2e,d0
+	move.b	#$2e,d0			;'.'
 Lfe48ae:
 	bsr.w	Lfe4b72
 	rts
 
 Lfe48b4:
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcs.s	Lfe48c0
 	cmp.b	#$fc,d0
 	bls.s	Lfe48c4
 Lfe48c0:
-	move.b	#$2e,d0
+	move.b	#$2e,d0			;'.'
 Lfe48c4:
 	bsr.w	Lfe4b72
 	rts
@@ -6136,35 +6337,38 @@ Lfe48ee:
 	move.w	#$0001,($016e,a6)
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
-	cmpi.b	#$4e,d0
+	cmpi.b	#$4e,d0			;'N'
 	bne.s	Lfe4910
 	clr.w	($0170,a6)
 	move.b	(a5)+,d0
 	bsr.w	Lfe4de2
 Lfe4910:
-	cmpi.b	#$53,d0
+	cmpi.b	#$53,d0			;'S'
 	bne.s	Lfe491c
 	clr.w	($016e,a6)
 	bra.s	Lfe4940
+
 Lfe491c:
-	cmpi.b	#$57,d0
+	cmpi.b	#$57,d0			;'W'
 	beq.s	Lfe4940
-	cmpi.b	#$4c,d0
+	cmpi.b	#$4c,d0			;'L'
 	bne.s	Lfe4930
 	move.w	#$0002,($016e,a6)
 	bra.s	Lfe4940
+
 Lfe4930:
-	cmpi.b	#$50,d0
+	cmpi.b	#$50,d0			;'P'
 	bne.s	Lfe493e
 	move.w	#$0003,($016e,a6)
 	bra.s	Lfe4940
+
 Lfe493e:
 	move.b	-(a5),d0
 Lfe4940:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe4976
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.s	Lfe4976
 	bsr.w	Lfe4238
 	bcs.w	Lfe0248
@@ -6172,7 +6376,7 @@ Lfe4940:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe4976
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.s	Lfe4976
 	bsr.w	Lfe34fe
 	tst.w	d7
@@ -6205,10 +6409,12 @@ Lfe49ba:
 	move.b	(a2),d1
 	bsr.w	Lfe4c3c
 	bra.s	Lfe49d0
+
 Lfe49c2:
 	move.w	(a2),d1
 	bsr.w	Lfe4c28
 	bra.s	Lfe49d0
+
 Lfe49ca:
 	move.l	(a2),d1
 	bsr.w	Lfe4c22
@@ -6217,20 +6423,21 @@ Lfe49d0:
 Lfe49d4:
 	bsr.w	Lfe4abc
 	bsr.w	Lfe4cd4
-	cmpi.b	#$3b,d0
+	cmpi.b	#$3b,d0			;';'
 	beq.s	Lfe4a08
 	tst.b	d0
 	beq.s	Lfe4a42
-	cmp.b	#$5e,d0
+	cmp.b	#$5e,d0			;'^'
 	beq.s	Lfe4a60
-	cmpi.b	#$2d,d0
+	cmpi.b	#$2d,d0			;'-'
 	bne.s	Lfe49fc
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe4a60
 	bra.s	Lfe4a10
+
 Lfe49fc:
-	cmpi.b	#$2e,d0
+	cmpi.b	#$2e,d0			;'.'
 	bne.s	Lfe4a10
 	bsr.w	Lfe4cc2
 	bne.s	Lfe4a10
@@ -6245,6 +6452,7 @@ Lfe4a10:
 	bcc.s	Lfe4a22
 	bsr.w	Lfe0432
 	bra.w	Lfe4992
+
 Lfe4a22:
 	movea.l	($002e,a6),a2
 	cmpi.w	#$0003,($016e,a6)
@@ -6255,9 +6463,11 @@ Lfe4a22:
 Lfe4a38:
 	move.b	d6,(a2)+
 	bra.s	Lfe4a42
+
 Lfe4a3c:
 	move.w	d6,(a2)+
 	bra.s	Lfe4a42
+
 Lfe4a40:
 	move.l	d6,(a2)+
 Lfe4a42:
@@ -6267,6 +6477,7 @@ Lfe4a42:
 	bne.s	Lfe4a52
 	moveq.l	#$02,d0
 	bra.s	Lfe4a58
+
 Lfe4a52:
 	add.w	d0,d0
 	bne.s	Lfe4a58
@@ -6274,6 +6485,7 @@ Lfe4a52:
 Lfe4a58:
 	add.l	d0,($002e,a6)
 	bra.w	Lfe4992
+
 Lfe4a60:
 	clr.l	d0
 	move.w	($016e,a6),d0
@@ -6281,6 +6493,7 @@ Lfe4a60:
 	bne.s	Lfe4a70
 	moveq.l	#$02,d0
 	bra.s	Lfe4a76
+
 Lfe4a70:
 	add.w	d0,d0
 	bne.s	Lfe4a76
@@ -6288,6 +6501,7 @@ Lfe4a70:
 Lfe4a76:
 	sub.l	d0,($002e,a6)
 	bra.w	Lfe4992
+
 Lfe4a7e:
 	lea.l	($029e,a6),a1
 	movea.l	($002e,a6),a0
@@ -6318,8 +6532,9 @@ Lfe4aac:
 Lfe4ab4:
 	bsr.w	Lfe4bb8
 	bra.w	Lfe0146
+
 Lfe4abc:
-	move.b	#$3a,d0
+	move.b	#$3a,d0			;':'
 	bsr.w	Lfe4b72
 	bsr.s	Lfe4aca
 	movea.l	a0,a5
@@ -6334,7 +6549,7 @@ Lfe4aca:
 	rts
 
 Lfe4ada:
-	move.b	#$2b,d0
+	move.b	#$2b,d0			;'+'
 	bsr.w	Lfe4b72
 	lea.l	($0206,a6),a0
 	move.l	a0,d5
@@ -6365,15 +6580,17 @@ Lfe4b10:
 	cmpa.l	d5,a0
 	bls.s	Lfe4b30
 	bra.s	Lfe4af6
+
 Lfe4b20:
 	cmpi.b	#$15,d0
 	bne.s	Lfe4b32
 Lfe4b26:
-	move.b	#$23,d0
+	move.b	#$23,d0			;'#'
 	bsr.s	Lfe4b86
 	bsr.w	Lfe4bb8
 Lfe4b30:
 	bra.s	Lfe4af4
+
 Lfe4b32:
 	cmpi.b	#$12,d0
 	beq.s	Lfe4b50
@@ -6386,16 +6603,18 @@ Lfe4b32:
 	move.b	d0,(a0)+
 	bsr.s	Lfe4b86
 	bra.s	Lfe4af6
+
 Lfe4b50:
 	movea.l	d5,a1
 	bsr.s	Lfe4bb8
-	move.b	#$20,d0
+	move.b	#$20,d0			;' '
 	bsr.s	Lfe4b86
 	exg.l	a1,a0
 	clr.b	(a1)
 	bsr.s	Lfe4bc8
 	exg.l	a0,a1
 	bra.s	Lfe4af6
+
 Lfe4b64:
 	bsr.s	Lfe4bb8
 	clr.b	(a0)
@@ -6406,6 +6625,7 @@ Lfe4b6c:
 
 Lfe4b6e:
 	bra.w	Lfe4c9e
+
 Lfe4b72:
 	bsr.s	Lfe4b86
 	cmpi.b	#$03,d0
@@ -6420,6 +6640,7 @@ Lfe4b86:
 	bsr.w	Lfe4ca8
 	clr.w	($0022,a6)
 	bra.s	Lfe4ba4
+
 Lfe4b96:
 	cmpi.b	#$0a,d0
 	beq.s	Lfe4ba0
@@ -6442,17 +6663,21 @@ Lfe4bb8:
 	bsr.s	Lfe4b72
 	moveq.l	#$0a,d0
 	bra.s	Lfe4b72
+
 Lfe4bc0:
 	moveq.l	#$09,d0
 	bra.s	Lfe4b72
+
 Lfe4bc4:
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	bra.s	Lfe4b72
+
 Lfe4bc8:
 	move.b	(a0)+,d0
 	beq.s	Lfe4bd0
 	bsr.s	Lfe4b72
 	bra.s	Lfe4bc8
+
 Lfe4bd0:
 	rts
 
@@ -6480,11 +6705,12 @@ Lfe4be4:
 	bpl.s	Lfe4c02
 	subq.l	#1,d7
 	bsr.w	Lfe4664
-	addi.b	#$31,d5
+	addi.b	#$31,d5			;'1'
 	bra.s	Lfe4c0a
+
 Lfe4c02:
 	bsr.w	Lfe4664
-	addi.b	#$30,d5
+	addi.b	#$30,d5			;'0'
 Lfe4c0a:
 	move.b	d5,-(a0)
 	tst.l	d7
@@ -6493,7 +6719,7 @@ Lfe4c0a:
 	sub.b	d2,d0
 	tst.l	d3
 	bpl.s	Lfe4c20
-	move.b	#$2d,-(a0)
+	move.b	#$2d,-(a0)		;'-'
 	addq.w	#1,d0
 Lfe4c20:
 	rts
@@ -6523,7 +6749,7 @@ Lfe4c42:
 	blt.s	Lfe4c52
 	addi.b	#$07,d0
 Lfe4c52:
-	addi.b	#$30,d0
+	addi.b	#$30,d0			;'0'
 	bsr.w	Lfe4b72
 	rts
 
@@ -6552,7 +6778,7 @@ Lfe4c7c:
 	blt.s	Lfe4c8c
 	addi.b	#$07,d0
 Lfe4c8c:
-	addi.b	#$30,d0
+	addi.b	#$30,d0			;'0'
 	move.b	d0,(a3)+
 	rts
 
@@ -6586,7 +6812,7 @@ Lfe4cbe:
 
 Lfe4cc2:
 	move.b	(a5)+,d0
-	cmpi.b	#$20,d0
+	cmpi.b	#$20,d0			;' '
 	beq.s	Lfe4cc2
 	cmpi.b	#$09,d0
 	beq.s	Lfe4cc2
@@ -6595,7 +6821,7 @@ Lfe4cc2:
 
 Lfe4cd4:
 	move.b	(a5)+,d0
-	cmpi.b	#$20,d0
+	cmpi.b	#$20,d0			;' '
 	beq.s	Lfe4cd4
 	cmpi.b	#$09,d0
 	beq.s	Lfe4cd4
@@ -6603,26 +6829,26 @@ Lfe4cd4:
 
 Lfe4ce4:
 	bsr.w	Lfe4de2
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	bcs.s	Lfe4d0e
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	bcs.s	Lfe4d0a
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	bcs.s	Lfe4d0e
-	cmpi.b	#$47,d0
+	cmpi.b	#$47,d0			;'G'
 	bcs.s	Lfe4d0a
-	cmpi.b	#$61,d0
+	cmpi.b	#$61,d0			;'a'
 	bcs.s	Lfe4d0e
-	cmpi.b	#$67,d0
+	cmpi.b	#$67,d0			;'g'
 Lfe4d0a:
 	eori.b	#$01,ccr
 Lfe4d0e:
 	rts
 
 Lfe4d10:
-	cmpi.b	#$39,d0
+	cmpi.b	#$39,d0			;'9'
 	bhi.s	Lfe4d1c
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	rts
 
 Lfe4d1c:
@@ -6630,7 +6856,7 @@ Lfe4d1c:
 	rts
 
 Lfe4d22:
-	cmpi.b	#$20,d0
+	cmpi.b	#$20,d0			;' '
 	bcs.s	Lfe4d30
 	cmpi.b	#$7f,d0
 	eori.b	#$01,ccr
@@ -6638,22 +6864,22 @@ Lfe4d30:
 	rts
 
 Lfe4d32:
-	cmpi.b	#$30,d0
+	cmpi.b	#$30,d0			;'0'
 	bcs.s	Lfe4d66
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	bcs.s	Lfe4d62
-	cmpi.b	#$3f,d0
+	cmpi.b	#$3f,d0			;'?'
 	bls.s	Lfe4d66
-	cmpi.b	#$40,d0
+	cmpi.b	#$40,d0			;'@'
 	beq.s	Lfe4d66
-	cmpi.b	#$5a,d0
+	cmpi.b	#$5a,d0			;'Z'
 	bcs.s	Lfe4d62
-	cmp.b	#$5f,d0
+	cmp.b	#$5f,d0			;'_'
 	beq.s	Lfe4d62
 	bcs.s	Lfe4d66
-	cmp.b	#$60,d0
+	cmp.b	#$60,d0			;'`'
 	beq.s	Lfe4d66
-	cmp.b	#$7a,d0
+	cmp.b	#$7a,d0			;'z'
 Lfe4d62:
 	eori.b	#$01,ccr
 Lfe4d66:
@@ -6662,32 +6888,33 @@ Lfe4d66:
 Lfe4d68:
 	move.b	(a0),d0
 	beq.s	Lfe4dc8
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	beq.s	Lfe4da8
 Lfe4d72:
 	move.b	(a0),d0
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lfe4dc8
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	bcs.s	Lfe4da8
-	cmp.b	#$3f,d0
+	cmp.b	#$3f,d0			;'?'
 	bcs.s	Lfe4dc8
 	cmp.b	#$80,d0
 	bcc.s	Lfe4dae
-	cmp.b	#$5b,d0
+	cmp.b	#$5b,d0			;'['
 	bcs.s	Lfe4da8
 	beq.s	Lfe4dc8
-	cmp.b	#$5d,d0
+	cmp.b	#$5d,d0			;']'
 	beq.s	Lfe4dc8
-	cmp.b	#$7b,d0
+	cmp.b	#$7b,d0			;'{'
 	bcs.s	Lfe4da8
 	beq.s	Lfe4dc8
-	cmp.b	#$7d,d0
+	cmp.b	#$7d,d0			;'}'
 	bls.s	Lfe4dc8
 Lfe4da8:
 	addq.l	#1,a0
 	move.b	d0,(a1)+
 	bra.s	Lfe4d72
+
 Lfe4dae:
 	cmp.b	#$e0,d0
 	bcc.s	Lfe4dba
@@ -6697,7 +6924,7 @@ Lfe4dba:
 	addq.l	#1,a0
 	move.b	d0,(a1)+
 	move.b	(a0),d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcc.s	Lfe4da8
 	subq.l	#1,a1
 Lfe4dc8:
@@ -6721,9 +6948,9 @@ Lfe4dde:
 	rts
 
 Lfe4de2:
-	cmpi.b	#$61,d0
+	cmpi.b	#$61,d0			;'a'
 	bcs.s	Lfe4df2
-	cmpi.b	#$7a,d0
+	cmpi.b	#$7a,d0			;'z'
 	bhi.s	Lfe4df2
 	andi.b	#$df,d0
 Lfe4df2:
@@ -6733,7 +6960,7 @@ Lfe4df4:
 	bsr.w	Lfe4cc2
 	tst.b	d0
 	beq.s	Lfe4e04
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	bne.w	Lfe022e
 Lfe4e04:
 	rts
@@ -7049,20 +7276,22 @@ Lfe56a2:
 	cmp.b	d0,d1
 	beq.s	Lfe56a2
 	bra.s	Lfe5698
+
 Lfe56b2:
 	move.b	(a5)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe56b2
-	cmp.b	#$3d,d0
+	cmp.b	#$3d,d0			;'='
 	bne.s	Lfe5698
 Lfe56c0:
 	rts
 
 Lfe56c2:
-	cmpi.b	#$20,(a5)
+	cmpi.b	#$20,(a5)		;' '
 	bne.s	Lfe56cc
 	addq.l	#1,a5
 	bra.s	Lfe56c2
+
 Lfe56cc:
 	movea.l	a5,a0
 	move.l	a1,-(a7)
@@ -7072,15 +7301,16 @@ Lfe56d2:
 	beq.s	Lfe56ee
 Lfe56d6:
 	move.b	d0,(a1)+
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bne.s	Lfe56d2
 	clr.b	(-$0001,a1)
 Lfe56e2:
 	move.b	(a0)+,d0
 	beq.s	Lfe56ee
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe56e2
 	bra.s	Lfe56d6
+
 Lfe56ee:
 	clr.b	(a1)+
 	clr.b	(a1)
@@ -7091,10 +7321,11 @@ Lfe56f6:
 	movem.l	a0/a5,-(a7)
 Lfe56fa:
 	move.b	(a5)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcs.s	Lfe5706
 	move.b	d0,(a0)+
 	bra.s	Lfe56fa
+
 Lfe5706:
 	clr.b	(a0)
 	movem.l	(a7)+,a0/a5
@@ -7103,12 +7334,13 @@ Lfe5706:
 Lfe570e:
 	clr.l	d1
 	bra.s	Lfe5714
+
 Lfe5712:
-	moveq.l	#$20,d1
+	moveq.l	#$20,d1			;' '
 Lfe5714:
 	move.b	(a5)+,d0
 	beq.s	Lfe572c
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe5714
 Lfe571e:
 	move.b	d0,(a0)+
@@ -7129,16 +7361,17 @@ Lfe5732:
 	clr.l	d1
 Lfe5736:
 	move.b	(a5)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe5736
 Lfe573e:
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	cmp.b	#$0a,d0
 	bcc.s	Lfe5752
 	mulu.w	#$000a,d1
 	add.l	d0,d1
 	move.b	(a5)+,d0
 	bra.s	Lfe573e
+
 Lfe5752:
 	move.l	d1,d0
 	rts
@@ -7160,7 +7393,7 @@ Lfe5766:
 	beq.s	Lfe5786
 	cmp.b	#$09,d0
 	bne.s	Lfe5778
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 Lfe5778:
 	move.b	d0,(a5)+
 	cmp.b	#$0a,d0
@@ -7280,6 +7513,7 @@ Lfe5988:
 	DOS	_PRINT
 	addq.l	#4,a7
 	bra.s	Lfe59b8
+
 Lfe59ac:
 	bsr.s	Lfe5a10
 	pea.l	($0000d577)
@@ -7288,6 +7522,7 @@ Lfe59ac:
 Lfe59b8:
 	pea.l	($0000d586)
 	bra.s	Lfe59c6
+
 Lfe59c0:
 	pea.l	($0000d5a4)
 Lfe59c6:
@@ -7310,6 +7545,7 @@ Lfe59c6:
 	tst.l	d0
 	bmi.w	Lfe5988
 	bra.w	Lfe5944
+
 Lfe5a10:
 	pea.l	($0000d5f1)
 	DOS	_PRINT
@@ -7323,6 +7559,7 @@ Lfe5a1c:
 	DOS	_PRINT
 	addq.l	#4,a7
 	bra.s	Lfe59b8
+
 Lfe5a30:
 	lea.l	($00006800).l,a7
 	IOCS	_OS_CURON
@@ -7331,9 +7568,10 @@ Lfe5a30:
 	clr.l	d0
 	trap	#15
 Lfe5a48:
-	move.l	#$58363800,d0
+	move.l	#$58363800,d0		;'X68'<<8
 	trap	#10
 	bra.s	Lfe5a48
+
 Lfe5a52:
 	tst.b	($0000d4fd)
 	bne.s	Lfe5a76
@@ -7413,6 +7651,7 @@ Lfe5b26:
 	bne.s	Lfe5b3e
 	bsr.w	Lfe8d3c
 	bra.s	Lfe5b46
+
 Lfe5b3e:
 	bsr.w	Lfe627e
 	bsr.w	Lfe628e
@@ -7492,10 +7731,12 @@ Lfe5c02:
 	move.l	d0,($003a,a7)
 	clr.w	($0000d4e2)
 	bra.w	Lfe5ae6
+
 Lfe5c16:
 	movea.l	($0000d4e4),a7
 	clr.w	($0000d4e2)
 	bra.w	Lfe5ae6
+
 Lfe5c26:
 	move.b	($0000d725),d0
 	clr.b	($0000d725)
@@ -7537,6 +7778,7 @@ Lfe5c8e:
 	beq.s	Lfe5c98
 	bsr.w	Lfe626c
 	bra.s	Lfe5c8e
+
 Lfe5c98:
 	rts
 
@@ -7562,9 +7804,11 @@ Lfe5ca4:
 Lfe5cc6:
 	not.b	($0000d5f7)
 	bra.s	Lfe5ca4
+
 Lfe5cce:
 	clr.b	($0000d5f7)
 	bra.s	Lfe5ca4
+
 Lfe5cd6:
 	move.w	(a6),d1
 Lfe5cd8:
@@ -7588,6 +7832,7 @@ Lfe5cfe:
 	bsr.w	Lfe5da8
 	move.l	d0,d1
 	bra.s	Lfe5ce6
+
 Lfe5d0a:
 	bsr.w	Lfe6320
 	not.b	($0000d5f7)
@@ -7608,6 +7853,7 @@ Lfe5d26:
 	cmp.w	#$0003,d1
 	beq.w	Lfe5bce
 	bra.s	Lfe5d26
+
 Lfe5d3c:
 	bsr.w	Lfe6336
 	rts
@@ -7622,6 +7868,7 @@ Lfe5d44:
 	cmp.w	#$0003,d1
 	beq.w	Lfe5bce
 	bra.s	Lfe5d44
+
 Lfe5d5a:
 	move.w	(a7)+,d1
 	bsr.w	Lfe633a
@@ -7637,6 +7884,7 @@ Lfe5d64:
 	cmp.w	#$0003,d1
 	beq.w	Lfe5bce
 	bra.s	Lfe5d64
+
 Lfe5d7a:
 	move.w	(a7)+,d1
 	bsr.w	Lfe633e
@@ -7684,9 +7932,11 @@ Lfe5dbe:
 Lfe5dd6:
 	not.b	($0000d5f7)
 	bra.s	Lfe5dbe
+
 Lfe5dde:
 	clr.b	($0000d5f7)
 	bra.s	Lfe5dbe
+
 Lfe5de6:
 	movea.l	(a6),a1
 Lfe5de8:
@@ -7695,12 +7945,14 @@ Lfe5de8:
 	beq.s	Lfe5df4
 	bsr.w	Lfe5cd8
 	bra.s	Lfe5de8
+
 Lfe5df4:
 	rts
 
 Lfe5df6:
 	move.w	#$0100,($0000d5f8)
 	bra.s	Lfe5e06
+
 Lfe5e00:
 	clr.w	($0000d5f8)
 Lfe5e06:
@@ -7724,6 +7976,7 @@ Lfe5e2c:
 	movea.l	a7,a6
 	clr.w	d4
 	bra.s	Lfe5e3c
+
 Lfe5e32:
 	moveq.l	#$07,d1
 	bsr.w	Lfe6474
@@ -7760,10 +8013,11 @@ Lfe5e80:
 	move.b	d1,(a6)+
 	tst.w	d0
 	beq.s	Lfe5e8c
-	move.b	#$20,(a1)
+	move.b	#$20,(a1)		;' '
 Lfe5e8c:
 	bsr.w	Lfe5f3e
 	bra.s	Lfe5e3c
+
 Lfe5e92:
 	clr.w	($0000d5f8)
 	moveq.l	#$0d,d1
@@ -7789,10 +8043,11 @@ Lfe5eba:
 	bcs.w	Lfe5e3c
 	lea.l	($0001,a2),a1
 	bra.w	Lfe5e3c
+
 Lfe5ed0:
 	bsr.w	Lfe6428
 	move.l	d0,d1
-	cmp.w	#$0020,d1
+	cmp.w	#$0020,d1		;' '
 	bcs.s	Lfe5e5c
 	and.w	#$00df,d1
 	lea.l	($0000749a).l,a5
@@ -7803,16 +8058,18 @@ Lfe5ef0:
 	beq.s	Lfe5f12
 	addq.l	#4,a4
 	dbra.w	d0,Lfe5ef0
-	cmp.b	#$40,d1
+	cmp.b	#$40,d1			;'@'
 	bcs.w	Lfe5e3c
-	cmp.b	#$60,d1
+	cmp.b	#$60,d1			;'`'
 	bcc.w	Lfe5e3c
 	and.w	#$001f,d1
 	bra.w	Lfe5e5c
+
 Lfe5f12:
 	movea.l	(a4),a4
 	jsr	(a4)
 	bra.w	Lfe5e3c
+
 Lfe5f1a:
 	.dc.b	$00,$00,$78,$94,$00,$00,$78,$be
 	.dc.b	$00,$00,$78,$d2,$00,$00,$78,$ee
@@ -7820,16 +8077,18 @@ Lfe5f1a:
 	.dc.b	$00,$00,$79,$2e,$00,$00,$79,$d8
 	.dc.b	$00,$00,$79,$58
 Lfe5f3e:
-	cmp.b	#$20,d1
+	cmp.b	#$20,d1			;' '
 	bcs.s	Lfe5f48
 	bra.w	Lfe6474
+
 Lfe5f48:
 	move.w	d1,-(a7)
-	move.b	#$5e,d1
+	move.b	#$5e,d1			;'^'
 	bsr.w	Lfe6474
 	move.w	(a7)+,d1
 	add.w	#$0040,d1
 	bra.w	Lfe6474
+
 Lfe5f5c:
 	clr.l	d0
 	tst.b	d4
@@ -7839,7 +8098,7 @@ Lfe5f64:
 	move.l	d0,-(a7)
 	moveq.l	#$08,d1
 	bsr.w	Lfe6474
-	moveq.l	#$20,d1
+	moveq.l	#$20,d1			;' '
 	bsr.w	Lfe6474
 	moveq.l	#$08,d1
 	bsr.w	Lfe6474
@@ -7878,7 +8137,7 @@ Lfe5faa:
 	rts
 
 Lfe5fb8:
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcs.s	Lfe5ff0
 	cmp.b	#$80,d0
 	bcs.s	Lfe5fe0
@@ -7963,11 +8222,13 @@ Lfe6054:
 	beq.s	Lfe6072
 	addq.w	#2,d5
 	bra.s	Lfe6054
+
 Lfe6066:
 	cmp.b	d1,d6
 	beq.s	Lfe606e
 	addq.w	#1,d5
 	bra.s	Lfe6054
+
 Lfe606e:
 	move.w	d5,d0
 	rts
@@ -7989,9 +8250,11 @@ Lfe6076:
 	beq.s	Lfe606e
 	addq.w	#2,d5
 	bra.s	Lfe6076
+
 Lfe6090:
 	addq.w	#1,d5
 	bra.s	Lfe6076
+
 Lfe6094:
 	bsr.w	Lfe61e8
 	move.b	(a1),d0
@@ -8021,6 +8284,7 @@ Lfe60be:
 	move.w	d0,d5
 	subq.w	#1,d5
 	bra.s	Lfe60ac
+
 Lfe60d2:
 	bsr.w	Lfe61e8
 Lfe60d6:
@@ -8033,6 +8297,7 @@ Lfe60d6:
 	addq.b	#1,d4
 	bsr.w	Lfe5f3e
 	bra.s	Lfe60d6
+
 Lfe60ea:
 	subq.l	#1,a1
 	rts
@@ -8066,18 +8331,20 @@ Lfe611e:
 	addq.l	#4,a7
 	lea.l	($0001,a2),a1
 	bra.w	Lfe5e2c
+
 Lfe612e:
 	bsr.w	Lfe61e8
 	tst.w	($0000d5f8)
 	bne.s	Lfe6192
 	clr.b	(a6)
-	move.b	#$40,d1
+	move.b	#$40,d1			;'@'
 	bsr.s	Lfe61a4
 	lea.l	($0001,a2),a1
 	addq.l	#4,a7
 	movea.l	a7,a5
 	movea.l	a1,a6
 	bra.w	Lfe5e22
+
 Lfe6150:
 	bsr.w	Lfe5f5c
 	bne.s	Lfe6150
@@ -8104,6 +8371,7 @@ Lfe6174:
 	move.w	d0,d5
 	subq.w	#1,d5
 	bra.w	Lfe60ac
+
 Lfe6192:
 	clr.b	(a6)
 	bsr.s	Lfe6150
@@ -8112,6 +8380,7 @@ Lfe6192:
 	movea.l	a7,a5
 	movea.l	a1,a6
 	bra.w	Lfe5e22
+
 Lfe61a4:
 	bsr.w	Lfe6474
 	moveq.l	#$08,d1
@@ -8143,6 +8412,7 @@ Lfe61d8:
 	clr.w	d0
 	move.b	($0000d5f6),d0
 	bra.s	Lfe61f0
+
 Lfe61e8:
 	clr.w	d0
 	move.b	d0,($0000d5f6)
@@ -8188,18 +8458,22 @@ Lfe6252:
 	moveq.l	#$0a,d0
 	moveq.l	#$01,d1
 	bra.w	Lfe62d8
+
 Lfe625a:
 	moveq.l	#$0a,d0
 	moveq.l	#$04,d1
 	bra.s	Lfe62d8
+
 Lfe6260:
 	moveq.l	#$05,d0
 	moveq.l	#$03,d1
 	bra.s	Lfe629e
+
 Lfe6266:
 	moveq.l	#$0a,d0
 	moveq.l	#$03,d1
 	bra.s	Lfe62d8
+
 Lfe626c:
 	bsr.w	Lfe6342
 	tst.b	($0000d5f7)
@@ -8231,7 +8505,7 @@ Lfe629e:
 	move.w	d0,-(a7)
 	move.w	d1,d0
 	bsr.w	Lfe8510
-	moveq.l	#$20,d1
+	moveq.l	#$20,d1			;' '
 	move.w	(a7)+,d0
 	btst.b	#$07,($0001,a0)
 	beq.s	Lfe62ce
@@ -8291,12 +8565,15 @@ Lfe632c:
 Lfe6336:
 	moveq.l	#$03,d0
 	bra.s	Lfe6360
+
 Lfe633a:
 	moveq.l	#$03,d0
 	bra.s	Lfe6344
+
 Lfe633e:
 	moveq.l	#$04,d0
 	bra.s	Lfe6344
+
 Lfe6342:
 	moveq.l	#$01,d0
 Lfe6344:
@@ -8414,9 +8691,11 @@ Lfe643c:
 Lfe6464:
 	not.b	($0000d5f7)
 	bra.s	Lfe643c
+
 Lfe646c:
 	clr.b	($0000d5f7)
 	bra.s	Lfe643c
+
 Lfe6474:
 	move.w	#$0002,d0
 	bsr.w	Lfe6344
@@ -8433,6 +8712,7 @@ Lfe648a:
 	bsr.w	Lfe633e
 Lfe649a:
 	bra.w	Lfe5cdc
+
 Lfe649e:
 	movea.l	($00008a22),a0
 	move.l	(a6),d0
@@ -8473,6 +8753,7 @@ Lfe650c:
 	bcc.s	Lfe64c4
 	move.l	d2,d7
 	bra.s	Lfe64c4
+
 Lfe6514:
 	move.l	($00001c00).l,d2
 	add.l	#$0000000f,d1
@@ -8656,6 +8937,7 @@ Lfe66e8:
 	bsr.w	Lfe7080
 	clr.l	d0
 	bra.s	Lfe6712
+
 Lfe6710:
 	moveq.l	#$fe,d0
 Lfe6712:
@@ -8665,11 +8947,11 @@ Lfe6712:
 
 Lfe6718:
 	bsr.w	Lfe6b42
-	cmp.b	#$78,d0
+	cmp.b	#$78,d0			;'x'
 	beq.s	Lfe678e
-	cmp.b	#$72,d0
+	cmp.b	#$72,d0			;'r'
 	beq.s	Lfe6768
-	cmp.b	#$7a,d0
+	cmp.b	#$7a,d0			;'z'
 	beq.s	Lfe673e
 	move.l	a1,d0
 	rol.l	#8,d0
@@ -8692,6 +8974,7 @@ Lfe673e:
 	bcs.s	Lfe675c
 	bsr.w	Lfe6ca0
 	bra.w	Lfe67f4
+
 Lfe675c:
 	bsr.w	Lfe6c98
 	moveq.l	#$f8,d0
@@ -8717,6 +9000,7 @@ Lfe6768:
 	DOS	_READ
 	lea.l	($000a,a7),a7
 	bra.w	Lfe6c98
+
 Lfe678e:
 	bsr.w	Lfe6cbe
 	bmi.s	Lfe6762
@@ -8729,7 +9013,7 @@ Lfe678e:
 	addq.l	#6,a7
 	cmp.l	(a7)+,d0
 	bne.w	Lfe6b22
-	cmpi.w	#$4855,(a5)
+	cmpi.w	#$4855,(a5)		;'HU'
 	bne.w	Lfe6b20
 	move.l	($000c,a5),d3
 	add.l	($0010,a5),d3
@@ -8769,11 +9053,11 @@ Lfe6802:
 Lfe6814:
 	move.l	a1,($0000d70c)
 	bsr.w	Lfe6b42
-	cmp.b	#$78,d0
+	cmp.b	#$78,d0			;'x'
 	beq.w	Lfe69e6
-	cmp.b	#$72,d0
+	cmp.b	#$72,d0			;'r'
 	beq.w	Lfe69a4
-	cmp.b	#$7a,d0
+	cmp.b	#$7a,d0			;'z'
 	beq.s	Lfe684a
 	move.l	a1,d0
 	rol.l	#8,d0
@@ -8809,9 +9093,9 @@ Lfe687e:
 	bsr.w	Lfe930a
 	lea.l	($0080,a0),a1
 	move.b	($0001,a2),d0
-	add.b	#$41,d0
+	add.b	#$41,d0			;'A'
 	move.b	d0,(a1)+
-	move.b	#$3a,(a1)+
+	move.b	#$3a,(a1)+		;':'
 	lea.l	($0002,a2),a3
 Lfe68be:
 	move.b	(a3)+,(a1)+
@@ -8821,7 +9105,7 @@ Lfe68be:
 	lea.l	($0043,a2),a3
 Lfe68ce:
 	move.b	(a3)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe68f4
 	move.b	d0,(a1)+
 	dbra.w	d1,Lfe68ce
@@ -8830,17 +9114,17 @@ Lfe68ce:
 Lfe68e4:
 	move.b	(a3)+,d0
 	beq.s	Lfe68f4
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe68f4
 	move.b	d0,(a1)+
 	dbra.w	d1,Lfe68e4
 Lfe68f4:
-	move.b	#$2e,(a1)+
+	move.b	#$2e,(a1)+		;'.'
 	move.w	#$0002,d1
 	lea.l	($004b,a2),a3
 Lfe6900:
 	move.b	(a3)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe690e
 	move.b	d0,(a1)+
 	dbra.w	d1,Lfe6900
@@ -8880,6 +9164,7 @@ Lfe694c:
 	bsr.w	Lfe8346
 	clr.l	d1
 	bra.s	Lfe6920
+
 Lfe698a:
 	bsr.w	Lfe6c98
 Lfe698e:
@@ -8912,6 +9197,7 @@ Lfe69a4:
 	bsr.w	Lfe6cee
 	clr.l	d6
 	bra.w	Lfe687e
+
 Lfe69e6:
 	bsr.w	Lfe6cbe
 	bmi.w	Lfe6762
@@ -8924,7 +9210,7 @@ Lfe69e6:
 	addq.l	#6,a7
 	cmp.l	(a7)+,d0
 	bne.w	Lfe6b22
-	cmpi.w	#$4855,(a5)
+	cmpi.w	#$4855,(a5)		;'HU'
 	bne.w	Lfe6b20
 	move.l	($000c,a5),d3
 	add.l	($0010,a5),d3
@@ -8951,6 +9237,7 @@ Lfe69e6:
 	lea.l	($0040,a7),a7
 	bsr.w	Lfe6cee
 	bra.w	Lfe687e
+
 Lfe6a66:
 	lea.l	($0100,a0),a1
 	adda.l	d3,a1
@@ -8993,9 +9280,11 @@ Lfe6ab0:
 	bne.s	Lfe6abc
 	add.l	d7,(a4)
 	bra.s	Lfe6a9e
+
 Lfe6abc:
 	add.w	d7,(a4)
 	bra.s	Lfe6a9e
+
 Lfe6ac0:
 	clr.l	d0
 Lfe6ac2:
@@ -9050,6 +9339,7 @@ Lfe6b18:
 Lfe6b1c:
 	moveq.l	#$f8,d0
 	bra.s	Lfe6b22
+
 Lfe6b20:
 	moveq.l	#$f5,d0
 Lfe6b22:
@@ -9058,12 +9348,14 @@ Lfe6b22:
 	bmi.w	Lfe6c98
 	moveq.l	#$f5,d0
 	bra.w	Lfe6c98
+
 Lfe6b32:
 	lea.l	($0040,a7),a7
 	tst.l	d0
 	bmi.w	Lfe698a
 	moveq.l	#$f5,d0
 	bra.w	Lfe698a
+
 Lfe6b42:
 	movem.l	d1/a1,-(a7)
 	clr.w	d1
@@ -9076,11 +9368,11 @@ Lfe6b50:
 	subq.w	#1,d1
 	beq.s	Lfe6b70
 	move.b	-(a1),d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe6b50
 	subq.l	#1,d1
 	beq.s	Lfe6b70
-	cmpi.b	#$2e,-(a1)
+	cmpi.b	#$2e,-(a1)		;'.'
 	bne.s	Lfe6b70
 	or.b	#$20,d0
 	movem.l	(a7)+,d1/a1
@@ -9326,6 +9618,7 @@ Lfe6dae:
 	move.l	a1,($0000.w,a2)
 	bsr.s	Lfe6ddc
 	bra.s	Lfe6da8
+
 Lfe6dce:
 	cmp.l	($0004,a0),d0
 	bne.s	Lfe6de8
@@ -9348,17 +9641,17 @@ Lfe6dea:
 Lfe6df8:
 	move.b	(a0),d0
 	beq.s	Lfe6e34
-	cmp.b	#$3f,d0
+	cmp.b	#$3f,d0			;'?'
 	beq.w	Lfe6f24
-	cmp.b	#$2a,d0
+	cmp.b	#$2a,d0			;'*'
 	beq.w	Lfe6f24
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe6e34
-	cmp.b	#$2d,d0
+	cmp.b	#$2d,d0			;'-'
 	beq.s	Lfe6e34
-	cmp.b	#$22,d0
+	cmp.b	#$22,d0			;'"'
 	beq.s	Lfe6e34
-	cmp.b	#$27,d0
+	cmp.b	#$27,d0			;'''
 	beq.s	Lfe6e34
 	bsr.w	Lfe70e8
 	tst.l	d0
@@ -9366,6 +9659,7 @@ Lfe6df8:
 	move.b	(a0)+,(a1)+
 	addq.w	#1,d1
 	bra.s	Lfe6df8
+
 Lfe6e32:
 	adda.l	d0,a0
 Lfe6e34:
@@ -9384,6 +9678,7 @@ Lfe6e44:
 	beq.s	Lfe6e52
 	clr.b	d3
 	bra.s	Lfe6e78
+
 Lfe6e52:
 	cmp.b	#$80,d0
 	bcs.s	Lfe6e6a
@@ -9394,16 +9689,18 @@ Lfe6e52:
 Lfe6e64:
 	move.b	#$01,d3
 	bra.s	Lfe6e78
+
 Lfe6e6a:
-	cmpi.b	#$3a,d0
+	cmpi.b	#$3a,d0			;':'
 	beq.s	Lfe6e76
-	cmpi.b	#$5c,d0
+	cmpi.b	#$5c,d0			;'\'
 	bne.s	Lfe6e78
 Lfe6e76:
 	move.l	a2,(a7)
 Lfe6e78:
 	addq.b	#1,d2
 	bra.s	Lfe6e44
+
 Lfe6e7c:
 	movea.l	(a7)+,a2
 	cmpa.l	a1,a2
@@ -9431,17 +9728,18 @@ Lfe6e98:
 	move.b	#$01,(-$0005,a6)
 	cmp.l	#$00000002,d0
 	bcs.s	Lfe6eea
-	cmpi.b	#$3a,($0001,a4)
+	cmpi.b	#$3a,($0001,a4)		;':'
 	bne.s	Lfe6eea
 	move.l	d0,d1
 	move.b	(a4),d0
 	or.b	#$20,d0
-	sub.b	#$61,d0
+	sub.b	#$61,d0			;'a'
 	bsr.w	Lfe719a
 	tst.l	d0
 	bmi.s	Lfe6f24
 	move.l	d1,d0
 	bra.s	Lfe6eea
+
 Lfe6ee8:
 	move.b	(a4)+,(a3)+
 Lfe6eea:
@@ -9451,7 +9749,7 @@ Lfe6eea:
 	move.b	#-$01,(-$0006,a6)
 Lfe6efa:
 	move.b	(a1)+,d0
-	cmpi.b	#$2e,d0
+	cmpi.b	#$2e,d0			;'.'
 	beq.s	Lfe6f0a
 	tst.b	d0
 	bne.s	Lfe6efa
@@ -9466,6 +9764,7 @@ Lfe6f10:
 	tst.b	d1
 	beq.s	Lfe6f24
 	bra.s	Lfe6f10
+
 Lfe6f1c:
 	move.b	d1,(a5)
 	move.w	#$ffff,d0
@@ -9483,6 +9782,7 @@ Lfe6f28:
 	bsr.w	Lfe708e
 	lea.l	($0000d71a),a3
 	bra.s	Lfe6f76
+
 Lfe6f42:
 	movea.l	(-$0004,a6),a1
 	lea.l	($0000d714),a0
@@ -9495,12 +9795,14 @@ Lfe6f58:
 	lea.l	(-$005e,a6),a0
 	bsr.w	Lfe7080
 	bra.s	Lfe6f76
+
 Lfe6f68:
 	tst.b	(a3)
 	bne.s	Lfe6f74
 	tst.b	(-$005e,a6)
 	bne.s	Lfe6fdc
 	bra.s	Lfe6f76
+
 Lfe6f74:
 	bsr.s	Lfe6fe0
 Lfe6f76:
@@ -9532,7 +9834,7 @@ Lfe6faa:
 	beq.s	Lfe6f68
 	movea.l	a4,a1
 	movea.l	a2,a0
-	move.b	#$2e,(a0)+
+	move.b	#$2e,(a0)+		;'.'
 	bsr.w	Lfe7080
 Lfe6fce:
 	lea.l	(-$005e,a6),a0
@@ -9551,7 +9853,7 @@ Lfe6fe0:
 Lfe6fe6:
 	move.b	(a3)+,d0
 	beq.s	Lfe701c
-	cmp.b	#$3b,d0
+	cmp.b	#$3b,d0			;';'
 	beq.s	Lfe701e
 	move.b	d0,(a0)+
 	tst.b	d3
@@ -9560,6 +9862,7 @@ Lfe6fe6:
 	beq.s	Lfe7002
 	move.b	#$02,d3
 	bra.s	Lfe6fe6
+
 Lfe7002:
 	clr.b	d3
 Lfe7004:
@@ -9572,16 +9875,17 @@ Lfe7004:
 Lfe7016:
 	move.b	#$01,d3
 	bra.s	Lfe6fe6
+
 Lfe701c:
 	subq.l	#1,a3
 Lfe701e:
 	move.b	(-$0001,a0),d0
 	cmp.b	#$02,d3
 	beq.s	Lfe702e
-	cmp.b	#$5c,d0
+	cmp.b	#$5c,d0			;'\'
 	beq.s	Lfe7032
 Lfe702e:
-	move.b	#$5c,(a0)+
+	move.b	#$5c,(a0)+		;'\'
 Lfe7032:
 	lea.l	(-$0076,a6),a1
 	bsr.s	Lfe7080
@@ -9591,7 +9895,7 @@ Lfe703a:
 	bsr.w	Lfe7102
 	move.b	(a0)+,d0
 	beq.s	Lfe706c
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lfe703a
 	move.b	#$04,d1
 	lea.l	($0000d71b),a1
@@ -9654,9 +9958,11 @@ Lfe70a6:
 	bcs.s	Lfe70b4
 	moveq.l	#$01,d0
 	bra.s	Lfe70be
+
 Lfe70b4:
 	moveq.l	#$ff,d0
 	bra.s	Lfe70be
+
 Lfe70b8:
 	tst.b	(a1)
 	bne.s	Lfe70b4
@@ -9669,6 +9975,7 @@ Lfe70be:
 Lfe70c6:
 	movem.l	a0-a1,-(a7)
 	bra.s	Lfe70d0
+
 Lfe70cc:
 	cmpm.b	(a0)+,(a1)+
 	bne.s	Lfe70d8
@@ -9676,10 +9983,12 @@ Lfe70d0:
 	dbra.w	d0,Lfe70cc
 	clr.l	d0
 	bra.s	Lfe70e0
+
 Lfe70d8:
 	bcs.s	Lfe70de
 	moveq.l	#$01,d0
 	bra.s	Lfe70e0
+
 Lfe70de:
 	moveq.l	#$ff,d0
 Lfe70e0:
@@ -9691,7 +10000,7 @@ Lfe70e8:
 	move.l	a0,-(a7)
 Lfe70ea:
 	move.b	(a0)+,d0
-	cmpi.b	#$20,d0
+	cmpi.b	#$20,d0			;' '
 	beq.s	Lfe70ea
 	cmpi.b	#$09,d0
 	beq.s	Lfe70ea
@@ -9711,6 +10020,7 @@ Lfe7108:
 	beq.s	Lfe7114
 	clr.b	d1
 	bra.s	Lfe712a
+
 Lfe7114:
 	cmp.b	#$80,d0
 	bcs.s	Lfe712e
@@ -9723,21 +10033,23 @@ Lfe7126:
 Lfe712a:
 	addq.l	#1,a0
 	bra.s	Lfe7108
+
 Lfe712e:
-	cmpi.b	#$41,d0
+	cmpi.b	#$41,d0			;'A'
 	bcs.s	Lfe713e
-	cmpi.b	#$5a,d0
+	cmpi.b	#$5a,d0			;'Z'
 	bhi.s	Lfe713e
-	add.b	#$20,d0
+	add.b	#$20,d0			;' '
 Lfe713e:
 	move.b	d0,(a0)+
 	bra.s	Lfe7108
+
 Lfe7142:
 	movem.l	(a7)+,d0-d1/a0
 	rts
 
 Lfe7148:
-	move.w	#$0020,-(a7)
+	move.w	#$0020,-(a7)		;' '
 	move.l	a0,-(a7)
 	move.l	a1,-(a7)
 	DOS	_FILES
@@ -9766,9 +10078,11 @@ Lfe717e:
 	tst.b	(a1)+
 	bne.s	Lfe717e
 	bra.s	Lfe716a
+
 Lfe7184:
 	clr.b	d0
 	bra.s	Lfe7194
+
 Lfe7188:
 	movem.l	(a7)+,d0
 	adda.l	d0,a1
@@ -9791,6 +10105,7 @@ Lfe719a:
 	bhi.s	Lfe71b8
 	moveq.l	#$ff,d0
 	bra.s	Lfe71bc
+
 Lfe71b8:
 	DOS	_CHGDRV
 	clr.l	d0
@@ -9802,12 +10117,14 @@ Lfe71bc:
 Lfe71c4:
 	clr.l	d0
 	bra.s	Lfe71cc
+
 Lfe71c8:
 	clr.l	d0
 	move.w	(a6),d0
 Lfe71cc:
 	move.l	d0,($0000d708)
 	bra.w	Lfe6bb2
+
 Lfe71d6:
 	move.l	(a6)+,d1
 	moveq.l	#$01,d0
@@ -9815,6 +10132,7 @@ Lfe71d6:
 	move.w	(a6),d0
 	move.l	d0,($0000d708)
 	bra.w	Lfe6bf0
+
 Lfe71e8:
 	move.l	($0000d708),d0
 	rts
@@ -9878,6 +10196,7 @@ Lfe7280:
 	bne.s	Lfe7296
 	bsr.w	Lfe8c68
 	bra.s	Lfe729a
+
 Lfe7296:
 	bsr.w	Lfe9054
 Lfe729a:
@@ -9905,15 +10224,18 @@ Lfe72c6:
 	subq.l	#1,a2
 	subq.l	#1,d7
 	bra.s	Lfe7280
+
 Lfe72cc:
 	tst.l	d7
 	bne.s	Lfe72bc
 	moveq.l	#$ff,d7
 	bra.s	Lfe72bc
+
 Lfe72d4:
 	subq.l	#1,a2
 	subq.l	#1,d7
 	bra.s	Lfe72bc
+
 Lfe72da:
 	move.w	(a6)+,d0
 	move.w	(a6),d1
@@ -9948,7 +10270,7 @@ Lfe7316:
 	movem.l	d0-d7/a0-a6,-(a7)
 	lea.l	($0000d72c),a1
 	moveq.l	#$0b,d2
-	moveq.l	#$5f,d0
+	moveq.l	#$5f,d0			;'_'
 Lfe7324:
 	moveq.l	#$07,d1
 Lfe7326:
@@ -9988,7 +10310,7 @@ Lfe7374:
 	bmi.s	Lfe7388
 	movea.l	(a6),a1
 	movea.l	d0,a0
-	moveq.l	#$5d,d0
+	moveq.l	#$5d,d0			;']'
 Lfe7380:
 	move.b	(a0)+,(a1)+
 	dbra.w	d0,Lfe7380
@@ -10049,6 +10371,7 @@ Lfe740c:
 	move.w	d3,d0
 	clr.w	(a6)
 	bra.w	Lfe74b6
+
 Lfe7416:
 	clr.l	d0
 	move.b	($0000d8dd),d0
@@ -10065,11 +10388,12 @@ Lfe7420:
 	move.b	(a1)+,d0
 	move.l	d0,(a7)
 	move.b	(a1),d0
-	add.b	#$41,d0
+	add.b	#$41,d0			;'A'
 	move.b	d0,(-$0001,a1)
-	move.b	#$3a,(a1)+
+	move.b	#$3a,(a1)+		;':'
 	bsr.w	Lfe778c
 	bra.s	Lfe745c
+
 Lfe7448:
 	movea.l	(a6)+,a1
 	movea.l	(a6),a2
@@ -10099,7 +10423,7 @@ Lfe7460:
 	movea.l	a0,a3
 	move.w	(a6),d2
 	bne.s	Lfe7488
-	moveq.l	#$20,d2
+	moveq.l	#$20,d2			;' '
 Lfe7488:
 	moveq.l	#$03,d0
 	bsr.s	Lfe74e2
@@ -10131,6 +10455,7 @@ Lfe74be:
 	tst.l	d0
 	bmi.s	Lfe74ce
 	bra.s	Lfe74aa
+
 Lfe74ce:
 	move.l	(a7)+,d1
 	move.l	d0,-(a7)
@@ -10227,6 +10552,7 @@ Lfe75aa:
 	beq.w	Lfe74aa
 	moveq.l	#$f3,d0
 	bra.w	Lfe74ce
+
 Lfe75de:
 	move.b	($0001,a2),d0
 	and.b	#$1f,d0
@@ -10247,6 +10573,7 @@ Lfe75de:
 	DOS	_GETDATE
 	move.w	d0,($0038,a3)
 	bra.w	Lfe74aa
+
 Lfe7622:
 	moveq.l	#$f4,d0
 	rts
@@ -10353,6 +10680,7 @@ Lfe76e8:
 	bpl.s	Lfe7704
 	movea.l	a1,a5
 	bra.s	Lfe7718
+
 Lfe7704:
 	move.l	a1,-(a7)
 	move.w	(a6),d0
@@ -10406,7 +10734,7 @@ Lfe7762:
 	movea.l	(a6),a1
 	tst.b	(a0)
 	beq.s	Lfe7782
-	move.w	#$003f,d1
+	move.w	#$003f,d1		;'?'
 Lfe7778:
 	move.b	(a0)+,(a1)+
 	beq.s	Lfe7780
@@ -10424,7 +10752,7 @@ Lfe778a:
 Lfe778c:
 	move.b	(a1)+,d0
 	beq.s	Lfe77ac
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe77ae
 	cmp.b	#$80,d0
 	bcs.s	Lfe778c
@@ -10439,8 +10767,9 @@ Lfe77ac:
 	rts
 
 Lfe77ae:
-	move.b	#$5c,(-$0001,a1)
+	move.b	#$5c,(-$0001,a1)	;'\'
 	bra.s	Lfe778c
+
 Lfe77b6:
 	clr.l	d0
 	move.w	(a6)+,d1
@@ -10464,6 +10793,7 @@ Lfe77d4:
 	beq.w	Lfe78e2
 	bsr.w	Lfe8c68
 	bra.w	Lfe78e2
+
 Lfe77f4:
 	move.w	d1,d0
 	bsr.w	Lfe8510
@@ -10583,6 +10913,7 @@ Lfe78fc:
 	bset.b	#$06,($0001,a0)
 	clr.l	d0
 	bra.s	Lfe78e2
+
 Lfe7912:
 	move.l	d2,d0
 	rts
@@ -10639,6 +10970,7 @@ Lfe796c:
 	beq.s	Lfe798c
 	bsr.w	Lfe930a
 	bra.s	Lfe7990
+
 Lfe798c:
 	bsr.w	Lfe9300
 Lfe7990:
@@ -10669,6 +11001,7 @@ Lfe79a4:
 	tst.b	(a2)
 	beq.s	Lfe79dc
 	bra.s	Lfe79e2
+
 Lfe79dc:
 	move.w	#$ffff,($0008,a5)
 Lfe79e2:
@@ -10696,7 +11029,7 @@ Lfe79ea:
 	bne.s	Lfe7a28
 	move.b	#$e5,d0
 Lfe7a28:
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe7a4e
 	move.b	d0,(a4)+
 	move.b	(a3)+,d0
@@ -10706,19 +11039,19 @@ Lfe7a28:
 Lfe7a3e:
 	move.b	(a3)+,d0
 	beq.s	Lfe7a4e
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe7a4e
 	move.b	d0,(a4)+
 	dbra.w	d1,Lfe7a3e
 Lfe7a4e:
 	lea.l	($0008,a1),a3
-	cmpi.b	#$20,(a3)
+	cmpi.b	#$20,(a3)		;' '
 	beq.s	Lfe7a6e
-	move.b	#$2e,(a4)+
+	move.b	#$2e,(a4)+		;'.'
 	move.w	#$0002,d1
 Lfe7a60:
 	move.b	(a3)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe7a6e
 	move.b	d0,(a4)+
 	dbra.w	d1,Lfe7a60
@@ -10768,6 +11101,7 @@ Lfe7ab6:
 Lfe7ade:
 	bsr.w	Lfe8ef2
 	bra.w	Lfe74b6
+
 Lfe7ae6:
 	move.b	($0001,a2),d0
 	and.b	#$1f,d0
@@ -10833,6 +11167,7 @@ Lfe7b9c:
 	move.b	(a4)+,(a3)+
 	dbra.w	d2,Lfe7b9c
 	bra.s	Lfe7bb4
+
 Lfe7ba4:
 	bsr.w	Lfe7ae6
 	bmi.s	Lfe7bfa
@@ -10857,9 +11192,11 @@ Lfe7bcc:
 	clr.l	d0
 	bsr.w	Lfe8ef2
 	bra.s	Lfe7bfa
+
 Lfe7bde:
 	moveq.l	#$f1,d0
 	bra.s	Lfe7bfa
+
 Lfe7be2:
 	movea.l	a1,a3
 	movea.l	a7,a2
@@ -10869,9 +11206,11 @@ Lfe7be2:
 	beq.s	Lfe7baa
 	moveq.l	#$ea,d0
 	bra.s	Lfe7bfa
+
 Lfe7bf4:
 	moveq.l	#$ed,d0
 	bra.s	Lfe7bfa
+
 Lfe7bf8:
 	moveq.l	#$f3,d0
 Lfe7bfa:
@@ -10911,6 +11250,7 @@ Lfe7c3a:
 	clr.l	d0
 	bsr.w	Lfe8ef2
 	bra.w	Lfe74b6
+
 Lfe7c66:
 	move.w	(a6)+,d0
 	cmp.w	#$0008,d0
@@ -10956,6 +11296,7 @@ Lfe7cce:
 Lfe7cf0:
 	moveq.l	#$03,d7
 	bra.s	Lfe7cf6
+
 Lfe7cf4:
 	moveq.l	#$0c,d7
 Lfe7cf6:
@@ -10973,9 +11314,11 @@ Lfe7cf6:
 	clr.l	d1
 	clr.l	d2
 	bra.s	Lfe7d44
+
 Lfe7d1e:
 	moveq.l	#$03,d7
 	bra.s	Lfe7d24
+
 Lfe7d22:
 	moveq.l	#$0c,d7
 Lfe7d24:
@@ -11011,6 +11354,7 @@ Lfe7d74:
 Lfe7d78:
 	moveq.l	#$06,d7
 	bra.s	Lfe7d7e
+
 Lfe7d7c:
 	moveq.l	#$0a,d7
 Lfe7d7e:
@@ -11081,6 +11425,7 @@ Lfe7e1e:
 	clr.w	($001c,a0)
 	move.w	#$2f00,($001e,a0)
 	bra.s	Lfe7e18
+
 Lfe7e30:
 	movem.l	d7/a0,-(a7)
 	movea.l	a0,a5
@@ -11161,6 +11506,7 @@ Lfe7ea0:
 Lfe7ee8:
 	lea.l	($0040,a7),a7
 	bra.w	Lfe74b6
+
 Lfe7ef0:
 	movea.l	(a6),a1
 	lea.l	(-$0058,a7),a7
@@ -11169,7 +11515,7 @@ Lfe7ef0:
 	tst.l	d0
 	bmi.w	Lfe74b6
 	lea.l	($0002,a2),a3
-	moveq.l	#$3f,d7
+	moveq.l	#$3f,d7			;'?'
 	tst.b	(a2)
 	bmi.s	Lfe7f10
 	bne.w	Lfe74b4
@@ -11181,13 +11527,13 @@ Lfe7f10:
 	subq.l	#1,a3
 	lea.l	($0043,a2),a4
 	moveq.l	#$07,d1
-	cmpi.b	#$20,(a4)
+	cmpi.b	#$20,(a4)		;' '
 	beq.s	Lfe7f9a
-	cmpi.b	#$3f,(a4)
+	cmpi.b	#$3f,(a4)		;'?'
 	beq.s	Lfe7f9a
 Lfe7f2c:
 	move.b	(a4)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe7f64
 	subq.l	#1,d7
 	beq.w	Lfe7fd0
@@ -11195,13 +11541,13 @@ Lfe7f2c:
 	dbra.w	d1,Lfe7f2c
 	lea.l	($004e,a2),a4
 	moveq.l	#$09,d1
-	cmpi.b	#$21,(a4)
+	cmpi.b	#$21,(a4)		;'!'
 	bcs.s	Lfe7f64
-	cmpi.b	#$3f,(a4)
+	cmpi.b	#$3f,(a4)		;'?'
 	beq.s	Lfe7f64
 Lfe7f52:
 	move.b	(a4)+,d0
-	cmp.b	#$21,d0
+	cmp.b	#$21,d0			;'!'
 	bcs.s	Lfe7f64
 	subq.l	#1,d7
 	beq.s	Lfe7fd0
@@ -11210,16 +11556,16 @@ Lfe7f52:
 Lfe7f64:
 	lea.l	($004b,a2),a4
 	moveq.l	#$02,d1
-	cmpi.b	#$20,(a4)
+	cmpi.b	#$20,(a4)		;' '
 	beq.s	Lfe7f90
-	cmpi.b	#$3f,(a4)
+	cmpi.b	#$3f,(a4)		;'?'
 	beq.s	Lfe7f90
 	subq.l	#1,d7
 	beq.s	Lfe7fd0
-	move.b	#$2e,(a3)+
+	move.b	#$2e,(a3)+		;'.'
 Lfe7f7e:
 	move.b	(a4)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe7f90
 	subq.l	#1,d7
 	beq.s	Lfe7fd0
@@ -11228,7 +11574,7 @@ Lfe7f7e:
 Lfe7f90:
 	subq.l	#1,d7
 	beq.s	Lfe7fd0
-	move.b	#$2f,(a3)+
+	move.b	#$2f,(a3)+		;'/'
 	clr.b	(a3)
 Lfe7f9a:
 	move.b	($0001,a2),d0
@@ -11249,24 +11595,26 @@ Lfe7fc6:
 	bne.s	Lfe7fc6
 	clr.l	d0
 	bra.w	Lfe74b6
+
 Lfe7fd0:
 	moveq.l	#$f3,d0
 	bra.w	Lfe74b6
+
 Lfe7fd6:
 	movea.l	(a6),a1
 	lea.l	(-$0080,a7),a7
 	movea.l	a7,a2
-	moveq.l	#$7b,d0
+	moveq.l	#$7b,d0			;'{'
 Lfe7fe0:
 	move.b	(a1)+,(a2)+
 	beq.s	Lfe7fe8
 	dbra.w	d0,Lfe7fe0
 Lfe7fe8:
 	subq.l	#1,a2
-	move.b	#$2f,(a2)+
-	move.b	#$2a,(a2)+
-	move.b	#$2e,(a2)+
-	move.b	#$2a,(a2)+
+	move.b	#$2f,(a2)+		;'/'
+	move.b	#$2a,(a2)+		;'*'
+	move.b	#$2e,(a2)+		;'.'
+	move.b	#$2a,(a2)+		;'*'
 	clr.b	(a2)
 	movea.l	a7,a1
 	lea.l	(-$0058,a7),a7
@@ -11306,7 +11654,7 @@ Lfe8052:
 	move.w	($001e,a2),d0
 	cmp.w	#$2e00,d0
 	beq.s	Lfe8066
-	cmp.w	#$2e2e,d0
+	cmp.w	#$2e2e,d0		;'..'
 	bne.s	Lfe8072
 Lfe8066:
 	move.l	a2,-(a7)
@@ -11314,6 +11662,7 @@ Lfe8066:
 	bsr.w	Lfe7a72
 	movea.l	(a7)+,a2
 	bra.s	Lfe8052
+
 Lfe8072:
 	movea.l	(a7)+,a6
 	lea.l	($00b6,a7),a7
@@ -11352,9 +11701,11 @@ Lfe8084:
 	bsr.w	Lfe97f6
 	bmi.w	Lfe74b6
 	bra.w	Lfe7ade
+
 Lfe80d4:
 	moveq.l	#$fd,d0
 	bra.w	Lfe74b6
+
 Lfe80da:
 	movea.l	(a6)+,a2
 	bsr.w	Lfe7e8a
@@ -11362,6 +11713,7 @@ Lfe80da:
 	move.w	(a6)+,d1
 	move.w	(a6),d2
 	bra.w	Lfe9004
+
 Lfe80ea:
 	movea.l	(a6)+,a2
 	bsr.w	Lfe7e8a
@@ -11370,6 +11722,7 @@ Lfe80ea:
 	move.w	(a6)+,d1
 	move.w	(a6),d2
 	bra.w	Lfe8ff6
+
 Lfe80fe:
 	movem.l	a0,-(a7)
 	bsr.w	Lfe930a
@@ -11441,6 +11794,7 @@ Lfe8186:
 	clr.l	d2
 	moveq.l	#$08,d0
 	bra.s	Lfe81ca
+
 Lfe819e:
 	bsr.s	Lfe81a8
 	asl.b	#2,d0
@@ -11463,6 +11817,7 @@ Lfe81b8:
 	lsr.w	#2,d1
 	lsr.b	#2,d1
 	bra.s	Lfe81c6
+
 Lfe81c4:
 	move.l	(a6),d1
 Lfe81c6:
@@ -11535,7 +11890,7 @@ Lfe826a:
 	rts
 
 Lfe826e:
-	move.w	#$3638,d0
+	move.w	#$3638,d0		;'68'
 	swap.w	d0
 	move.w	#$0100,d0
 	rts
@@ -11681,6 +12036,7 @@ Lfe83f2:
 	beq.s	Lfe8400
 	movea.l	d2,a0
 	bra.s	Lfe83f2
+
 Lfe8400:
 	movem.l	(a7)+,d2/a0
 	rts
@@ -11750,6 +12106,7 @@ Lfe8478:
 Lfe849e:
 	moveq.l	#$fc,d0
 	bra.s	Lfe8472
+
 Lfe84a2:
 	movea.l	a0,a1
 	move.l	d0,d1
@@ -11767,6 +12124,7 @@ Lfe84a2:
 	tst.b	(a0)
 	beq.s	Lfe8464
 	bra.s	Lfe849e
+
 Lfe84cc:
 	cmp.w	#$0005,d0
 	bcs.s	Lfe84ee
@@ -11797,6 +12155,7 @@ Lfe84ee:
 	movea.l	(a7)+,a0
 	move.l	(a7)+,d1
 	bra.s	Lfe84e0
+
 Lfe850c:
 	move.l	(a7)+,d1
 Lfe850e:
@@ -11856,6 +12215,7 @@ Lfe858c:
 	dbra.w	d0,Lfe858c
 	addq.l	#2,a7
 	bra.s	Lfe8562
+
 Lfe859a:
 	sub.w	d0,(a7)
 	clr.l	d0
@@ -11883,6 +12243,7 @@ Lfe85c6:
 	dbra.w	d0,Lfe85c6
 	addq.l	#2,a7
 	bra.s	Lfe8562
+
 Lfe85d6:
 	sub.w	d0,(a7)
 	clr.l	d0
@@ -11893,7 +12254,7 @@ Lfe85de:
 
 Lfe85e0:
 	movem.l	d0-d1/a0,-(a7)
-	cmp.w	#$0060,d0
+	cmp.w	#$0060,d0		;'`'
 	bcc.s	Lfe85fc
 	move.w	d0,d1
 	and.w	#$0007,d0
@@ -11906,7 +12267,7 @@ Lfe85fc:
 
 Lfe8602:
 	movem.l	d0-d1/a0,-(a7)
-	cmp.w	#$0060,d0
+	cmp.w	#$0060,d0		;'`'
 	bcc.s	Lfe861e
 	move.w	d0,d1
 	and.w	#$0007,d0
@@ -11928,6 +12289,7 @@ Lfe8630:
 	beq.s	Lfe8630
 	moveq.l	#$ff,d0
 	bra.s	Lfe863e
+
 Lfe863c:
 	tst.b	(a4)
 Lfe863e:
@@ -12039,6 +12401,7 @@ Lfe8738:
 	bsr.w	Lfe8a7c
 	clr.l	d0
 	bra.s	Lfe8766
+
 Lfe8764:
 	moveq.l	#$e9,d0
 Lfe8766:
@@ -12054,6 +12417,7 @@ Lfe876c:
 Lfe877c:
 	move.l	(a7)+,d0
 	bra.s	Lfe8766
+
 Lfe8780:
 	move.l	d0,-(a7)
 	move.w	($003a,a3),d0
@@ -12091,7 +12455,7 @@ Lfe87a6:
 	bsr.w	Lfe8fb6
 	lea.l	($0020,a3),a4
 	moveq.l	#$0a,d1
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 Lfe87e8:
 	move.b	d0,(a4)+
 	dbra.w	d1,Lfe87e8
@@ -12100,9 +12464,9 @@ Lfe87e8:
 Lfe87f2:
 	clr.b	(a4)+
 	dbra.w	d1,Lfe87f2
-	move.b	#$2e,($0020,a3)
+	move.b	#$2e,($0020,a3)		;'.'
 	bsr.w	Lfe8ab2
-	move.w	#$2e2e,($0020,a3)
+	move.w	#$2e2e,($0020,a3)	;'..'
 	move.w	($0008,a3),d1
 	bsr.w	Lfe9938
 	move.w	d1,($003a,a3)
@@ -12147,6 +12511,7 @@ Lfe886a:
 	clr.l	($001c,a3)
 	clr.l	d0
 	bra.s	Lfe8880
+
 Lfe887e:
 	moveq.l	#$fb,d0
 Lfe8880:
@@ -12208,11 +12573,13 @@ Lfe88bc:
 	sub.w	d6,d0
 	move.w	d0,d6
 	bra.s	Lfe897a
+
 Lfe8906:
 	movem.l	d2-d7/a2-a4,-(a7)
 	move.b	(a5),d7
 	swap.w	d7
 	bra.s	Lfe8916
+
 Lfe8910:
 	movem.l	d2-d7/a2-a4,-(a7)
 	moveq.l	#$ff,d7
@@ -12242,7 +12609,7 @@ Lfe893c:
 	swap.w	d7
 	move.b	($000b,a1),d5
 	bne.s	Lfe8954
-	moveq.l	#$20,d5
+	moveq.l	#$20,d5			;' '
 Lfe8954:
 	and.b	d7,d5
 	swap.w	d7
@@ -12262,6 +12629,7 @@ Lfe8968:
 	move.w	d4,d0
 	sub.w	d2,d0
 	bra.s	Lfe8990
+
 Lfe897a:
 	subq.w	#1,d2
 	beq.s	Lfe898e
@@ -12293,20 +12661,21 @@ Lfe89aa:
 	cmp.b	d0,d7
 	bne.s	Lfe89ee
 	bra.s	Lfe89e6
+
 Lfe89bc:
-	cmp.b	#$3f,d7
+	cmp.b	#$3f,d7			;'?'
 	beq.s	Lfe89e6
-	cmp.b	#$61,d0
+	cmp.b	#$61,d0			;'a'
 	bcs.s	Lfe89d2
-	cmp.b	#$7b,d0
+	cmp.b	#$7b,d0			;'{'
 	bcc.s	Lfe89d2
-	sub.b	#$20,d0
+	sub.b	#$20,d0			;' '
 Lfe89d2:
-	cmp.b	#$61,d7
+	cmp.b	#$61,d7			;'a'
 	bcs.s	Lfe89e2
-	cmp.b	#$7b,d7
+	cmp.b	#$7b,d7			;'{'
 	bcc.s	Lfe89e2
-	sub.b	#$20,d7
+	sub.b	#$20,d7			;' '
 Lfe89e2:
 	cmp.b	d0,d7
 	bne.s	Lfe89ee
@@ -12320,7 +12689,7 @@ Lfe89ee:
 
 Lfe89f0:
 	move.b	(a4)+,d7
-	cmp.b	#$3f,d7
+	cmp.b	#$3f,d7			;'?'
 	beq.s	Lfe89fe
 	cmp.b	d0,d7
 	bne.w	Lfe897a
@@ -12366,6 +12735,7 @@ Lfe8a56:
 	move.w	d4,d0
 	sub.w	d2,d0
 	bra.s	Lfe8a50
+
 Lfe8a5c:
 	movem.l	d1-d7/a0-a4,-(a7)
 	clr.l	d0
@@ -12455,6 +12825,7 @@ Lfe8b10:
 	move.w	d0,d1
 	subq.w	#1,d7
 	bra.s	Lfe8b10
+
 Lfe8b30:
 	move.w	d0,-(a7)
 	moveq.l	#$ff,d0
@@ -12468,6 +12839,7 @@ Lfe8b3a:
 	cmp.w	#$ffff,d0
 	bne.s	Lfe8b3a
 	bra.w	Lfe8c50
+
 Lfe8b52:
 	movem.l	d1-d7/a0-a6,-(a7)
 	movea.l	a0,a3
@@ -12585,10 +12957,12 @@ Lfe8c56:
 	bne.s	Lfe8c50
 	clr.l	d0
 	bra.s	Lfe8c50
+
 Lfe8c62:
 	move.l	(a7)+,d1
 	move.l	(a7)+,d5
 	bra.s	Lfe8c3a
+
 Lfe8c68:
 	movem.l	d1-d7/a0-a6,-(a7)
 	movea.l	a0,a3
@@ -12745,11 +13119,13 @@ Lfe8dc6:
 	bcc.s	Lfe8db8
 	movea.l	a2,a1
 	bra.s	Lfe8db8
+
 Lfe8de2:
 	cmpi.b	#-$01,($0004,a1)
 	beq.s	Lfe8db8
 	movea.l	a2,a1
 	bra.s	Lfe8db8
+
 Lfe8dee:
 	movea.l	a1,a2
 	bsr.w	Lfe8e7e
@@ -12768,6 +13144,7 @@ Lfe8e0c:
 	move.l	#$ffffffff,($000c,a2)
 	move.w	#$ffff,($0008,a2)
 	bra.s	Lfe8e3c
+
 Lfe8e2c:
 	movea.l	(a7)+,a2
 	move.b	($0000.w,a0),($0004,a2)
@@ -12791,9 +13168,11 @@ Lfe8e5a:
 	bne.s	Lfe8e66
 	move.l	(a2),(a1)
 	bra.s	Lfe8e5a
+
 Lfe8e66:
 	movea.l	d2,a1
 	bra.s	Lfe8e5a
+
 Lfe8e6a:
 	cmpa.l	a1,a2
 	beq.s	Lfe8e72
@@ -12922,6 +13301,7 @@ Lfe8fac:
 Lfe8fb6:
 	bsr.w	Lfe8da6
 	bra.s	Lfe8fc0
+
 Lfe8fbc:
 	bsr.w	Lfe8d7a
 Lfe8fc0:
@@ -12953,6 +13333,7 @@ Lfe8ff6:
 	beq.s	Lfe9006
 	moveq.l	#$09,d0
 	bra.s	Lfe9006
+
 Lfe9004:
 	moveq.l	#$04,d0
 Lfe9006:
@@ -12977,6 +13358,7 @@ Lfe9006:
 Lfe9050:
 	moveq.l	#$08,d0
 	bra.s	Lfe9056
+
 Lfe9054:
 	moveq.l	#$04,d0
 Lfe9056:
@@ -13006,6 +13388,7 @@ Lfe909a:
 	bpl.s	Lfe909a
 	movea.l	#$fffffff1,a0
 	bra.s	Lfe90b2
+
 Lfe90b0:
 	bsr.s	Lfe90ba
 Lfe90b2:
@@ -13071,6 +13454,7 @@ Lfe913c:
 	bsr.w	Lfe9938
 	move.w	d1,($001c,a0)
 	bra.s	Lfe9164
+
 Lfe915a:
 	clr.w	($001c,a0)
 	move.w	#$2f00,($001e,a0)
@@ -13102,6 +13486,7 @@ Lfe91a6:
 	move.b	#-$01,($0004,a0)
 	clr.b	($0006,a0)
 	bra.s	Lfe91a6
+
 Lfe91c0:
 	clr.l	(a0)
 	move.l	a1,($0000d4e8)
@@ -13116,6 +13501,7 @@ Lfe91ce:
 	move.l	a2,($0000d8d8)
 	clr.l	d6
 	bra.s	Lfe9202
+
 Lfe91ea:
 	movea.l	d1,a3
 	move.l	($0018,a3),d1
@@ -13149,6 +13535,7 @@ Lfe9216:
 	addq.w	#1,d7
 	addq.w	#1,d6
 	bra.s	Lfe9216
+
 Lfe9242:
 	move.l	#$ffffffff,($0018,a3)
 	movea.l	(a7)+,a3
@@ -13209,15 +13596,16 @@ Lfe92dc:
 	move.b	#-$01,($0017,a2)
 	clr.w	($001c,a2)
 	lea.l	($001e,a2),a3
-	move.b	#$2f,(a3)+
+	move.b	#$2f,(a3)+		;'/'
 	clr.b	(a3)+
 	rts
 
 Lfe9300:
-	move.b	#$3f,($0000d8df)
+	move.b	#$3f,($0000d8df)	;'?'
 	bra.s	Lfe9312
+
 Lfe930a:
-	move.b	#$20,($0000d8df)
+	move.b	#$20,($0000d8df)	;' '
 Lfe9312:
 	movem.l	d1-d2/a0-a1/a3-a4/a6,-(a7)
 	lea.l	(-$005a,a7),a7
@@ -13233,7 +13621,7 @@ Lfe9328:
 
 Lfe9332:
 	movem.l	d1-d2/a0-a1/a3-a4/a6,-(a7)
-	move.b	#$20,($0000d8df)
+	move.b	#$20,($0000d8df)	;' '
 	lea.l	(-$005a,a7),a7
 	movea.l	a7,a4
 	bsr.s	Lfe93b8
@@ -13253,7 +13641,7 @@ Lfe9332:
 	lea.l	($0043,a2),a3
 	moveq.l	#$07,d2
 Lfe936e:
-	cmpi.b	#$20,(a3)
+	cmpi.b	#$20,(a3)		;' '
 	beq.s	Lfe9390
 	addq.l	#1,a3
 	dbra.w	d2,Lfe936e
@@ -13262,7 +13650,7 @@ Lfe936e:
 Lfe9380:
 	move.b	(a4)+,d0
 	beq.s	Lfe9390
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe9390
 	move.b	d0,(a3)+
 	dbra.w	d2,Lfe9380
@@ -13271,50 +13659,52 @@ Lfe9390:
 	lea.l	($0056,a2),a3
 	tst.b	($0000d8de)
 	beq.s	Lfe93b2
-	move.b	#$2e,(a3)+
+	move.b	#$2e,(a3)+		;'.'
 	moveq.l	#$02,d2
 Lfe93a4:
 	rol.l	#8,d1
-	cmp.b	#$20,d1
+	cmp.b	#$20,d1			;' '
 	beq.s	Lfe93b2
 	move.b	d1,(a3)+
 	dbra.w	d2,Lfe93a4
 Lfe93b2:
 	clr.b	(a3)
 	bra.w	Lfe9328
+
 Lfe93b8:
 	move.b	(a1)+,d0
 	beq.s	Lfe9434
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe93b8
-	moveq.l	#$59,d1
+	moveq.l	#$59,d1			;'Y'
 	bra.s	Lfe93ca
+
 Lfe93c6:
 	move.b	(a1)+,d0
 	beq.s	Lfe9434
 Lfe93ca:
-	cmp.b	#$5c,d0
+	cmp.b	#$5c,d0			;'\'
 	beq.s	Lfe9438
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcs.s	Lfe9430
 	beq.s	Lfe943e
-	cmp.b	#$22,d0
+	cmp.b	#$22,d0			;'"'
 	beq.s	Lfe9430
-	cmp.b	#$27,d0
+	cmp.b	#$27,d0			;'''
 	beq.s	Lfe9430
-	cmp.b	#$2b,d0
+	cmp.b	#$2b,d0			;'+'
 	bcs.s	Lfe942a
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bcs.s	Lfe9430
-	cmp.b	#$3b,d0
+	cmp.b	#$3b,d0			;';'
 	bcs.s	Lfe942a
-	cmp.b	#$3f,d0
+	cmp.b	#$3f,d0			;'?'
 	bcs.s	Lfe9430
-	cmp.b	#$5b,d0
+	cmp.b	#$5b,d0			;'['
 	beq.s	Lfe9430
-	cmp.b	#$5d,d0
+	cmp.b	#$5d,d0			;']'
 	beq.s	Lfe9430
-	cmp.b	#$7c,d0
+	cmp.b	#$7c,d0			;'|'
 	beq.s	Lfe9430
 	cmp.b	#$80,d0
 	bcs.s	Lfe942a
@@ -13340,27 +13730,29 @@ Lfe9434:
 	rts
 
 Lfe9438:
-	move.b	#$2f,d0
+	move.b	#$2f,d0			;'/'
 	bra.s	Lfe942a
+
 Lfe943e:
 	move.b	(a1)+,d0
 	beq.s	Lfe9434
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe943e
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lfe9430
 	bra.s	Lfe942a
+
 Lfe9450:
 	clr.b	(a2)
 Lfe9452:
 	move.b	(a1)+,d0
 	beq.w	Lfe9742
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lfe9452
-	cmpi.b	#$3a,(a1)
+	cmpi.b	#$3a,(a1)		;':'
 	bne.s	Lfe948e
 	or.b	#$20,d0
-	sub.b	#$61,d0
+	sub.b	#$61,d0			;'a'
 	cmp.b	#$1a,d0
 	bcc.w	Lfe97b6
 	move.b	($0000d8dc),d1
@@ -13371,6 +13763,7 @@ Lfe9452:
 	move.b	(a1)+,d0
 	beq.w	Lfe974c
 	bra.s	Lfe9498
+
 Lfe948e:
 	move.b	($0000d8dd),d1
 	move.b	d1,($0001,a2)
@@ -13390,8 +13783,9 @@ Lfe94ae:
 	move.b	(a1)+,d0
 	bne.s	Lfe949c
 	bra.s	Lfe94c6
+
 Lfe94ba:
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	bne.s	Lfe94c2
 	move.l	a1,d2
 Lfe94c2:
@@ -13402,11 +13796,11 @@ Lfe94c6:
 	subq.l	#1,a1
 	tst.l	d2
 	bne.s	Lfe951e
-	cmpi.b	#$2e,(a1)
+	cmpi.b	#$2e,(a1)		;'.'
 	bne.s	Lfe9512
 	move.b	($0001,a1),d0
 	beq.s	Lfe9502
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lfe9512
 	tst.b	($0002,a1)
 	bne.w	Lfe97b6
@@ -13414,30 +13808,33 @@ Lfe94c6:
 	bsr.w	Lfe97c6
 	bmi.w	Lfe97b2
 	bsr.w	Lfe9798
-	move.b	#$2f,(a3)+
+	move.b	#$2f,(a3)+		;'/'
 	clr.b	(a3)
 	bra.w	Lfe9750
+
 Lfe9502:
 	lea.l	($0002,a2),a3
 	bsr.w	Lfe97c6
 	bmi.w	Lfe97b2
 	bra.w	Lfe9750
+
 Lfe9512:
 	bsr.w	Lfe97c6
 	bmi.w	Lfe97b2
 	bra.w	Lfe95f2
+
 Lfe951e:
 	sub.l	a1,d2
 	bcs.w	Lfe97ba
 	lea.l	($0002,a2),a3
 	move.b	(a1),d0
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe9574
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lfe9568
 	addq.l	#1,a1
 	subq.w	#1,d2
-	cmpi.b	#$2e,(a1)
+	cmpi.b	#$2e,(a1)		;'.'
 	bne.s	Lfe9552
 	subq.w	#1,d2
 	addq.l	#1,a1
@@ -13445,19 +13842,22 @@ Lfe951e:
 	bmi.w	Lfe97b2
 	bsr.w	Lfe9798
 	bra.s	Lfe9580
+
 Lfe9552:
-	cmpi.b	#$2f,(a1)+
+	cmpi.b	#$2f,(a1)+		;'/'
 	bne.w	Lfe97b6
 	subq.w	#1,d2
 	bsr.w	Lfe97c6
 	bmi.w	Lfe97b2
 	subq.l	#1,a3
 	bra.s	Lfe9580
+
 Lfe9568:
 	bsr.w	Lfe97c6
 	bmi.w	Lfe97b2
 	subq.l	#1,a3
 	bra.s	Lfe9580
+
 Lfe9574:
 	tst.w	d2
 	beq.s	Lfe95d6
@@ -13469,24 +13869,25 @@ Lfe957a:
 Lfe9580:
 	tst.w	d2
 	beq.s	Lfe95d6
-	cmpi.b	#$2e,(a1)
+	cmpi.b	#$2e,(a1)		;'.'
 	bne.s	Lfe95b0
 	addq.l	#1,a1
 	subq.w	#1,d2
 	move.b	(a1)+,d0
 	subq.w	#1,d2
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe9580
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.w	Lfe97b6
-	cmpi.b	#$2f,(a1)
+	cmpi.b	#$2f,(a1)		;'/'
 	bne.w	Lfe97b6
 	addq.l	#1,a3
 	bsr.w	Lfe9798
 	bra.s	Lfe9574
+
 Lfe95b0:
 	move.b	(a1)+,d0
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe957a
 	move.b	d0,(a3)+
 	subq.w	#1,d2
@@ -13513,33 +13914,34 @@ Lfe95d6:
 Lfe95f2:
 	tst.b	(a1)
 	beq.w	Lfe9750
-	cmpi.b	#$2e,(a1)
+	cmpi.b	#$2e,(a1)		;'.'
 	bne.s	Lfe9624
 	addq.l	#1,a1
 	move.b	(a1),d0
 	beq.w	Lfe9750
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.w	Lfe96e0
 	addq.l	#1,a1
 	tst.b	(a1)
 	bne.w	Lfe97b6
 	bsr.w	Lfe9798
-	move.b	#$2f,(a3)+
+	move.b	#$2f,(a3)+		;'/'
 	clr.b	(a3)+
 	bra.w	Lfe9750
+
 Lfe9624:
 	move.w	#$0007,d1
 	lea.l	($0043,a2),a3
 Lfe962c:
 	move.b	(a1)+,d0
 	beq.s	Lfe9682
-	cmp.b	#$2a,d0
+	cmp.b	#$2a,d0			;'*'
 	beq.s	Lfe968e
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	beq.s	Lfe96a2
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.w	Lfe97b6
-	cmp.b	#$3f,d0
+	cmp.b	#$3f,d0			;'?'
 	bne.s	Lfe964c
 	addq.b	#1,(a2)
 Lfe964c:
@@ -13550,54 +13952,62 @@ Lfe964c:
 Lfe965a:
 	move.b	(a1)+,d0
 	beq.s	Lfe96b4
-	cmp.b	#$2a,d0
+	cmp.b	#$2a,d0			;'*'
 	beq.s	Lfe96be
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	beq.s	Lfe96c8
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.w	Lfe97b6
-	cmp.b	#$3f,d0
+	cmp.b	#$3f,d0			;'?'
 	bne.s	Lfe967a
 	addq.b	#1,(a2)
 Lfe967a:
 	move.b	d0,(a3)+
 	dbra.w	d1,Lfe965a
 	bra.s	Lfe96d0
+
 Lfe9682:
-	move.b	#$20,(a3)+
+	move.b	#$20,(a3)+		;' '
 	dbra.w	d1,Lfe9682
 	bra.w	Lfe9756
+
 Lfe968e:
 	addq.b	#1,(a2)
-	move.b	#$3f,(a3)+
+	move.b	#$3f,(a3)+		;'?'
 	dbra.w	d1,Lfe968e
 	move.w	#$0009,d1
 	lea.l	($004e,a2),a3
 	bra.s	Lfe96be
+
 Lfe96a2:
-	move.b	#$20,(a3)+
+	move.b	#$20,(a3)+		;' '
 	dbra.w	d1,Lfe96a2
 	move.w	#$0009,d1
 	lea.l	($004e,a2),a3
 	bra.s	Lfe96c8
+
 Lfe96b4:
 	clr.b	(a3)+
 	dbra.w	d1,Lfe96b4
 	bra.w	Lfe9758
+
 Lfe96be:
-	move.b	#$3f,(a3)+
+	move.b	#$3f,(a3)+		;'?'
 	dbra.w	d1,Lfe96be
 	bra.s	Lfe96d0
+
 Lfe96c8:
 	clr.b	(a3)+
 	dbra.w	d1,Lfe96c8
 	bra.s	Lfe96e8
+
 Lfe96d0:
 	move.b	(a1)+,d0
 	beq.w	Lfe9758
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.w	Lfe97be
 	bra.s	Lfe96e8
+
 Lfe96e0:
 	bsr.w	Lfe9770
 	bsr.w	Lfe9788
@@ -13608,13 +14018,13 @@ Lfe96e8:
 Lfe96f8:
 	move.b	(a1)+,d0
 	beq.s	Lfe972a
-	cmp.b	#$2a,d0
+	cmp.b	#$2a,d0			;'*'
 	beq.s	Lfe9736
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	beq.w	Lfe97b6
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	beq.w	Lfe97b6
-	cmp.b	#$3f,d0
+	cmp.b	#$3f,d0			;'?'
 	bne.s	Lfe971a
 	addq.b	#1,(a2)
 Lfe971a:
@@ -13627,16 +14037,17 @@ Lfe9720:
 	rts
 
 Lfe972a:
-	move.b	#$20,(a3)+
+	move.b	#$20,(a3)+		;' '
 	dbra.w	d1,Lfe972a
 	clr.l	d0
 	rts
 
 Lfe9736:
 	addq.b	#1,(a2)
-	move.b	#$3f,(a3)+
+	move.b	#$3f,(a3)+		;'?'
 	dbra.w	d1,Lfe9736
 	bra.s	Lfe9720
+
 Lfe9742:
 	move.b	($0000d8dd),d1
 	move.b	d1,($0001,a2)
@@ -13682,7 +14093,7 @@ Lfe9798:
 	cmpa.l	a0,a3
 	beq.s	Lfe97ac
 Lfe97a2:
-	cmpi.b	#$2f,-(a3)
+	cmpi.b	#$2f,-(a3)		;'/'
 	bne.s	Lfe97a2
 	clr.l	d0
 	rts
@@ -13720,7 +14131,7 @@ Lfe97c6:
 	movea.l	d0,a0
 	lea.l	($0002,a2),a3
 	lea.l	($001e,a0),a0
-	move.w	#$0040,d0
+	move.w	#$0040,d0		;'@'
 Lfe97e0:
 	move.b	(a0)+,(a3)+
 	beq.s	Lfe97e8
@@ -13923,6 +14334,7 @@ Lfe9980:
 	beq.s	Lfe999a
 	bsr.s	Lfe99ac
 	bra.s	Lfe99a6
+
 Lfe999a:
 	move.w	($001c,a0),d1
 	bsr.s	Lfe992a
@@ -13945,26 +14357,28 @@ Lfe99bc:
 Lfe99c2:
 	move.b	(a5)+,d0
 	beq.w	Lfe9aa2
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe99ee
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	beq.s	Lfe99f0
 	move.b	d0,(a2)+
 	dbra.w	d3,Lfe99c2
 Lfe99da:
 	move.b	(a5)+,d0
 	beq.w	Lfe9aa2
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe99fa
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lfe99da
 	bra.s	Lfe99fc
+
 Lfe99ee:
 	subq.l	#1,a5
 Lfe99f0:
-	move.b	#$20,(a2)+
+	move.b	#$20,(a2)+		;' '
 	dbra.w	d3,Lfe99f0
 	bra.s	Lfe99fc
+
 Lfe99fa:
 	subq.l	#1,a5
 Lfe99fc:
@@ -13972,18 +14386,19 @@ Lfe99fc:
 Lfe99fe:
 	move.b	(a5)+,d0
 	beq.w	Lfe9aa2
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe9a1e
 	move.b	d0,(a2)+
 	dbra.w	d3,Lfe99fe
 Lfe9a10:
 	move.b	(a5)+,d0
 	beq.w	Lfe9aa2
-	cmp.b	#$2f,d0
+	cmp.b	#$2f,d0			;'/'
 	beq.s	Lfe9a26
 	bra.s	Lfe9a10
+
 Lfe9a1e:
-	move.b	#$20,(a2)+
+	move.b	#$20,(a2)+		;' '
 	dbra.w	d3,Lfe9a1e
 Lfe9a26:
 	movea.l	a7,a2
@@ -14026,6 +14441,7 @@ Lfe9a6a:
 	bsr.w	Lfe992a
 	move.w	#$7fff,d2
 	bra.w	Lfe99bc
+
 Lfe9a8a:
 	subq.w	#1,d2
 	beq.s	Lfe9a9e
@@ -14149,10 +14565,12 @@ Lfe9b96:
 	clr.l	d0
 	move.w	d1,d0
 	bra.s	Lfe9baa
+
 Lfe9ba2:
 	move.w	d1,d0
 	addq.w	#1,d3
 	bra.s	Lfe9b96
+
 Lfe9ba8:
 	addq.w	#1,d3
 Lfe9baa:
@@ -14205,10 +14623,12 @@ Lfe9c0a:
 	bsr.w	Lfe9d46
 	move.w	(a7)+,d1
 	bra.s	Lfe9bfe
+
 Lfe9c1a:
 	move.w	#$1005,d7
 	trap	#14
 	bra.s	Lfe9c1a
+
 Lfe9c22:
 	moveq.l	#$02,d0
 Lfe9c24:
@@ -14240,6 +14660,7 @@ Lfe9c52:
 	clr.l	d0
 	move.w	d2,d0
 	bra.s	Lfe9c4a
+
 Lfe9c62:
 	movem.l	d4-d6/a1-a2,-(a7)
 	clr.l	d6
@@ -14268,16 +14689,19 @@ Lfe9c8a:
 	bsr.w	Lfe9e86
 	bmi.s	Lfe9caa
 	bra.s	Lfe9c8a
+
 Lfe9ca8:
 	moveq.l	#$e9,d0
 Lfe9caa:
 	movem.l	(a7)+,d4-d6/a1-a2
 	bra.s	Lfe9c4a
+
 Lfe9cb0:
 	move.w	#$ffff,-(a2)
 	bsr.w	Lfe8fc0
 	move.l	d6,d0
 	bra.s	Lfe9caa
+
 Lfe9cbc:
 	moveq.l	#$02,d0
 	movem.l	d1-d3,-(a7)
@@ -14299,6 +14723,7 @@ Lfe9ce2:
 	dbra.w	d1,Lfe9cd4
 	move.l	d3,d0
 	bra.w	Lfe9c4a
+
 Lfe9cee:
 	movem.l	d4-d5/a1-a2,-(a7)
 	sub.w	d0,d1
@@ -14322,11 +14747,13 @@ Lfe9d0a:
 	bsr.w	Lfe9e86
 	bmi.s	Lfe9d24
 	bra.s	Lfe9d04
+
 Lfe9d22:
 	move.l	d3,d0
 Lfe9d24:
 	movem.l	(a7)+,d4-d5/a1-a2
 	bra.w	Lfe9c4a
+
 Lfe9d2c:
 	movem.l	d1,-(a7)
 	move.w	d0,d1
@@ -14365,6 +14792,7 @@ Lfe9d46:
 	move.b	d1,(a1)
 	lsr.w	#4,d0
 	bra.s	Lfe9da4
+
 Lfe9d84:
 	clr.l	d0
 	move.b	(a2),d0
@@ -14398,6 +14826,7 @@ Lfe9db6:
 	move.w	(a2),d0
 	move.w	d2,(a2)
 	bra.s	Lfe9dae
+
 Lfe9dcc:
 	movem.l	d1/a1-a2,-(a7)
 	cmpi.w	#$0ff8,($000e,a0)
@@ -14413,6 +14842,7 @@ Lfe9dcc:
 	move.b	(a1),d0
 	lsr.w	#4,d0
 	bra.s	Lfe9dfc
+
 Lfe9df0:
 	clr.l	d0
 	move.b	(a2),d0
@@ -14434,6 +14864,7 @@ Lfe9e0e:
 	clr.l	d0
 	move.w	(a2),d0
 	bra.s	Lfe9e06
+
 Lfe9e1a:
 	movem.l	d1-d2/a3,-(a7)
 	bsr.s	Lfe9e6a
@@ -14492,7 +14923,7 @@ Lfe9e86:
 	bsr.w	Lfe8da6
 	tst.l	d0
 	bmi.s	Lfe9e9a
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	bsr.w	Lfe8fd2
 	movea.l	a1,a2
 	adda.l	d2,a2
@@ -14540,21 +14971,23 @@ Lfe9f00:
 	dbra.w	d1,Lfe9ef8
 	move.l	a1,d0
 	bra.s	Lfe9f30
+
 Lfe9f08:
 	sub.b	d2,d3
-	cmp.b	#$20,d3
+	cmp.b	#$20,d3			;' '
 	beq.s	Lfe9f24
 	cmp.b	#$e0,d3
 	bne.s	Lfe9f30
-	cmp.b	#$61,d2
+	cmp.b	#$61,d2			;'a'
 	bcs.s	Lfe9f30
-	cmp.b	#$7b,d2
+	cmp.b	#$7b,d2			;'{'
 	bcs.s	Lfe9f00
 	bra.s	Lfe9f30
+
 Lfe9f24:
-	cmp.b	#$41,d2
+	cmp.b	#$41,d2			;'A'
 	bcs.s	Lfe9f30
-	cmp.b	#$5b,d2
+	cmp.b	#$5b,d2			;'['
 	bcs.s	Lfe9f00
 Lfe9f30:
 	movea.l	(a1),a1
@@ -14658,6 +15091,7 @@ Lfea09e:
 	movea.l	($0000b85e),a5
 	lea.l	($0000b862),a4
 	bra.w	Lfea016
+
 Lfea0b2:
 	movem.l	d1-d2,-(a7)
 	moveq.l	#$10,d1
@@ -14666,12 +15100,13 @@ Lfea0b2:
 	move.l	#$005f001e,d2
 	IOCS	_B_CONSOL
 	move.l	#$0000b90e,d1
-	moveq.l	#$37,d0
+	moveq.l	#$37,d0			;'7'
 	trap	#15
 	IOCS	_B_SFTSNS
 	move.w	d0,($0000fae6)
 	movem.l	(a7)+,d1-d2
 	bra.w	Lfea03c
+
 Lfea0e4:
 	movem.l	d1/d3/a1,-(a7)
 	move.l	($0012,a5),d3
@@ -14686,63 +15121,67 @@ Lfea0f4:
 Lfea0fc:
 	movem.l	(a7)+,d1/d3/a1
 	bra.w	Lfea044
+
 Lfea104:
 	bra.w	Lfea044
+
 Lfea108:
 	IOCS	_B_PUTC
 	rts
 
 Lfea10e:
 	move.b	(a0)+,d0
-	cmp.b	#$5b,d0
+	cmp.b	#$5b,d0			;'['
 	bne.s	Lfea15e
 	move.b	(a0)+,d0
-	cmp.b	#$36,d0
+	cmp.b	#$36,d0			;'6'
 	bne.s	Lfea160
-	cmpi.b	#$6e,(a0)
+	cmpi.b	#$6e,(a0)		;'n'
 	bne.s	Lfea15e
 	lea.l	($0000fac4),a0
 	move.l	a0,($0000fac0)
 	move.b	#$1b,(a0)+
-	move.b	#$5b,(a0)+
+	move.b	#$5b,(a0)+		;'['
 	movem.l	d1-d2,-(a7)
 	moveq.l	#$ff,d1
 	IOCS	_B_LOCATE
 	move.l	d1,d2
 	addq.w	#1,d1
 	bsr.s	Lfea186
-	move.b	#$3b,(a0)+
+	move.b	#$3b,(a0)+		;';'
 	move.l	d2,d1
 	swap.w	d1
 	addq.w	#1,d1
 	bsr.s	Lfea186
 	movem.l	(a7)+,d1-d2
-	move.b	#$52,(a0)+
+	move.b	#$52,(a0)+		;'R'
 	clr.b	(a0)
 Lfea15e:
 	rts
 
 Lfea160:
-	cmp.b	#$3e,d0
+	cmp.b	#$3e,d0			;'>'
 	bne.s	Lfea15e
-	cmpi.b	#$31,(a0)+
+	cmpi.b	#$31,(a0)+		;'1'
 	bne.s	Lfea15e
 	move.b	(a0),d0
-	cmp.b	#$68,d0
+	cmp.b	#$68,d0			;'h'
 	beq.s	Lfea180
-	cmp.b	#$6c,d0
+	cmp.b	#$6c,d0			;'l'
 	bne.s	Lfea15e
 	clr.l	d1
 	bra.w	Lfea278
+
 Lfea180:
 	moveq.l	#$03,d1
 	bra.w	Lfea278
+
 Lfea186:
 	and.l	#$000000ff,d1
 	divu.w	#$0064,d1
 	tst.w	d1
 	beq.s	Lfea19c
-	add.b	#$30,d1
+	add.b	#$30,d1			;'0'
 	move.b	d1,(a0)+
 	clr.w	d1
 Lfea19c:
@@ -14750,11 +15189,11 @@ Lfea19c:
 	divu.w	#$000a,d1
 	tst.w	d1
 	beq.s	Lfea1ac
-	add.b	#$30,d1
+	add.b	#$30,d1			;'0'
 	move.b	d1,(a0)+
 Lfea1ac:
 	swap.w	d1
-	add.b	#$30,d1
+	add.b	#$30,d1			;'0'
 	move.b	d1,(a0)+
 	rts
 
@@ -14877,26 +15316,28 @@ Lfea2d4:
 Lfea2d6:
 	bsr.w	Lfea3e4
 	bra.s	Lfea2b4
+
 Lfea2dc:
 	bsr.w	Lfea3e4
 	bsr.s	Lfea2b4
 	bra.w	Lfea3ae
+
 Lfea2e6:
 	move.l	d0,d0
 	move.w	d1,d0
 	add.w	d2,d0
-	cmp.w	#$0021,d0
+	cmp.w	#$0021,d0		;'!'
 	bcc.w	Lfea1d2
 	cmpi.b	#$03,($0000f706)
 	beq.s	Lfea306
-	cmp.w	#$0020,d0
+	cmp.w	#$0020,d0		;' '
 	beq.w	Lfea1d2
 Lfea306:
 	asl.w	#4,d1
 	and.l	#$0000ffff,d1
 	subq.w	#1,d2
 	movem.l	d1-d2,-(a7)
-	moveq.l	#$2e,d0
+	moveq.l	#$2e,d0			;'.'
 	moveq.l	#$ff,d1
 	moveq.l	#$ff,d2
 	trap	#15
@@ -14928,7 +15369,7 @@ Lfea330:
 	move.w	#$0090,d0
 	trap	#15
 Lfea36a:
-	moveq.l	#$2e,d0
+	moveq.l	#$2e,d0			;'.'
 	moveq.l	#$ff,d1
 	moveq.l	#$ff,d2
 	trap	#15
@@ -14966,7 +15407,7 @@ Lfea3ae:
 	cmp.b	#$01,d0
 	bne.s	Lfea3de
 	adda.l	#$00000140,a6
-	move.b	#$2a,d0
+	move.b	#$2a,d0			;'*'
 Lfea3dc:
 	bsr.s	Lfea432
 Lfea3de:
@@ -15017,10 +15458,10 @@ Lfea432:
 	moveq.l	#$02,d5
 	bsr.s	Lfea46c
 	move.w	#$0004,d7
-	moveq.l	#$32,d5
+	moveq.l	#$32,d5			;'2'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea464
-	moveq.l	#$21,d5
+	moveq.l	#$21,d5			;'!'
 Lfea464:
 	bsr.s	Lfea46c
 	movem.l	(a7)+,d0-d7/a0-a5
@@ -15069,14 +15510,15 @@ Lfea4b0:
 Lfea4ee:
 	moveq.l	#$03,d1
 	bra.s	Lfea4f4
+
 Lfea4f2:
 	moveq.l	#$0b,d1
 Lfea4f4:
 	moveq.l	#$10,d4
-	moveq.l	#$50,d7
+	moveq.l	#$50,d7			;'P'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea504
-	moveq.l	#$30,d7
+	moveq.l	#$30,d7			;'0'
 Lfea504:
 	clr.l	d2
 	clr.l	d3
@@ -15108,33 +15550,36 @@ Lfea52e:
 Lfea536:
 	moveq.l	#$18,d0
 	bra.w	Lfea5ea
+
 Lfea53c:
-	moveq.l	#$50,d0
+	moveq.l	#$50,d0			;'P'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea54a
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 Lfea54a:
 	rts
 
 Lfea54c:
 	moveq.l	#$03,d1
 	bra.s	Lfea552
+
 Lfea550:
 	moveq.l	#$0b,d1
 Lfea552:
 	moveq.l	#$00,d7
-	move.w	#$0050,d4
+	move.w	#$0050,d4		;'P'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea504
-	moveq.l	#$30,d4
+	moveq.l	#$30,d4			;'0'
 	bra.s	Lfea504
+
 Lfea566:
 	clr.l	d5
 	move.w	(a6),d5
-	moveq.l	#$4f,d4
+	moveq.l	#$4f,d4			;'O'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea578
-	moveq.l	#$2f,d4
+	moveq.l	#$2f,d4			;'/'
 Lfea578:
 	sub.l	d5,d4
 	bcs.s	Lfea5ac
@@ -15162,34 +15607,36 @@ Lfea5ae:
 	moveq.l	#$17,d0
 	bsr.s	Lfea61a
 	bsr.w	Lfea684
-	moveq.l	#$50,d0
+	moveq.l	#$50,d0			;'P'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea5c4
-	moveq.l	#$30,d0
+	moveq.l	#$30,d0			;'0'
 Lfea5c4:
 	rts
 
 Lfea5c6:
 	moveq.l	#$01,d1
 	bra.s	Lfea5cc
+
 Lfea5ca:
 	moveq.l	#$09,d1
 Lfea5cc:
 	moveq.l	#$00,d7
-	move.w	#$0050,d4
+	move.w	#$0050,d4		;'P'
 	cmpi.b	#$16,($00e80029)
 	beq.w	Lfea504
-	moveq.l	#$30,d4
+	moveq.l	#$30,d4			;'0'
 	bra.w	Lfea504
+
 Lfea5e4:
 	moveq.l	#$18,d0
 	bsr.s	Lfea61a
 	rts
 
 Lfea5ea:
-	move.w	#$005f,d1
+	move.w	#$005f,d1		;'_'
 	move.w	#$000f,d2
-	moveq.l	#$20,d3
+	moveq.l	#$20,d3			;' '
 	lea.l	($0000e106),a1
 	lea.l	($00e0f800),a2
 	movem.l	d0-d3,-(a7)
@@ -15201,10 +15648,10 @@ Lfea5ea:
 	rts
 
 Lfea61a:
-	moveq.l	#$4f,d1
+	moveq.l	#$4f,d1			;'O'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea628
-	moveq.l	#$2f,d1
+	moveq.l	#$2f,d1			;'/'
 Lfea628:
 	move.w	#$000f,d2
 	moveq.l	#$7f,d3
@@ -15221,7 +15668,7 @@ Lfea628:
 
 Lfea656:
 	move.w	#$000f,d2
-	moveq.l	#$20,d3
+	moveq.l	#$20,d3			;' '
 	lea.l	($00e0f800),a2
 	movem.l	d0-d3,-(a7)
 	bsr.s	Lfea672
@@ -15238,11 +15685,11 @@ Lfea676:
 
 Lfea684:
 	moveq.l	#$13,d1
-	moveq.l	#$30,d3
+	moveq.l	#$30,d3			;'0'
 	cmpi.b	#$16,($00e80029)
 	beq.s	Lfea696
 	moveq.l	#$0b,d1
-	moveq.l	#$50,d3
+	moveq.l	#$50,d3			;'P'
 Lfea696:
 	move.w	#$000f,d2
 	lea.l	($00e0f800),a2
@@ -15280,18 +15727,22 @@ Lfea6e2:
 Lfea6ec:
 	movem.l	(a7)+,d3/a1
 	bra.w	Lfea044
+
 Lfea6f4:
 	bsr.w	Lfea79a
 	move.b	d0,($000d,a5)
 	bra.w	Lfea044
+
 Lfea700:
 	bra.w	Lfea044
+
 Lfea704:
 	bsr.w	Lfea79a
 	tst.b	d0
 	beq.w	Lfea044
 	bsr.s	Lfea77a
 	bra.s	Lfea704
+
 Lfea712:
 	move.b	(a6)+,d2
 	clr.l	d1
@@ -15328,7 +15779,7 @@ Lfea744:
 	move.w	#$02c7,d3
 	subq.w	#1,d1
 	bmi.s	Lfea776
-	moveq.l	#$20,d3
+	moveq.l	#$20,d3			;' '
 	cmp.w	#$0014,d1
 	bcs.s	Lfea770
 	sub.w	#$0014,d1
@@ -15371,6 +15822,7 @@ Lfea79e:
 	beq.s	Lfea7b6
 	bsr.s	Lfea7bc
 	bra.s	Lfea79e
+
 Lfea7b6:
 	movem.l	(a7)+,a0
 	rts
@@ -15399,6 +15851,7 @@ Lfea802:
 	subq.l	#1,a0
 	movem.l	(a7)+,d0/a1
 	bra.w	Lfeaa0a
+
 Lfea810:
 	move.b	d0,(a0)+
 	clr.b	(a0)
@@ -15417,10 +15870,12 @@ Lfea832:
 	beq.s	Lfea83a
 	bsr.s	Lfea844
 	bra.s	Lfea832
+
 Lfea83a:
 	clr.b	(a0)
 	movem.l	(a7)+,d0/a1
 	bra.w	Lfeaa0a
+
 Lfea844:
 	cmp.b	#$a6,d0
 	bcs.s	Lfea810
@@ -15454,15 +15909,18 @@ Lfea87e:
 	bne.s	Lfea87e
 	bsr.w	Lfee1d0
 	bra.s	Lfea87c
+
 Lfea898:
 	bsr.w	Lfee20e
 	bra.s	Lfea87c
+
 Lfea89e:
 	clr.b	(a0)
 	movem.l	(a7)+,d0/a1
 	bra.w	Lfeaa0a
+
 Lfea8a8:
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcs.w	Lfea810
 	cmp.b	#$7f,d0
 	beq.w	Lfea810
@@ -15488,18 +15946,19 @@ Lfea8e0:
 	bne.s	Lfea8f0
 	bsr.w	Lfeaa0a
 	bra.w	Lfea972
+
 Lfea8f0:
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcs.s	Lfea96e
 	cmp.b	#$7f,d0
 	beq.s	Lfea96e
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lfea972
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	bcs.s	Lfea916
-	cmp.b	#$41,d0
+	cmp.b	#$41,d0			;'A'
 	bcs.s	Lfea972
-	cmp.b	#$47,d0
+	cmp.b	#$47,d0			;'G'
 	bcc.s	Lfea972
 	subq.w	#7,d0
 Lfea916:
@@ -15523,6 +15982,7 @@ Lfea916:
 	cmp.w	#$8000,d1
 	bcc.s	Lfea964
 	bra.s	Lfea960
+
 Lfea95c:
 	bsr.w	Lfeab38
 Lfea960:
@@ -15602,11 +16062,11 @@ Lfeaa02:
 
 Lfeaa0a:
 	lsr.w	#8,d0
-	cmp.b	#$70,d0
+	cmp.b	#$70,d0			;'p'
 	bcc.s	Lfeaa1e
-	cmp.b	#$5a,d0
+	cmp.b	#$5a,d0			;'Z'
 	bcs.s	Lfeaa2c
-	cmp.b	#$61,d0
+	cmp.b	#$61,d0			;'a'
 	bcc.s	Lfeaa2c
 Lfeaa1e:
 	move.w	d0,-(a7)
@@ -15668,6 +16128,7 @@ Lfeaa8c:
 	beq.s	Lfeaa80
 	add.w	#$000a,d1
 	bra.s	Lfeaa80
+
 Lfeaaa2:
 	cmp.w	#$0005,d1
 	bcs.s	Lfeaad2
@@ -15685,12 +16146,14 @@ Lfeaac8:
 	bsr.w	Lfea278
 	movem.l	(a7)+,d2/d4-d7/a0-a6
 	bra.s	Lfeaa68
+
 Lfeaad2:
 	or.w	#$0100,d1
 	move.w	d1,-(a7)
 	DOS	_DRVCTRL
 	addq.l	#2,a7
 	bra.s	Lfeaa68
+
 Lfeaade:
 	move.w	(a6)+,d0
 	move.w	(a6),d1
@@ -15748,12 +16211,14 @@ Lfeab9a:
 	movea.l	($0000c35a),a5
 	lea.l	($0000c35e),a4
 	bra.w	Lfea016
+
 Lfeabae:
 	move.w	d1,-(a7)
 	move.w	($00ed001a),d1
 	IOCS	_SET232C
 	move.w	(a7)+,d1
 	bra.w	Lfea03c
+
 Lfeabc0:
 	movem.l	d3/a1,-(a7)
 	move.l	($0012,a5),d3
@@ -15767,18 +16232,22 @@ Lfeabce:
 Lfeabd8:
 	movem.l	(a7)+,d3/a1
 	bra.w	Lfea044
+
 Lfeabe0:
 	IOCS	_ISNS232C
 	move.b	d0,($000d,a5)
 	bra.w	Lfea044
+
 Lfeabec:
 	bra.w	Lfea044
+
 Lfeabf0:
 	IOCS	_ISNS232C
 	tst.l	d0
 	beq.w	Lfea044
 	IOCS	_INP232C
 	bra.s	Lfeabf0
+
 Lfeac00:
 	movem.l	d1/d3/a1,-(a7)
 	move.l	($0012,a5),d3
@@ -15793,6 +16262,7 @@ Lfeac10:
 Lfeac1a:
 	movem.l	(a7)+,d1/d3/a1
 	bra.w	Lfea044
+
 Lfeac22:
 	IOCS	_OSNS232C
 	tst.b	d0
@@ -15817,6 +16287,7 @@ Lfeac86:
 	movea.l	($0000c446),a5
 	lea.l	($0000c44a),a4
 	bra.w	Lfea016
+
 Lfeac9a:
 	.dc.b	$00,$00,$c5,$5a,$80,$00,$00,$00
 	.dc.b	$c4,$e8,$00,$00,$c4,$f0,$4c,$50
@@ -15834,10 +16305,12 @@ Lfeacf0:
 	movea.l	($0000c4b0),a5
 	lea.l	($0000c4b4),a4
 	bra.w	Lfea016
+
 Lfead04:
 	moveq.l	#$ff,d1
 	IOCS	_INIT_PRN
 	bra.w	Lfea03c
+
 Lfead0e:
 	movem.l	d1/d3/a1,-(a7)
 	move.l	($0012,a5),d3
@@ -15852,6 +16325,7 @@ Lfead1c:
 Lfead28:
 	movem.l	(a7)+,d1/d3/a1
 	bra.w	Lfea044
+
 Lfead30:
 	movem.l	d1/d3/a1,-(a7)
 	move.l	($0012,a5),d3
@@ -15864,6 +16338,7 @@ Lfead3e:
 	subq.l	#1,d3
 	bne.s	Lfead3e
 	bra.s	Lfead28
+
 Lfead4c:
 	IOCS	_SNSPRN
 	tst.b	d0
@@ -15888,8 +16363,10 @@ Lfeadb0:
 	movea.l	($0000c570),a5
 	lea.l	($0000c574),a4
 	bra.w	Lfea016
+
 Lfeadc4:
 	bra.w	Lfea03c
+
 Lfeadc8:
 	movem.l	d1,-(a7)
 	move.w	($0018,a5),d0
@@ -15898,6 +16375,7 @@ Lfeadc8:
 	move.l	d0,d1
 	IOCS	_TIMEBIN
 	bra.s	Lfeade8
+
 Lfeadde:
 	IOCS	_DATEGET
 	move.l	d0,d1
@@ -15914,6 +16392,7 @@ Lfeade8:
 	move.b	d0,(a4)
 	movem.l	(a7)+,d1
 	bra.w	Lfea044
+
 Lfeae04:
 	movem.l	d1,-(a7)
 	movea.l	($000e,a5),a4
@@ -15932,6 +16411,7 @@ Lfeae04:
 	IOCS	_TIMESET
 	clr.l	d0
 	bra.s	Lfeae3e
+
 Lfeae30:
 	IOCS	_DATEBCD
 	move.l	d0,d1
@@ -15962,6 +16442,7 @@ Lfeaea4:
 	movea.l	($0000c664),a5
 	lea.l	($0000c668),a4
 	bra.w	Lfea016
+
 Lfeaeb8:
 	movem.l	d0-d4,-(a7)
 	moveq.l	#$00,d3
@@ -15979,6 +16460,7 @@ Lfeaeda:
 	move.l	#$0000c6ee,($0012,a5)
 	movem.l	(a7)+,d0-d4
 	bra.w	Lfea03c
+
 Lfeaeee:
 	.dc.b	$00,$00,$c6,$fe,$00,$00,$c6,$fe
 	.dc.b	$00,$00,$c6,$fe,$00,$00,$c6,$fe
@@ -16005,6 +16487,7 @@ Lfeaeee:
 Lfeaf98:
 	movem.l	d1-d7/a0-a6,-(a7)
 	bra.s	Lfeafae
+
 Lfeaf9e:
 	movem.l	d1-d7/a0-a6,-(a7)
 	move.l	($0012,a5),d3
@@ -16034,7 +16517,7 @@ Lfeafd0:
 	and.w	#$0003,d1
 	or.w	#$0090,d1
 	asl.w	#8,d1
-	move.b	#$70,d1
+	move.b	#$70,d1			;'p'
 	move.l	(a7)+,d0
 	trap	#15
 	movem.l	(a7)+,d1-d7/a0-a6
@@ -16080,7 +16563,7 @@ Lfeb04a:
 	move.w	#$700d,d0
 	move.w	d0,-(a7)
 	move.b	($0001,a5),d1
-	move.w	#$0020,d0
+	move.w	#$0020,d0		;' '
 	and.w	#$0003,d1
 	bset.l	d1,d0
 	move.b	d0,($00e94005)
@@ -16102,6 +16585,7 @@ Lfeb078:
 	move.b	d0,($000d,a5)
 	movem.l	(a7)+,d1-d2/a1
 	bra.w	Lfea044
+
 Lfeb0a2:
 	.dc.b	$ff,$ff,$ff,$ff,$00,$00,$00,$00
 	.dc.b	$c8,$f0,$00,$00,$c8,$f8,$10,$48
@@ -16119,11 +16603,13 @@ Lfeb0f8:
 	movea.l	($0000c8b8),a5
 	lea.l	($0000c8bc),a4
 	bra.w	Lfea016
+
 Lfeb10c:
 	bsr.w	Lfeb3a8
 	move.b	d0,($000d,a5)
 	move.l	#$0000c920,($0012,a5)
 	bra.w	Lfea03c
+
 Lfeb120:
 	.dc.b	$00,$00,$c9,$60,$00,$00,$c9,$70
 	.dc.b	$00,$00,$c9,$80,$00,$00,$c9,$90
@@ -16185,15 +16671,18 @@ Lfeb28c:
 	bne.s	Lfeb2a0
 	IOCS	_B_EJECT
 Lfeb2a0:
-	move.b	#$42,($000d,a5)
+	move.b	#$42,($000d,a5)		;'B'
 	movem.l	(a7)+,d1-d7/a0-a3
 	bra.w	Lfea044
+
 Lfeb2ae:
-	moveq.l	#$46,d0
+	moveq.l	#$46,d0			;'F'
 	bra.s	Lfeb328
+
 Lfeb2b2:
-	moveq.l	#$45,d0
+	moveq.l	#$45,d0			;'E'
 	bra.s	Lfeb328
+
 Lfeb2b6:
 	movem.l	d1-d7/a0-a6,-(a7)
 	bsr.s	Lfeb26e
@@ -16214,7 +16703,7 @@ Lfeb2ea:
 	clr.l	d0
 	tst.l	d4
 	beq.s	Lfeb31c
-	moveq.l	#$21,d3
+	moveq.l	#$21,d3			;'!'
 	move.w	d2,d0
 	divu.w	d3,d0
 	swap.w	d0
@@ -16223,11 +16712,11 @@ Lfeb2ea:
 	bcc.s	Lfeb300
 	move.w	d4,d3
 Lfeb300:
-	moveq.l	#$45,d0
+	moveq.l	#$45,d0			;'E'
 	bsr.s	Lfeb322
 	tst.b	d0
 	bne.s	Lfeb31c
-	moveq.l	#$41,d0
+	moveq.l	#$41,d0			;'A'
 	bsr.s	Lfeb322
 	tst.b	d0
 	bne.s	Lfeb31c
@@ -16237,6 +16726,7 @@ Lfeb300:
 	asl.l	#8,d0
 	adda.l	d0,a1
 	bra.s	Lfeb2ea
+
 Lfeb31c:
 	movem.l	(a7)+,d1-d7/a0-a6
 	rts
@@ -16244,6 +16734,7 @@ Lfeb31c:
 Lfeb322:
 	movem.l	d1-d7/a0-a6,-(a7)
 	bra.s	Lfeb35c
+
 Lfeb328:
 	movem.l	d1-d7/a0-a6,-(a7)
 	bsr.w	Lfeb26e
@@ -16277,18 +16768,23 @@ Lfeb35c:
 	beq.s	Lfeb39a
 	move.w	#$700c,d0
 	bra.s	Lfeb3a2
+
 Lfeb388:
 	move.w	#$7002,d0
 	bra.s	Lfeb3a2
+
 Lfeb38e:
 	move.w	#$7006,d0
 	bra.s	Lfeb3a2
+
 Lfeb394:
 	move.w	#$5008,d0
 	bra.s	Lfeb3a2
+
 Lfeb39a:
 	move.w	#$700b,d0
 	bra.s	Lfeb3a2
+
 Lfeb3a0:
 	clr.l	d0
 Lfeb3a2:
@@ -16317,19 +16813,20 @@ Lfeb3c8:
 	movem.l	(a7)+,d1-d4/a1-a2
 	tst.b	d0
 	bne.s	Lfeb468
-	cmpi.l	#$5836384b,(a1)
+	cmpi.l	#$5836384b,(a1)		;'X68K'
 	bne.s	Lfeb468
 	moveq.l	#$0e,d5
 	movea.l	a1,a0
 Lfeb3f8:
 	lea.l	($0010,a0),a0
-	cmpi.l	#$48756d61,(a0)
+	cmpi.l	#$48756d61,(a0)		;'Huma'
 	bne.s	Lfeb40e
-	cmpi.l	#$6e36386b,($0004,a0)
+	cmpi.l	#$6e36386b,($0004,a0)	;'n68k'
 	beq.s	Lfeb414
 Lfeb40e:
 	dbra.w	d5,Lfeb3f8
 	bra.s	Lfeb468
+
 Lfeb414:
 	move.l	($0008,a0),d5
 	cmp.l	#L000000,d5
@@ -16359,6 +16856,7 @@ Lfeb448:
 	lea.l	($0010,a2),a2
 	addq.l	#1,d4
 	bra.s	Lfeb474
+
 Lfeb468:
 	movem.l	a1/a4,-(a7)
 	IOCS	_B_EJECT
@@ -16368,6 +16866,7 @@ Lfeb474:
 	cmp.w	#$9000,d1
 	bne.w	Lfeb3c8
 	bra.s	Lfeb486
+
 Lfeb482:
 	IOCS	_B_EJECT
 Lfeb486:
@@ -16399,6 +16898,7 @@ Lfeb500:
 	movea.l	($0000ccc0),a5
 	lea.l	($0000ccc4),a4
 	bra.w	Lfea016
+
 Lfeb514:
 	.dc.b	$ff,$ff,$ff,$ff,$00,$00,$00,$00
 	.dc.b	$cd,$62,$00,$00,$cd,$6a,$01,$52
@@ -16416,9 +16916,11 @@ Lfeb56a:
 	movea.l	($0000cd2a),a5
 	lea.l	($0000cd2e),a4
 	bra.w	Lfea016
+
 Lfeb57e:
 	clr.w	d0
 	bra.s	Lfeb590
+
 Lfeb582:
 	clr.w	d0
 	cmpi.b	#$f9,($00ed0400)
@@ -16431,6 +16933,7 @@ Lfeb590:
 
 Lfeb598:
 	bra.w	Lfea044
+
 Lfeb59c:
 	movem.l	d1/a0-a2,-(a7)
 	clr.l	d0
@@ -16481,7 +16984,7 @@ Lfeb610:
 
 Lfeb612:
 	movem.l	d1/a0-a2,-(a7)
-	move.b	#$31,($00e8e00d)
+	move.b	#$31,($00e8e00d)	;'1'
 	lea.l	($0000ceaa),a0
 	bsr.s	Lfeb65e
 	move.b	#$00,($00e8e00d)
@@ -16489,16 +16992,18 @@ Lfeb612:
 	rts
 
 Lfeb634:
-	move.b	#$4a,d0
+	move.b	#$4a,d0			;'J'
 	bra.s	Lfeb64c
+
 Lfeb63a:
-	move.b	#$42,d0
+	move.b	#$42,d0			;'B'
 	cmpi.b	#$f9,($00ed0400)
 	beq.s	Lfeb64c
 	bset.l	#$02,d0
 Lfeb64c:
 	move.b	d0,($000d,a5)
 	bra.w	Lfea044
+
 Lfeb654:
 	cmpi.b	#$f9,($00ed0400)
 	bne.s	Lfeb694
@@ -16616,7 +17121,7 @@ Lfeb7f4:
 	movea.l	a0,a1
 	lea.l	(-$0100,a6),a0
 	bsr.w	Lfeb97e
-	move.b	#$3d,(-$0001,a0)
+	move.b	#$3d,(-$0001,a0)	;'='
 	clr.b	(a0)
 	movem.l	(a7),a1
 	addq.l	#4,a1
@@ -16634,9 +17139,11 @@ Lfeb830:
 	tst.b	(a1)+
 	bne.s	Lfeb830
 	bra.s	Lfeb81c
+
 Lfeb836:
 	clr.b	d0
 	bra.s	Lfeb846
+
 Lfeb83a:
 	movem.l	(a7)+,d0
 	adda.l	d0,a1
@@ -16656,12 +17163,13 @@ Lfeb84e:
 	movea.l	a2,a1
 	lea.l	(-$0100,a6),a0
 	bsr.w	Lfeb97e
-	move.b	#$3d,(-$0001,a0)
+	move.b	#$3d,(-$0001,a0)	;'='
 	clr.b	(a0)
 	move.l	a5,(-$0004,a7)
 	bne.s	Lfeb878
 	movea.l	a0,a5
 	bra.s	Lfeb87e
+
 Lfeb878:
 	movea.l	a5,a1
 	bsr.w	Lfeb97e
@@ -16722,6 +17230,7 @@ Lfeb8e4:
 Lfeb8fa:
 	moveq.l	#$ff,d0
 	bra.s	Lfeb900
+
 Lfeb8fe:
 	clr.l	d0
 Lfeb900:
@@ -16760,6 +17269,7 @@ Lfeb92e:
 Lfeb93c:
 	movem.l	a0-a1,-(a7)
 	bra.s	Lfeb946
+
 Lfeb942:
 	cmpm.b	(a0)+,(a1)+
 	bne.s	Lfeb94e
@@ -16767,10 +17277,12 @@ Lfeb946:
 	dbra.w	d0,Lfeb942
 	clr.l	d0
 	bra.s	Lfeb956
+
 Lfeb94e:
 	bcs.s	Lfeb954
 	moveq.l	#$01,d0
 	bra.s	Lfeb956
+
 Lfeb954:
 	moveq.l	#$ff,d0
 Lfeb956:
@@ -16788,6 +17300,7 @@ Lfeb966:
 	bne.s	Lfeb966
 	subq.w	#1,d2
 	bra.s	Lfeb95e
+
 Lfeb96e:
 	tst.b	(a0)
 Lfeb970:
@@ -16800,6 +17313,7 @@ Lfeb976:
 	move.b	(a1)+,(a0)+
 	bne.s	Lfeb976
 	bra.s	Lfeb972
+
 Lfeb97c:
 	rts
 
@@ -16815,7 +17329,7 @@ Lfeb984:
 	bsr.w	Lfeba42
 	moveq.l	#$16,d2
 	moveq.l	#$10,d3
-	moveq.l	#$33,d4
+	moveq.l	#$33,d4			;'3'
 	lea.l	($0000fb3a),a1
 	bsr.w	Lfebb50
 	ror.w	#8,d7
@@ -16845,21 +17359,23 @@ Lfeb9e6:
 Lfeb9ea:
 	bsr.w	Lfebca2
 	and.w	#$00df,d0
-	cmp.b	#$41,d0
+	cmp.b	#$41,d0			;'A'
 	beq.s	Lfeba1c
-	cmp.b	#$52,d0
+	cmp.b	#$52,d0			;'R'
 	beq.s	Lfeba10
-	cmp.b	#$49,d0
+	cmp.b	#$49,d0			;'I'
 	bne.s	Lfeb9ea
 	btst.l	#$06,d7
 	beq.s	Lfeb9ea
 	move.b	#$02,d7
 	bra.s	Lfeba2c
+
 Lfeba10:
 	btst.l	#$05,d7
 	beq.s	Lfeb9ea
 	move.b	#$01,d7
 	bra.s	Lfeba2c
+
 Lfeba1c:
 	btst.l	#$04,d7
 	beq.s	Lfeb9ea
@@ -16877,6 +17393,7 @@ Lfeba3a:
 	move.w	#$00ff,d0
 	trap	#15
 	bra.s	Lfeba34
+
 Lfeba42:
 	lea.l	($0000fc3a),a1
 	cmp.w	#$001f,d7
@@ -16898,6 +17415,7 @@ Lfeba42:
 	bcc.s	Lfebab8
 	lea.l	($0000fc57),a1
 	bra.s	Lfebaa8
+
 Lfeba80:
 	clr.l	d0
 	move.b	d7,d0
@@ -16912,15 +17430,17 @@ Lfeba92:
 	bsr.w	Lfebb50
 	lea.l	($0000fb2b),a1
 	moveq.l	#$04,d4
-	moveq.l	#$32,d2
+	moveq.l	#$32,d2			;'2'
 	bra.s	Lfebaec
+
 Lfebaa8:
 	mulu.w	#$0035,d0
 	adda.l	d0,a1
 	moveq.l	#$16,d2
 	moveq.l	#$0f,d3
-	moveq.l	#$33,d4
+	moveq.l	#$33,d4			;'3'
 	bra.w	Lfebb50
+
 Lfebab8:
 	moveq.l	#$16,d2
 	moveq.l	#$0f,d3
@@ -16937,19 +17457,19 @@ Lfebab8:
 	bsr.s	Lfebb50
 	lea.l	($0000fb1c),a1
 	moveq.l	#$13,d4
-	moveq.l	#$23,d2
+	moveq.l	#$23,d2			;'#'
 Lfebaec:
 	moveq.l	#$0f,d3
 	bsr.s	Lfebb50
 	move.w	(a6),d2
 	lea.l	($00010c6e),a1
 	bsr.s	Lfebb6c
-	moveq.l	#$37,d2
+	moveq.l	#$37,d2			;'7'
 	moveq.l	#$0f,d3
 	moveq.l	#$03,d4
 	lea.l	($00010c6e),a1
 	bsr.s	Lfebb50
-	moveq.l	#$3b,d2
+	moveq.l	#$3b,d2			;';'
 	moveq.l	#$0f,d3
 	moveq.l	#$04,d4
 	lea.l	($0000fb31),a1
@@ -16957,16 +17477,17 @@ Lfebaec:
 	move.l	($0002,a6),d2
 	lea.l	($00010c6e),a1
 	bsr.s	Lfebb66
-	moveq.l	#$40,d2
+	moveq.l	#$40,d2			;'@'
 	moveq.l	#$0f,d3
 	moveq.l	#$07,d4
 	lea.l	($00010c6e),a1
 	bsr.s	Lfebb50
-	moveq.l	#$48,d2
+	moveq.l	#$48,d2			;'H'
 	moveq.l	#$0f,d3
 	moveq.l	#$01,d4
 	lea.l	($0000fb37),a1
 	bra.s	Lfebb50
+
 Lfebb3e:
 	move.w	(a1)+,d2
 	move.w	(a1),d3
@@ -17097,6 +17618,7 @@ Lfebca6:
 	clr.l	d0
 	trap	#15
 	bra.s	Lfebca6
+
 Lfebcb4:
 	clr.l	d0
 	trap	#15
@@ -17111,6 +17633,7 @@ Lfebcbe:
 	beq.s	Lfebcd6
 	sub.w	#$0010,d1
 	bra.s	Lfebcd6
+
 Lfebcd2:
 	move.w	(a1)+,d1
 	move.w	(a1)+,d2
@@ -18316,7 +18839,7 @@ Lfee1d0:
 	bcs.s	Lfee1f4
 	subq.b	#1,d0
 Lfee1f4:
-	add.b	#$5f,d0
+	add.b	#$5f,d0			;'_'
 Lfee1f8:
 	bsr.s	Lfee25e
 	bne.s	Lfee202
@@ -18325,7 +18848,7 @@ Lfee1f8:
 
 Lfee202:
 	move.b	#$81,(a0)+
-	move.b	#$4b,(a0)+
+	move.b	#$4b,(a0)+		;'K'
 	clr.b	(a0)
 	rts
 
@@ -18343,7 +18866,7 @@ Lfee20e:
 	bcs.s	Lfee232
 	subq.b	#1,d0
 Lfee232:
-	add.b	#$5f,d0
+	add.b	#$5f,d0			;'_'
 	cmp.b	#$a4,d0
 	beq.s	Lfee256
 Lfee23c:
@@ -18357,7 +18880,7 @@ Lfee244:
 
 Lfee24a:
 	move.b	#$81,(a0)+
-	move.b	#$4a,(a0)+
+	move.b	#$4a,(a0)+		;'J'
 	clr.b	(a0)
 	rts
 
@@ -19358,6 +19881,7 @@ Lff0080:
 	bne.s	Lff008a
 	dbra.w	d0,Lff0080
 	bra.s	Lff008e
+
 Lff008a:
 	bsr.w	Lff0436
 Lff008e:
@@ -19407,7 +19931,7 @@ Lff0130:
 	bne.w	Lff0010
 	btst.b	#$06,($0002,a1)
 	beq.s	Lff0130
-	move.b	#$31,($00e8e00d)
+	move.b	#$31,($00e8e00d)	;'1'
 	lea.l	($00ed0000),a0
 	move.w	#$0fff,d0
 Lff0154:
@@ -19415,6 +19939,7 @@ Lff0154:
 	dbra.w	d0,Lff0154
 	move.b	#$00,($00e8e00d)
 	bra.w	Lff0010
+
 Lff0166:
 	lea.l	(Lff09e0),a1
 	bsr.w	Lff756c
@@ -19444,10 +19969,11 @@ Lff01c6:
 	movea.l	($00ed001e),a0
 	move.l	a0,d0
 	beq.s	Lff01e6
-	cmpi.b	#$60,(a0)
+	cmpi.b	#$60,(a0)		;'`'
 	bne.s	Lff01e6
 	jsr	(a0)
 	bra.w	Lff124c
+
 Lff01e6:
 	move.w	($00ed0018),d1
 	beq.s	Lff0216
@@ -19469,15 +19995,19 @@ Lff0216:
 	bsr.w	Lff02d8
 	bsr.w	Lff0310
 	bra.s	Lff0258
+
 Lff0228:
 	bsr.w	Lff02d8
 	bra.s	Lff0216
+
 Lff022e:
 	bsr.w	Lff0310
 	bra.s	Lff0216
+
 Lff0234:
 	bsr.w	Lff033e
 	bra.s	Lff0216
+
 Lff023a:
 	move.w	d1,-(a7)
 	moveq.l	#$05,d2
@@ -19489,6 +20019,7 @@ Lff024e:
 	bsr.w	Lff037a
 	bsr.w	Lff03b6
 	bra.s	Lff0216
+
 Lff0258:
 	lea.l	($00002000).l,a7
 	tst.b	($000009de).l
@@ -19513,6 +20044,7 @@ Lff029e:
 	cmp.w	#$9470,d1
 	bne.s	Lff029e
 	bra.s	Lff029a
+
 Lff02b4:
 	lea.l	(Lff089d),a1
 	bsr.w	Lff756c
@@ -19545,7 +20077,7 @@ Lff0306:
 
 Lff0310:
 	movea.l	($00ed0010),a0
-	cmpi.b	#$60,(a0)
+	cmpi.b	#$60,(a0)		;'`'
 	bne.s	Lff0326
 	move.b	#$02,($000009e0).l
 	jsr	(a0)
@@ -19571,13 +20103,13 @@ Lff033e:
 	IOCS	_B_RECALI
 	tst.b	d0
 	bne.s	Lff0370
-	moveq.l	#$46,d0
+	moveq.l	#$46,d0			;'F'
 	move.l	a1,-(a7)
 	trap	#15
 	movea.l	(a7)+,a1
 	tst.b	d0
 	bne.s	Lff0370
-	cmpi.b	#$60,(a1)
+	cmpi.b	#$60,(a1)		;'`'
 	bne.s	Lff0370
 	lsr.w	#8,d1
 	move.b	d1,($000009e0).l
@@ -19626,6 +20158,7 @@ Lff03cc:
 	bne.s	Lff03dc
 	dbra.w	d4,Lff03cc
 	bra.s	Lff042c
+
 Lff03dc:
 	IOCS	_B_RECALI
 	btst.l	#$1e,d0
@@ -19643,13 +20176,13 @@ Lff03dc:
 	move.b	($0006,a0),d0
 	ror.l	#8,d0
 	or.l	d0,d2
-	moveq.l	#$46,d0
+	moveq.l	#$46,d0			;'F'
 	move.l	a1,-(a7)
 	trap	#15
 	movea.l	(a7)+,a1
 	btst.l	#$1e,d0
 	bne.s	Lff042c
-	cmpi.b	#$60,(a1)
+	cmpi.b	#$60,(a1)		;'`'
 	bne.s	Lff042c
 	lsr.w	#8,d1
 	move.b	d1,($000009e0).l
@@ -19661,10 +20194,10 @@ Lff042c:
 	rts
 
 Lff0436:
-	move.b	#$31,($00e8e00d)
+	move.b	#$31,($00e8e00d)	;'1'
 	lea.l	($00ed0000),a0
 	lea.l	(Lff0842),a1
-	moveq.l	#$5a,d0
+	moveq.l	#$5a,d0			;'Z'
 Lff044c:
 	move.b	(a1)+,(a0)+
 	dbra.w	d0,Lff044c
@@ -19690,6 +20223,7 @@ Lff0498:
 	move.b	($00ed002a),d1
 	IOCS	_TVCTRL
 	bra.w	Lff124c
+
 Lff04b2:
 	tst.b	($00ed0026)
 	bne.s	Lff0498
@@ -19707,11 +20241,11 @@ Lff04b2:
 	beq.s	Lff0560
 	cmp.l	#$00000040,d1
 	bcc.s	Lff0560
-	cmp.b	#$20,d1
+	cmp.b	#$20,d1			;' '
 	bcs.s	Lff050e
 	and.b	#$1f,d1
 	move.w	d1,-(a7)
-	moveq.l	#$25,d1
+	moveq.l	#$25,d1			;'%'
 	IOCS	_TVCTRL
 	move.w	(a7)+,d1
 Lff050e:
@@ -19738,8 +20272,10 @@ Lff054c:
 	btst.l	#$01,d0
 	beq.s	Lff0580
 	bra.s	Lff054c
+
 Lff055c:
 	bra.w	Lff124c
+
 Lff0560:
 	move.b	#$02,($000009df).l
 	move.l	($00ed001e),d0
@@ -19750,6 +20286,7 @@ Lff0560:
 Lff0578:
 	clr.b	($000009df).l
 	bra.s	Lff0588
+
 Lff0580:
 	move.b	#$01,($000009df).l
 Lff0588:
@@ -19764,7 +20301,7 @@ Lff059e:
 	nop
 	move.b	#$08,($001b,a0)
 Lff05ac:
-	moveq.l	#$3d,d1
+	moveq.l	#$3d,d1			;'='
 	IOCS	_TVCTRL
 	rts
 
@@ -19827,11 +20364,13 @@ Lff062a:
 	move.w	#$00ff,d0
 	trap	#15
 	bra.s	Lff062a
+
 Lff0632:
 	lea.l	(Lff09ab),a1
 	bsr.w	Lff756c
 Lff063c:
 	bra.s	Lff063c
+
 Lff063e:
 	clr.w	($00000ade).l
 	clr.b	($00000bc4).l
@@ -19998,7 +20537,7 @@ Lff09e2:
 	.dc.b	';26H                                      ',$1b,'[m',$00
 Lff0aa6:
 	link.w	a6,#-$002e
-	move.w	#$002e,d0
+	move.w	#$002e,d0		;'.'
 	subq.w	#1,d0
 	lea.l	(Lff0b36,pc),a0
 	lea.l	(-$002e,a6),a1
@@ -20011,11 +20550,11 @@ Lff0ab8:
 	lea.l	($00e88000),a0
 	movep.w	($0013,a0),d0
 	move.w	d0,-(a7)
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	movep.w	d0,($0013,a0)
 	movep.w	($0007,a0),d0
 	move.w	d0,-(a7)
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	movep.w	d0,($0007,a0)
 	move.b	($001d,a0),d0
 	move.b	d0,-(a7)
@@ -20046,7 +20585,7 @@ Lff0b36:
 	move.b	#$fa,($0023,a0)
 	moveq.l	#$ff,d1
 	move.w	#$2500,sr
-	move.b	#$30,($001d,a0)
+	move.b	#$30,($001d,a0)		;'0'
 Lff0b48:
 	dbra.w	d1,Lff0b48
 Lff0b4c:
@@ -20101,7 +20640,7 @@ Lff0bb6:
 	move.w	#$000f,(a0)+
 	move.w	#$000f,(a0)+
 	lea.l	($00000970).l,a0
-	move.w	#$005f,(a0)+
+	move.w	#$005f,(a0)+		;'_'
 	move.w	#$001f,(a0)+
 	move.l	#Lff0d3c,($0000097e).l
 	move.b	#$03,($00000994).l
@@ -20130,8 +20669,8 @@ Lff0cba:
 	move.w	#$0001,(a0)+
 	move.w	#$0001,(a0)+
 	move.l	#Lff171e,(a0)+
-	move.w	#$0032,(a0)+
-	move.w	#$0032,(a0)+
+	move.w	#$0032,(a0)+		;'2'
+	move.w	#$0032,(a0)+		;'2'
 	move.l	#Lff15d8,(a0)+
 	move.w	#$00c8,(a0)+
 	move.w	#$00c8,(a0)+
@@ -20183,7 +20722,7 @@ Lff0db8:
 	cmp.b	#$07,d0
 	beq.s	Lff0df4
 	move.b	#$07,d0
-	move.b	#$31,($00e8e00d)
+	move.b	#$31,($00e8e00d)	;'1'
 	move.b	d0,($00ed0026)
 	move.b	#$00,($00e8e00d)
 Lff0df4:
@@ -20202,8 +20741,8 @@ Lff0df4:
 	move.b	#$03,($002d,a4)
 	move.b	#$05,($0031,a4)
 	move.b	#$05,($0039,a4)
-	move.b	#$68,($0025,a4)
-	move.b	#$69,($0027,a4)
+	move.b	#$68,($0025,a4)		;'h'
+	move.b	#$69,($0027,a4)		;'i'
 	move.l	#Lff11a6,($000001a0).l
 	move.l	#Lff1194,($000001a4).l
 	lea.l	($00e840c0),a4
@@ -20214,8 +20753,8 @@ Lff0df4:
 	move.b	#$05,($0031,a4)
 	move.b	#$05,($0039,a4)
 	move.l	#$00e92003,($0014,a4)
-	move.b	#$6a,($0025,a4)
-	move.b	#$6b,($0027,a4)
+	move.b	#$6a,($0025,a4)		;'j'
+	move.b	#$6b,($0027,a4)		;'k'
 	move.l	#Lff1156,($000001a8).l
 	move.l	#Lff113c,($000001ac).l
 	clr.l	d1
@@ -20240,7 +20779,7 @@ Lff0ee0:
 Lff0eee:
 	move.l	(a0)+,(a1)+
 	dbra.w	d0,Lff0eee
-	move.b	#$60,($00e9c003)
+	move.b	#$60,($00e9c003)	;'`'
 	lea.l	($00e84000),a0
 	lea.l	(Lff0fc0),a1
 	moveq.l	#$09,d0
@@ -20394,6 +20933,7 @@ Lff113c:
 	clr.b	($00000c32).l
 	move.b	($00e840c1),($00000c33).l
 	bra.s	Lff1164
+
 Lff1156:
 	move.w	d0,-(a7)
 	move.b	($00000c32).l,d0
@@ -20414,6 +20954,7 @@ Lff1194:
 	clr.b	($00000c34).l
 	move.b	($00e84081),($00000c35).l
 	bra.s	Lff11ac
+
 Lff11a6:
 	clr.w	($00000c34).l
 Lff11ac:
@@ -20453,6 +20994,7 @@ Lff1204:
 	beq.s	Lff1224
 	bsr.w	Lff132c
 	bra.w	Lff0010
+
 Lff1224:
 	cmpi.b	#$02,($000009df).l
 	bne.s	Lff1242
@@ -20462,6 +21004,7 @@ Lff1224:
 	bcc.s	Lff1242
 	moveq.l	#$0d,d1
 	bra.s	Lff1248
+
 Lff1242:
 	move.b	($00ed002a),d1
 Lff1248:
@@ -20472,7 +21015,7 @@ Lff124c:
 	beq.s	Lff1272
 	moveq.l	#$03,d1
 Lff125a:
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	bset.l	d1,d0
 	move.b	d0,($00e94005)
 	and.w	#$0020,d0
@@ -20498,7 +21041,7 @@ Lff128a:
 	lea.l	($00e8a000),a0
 	move.b	($00ed0026),d0
 	bsr.w	Lff2822
-	move.b	#$31,($00e8e00d)
+	move.b	#$31,($00e8e00d)	;'1'
 	addq.l	#1,($00ed0044)
 	move.b	#$00,($00e8e00d)
 	move.b	#$0c,($001f,a0)
@@ -20528,8 +21071,9 @@ Lff1324:
 	bne.s	Lff1324
 Lff1328:
 	bra.w	Lff0010
+
 Lff132c:
-	move.b	#$31,($00e8e00d)
+	move.b	#$31,($00e8e00d)	;'1'
 	move.b	($00000810).l,($00ed001c)
 	move.l	($000009d6).l,d0
 	add.l	d0,($00ed0040)
@@ -20541,9 +21085,9 @@ Lff1354:
 	btst.l	#$00,d0
 	bne.s	Lff1372
 	move.w	($00000a0e).l,d0
-	cmp.w	#$0040,d0
+	cmp.w	#$0040,d0		;'@'
 	bcs.s	Lff1370
-	cmp.w	#$0050,d0
+	cmp.w	#$0050,d0		;'P'
 	bcs.s	Lff1372
 Lff1370:
 	bsr.s	Lff137a
@@ -20604,6 +21148,7 @@ Lff13ea:
 	bsr.s	Lff143a
 	bne.s	Lff13ea
 	bra.s	Lff13a2
+
 Lff13f0:
 	moveq.l	#$07,d2
 Lff13f2:
@@ -20612,6 +21157,7 @@ Lff13f2:
 	bne.s	Lff13f2
 	bset.b	d2,($00000c8f).l
 	bra.s	Lff13a2
+
 Lff1400:
 	movem.l	(a7)+,d0-d3/a0-a2
 	rts
@@ -20713,7 +21259,7 @@ Lff14ae:
 	cmp.b	#$0e,d0
 	beq.w	Lff1584
 	and.b	#$7f,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	bcs.s	Lff14f6
 	btst.b	#$00,($00000928).l
 	beq.s	Lff14f6
@@ -20727,7 +21273,7 @@ Lff14f6:
 	beq.w	Lff1598
 Lff1510:
 	movea.l	($0000089e).l,a0
-	cmpi.w	#$003f,($0000089c).l
+	cmpi.w	#$003f,($0000089c).l	;'?'
 	bcc.s	Lff153c
 	addq.l	#2,a0
 	cmpa.l	#$00000926,a0
@@ -20743,28 +21289,32 @@ Lff153c:
 	beq.s	Lff156c
 	btst.b	#$00,($00000929).l
 	bne.s	Lff156c
-	cmpi.w	#$0030,($0000089c).l
+	cmpi.w	#$0030,($0000089c).l	;'0'
 	bcs.s	Lff156c
 	bset.b	#$00,($00000929).l
 	moveq.l	#$13,d1
 	bsr.w	Lff842a
 Lff156c:
 	movem.l	(a7)+,d0-d1/a0
-	move.w	#$0038,($00e98004)
+	move.w	#$0038,($00e98004)	;'8'
 	rte
 
 Lff157a:
 	bset.b	#$00,($00000928).l
 	bra.s	Lff156c
+
 Lff1584:
 	bclr.b	#$00,($00000928).l
 	bra.s	Lff156c
+
 Lff158e:
 	bset.b	#$01,($00000929).l
 	bra.s	Lff156c
+
 Lff1598:
 	bclr.b	#$01,($00000929).l
 	bra.s	Lff156c
+
 Lff15a2:
 	move.l	a0,-(a7)
 	lea.l	($000009b4).l,a0
@@ -20872,7 +21422,7 @@ Lff169e:
 	tst.w	(a0)
 	tst.w	(a0)
 	tst.w	(a0)
-	move.w	#$0040,d1
+	move.w	#$0040,d1		;'@'
 Lff16ce:
 	bsr.w	Lff6502
 Lff16d2:
@@ -20888,8 +21438,9 @@ Lff16d8:
 	beq.s	Lff16fc
 Lff16f2:
 	move.b	#$80,(a0)
-	move.w	#$0041,d1
+	move.w	#$0041,d1		;'A'
 	bra.s	Lff16ce
+
 Lff16fc:
 	move.b	(a0),d0
 	addq.b	#1,d0
@@ -20897,12 +21448,14 @@ Lff16fc:
 	bcc.s	Lff170a
 	move.b	d0,(a0)
 	bra.s	Lff16d2
+
 Lff170a:
 	move.b	#$80,(a0)
 	lea.l	(Lff171e,pc),a0
 	move.l	a0,($000009b6).l
-	move.w	#$0041,d1
+	move.w	#$0041,d1		;'A'
 	bra.s	Lff16ce
+
 Lff171e:
 	tst.b	($00000933).l
 	bpl.s	Lff176e
@@ -20923,7 +21476,7 @@ Lff1732:
 	tst.w	(a0)
 	subq.l	#2,a0
 	move.w	#$0005,(a0)
-	move.w	#$0062,(a0)
+	move.w	#$0062,(a0)		;'b'
 Lff1768:
 	movem.l	(a7)+,d0-d1/a0
 	rts
@@ -20939,16 +21492,19 @@ Lff176e:
 	bcc.s	Lff1792
 	move.b	d0,(a0)
 	bra.s	Lff1768
+
 Lff178c:
 	move.b	#$80,(a0)
 	bra.s	Lff1768
+
 Lff1792:
 	move.b	#$80,(a0)
 	move.w	#$0005,($00e98000)
-	move.w	#$0060,($00e98000)
+	move.w	#$0060,($00e98000)	;'`'
 	lea.l	(Lff168a,pc),a0
 	move.l	a0,($000009b6).l
 	bra.s	Lff1768
+
 Lff17b2:
 	btst.b	#$06,($000009e1).l
 	beq.s	Lff17d2
@@ -20999,13 +21555,13 @@ Lff181c:
 	bset.b	#$07,($00000bbf).l
 	bset.b	#$06,($00000933).l
 	move.w	#$0005,($00e98000)
-	move.w	#$0060,($00e98000)
+	move.w	#$0060,($00e98000)	;'`'
 	lea.l	($00000cb1).l,a0
 	move.b	(a1)+,(a0)+
 	move.b	(a1)+,(a0)+
 	move.b	(a1)+,(a0)+
 	lea.l	($00000cb1).l,a1
-	move.w	#$0038,($00e98000)
+	move.w	#$0038,($00e98000)	;'8'
 	move.w	($0010,a7),d0
 	or.w	#$2000,d0
 	move.w	d0,sr
@@ -21019,22 +21575,22 @@ Lff181c:
 
 Lff18ca:
 	movem.l	(a7)+,d0-d1/a0-a1
-	move.w	#$0038,($00e98000)
+	move.w	#$0038,($00e98000)	;'8'
 	rte
 
 Lff18d8:
 	move.w	d0,-(a7)
 	move.w	($00e98006),d0
-	move.w	#$0030,($00e98004)
-	move.w	#$0038,($00e98004)
+	move.w	#$0030,($00e98004)	;'0'
+	move.w	#$0038,($00e98004)	;'8'
 	move.w	(a7)+,d0
 	rte
 
 Lff18f4:
 	move.w	d0,-(a7)
 	move.w	($00e98002),d0
-	move.w	#$0030,($00e98000)
-	move.w	#$0038,($00e98000)
+	move.w	#$0030,($00e98000)	;'0'
+	move.w	#$0038,($00e98000)	;'8'
 	move.w	(a7)+,d0
 	rte
 
@@ -21064,6 +21620,7 @@ Lff191e:
 	bsr.s	Lff1978
 	bset.b	#$04,($00e88013)
 	bra.s	Lff195e
+
 Lff195c:
 	bsr.s	Lff1964
 Lff195e:
@@ -21090,6 +21647,7 @@ Lff1978:
 	bne.s	Lff19b6
 	btst.b	#$03,($00000811).l
 	bra.s	Lff19aa
+
 Lff19a2:
 	btst.b	#$02,($00000811).l
 Lff19aa:
@@ -21097,6 +21655,7 @@ Lff19aa:
 	bsr.w	Lff1ab0
 	move.w	#$6d00,d1
 	bra.s	Lff19d2
+
 Lff19b6:
 	cmp.w	#$6100,d1
 	beq.w	Lff1a48
@@ -21122,6 +21681,7 @@ Lff19dc:
 	movem.l	(a7)+,d0-d7/a0-a6
 	bclr.b	#$02,($00000bc5).l
 	bra.s	Lff19d2
+
 Lff1a08:
 	btst.b	#$02,($00000811).l
 	beq.s	Lff19d2
@@ -21131,11 +21691,12 @@ Lff1a08:
 	bne.s	Lff19d6
 	bset.b	#$00,($00000bc5).l
 	movem.l	d0-d7/a0-a6,-(a7)
-	move.l	#$58363800,d0
+	move.l	#$58363800,d0		;'X68'<<8
 	trap	#10
 	movem.l	(a7)+,d0-d7/a0-a6
 	bclr.b	#$00,($00000bc5).l
 	bra.s	Lff19d6
+
 Lff1a48:
 	btst.b	#$01,($00000bc5).l
 	bne.s	Lff1a72
@@ -21159,8 +21720,9 @@ Lff1a86:
 	movem.l	(a7)+,d0-d7/a0-a6
 	bclr.b	#$03,($00000bc5).l
 	bra.w	Lff19d2
+
 Lff1ab0:
-	cmpi.w	#$0040,($00000812).l
+	cmpi.w	#$0040,($00000812).l	;'@'
 	bcc.s	Lff1ade
 	movea.l	($00000814).l,a0
 	addq.l	#2,a0
@@ -21194,22 +21756,22 @@ Lff1b02:
 Lff1b08:
 	move.b	d0,d1
 	and.b	#$7f,d1
-	cmp.b	#$74,d1
+	cmp.b	#$74,d1			;'t'
 	bcc.s	Lff1b66
-	cmp.b	#$70,d1
+	cmp.b	#$70,d1			;'p'
 	bcc.s	Lff1b4e
 	btst.l	#$07,d0
 	bne.s	Lff1b66
-	cmp.b	#$5a,d1
+	cmp.b	#$5a,d1			;'Z'
 	bcs.s	Lff1b66
 	beq.s	Lff1b68
-	cmp.b	#$5b,d1
+	cmp.b	#$5b,d1			;'['
 	beq.s	Lff1b84
-	cmp.b	#$5e,d1
+	cmp.b	#$5e,d1			;'^'
 	bcs.s	Lff1b9e
-	cmp.b	#$61,d1
+	cmp.b	#$61,d1			;'a'
 	bcc.s	Lff1b66
-	sub.b	#$5a,d1
+	sub.b	#$5a,d1			;'Z'
 Lff1b3e:
 	bchg.b	d1,($00000810).l
 	move.w	d0,-(a7)
@@ -21218,7 +21780,7 @@ Lff1b3e:
 	rts
 
 Lff1b4e:
-	sub.b	#$70,d1
+	sub.b	#$70,d1			;'p'
 	btst.l	#$07,d0
 	beq.s	Lff1b60
 	bclr.b	d1,($00000811).l
@@ -21235,16 +21797,18 @@ Lff1b68:
 	bclr.b	#$05,($00000811).l
 	bclr.b	#$01,($00000810).l
 	bra.s	Lff1b9e
+
 Lff1b84:
 	btst.b	#$05,($00000811).l
 	bne.s	Lff1b9e
 	bclr.b	#$04,($00000811).l
 	bclr.b	#$00,($00000810).l
 Lff1b9e:
-	sub.b	#$56,d1
+	sub.b	#$56,d1			;'V'
 	bchg.b	d1,($00000811).l
 	subq.b	#4,d1
 	bra.s	Lff1b3e
+
 Lff1bac:
 	move.w	d0,d1
 	move.b	($00000811).l,d2
@@ -21255,15 +21819,15 @@ Lff1bac:
 	btst.l	#$03,d2
 	beq.s	Lff1bda
 Lff1bc8:
-	cmp.b	#$4e,d0
+	cmp.b	#$4e,d0			;'N'
 	beq.s	Lff1bda
-	cmp.b	#$3b,d0
+	cmp.b	#$3b,d0			;';'
 	bcs.s	Lff1bda
-	cmp.b	#$52,d0
+	cmp.b	#$52,d0			;'R'
 	bcs.s	Lff1bfe
 Lff1bda:
 	asl.w	#8,d1
-	cmp.b	#$35,d0
+	cmp.b	#$35,d0			;'5'
 	bcs.s	Lff1c02
 	cmp.b	#$80,d0
 	bcs.s	Lff1bf2
@@ -21297,13 +21861,13 @@ Lff1c22:
 	bsr.s	Lff1c48
 	btst.l	#$07,d2
 	bne.s	Lff1c46
-	cmp.b	#$41,d1
+	cmp.b	#$41,d1			;'A'
 	bcs.s	Lff1c46
-	cmp.b	#$5b,d1
+	cmp.b	#$5b,d1			;'['
 	bcs.s	Lff1c42
-	cmp.b	#$61,d1
+	cmp.b	#$61,d1			;'a'
 	bcs.s	Lff1c46
-	cmp.b	#$7b,d1
+	cmp.b	#$7b,d1			;'{'
 	bcc.s	Lff1c46
 Lff1c42:
 	eori.b	#$20,d1
@@ -21327,6 +21891,7 @@ Lff1c5a:
 	lea.l	(Lff1dba),a0
 	move.w	#$000f,d2
 	bra.s	Lff1c98
+
 Lff1c7e:
 	lea.l	(Lff1dca),a0
 	move.b	(a0,d0.w),d1
@@ -21349,9 +21914,9 @@ Lff1ca2:
 Lff1caa:
 	lea.l	(Lff1d50),a0
 	move.b	(a0,d0.w),d1
-	cmp.b	#$20,d1
+	cmp.b	#$20,d1			;' '
 	bcs.s	Lff1cce
-	cmp.b	#$40,d1
+	cmp.b	#$40,d1			;'@'
 	bcs.w	Lff1bfe
 	cmp.b	#$80,d1
 	bcc.w	Lff1bfe
@@ -21424,12 +21989,14 @@ Lff1e40:
 	move.w	#$01ff,d7
 	move.w	#$ffff,($00000a0e).l
 	bra.w	Lff0626
+
 Lff1e52:
 	addq.l	#8,a7
 	move.w	#$0100,d7
 	move.b	d0,d7
 	move.w	#$ffff,($00000a0e).l
 	bra.w	Lff0626
+
 Lff1e66:
 	.dc.b	$00,$ff,$35,$f0,$00,$ff,$36,$5a
 	.dc.b	$00,$ff,$63,$e4,$00,$ff,$63,$ee
@@ -21624,7 +22191,7 @@ Lff23ba:
 	rol.l	#8,d1
 	clr.l	d2
 	move.b	d1,d2
-	cmp.b	#$3c,d2
+	cmp.b	#$3c,d2			;'<'
 	bcc.s	Lff2410
 	divu.w	#$000a,d2
 	or.b	d2,d0
@@ -21635,7 +22202,7 @@ Lff23ba:
 	rol.l	#8,d1
 	clr.l	d2
 	move.b	d1,d2
-	cmp.b	#$3c,d2
+	cmp.b	#$3c,d2			;'<'
 	bcc.s	Lff2410
 	divu.w	#$000a,d2
 	or.b	d2,d0
@@ -21643,6 +22210,7 @@ Lff23ba:
 	rol.l	#4,d0
 	or.b	d2,d0
 	bra.s	Lff2412
+
 Lff2410:
 	moveq.l	#$ff,d0
 Lff2412:
@@ -21759,6 +22327,7 @@ Lff250a:
 	and.w	#$0001,d0
 	lea.l	($000c,a0),a1
 	bra.w	Lff249e
+
 Lff2536:
 	movem.l	d1-d3,-(a7)
 	rol.l	#8,d1
@@ -21774,12 +22343,13 @@ Lff2546:
 	bcc.s	Lff259e
 	cmp.w	#$07bc,d1
 	bcc.s	Lff2574
-	cmp.w	#$0064,d1
+	cmp.w	#$0064,d1		;'d'
 	bcc.s	Lff259e
-	cmp.w	#$0050,d1
+	cmp.w	#$0050,d1		;'P'
 	bcc.s	Lff256e
 	add.l	#$000007d0,d1
 	bra.s	Lff2574
+
 Lff256e:
 	add.l	#$0000076c,d1
 Lff2574:
@@ -21804,19 +22374,20 @@ Lff2598:
 Lff259e:
 	moveq.l	#$ff,d0
 	bra.s	Lff2598
+
 Lff25a2:
 	clr.l	d1
 	clr.l	d0
 	move.b	(a1)+,d0
 	beq.s	Lff25ca
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lff25a2
 Lff25b0:
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lff25cc
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	bcc.s	Lff25cc
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	mulu.w	#$000a,d1
 	add.w	d0,d1
 	move.b	(a1)+,d0
@@ -21844,6 +22415,7 @@ Lff25ce:
 	move.b	d1,d2
 	move.l	d2,d0
 	bra.s	Lff2598
+
 Lff25fe:
 	movem.l	d1-d3,-(a7)
 	move.l	d1,d2
@@ -21862,20 +22434,21 @@ Lff25fe:
 	bcc.s	Lff2678
 	tst.b	d1
 	beq.s	Lff2678
-	cmp.b	#$20,d1
+	cmp.b	#$20,d1			;' '
 	bcc.s	Lff2678
 	btst.l	#$1d,d1
 	beq.s	Lff263e
 	divu.w	#$0064,d2
 	bra.s	Lff2656
+
 Lff263e:
 	divu.w	#$03e8,d2
-	add.b	#$30,d2
+	add.b	#$30,d2			;'0'
 	move.b	d2,(a1)+
 	clr.w	d2
 	swap.w	d2
 	divu.w	#$0064,d2
-	add.b	#$30,d2
+	add.b	#$30,d2			;'0'
 	move.b	d2,(a1)+
 Lff2656:
 	clr.w	d2
@@ -21893,6 +22466,7 @@ Lff2656:
 	clr.b	(a1)
 	clr.l	d0
 	bra.s	Lff267a
+
 Lff2678:
 	moveq.l	#$ff,d0
 Lff267a:
@@ -21901,21 +22475,21 @@ Lff267a:
 
 Lff2680:
 	divu.w	#$000a,d2
-	add.b	#$30,d2
+	add.b	#$30,d2			;'0'
 	move.b	d2,(a1)+
 	swap.w	d2
-	add.b	#$30,d2
+	add.b	#$30,d2			;'0'
 	move.b	d2,(a1)+
 	rts
 
 Lff2694:
 	btst.l	#$1c,d1
 	beq.s	Lff26a0
-	move.b	#$2d,d0
+	move.b	#$2d,d0			;'-'
 	rts
 
 Lff26a0:
-	move.b	#$2f,d0
+	move.b	#$2f,d0			;'/'
 	rts
 
 Lff26a6:
@@ -21928,26 +22502,27 @@ Lff26a6:
 	clr.l	d3
 	move.w	d1,d3
 	lsr.w	#8,d3
-	cmp.b	#$3c,d3
+	cmp.b	#$3c,d3			;'<'
 	bcc.s	Lff2678
-	cmp.b	#$3c,d1
+	cmp.b	#$3c,d1			;'<'
 	bcc.s	Lff2678
 	movea.l	a1,a0
 	bsr.s	Lff2680
-	cmpi.b	#$30,(a0)
+	cmpi.b	#$30,(a0)		;'0'
 	bne.s	Lff26d6
-	move.b	#$20,(a0)
+	move.b	#$20,(a0)		;' '
 Lff26d6:
-	move.b	#$3a,(a1)+
+	move.b	#$3a,(a1)+		;':'
 	move.l	d3,d2
 	bsr.s	Lff2680
-	move.b	#$3a,(a1)+
+	move.b	#$3a,(a1)+		;':'
 	move.w	d1,d2
 	and.l	#$000000ff,d2
 	bsr.s	Lff2680
 	clr.b	(a1)
 	clr.l	d0
 	bra.s	Lff267a
+
 Lff26f2:
 	move.b	d1,d0
 	and.w	#$0007,d0
@@ -21971,7 +22546,7 @@ Lff2723:
 	.dc.b	$26,$c0,$bc,$00,$00,$00,$01,$0a
 	.dc.b	$00,$00,$01,$4e,$75
 Lff2760:
-	move.b	#$31,($00e8e00d)
+	move.b	#$31,($00e8e00d)	;'1'
 	move.l	a1,($00ed001e)
 	move.l	d1,($00ed0022)
 	subq.l	#1,d2
@@ -22084,10 +22659,10 @@ Lff287c:
 	and.w	#$07ff,d2
 	sub.w	#$03ff,d2
 	bcs.s	Lff28c0
-	cmp.w	#$0034,d2
+	cmp.w	#$0034,d2		;'4'
 	bcc.s	Lff28c4
-	move.l	#$80000000,d3
-	cmp.w	#$0020,d2
+	move.l	#$80000000.l,d3
+	cmp.w	#$0020,d2		;' '
 	bcc.s	Lff28aa
 	and.l	#$000007ff,d1
 	lsr.l	d2,d3
@@ -22167,6 +22742,7 @@ Lff2936:
 	tst.l	d1
 	bne.s	Lff2936
 	bra.s	Lff295e
+
 Lff294e:
 	tst.l	d3
 	bmi.s	Lff2956
@@ -22197,6 +22773,7 @@ Lff2980:
 	subq.w	#1,d1
 	lsl.l	#1,d0
 	bra.s	Lff2980
+
 Lff2988:
 	bclr.l	#$1f,d0
 	or.l	(a7)+,d0
@@ -22227,6 +22804,7 @@ Lff29b2:
 Lff29c0:
 	move.l	(a7)+,d2
 	bra.s	Lff29c6
+
 Lff29c4:
 	clr.l	d0
 Lff29c6:
@@ -22292,6 +22870,7 @@ Lff2a30:
 	bne.s	Lff2a1e
 	move.l	d1,d0
 	bra.s	Lff2a14
+
 Lff2a3e:
 	move.w	d1,d2
 	mulu.w	d0,d2
@@ -22447,12 +23026,14 @@ Lff2b60:
 	bpl.s	Lff2b7c
 	bsr.s	Lff2b7c
 	bra.s	Lff2b3e
+
 Lff2b6e:
 	tst.l	d0
 	bpl.w	Lff2c2c
 	exg.l	d0,d2
 	exg.l	d1,d3
 	bra.w	Lff2c2c
+
 Lff2b7c:
 	clr.l	d6
 	and.l	#$7fffffff,d0
@@ -22482,11 +23063,12 @@ Lff2ba2:
 Lff2bb8:
 	move.w	d4,d7
 	sub.w	d5,d4
-	cmp.w	#$0035,d4
+	cmp.w	#$0035,d4		;'5'
 	bcc.s	Lff2bfe
 	bset.l	#$1f,d2
 	and.w	#$f800,d3
 	bra.s	Lff2bd0
+
 Lff2bcc:
 	lsr.l	#1,d2
 	roxr.l	#1,d3
@@ -22526,11 +23108,13 @@ Lff2c0e:
 	exg.l	d0,d2
 	exg.l	d1,d3
 	bra.s	Lff2c2c
+
 Lff2c1e:
 	tst.l	d0
 	bpl.w	Lff2b7c
 	bsr.w	Lff2b7c
 	bra.w	Lff2b3e
+
 Lff2c2c:
 	clr.l	d6
 	and.l	#$7fffffff,d0
@@ -22541,6 +23125,7 @@ Lff2c2c:
 	move.l	d3,d1
 	bclr.l	#$1f,d0
 	bra.w	Lff2b3e
+
 Lff2c46:
 	and.l	#$7fffffff,d2
 	bne.s	Lff2c52
@@ -22560,6 +23145,7 @@ Lff2c5e:
 	exg.l	d1,d3
 	bsr.s	Lff2c6a
 	bra.w	Lff2b3e
+
 Lff2c6a:
 	move.w	d1,d4
 	and.w	#$07ff,d4
@@ -22567,11 +23153,12 @@ Lff2c6a:
 	and.w	#$07ff,d5
 	move.w	d4,d7
 	sub.w	d5,d4
-	cmp.w	#$0035,d4
+	cmp.w	#$0035,d4		;'5'
 	bcc.s	Lff2cce
 	bset.l	#$1f,d2
 	and.w	#$f800,d3
 	bra.s	Lff2c8e
+
 Lff2c8a:
 	lsr.l	#1,d2
 	roxr.l	#1,d3
@@ -22582,6 +23169,7 @@ Lff2c8e:
 	sub.l	d3,d1
 	subx.l	d2,d0
 	bra.s	Lff2ca6
+
 Lff2ca0:
 	subq.w	#1,d7
 	lsl.l	#1,d1
@@ -22631,6 +23219,7 @@ Lff2cf2:
 	bpl.s	Lff2cfe
 	bsr.s	Lff2cfe
 	bra.w	Lff2b3e
+
 Lff2cfe:
 	and.l	#$7fffffff,d0
 	bne.s	Lff2d0a
@@ -22656,9 +23245,11 @@ Lff2d1e:
 	lsl.l	#1,d5
 	roxl.l	#1,d4
 	bra.w	Lff2e52
+
 Lff2d32:
 	addq.w	#1,d7
 	bra.w	Lff2e52
+
 Lff2d38:
 	movem.l	a0-a2,-(a7)
 	link.w	a6,#-$0020
@@ -22737,6 +23328,7 @@ Lff2df8:
 	bpl.s	Lff2e04
 	bsr.s	Lff2e04
 	bra.w	Lff2b3e
+
 Lff2e04:
 	and.l	#$7fffffff,d2
 	bne.s	Lff2e10
@@ -22763,6 +23355,7 @@ Lff2e20:
 	subq.w	#1,d7
 	clr.l	d5
 	bra.s	Lff2e3c
+
 Lff2e38:
 	moveq.l	#$01,d5
 	bsr.s	Lff2e92
@@ -22816,9 +23409,9 @@ Lff2e92:
 	rts
 
 Lff2e98:
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lff2ea6
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	eori.b	#$01,ccr
 Lff2ea6:
 	rts
@@ -22836,7 +23429,7 @@ Lff2ea8:
 Lff2ebc:
 	move.b	(a0)+,d0
 	beq.s	Lff2ed0
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lff2ebc
 	move.b	(a0),d0
 	bsr.s	Lff2e98
@@ -22874,6 +23467,7 @@ Lff2ef8:
 	move.b	d1,(a1)+
 	addq.l	#4,a2
 	bra.s	Lff2ef2
+
 Lff2f08:
 	clr.b	d1
 	movea.l	a7,a1
@@ -22887,10 +23481,10 @@ Lff2f0c:
 Lff2f1a:
 	tst.w	d7
 	beq.s	Lff2f22
-	move.b	#$2d,(a0)+
+	move.b	#$2d,(a0)+		;'-'
 Lff2f22:
 	move.b	(a1)+,d0
-	add.b	#$30,d0
+	add.b	#$30,d0			;'0'
 	move.b	d0,(a0)+
 	addq.b	#1,d1
 	cmp.b	#$0a,d1
@@ -22944,9 +23538,11 @@ Lff2fd8:
 	cmp.l	#$80000000,d1
 	beq.s	Lff2fce
 	bra.s	Lff2fae
+
 Lff2fe6:
 	neg.l	d1
 	bra.s	Lff2fce
+
 Lff2fea:
 	movem.l	d2-d7/a1-a2,-(a7)
 	link.w	a6,#-$001e
@@ -22957,7 +23553,7 @@ Lff2fea:
 	clr.l	(-$0004,a6)
 	move.b	(a0),d0
 	clr.l	d6
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lff301e
 	bset.l	#$1f,d6
 	clr.w	(-$0006,a6)
@@ -22969,13 +23565,13 @@ Lff301e:
 	addq.l	#1,a0
 	bsr.w	Lff30f8
 	lea.l	(-$001e,a6),a1
-	move.b	#$30,(a1)+
+	move.b	#$30,(a1)+		;'0'
 	movea.l	a1,a2
 	move.b	d0,(a1)+
 	moveq.l	#$01,d5
 Lff303a:
 	move.b	(a0),d0
-	cmp.b	#$2e,d0
+	cmp.b	#$2e,d0			;'.'
 	bne.s	Lff3054
 	tst.w	d6
 	bne.w	Lff30d0
@@ -22983,6 +23579,7 @@ Lff303a:
 	clr.w	(-$0006,a6)
 	addq.l	#1,a0
 	bra.s	Lff303a
+
 Lff3054:
 	bsr.w	Lff3212
 	bcs.s	Lff306e
@@ -23014,6 +23611,7 @@ Lff307e:
 	bne.s	Lff30ac
 	move.l	d4,(-$0004,a6)
 	bra.s	Lff30b0
+
 Lff30ac:
 	clr.w	(-$0006,a6)
 Lff30b0:
@@ -23066,7 +23664,7 @@ Lff3104:
 	move.l	d1,d3
 	clr.l	d0
 	move.b	(a2)+,d0
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	bsr.w	Lff2968
 	bsr.w	Lff2b52
 	subq.w	#1,d5
@@ -23095,9 +23693,9 @@ Lff3160:
 
 Lff3162:
 	clr.l	d4
-	cmp.b	#$45,d0
+	cmp.b	#$45,d0			;'E'
 	beq.s	Lff3172
-	cmp.b	#$65,d0
+	cmp.b	#$65,d0			;'e'
 	beq.s	Lff3172
 	rts
 
@@ -23105,9 +23703,9 @@ Lff3172:
 	clr.w	(-$0006,a6)
 	addq.l	#1,a0
 	move.b	(a0),d0
-	cmp.b	#$2b,d0
+	cmp.b	#$2b,d0			;'+'
 	beq.s	Lff318a
-	cmp.b	#$2d,d0
+	cmp.b	#$2d,d0			;'-'
 	bne.s	Lff318e
 	bset.l	#$1f,d4
 Lff318a:
@@ -23116,7 +23714,7 @@ Lff318a:
 Lff318e:
 	bsr.w	Lff3212
 	bcs.w	Lff30d0
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	move.b	d0,d4
 	clr.w	d0
 Lff319e:
@@ -23124,7 +23722,7 @@ Lff319e:
 	move.b	(a0),d0
 	bsr.s	Lff3212
 	bcs.s	Lff31c4
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	move.w	d4,-(a7)
 	lsl.w	#2,d4
 	add.w	(a7)+,d4
@@ -23135,6 +23733,7 @@ Lff319e:
 	tst.l	d4
 	bpl.w	Lff30ec
 	bra.w	Lff30e0
+
 Lff31c4:
 	tst.l	d4
 	bpl.s	Lff31ca
@@ -23145,14 +23744,15 @@ Lff31ca:
 Lff31cc:
 	addq.w	#1,d6
 	subq.w	#1,d5
-	cmpi.b	#$35,-(a1)
+	cmpi.b	#$35,-(a1)		;'5'
 	bcs.s	Lff31e4
 Lff31d6:
 	addq.b	#1,-(a1)
-	cmpi.b	#$3a,(a1)
+	cmpi.b	#$3a,(a1)		;':'
 	bcs.s	Lff31e4
-	move.b	#$30,(a1)
+	move.b	#$30,(a1)		;'0'
 	bra.s	Lff31d6
+
 Lff31e4:
 	cmpa.l	a2,a1
 	bcc.s	Lff31ec
@@ -23167,14 +23767,15 @@ Lff31ec:
 	bmi.s	Lff31ec
 	addq.w	#1,d6
 	bra.s	Lff31ec
+
 Lff31fc:
 	rts
 
 Lff31fe:
 	clr.w	d7
-	cmp.b	#$2b,d0
+	cmp.b	#$2b,d0			;'+'
 	beq.s	Lff320e
-	cmp.b	#$2d,d0
+	cmp.b	#$2d,d0			;'-'
 	bne.s	Lff3210
 	not.w	d7
 Lff320e:
@@ -23183,9 +23784,9 @@ Lff3210:
 	rts
 
 Lff3212:
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lff3220
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	eori.b	#$01,ccr
 Lff3220:
 	rts
@@ -23196,7 +23797,7 @@ Lff3224:
 	move.b	(a0),d0
 	cmp.b	#$09,d0
 	beq.s	Lff3222
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lff3222
 	tst.b	d0
 	rts
@@ -23207,13 +23808,13 @@ Lff3236:
 	tst.l	d1
 	beq.s	Lff324a
 	bsr.w	Lff3386
-	move.b	#$2d,(a0)+
+	move.b	#$2d,(a0)+		;'-'
 Lff324a:
 	addq.l	#1,a0
 	bsr.w	Lff3386
-	move.b	#$2e,(a0)
+	move.b	#$2e,(a0)		;'.'
 	bsr.w	Lff339e
-	move.b	#$45,(a0)+
+	move.b	#$45,(a0)+		;'E'
 	subq.l	#1,d0
 	bsr.w	Lff3352
 	clr.b	(a0)
@@ -23226,15 +23827,16 @@ Lff326a:
 	tst.l	d1
 	beq.s	Lff327e
 	bsr.w	Lff3386
-	move.b	#$2d,(a0)+
+	move.b	#$2d,(a0)+		;'-'
 Lff327e:
 	tst.l	d0
 	bmi.s	Lff3292
 	beq.s	Lff3292
 	lea.l	(a0,d0.l),a0
 	bsr.w	Lff3386
-	move.b	#$2e,(a0)
+	move.b	#$2e,(a0)		;'.'
 	bra.s	Lff32be
+
 Lff3292:
 	neg.l	d0
 	and.w	#$00ff,d2
@@ -23243,14 +23845,14 @@ Lff3292:
 	move.w	d2,d0
 Lff329e:
 	bsr.w	Lff3386
-	move.b	#$30,(a0)+
+	move.b	#$30,(a0)+		;'0'
 	bsr.w	Lff3386
-	move.b	#$2e,(a0)+
+	move.b	#$2e,(a0)+		;'.'
 	tst.w	d0
 	beq.s	Lff32be
 Lff32b2:
 	bsr.w	Lff3386
-	move.b	#$30,(a0)
+	move.b	#$30,(a0)		;'0'
 	subq.w	#1,d0
 	bne.s	Lff32b2
 Lff32be:
@@ -23264,7 +23866,7 @@ Lff32c8:
 	tst.l	d1
 	beq.s	Lff32dc
 	bsr.w	Lff3386
-	move.b	#$2d,(a0)+
+	move.b	#$2d,(a0)+		;'-'
 Lff32dc:
 	tst.l	d0
 	beq.s	Lff333a
@@ -23275,10 +23877,11 @@ Lff32dc:
 	bcc.s	Lff3322
 	lea.l	(a0,d0.l),a0
 	bsr.w	Lff3386
-	move.b	#$2e,(a0)
+	move.b	#$2e,(a0)		;'.'
 	bsr.w	Lff339e
 	bsr.w	Lff33a4
 	bra.s	Lff334a
+
 Lff3302:
 	move.l	a0,-(a7)
 	bsr.w	Lff339e
@@ -23295,19 +23898,20 @@ Lff3302:
 Lff3322:
 	addq.l	#1,a0
 	bsr.s	Lff3386
-	move.b	#$2e,(a0)
+	move.b	#$2e,(a0)		;'.'
 	bsr.s	Lff339e
 	bsr.s	Lff33a4
-	move.b	#$45,(a0)+
+	move.b	#$45,(a0)+		;'E'
 	subq.l	#1,d0
 	bsr.s	Lff3352
 	clr.b	(a0)
 	bra.s	Lff334a
+
 Lff333a:
 	bsr.s	Lff3386
-	move.b	#$30,(a0)+
+	move.b	#$30,(a0)+		;'0'
 	bsr.s	Lff3386
-	move.b	#$2e,(a0)+
+	move.b	#$2e,(a0)+		;'.'
 	bsr.s	Lff339e
 	bsr.s	Lff33a4
 Lff334a:
@@ -23316,23 +23920,23 @@ Lff334a:
 	rts
 
 Lff3352:
-	move.b	#$2b,d1
+	move.b	#$2b,d1			;'+'
 	tst.l	d0
 	bpl.s	Lff3360
-	move.b	#$2d,d1
+	move.b	#$2d,d1			;'-'
 	neg.l	d0
 Lff3360:
 	move.b	d1,(a0)+
-	move.w	#$0064,d1
+	move.w	#$0064,d1		;'d'
 	bsr.s	Lff3376
 	move.w	#$000a,d1
 	bsr.s	Lff3376
-	add.b	#$30,d0
+	add.b	#$30,d0			;'0'
 	move.b	d0,(a0)+
 	rts
 
 Lff3376:
-	move.b	#$2f,d2
+	move.b	#$2f,d2			;'/'
 Lff337a:
 	addq.b	#1,d2
 	sub.w	d1,d0
@@ -23350,6 +23954,7 @@ Lff338c:
 	beq.s	Lff3396
 	move.b	d1,d0
 	bra.s	Lff338c
+
 Lff3396:
 	movem.l	(a7)+,d0-d1/a0
 	rts
@@ -23362,7 +23967,7 @@ Lff339e:
 	rts
 
 Lff33a4:
-	cmpi.b	#$30,-(a0)
+	cmpi.b	#$30,-(a0)		;'0'
 	beq.s	Lff33a4
 	addq.l	#1,a0
 	clr.b	(a0)
@@ -23406,7 +24011,7 @@ Lff33fe:
 	move.b	d2,(-$0011,a6)
 	bsr.s	Lff3474
 	lea.l	(-$0010,a6),a1
-	move.b	#$30,(a1)+
+	move.b	#$30,(a1)+		;'0'
 	move.l	a1,-(a7)
 	bsr.w	Lff3502
 	lea.l	(-$0001,a6),a0
@@ -23450,9 +24055,11 @@ Lff345a:
 Lff3466:
 	addq.w	#1,d1
 	bra.s	Lff345a
+
 Lff346a:
-	move.b	#$30,(a0)+
+	move.b	#$30,(a0)+		;'0'
 	bra.s	Lff3466
+
 Lff3470:
 	clr.b	(a0)
 	rts
@@ -23473,7 +24080,7 @@ Lff3488:
 	moveq.l	#$0f,d7
 Lff348e:
 	move.l	#$635fa931,d2
-	move.l	#$a0000430,d3
+	move.l	#$a0000430.l,d3
 	bsr.w	Lff2ade
 	bcc.s	Lff34c4
 	moveq.l	#$00,d2
@@ -23481,19 +24088,21 @@ Lff348e:
 	bsr.w	Lff2ade
 	bcc.s	Lff34da
 	move.l	#$635fa931,d2
-	move.l	#$a0000430,d3
+	move.l	#$a0000430.l,d3
 	bsr.w	Lff2ce4
 	sub.w	#$000f,d7
 	bra.s	Lff348e
+
 Lff34c4:
 	move.l	#$635fa931,d2
-	move.l	#$a0000430,d3
+	move.l	#$a0000430.l,d3
 	bsr.w	Lff2dea
 	add.w	#$000f,d7
 	bra.s	Lff348e
+
 Lff34da:
 	move.l	#$35e620f4,d2
-	move.l	#$8000042d,d3
+	move.l	#$8000042d.l,d3
 	bsr.w	Lff2ade
 	bcc.s	Lff3500
 	move.l	#$20000000,d2
@@ -23501,6 +24110,7 @@ Lff34da:
 	bsr.w	Lff2ce4
 	subq.w	#1,d7
 	bra.s	Lff34da
+
 Lff3500:
 	rts
 
@@ -23508,7 +24118,7 @@ Lff3502:
 	move.w	#$000e,d4
 	lea.l	(Lff3546,pc),a2
 Lff350a:
-	move.b	#$30,(a1)
+	move.b	#$30,(a1)		;'0'
 	lea.l	(a2),a0
 Lff3510:
 	bsr.w	Lff35be
@@ -23516,6 +24126,7 @@ Lff3510:
 	addq.b	#1,(a1)
 	bsr.w	Lff35d2
 	bra.s	Lff3510
+
 Lff351e:
 	addq.l	#1,a1
 	addq.l	#8,a2
@@ -23523,14 +24134,15 @@ Lff351e:
 	rts
 
 Lff3528:
-	cmpi.b	#$35,(a0)
+	cmpi.b	#$35,(a0)		;'5'
 	bcs.s	Lff353c
 Lff352e:
 	addq.b	#1,-(a0)
-	cmpi.b	#$39,(a0)
+	cmpi.b	#$39,(a0)		;'9'
 	bls.s	Lff353c
-	move.b	#$30,(a0)
+	move.b	#$30,(a0)		;'0'
 	bra.s	Lff352e
+
 Lff353c:
 	rts
 
@@ -23556,22 +24168,27 @@ Lff35be:
 	move.l	(a0),d2
 	move.l	($0004,a0),d3
 	bra.w	Lff2ade
+
 Lff35c8:
 	move.l	(a0),d2
 	move.l	($0004,a0),d3
 	bra.w	Lff2b52
+
 Lff35d2:
 	move.l	(a0),d2
 	move.l	($0004,a0),d3
 	bra.w	Lff2c00
+
 Lff35dc:
 	move.l	(a0),d2
 	move.l	($0004,a0),d3
 	bra.w	Lff2ce4
+
 Lff35e6:
 	move.l	(a0),d2
 	move.l	($0004,a0),d3
 	bra.w	Lff2dea
+
 Lff35f0:
 	move.w	($00000bca).l,d0
 	bne.s	Lff3634
@@ -23587,11 +24204,13 @@ Lff35f0:
 	beq.s	Lff3624
 	bsr.w	Lff36f8
 	bra.s	Lff3628
+
 Lff3624:
 	bsr.w	Lff3f44
 Lff3628:
 	movem.l	(a7)+,d1-d2
 	bra.s	Lff35f0
+
 Lff362e:
 	movem.l	(a7)+,d1-d2
 Lff3632:
@@ -23612,6 +24231,7 @@ Lff364e:
 	bne.s	Lff364c
 	bsr.w	Lff3e92
 	bra.s	Lff35f0
+
 Lff365a:
 	move.w	($00000bca).l,d0
 	bne.s	Lff369a
@@ -23628,6 +24248,7 @@ Lff365a:
 	beq.s	Lff368e
 	bsr.s	Lff36f8
 	bra.s	Lff3692
+
 Lff368e:
 	bsr.w	Lff3f44
 Lff3692:
@@ -23655,7 +24276,7 @@ Lff36bc:
 	lea.l	(Lff40ce),a0
 	move.w	d0,d1
 	lsr.w	#8,d1
-	moveq.l	#$21,d2
+	moveq.l	#$21,d2			;'!'
 Lff36c8:
 	cmp.b	($0001,a0),d1
 	beq.s	Lff36d8
@@ -23669,9 +24290,9 @@ Lff36d8:
 	move.b	(a0),d1
 	tst.b	($00000bc7).l
 	bne.s	Lff36ee
-	cmp.b	#$41,d1
+	cmp.b	#$41,d1			;'A'
 	bcs.s	Lff36ee
-	cmp.b	#$47,d1
+	cmp.b	#$47,d1			;'G'
 	bcs.s	Lff36d4
 Lff36ee:
 	sub.w	#$0021,d2
@@ -23687,6 +24308,7 @@ Lff36f8:
 	clr.b	($00000bc8).l
 	clr.b	($00000c1a).l
 	bra.w	Lff3da4
+
 Lff371a:
 	rts
 
@@ -23698,12 +24320,14 @@ Lff371c:
 	bsr.w	Lff3af8
 	move.b	#$01,($00000bc7).l
 	bra.w	Lff3db8
+
 Lff373a:
 	cmp.b	#$f2,d1
 	bne.s	Lff374e
 	bsr.w	Lff3af8
 	clr.b	($00000bc7).l
 	bra.w	Lff3db8
+
 Lff374e:
 	cmp.b	#$f3,d1
 	bne.s	Lff3774
@@ -23711,6 +24335,7 @@ Lff374e:
 	move.l	($00000c04).l,($00000c14).l
 	bclr.b	#$04,($00000bc8).l
 	bra.w	Lff3db8
+
 Lff3774:
 	cmp.b	#$f5,d1
 	bne.s	Lff37f6
@@ -23724,18 +24349,19 @@ Lff3774:
 	lea.l	($00000bd0).l,a1
 	move.l	a1,($00000bcc).l
 	lea.l	($00000c1b).l,a0
-	cmpi.b	#$2e,($000f,a0)
+	cmpi.b	#$2e,($000f,a0)		;'.'
 	beq.s	Lff37bc
-	cmpi.b	#$20,($0010,a0)
+	cmpi.b	#$20,($0010,a0)		;' '
 	bne.s	Lff37c0
 	clr.b	($0010,a0)
 	bra.s	Lff37c0
+
 Lff37bc:
 	clr.b	($000f,a0)
 Lff37c0:
 	move.b	(a0)+,d0
 	beq.s	Lff37ea
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lff37c0
 	lea.l	(Lff40ec),a2
 	moveq.l	#$12,d1
@@ -23745,6 +24371,7 @@ Lff37d2:
 	addq.l	#1,a2
 	dbra.w	d1,Lff37d2
 	bra.s	Lff37c0
+
 Lff37de:
 	asl.w	#8,d0
 	move.b	(a2),d0
@@ -23752,6 +24379,7 @@ Lff37de:
 	move.w	d0,(a1)+
 	addq.w	#1,d2
 	bra.s	Lff37c0
+
 Lff37ea:
 	move.w	d2,($00000bca).l
 	movem.l	(a7)+,a1-a2
@@ -23765,6 +24393,7 @@ Lff37f6:
 	clr.l	($00000c14).l
 	bclr.b	#$04,($00000bc8).l
 	bra.w	Lff3db8
+
 Lff3814:
 	cmp.b	#$f7,d1
 	bne.s	Lff3862
@@ -23782,9 +24411,11 @@ Lff3814:
 Lff3850:
 	movem.l	(a7)+,d2-d3
 	bra.w	Lff3da4
+
 Lff3858:
 	move.b	#$01,($00000c1a).l
 	bra.s	Lff3850
+
 Lff3862:
 	cmp.b	#$f8,d1
 	bne.s	Lff38b0
@@ -23802,15 +24433,18 @@ Lff3862:
 Lff389e:
 	movem.l	(a7)+,d2-d3
 	bra.w	Lff3da4
+
 Lff38a6:
 	move.b	#$01,($00000c1a).l
 	bra.s	Lff389e
+
 Lff38b0:
 	cmp.b	#$f9,d1
 	bne.s	Lff38c6
 	clr.l	($00000c00).l
 	clr.l	($00000c04).l
 	bra.w	Lff3dc2
+
 Lff38c6:
 	cmp.b	#$fa,d1
 	bne.s	Lff3930
@@ -23820,14 +24454,16 @@ Lff38c6:
 	beq.s	Lff38fa
 	movem.l	d0/a0-a1,-(a7)
 	lea.l	($00000c2a).l,a0
-	cmpi.b	#$2e,(a0)
+	cmpi.b	#$2e,(a0)		;'.'
 	beq.s	Lff38f2
 	subq.l	#1,a0
 	moveq.l	#$0e,d0
 	bra.s	Lff3906
+
 Lff38f2:
 	clr.b	($00000bc9).l
 	bra.s	Lff3924
+
 Lff38fa:
 	movem.l	d0/a0-a1,-(a7)
 	lea.l	($00000c28).l,a0
@@ -23837,9 +24473,9 @@ Lff3906:
 	subq.l	#1,a0
 	dbra.w	d0,Lff3906
 	lea.l	($00000c29).l,a0
-	cmpi.b	#$20,(a0)
+	cmpi.b	#$20,(a0)		;' '
 	bne.s	Lff3920
-	move.b	#$30,(a0)
+	move.b	#$30,(a0)		;'0'
 Lff3920:
 	bsr.w	Lff3dc2
 Lff3924:
@@ -23859,44 +24495,50 @@ Lff3930:
 	move.l	d1,($00000c14).l
 	bclr.b	#$04,($00000bc8).l
 	bra.w	Lff3db8
+
 Lff3962:
-	cmp.b	#$3d,d1
+	cmp.b	#$3d,d1			;'='
 	bne.s	Lff3974
 	bsr.w	Lff3af8
 	bsr.w	Lff3b82
 	bra.w	Lff3da4
+
 Lff3974:
-	cmp.b	#$2b,d1
+	cmp.b	#$2b,d1			;'+'
 	bne.s	Lff398e
 	bsr.w	Lff3af8
 	bsr.w	Lff3b82
 	move.b	#$11,($00000bc8).l
 	bra.w	Lff3da4
+
 Lff398e:
-	cmp.b	#$2d,d1
+	cmp.b	#$2d,d1			;'-'
 	bne.s	Lff39a8
 	bsr.w	Lff3af8
 	bsr.w	Lff3b82
 	move.b	#$12,($00000bc8).l
 	bra.w	Lff3da4
+
 Lff39a8:
-	cmp.b	#$2a,d1
+	cmp.b	#$2a,d1			;'*'
 	bne.s	Lff39c2
 	bsr.w	Lff3af8
 	bsr.w	Lff3b82
 	move.b	#$13,($00000bc8).l
 	bra.w	Lff3da4
+
 Lff39c2:
-	cmp.b	#$2f,d1
+	cmp.b	#$2f,d1			;'/'
 	bne.s	Lff39dc
 	bsr.w	Lff3af8
 	bsr.w	Lff3b82
 	move.b	#$14,($00000bc8).l
 	bra.w	Lff3da4
+
 Lff39dc:
 	cmpi.w	#$0001,($00000c18).l
 	bne.s	Lff39f6
-	cmpi.b	#$30,($00000c29).l
+	cmpi.b	#$30,($00000c29).l	;'0'
 	bne.s	Lff39f6
 	clr.w	($00000c18).l
 Lff39f6:
@@ -23906,18 +24548,19 @@ Lff39f6:
 Lff3a06:
 	tst.b	($00000bc7).l
 	beq.s	Lff3a26
-	cmp.b	#$2e,d1
+	cmp.b	#$2e,d1			;'.'
 	beq.w	Lff3aac
 	cmpi.w	#$0008,($00000c18).l
 	bcc.w	Lff3aac
 	moveq.l	#$0d,d0
 	bra.s	Lff3a48
+
 Lff3a26:
-	cmp.b	#$40,d1
+	cmp.b	#$40,d1			;'@'
 	bcc.w	Lff3aac
 	tst.b	($00000bc9).l
 	beq.s	Lff3a6e
-	cmp.b	#$2e,d1
+	cmp.b	#$2e,d1			;'.'
 	beq.s	Lff3aac
 	moveq.l	#$0e,d0
 	cmpi.w	#$000f,($00000c18).l
@@ -23935,11 +24578,12 @@ Lff3a5e:
 	dbra.w	d0,Lff3a5e
 	move.b	d1,(a0)
 	bra.w	Lff3dc2
+
 Lff3a6e:
 	cmpi.w	#$000e,($00000c18).l
 	bcc.s	Lff3aac
 	moveq.l	#$0d,d0
-	cmp.b	#$2e,d1
+	cmp.b	#$2e,d1			;'.'
 	bne.s	Lff3a48
 	addq.w	#1,($00000c18).l
 	move.b	#$01,($00000bc9).l
@@ -23947,8 +24591,9 @@ Lff3a6e:
 	bne.s	Lff3aac
 	addq.w	#1,($00000c18).l
 	bsr.s	Lff3aae
-	move.b	#$30,($00000c29).l
+	move.b	#$30,($00000c29).l	;'0'
 	bra.w	Lff3dc2
+
 Lff3aac:
 	rts
 
@@ -23957,24 +24602,24 @@ Lff3aae:
 	move.l	d0,-(a7)
 	moveq.l	#$0e,d0
 Lff3ab8:
-	move.b	#$20,(a0)+
+	move.b	#$20,(a0)+		;' '
 	dbra.w	d0,Lff3ab8
-	move.b	#$2e,(a0)+
-	move.b	#$20,(a0)+
-	move.b	#$20,(a0)+
+	move.b	#$2e,(a0)+		;'.'
+	move.b	#$20,(a0)+		;' '
+	move.b	#$20,(a0)+		;' '
 	tst.b	($00000bc7).l
 	bne.s	Lff3ae6
-	move.b	#$44,(a0)+
-	move.b	#$45,(a0)+
-	move.b	#$43,(a0)+
+	move.b	#$44,(a0)+		;'D'
+	move.b	#$45,(a0)+		;'E'
+	move.b	#$43,(a0)+		;'C'
 	clr.b	(a0)+
 	move.l	(a7)+,d0
 	rts
 
 Lff3ae6:
-	move.b	#$48,(a0)+
-	move.b	#$45,(a0)+
-	move.b	#$58,(a0)+
+	move.b	#$48,(a0)+		;'H'
+	move.b	#$45,(a0)+		;'E'
+	move.b	#$58,(a0)+		;'X'
 	clr.b	(a0)+
 	move.l	(a7)+,d0
 	rts
@@ -24001,37 +24646,41 @@ Lff3b30:
 Lff3b34:
 	move.b	(a0)+,d0
 	beq.s	Lff3b7a
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lff3b34
 Lff3b3e:
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lff3b7a
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	bcs.s	Lff3b6e
-	cmp.b	#$41,d0
+	cmp.b	#$41,d0			;'A'
 	bcs.s	Lff3b7a
-	cmp.b	#$47,d0
+	cmp.b	#$47,d0			;'G'
 	bcs.s	Lff3b68
-	cmp.b	#$61,d0
+	cmp.b	#$61,d0			;'a'
 	bcs.s	Lff3b7a
-	cmp.b	#$67,d0
+	cmp.b	#$67,d0			;'g'
 	bcc.s	Lff3b7a
-	sub.b	#$57,d0
+	sub.b	#$57,d0			;'W'
 	bra.s	Lff3b72
+
 Lff3b68:
-	sub.b	#$37,d0
+	sub.b	#$37,d0			;'7'
 	bra.s	Lff3b72
+
 Lff3b6e:
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 Lff3b72:
 	asl.l	#4,d1
 	add.l	d0,d1
 	move.b	(a0)+,d0
 	bra.s	Lff3b3e
+
 Lff3b7a:
 	move.l	d1,d0
 	bsr.w	Lff2968
 	bra.s	Lff3b1e
+
 Lff3b82:
 	movem.l	d0-d4,-(a7)
 	move.b	($00000bc8).l,d4
@@ -24051,6 +24700,7 @@ Lff3bb4:
 Lff3bc0:
 	move.b	#$01,($00000c1a).l
 	bra.s	Lff3bb4
+
 Lff3bca:
 	subq.b	#1,d4
 	beq.w	Lff2b52
@@ -24088,31 +24738,31 @@ Lff3bea:
 	bsr.w	Lff3d94
 	bsr.w	Lff3d86
 	move.b	d0,(a1)+
-	move.b	#$2e,(a1)+
+	move.b	#$2e,(a1)+		;'.'
 	moveq.l	#$0c,d2
 Lff3c4c:
 	bsr.w	Lff3d86
 	move.b	d0,(a1)+
 	dbra.w	d2,Lff3c4c
 	move.l	(a7)+,d2
-	move.b	#$45,(a1)+
-	move.b	#$2b,d0
+	move.b	#$45,(a1)+		;'E'
+	move.b	#$2b,d0			;'+'
 	subq.l	#1,d2
 	bpl.s	Lff3c6a
 	neg.l	d2
-	move.b	#$2d,d0
+	move.b	#$2d,d0			;'-'
 Lff3c6a:
 	move.b	d0,(a1)+
 	divu.w	#$0064,d2
-	add.b	#$30,d2
+	add.b	#$30,d2			;'0'
 	move.b	d2,(a1)+
 	clr.w	d2
 	swap.w	d2
 	divu.w	#$000a,d2
-	add.b	#$30,d2
+	add.b	#$30,d2			;'0'
 	move.b	d2,(a1)+
 	swap.w	d2
-	add.b	#$30,d2
+	add.b	#$30,d2			;'0'
 	move.b	d2,(a1)+
 	clr.b	(a1)+
 Lff3c8e:
@@ -24124,12 +24774,13 @@ Lff3c98:
 	move.b	#$01,($00000c1a).l
 Lff3ca0:
 	lea.l	($00000c26).l,a1
-	move.b	#$2d,(a1)+
-	move.b	#$20,(a1)+
-	move.b	#$45,(a1)+
-	move.b	#$20,(a1)+
-	move.b	#$2d,(a1)
+	move.b	#$2d,(a1)+		;'-'
+	move.b	#$20,(a1)+		;' '
+	move.b	#$45,(a1)+		;'E'
+	move.b	#$20,(a1)+		;' '
+	move.b	#$2d,(a1)		;'-'
 	bra.s	Lff3c8e
+
 Lff3cbc:
 	movea.l	a7,a0
 	lea.l	(-$0016,a7),a7
@@ -24145,18 +24796,20 @@ Lff3cd0:
 	subq.l	#1,d2
 	dbra.w	d1,Lff3cd0
 	bra.s	Lff3cf4
+
 Lff3cde:
-	move.b	#$30,(a1)+
+	move.b	#$30,(a1)+		;'0'
 	subq.l	#1,d2
-	move.b	#$2e,(a1)+
+	move.b	#$2e,(a1)+		;'.'
 Lff3ce8:
 	subq.l	#1,d2
 	addq.l	#1,d1
 	beq.s	Lff3cfa
-	move.b	#$30,(a1)+
+	move.b	#$30,(a1)+		;'0'
 	bra.s	Lff3ce8
+
 Lff3cf4:
-	move.b	#$2e,(a1)+
+	move.b	#$2e,(a1)+		;'.'
 	subq.l	#1,d2
 Lff3cfa:
 	move.b	(a0)+,(a1)+
@@ -24167,7 +24820,7 @@ Lff3d04:
 	subq.l	#1,a1
 Lff3d06:
 	move.b	-(a1),d0
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	beq.s	Lff3d06
 	addq.l	#1,a1
 	clr.b	(a1)
@@ -24189,6 +24842,7 @@ Lff3d28:
 Lff3d32:
 	lea.l	($0016,a7),a7
 	bra.w	Lff3c8e
+
 Lff3d3a:
 	bsr.w	Lff2994
 	bcs.w	Lff3c98
@@ -24200,25 +24854,27 @@ Lff3d4e:
 	rol.l	#4,d1
 	move.b	d1,d0
 	and.b	#$0f,d0
-	add.b	#$30,d0
-	cmp.b	#$3a,d0
+	add.b	#$30,d0			;'0'
+	cmp.b	#$3a,d0			;':'
 	bcs.s	Lff3d62
 	addq.b	#7,d0
 Lff3d62:
 	btst.l	#$08,d0
 	bne.s	Lff3d80
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bne.s	Lff3d80
 	tst.w	d2
 	beq.s	Lff3d80
-	move.b	#$20,d0
+	move.b	#$20,d0			;' '
 Lff3d76:
 	move.b	d0,(a1)+
 	dbra.w	d2,Lff3d4e
 	bra.w	Lff3c8e
+
 Lff3d80:
 	bset.l	#$08,d0
 	bra.s	Lff3d76
+
 Lff3d86:
 	move.b	(a0),d0
 	beq.s	Lff3d8e
@@ -24226,17 +24882,17 @@ Lff3d86:
 	rts
 
 Lff3d8e:
-	move.b	#$30,d0
+	move.b	#$30,d0			;'0'
 	rts
 
 Lff3d94:
 	tst.b	d1
 	beq.s	Lff3d9e
-	move.b	#$2d,(a1)+
+	move.b	#$2d,(a1)+		;'-'
 	rts
 
 Lff3d9e:
-	move.b	#$20,(a1)+
+	move.b	#$20,(a1)+		;' '
 	rts
 
 Lff3da4:
@@ -24254,29 +24910,29 @@ Lff3dc2:
 	lea.l	(-$000c,a7),a7
 	movea.l	a7,a1
 	move.b	#$f0,(a1)
-	moveq.l	#$20,d1
+	moveq.l	#$20,d1			;' '
 	move.l	($00000c00).l,d0
 	or.l	($00000c04).l,d0
 	beq.s	Lff3df4
-	moveq.l	#$4d,d1
+	moveq.l	#$4d,d1			;'M'
 Lff3df4:
 	move.b	d1,($0001,a1)
 	move.b	#$f2,($0002,a1)
 	move.b	($00000bc8).l,d0
 	and.b	#$07,d0
-	moveq.l	#$2b,d1
+	moveq.l	#$2b,d1			;'+'
 	subq.b	#1,d0
 	beq.s	Lff3e22
-	moveq.l	#$2d,d1
+	moveq.l	#$2d,d1			;'-'
 	subq.b	#1,d0
 	beq.s	Lff3e22
-	moveq.l	#$2a,d1
+	moveq.l	#$2a,d1			;'*'
 	subq.b	#1,d0
 	beq.s	Lff3e22
-	moveq.l	#$2f,d1
+	moveq.l	#$2f,d1			;'/'
 	subq.b	#1,d0
 	beq.s	Lff3e22
-	moveq.l	#$20,d1
+	moveq.l	#$20,d1			;' '
 Lff3e22:
 	move.b	d1,($0003,a1)
 	move.w	($00000bfc).l,d1
@@ -24410,7 +25066,7 @@ Lff3ffe:
 	move.b	(a1)+,d0
 	bne.s	Lff4008
 	subq.l	#1,a1
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 Lff4008:
 	cmp.b	#$80,d0
 	bcs.s	Lff4032
@@ -24436,7 +25092,7 @@ Lff4032:
 	rts
 
 Lff403a:
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	bsr.s	Lff4040
 	rts
 
@@ -24459,12 +25115,13 @@ Lff4040:
 	move.w	(a7),d0
 	lea.l	($004c,a7),a7
 	bra.s	Lff40c6
+
 Lff408a:
 	move.w	d0,d3
 	lea.l	(Lff4112),a1
-	cmp.b	#$20,d3
+	cmp.b	#$20,d3			;' '
 	bne.s	Lff409a
-	moveq.l	#$20,d3
+	moveq.l	#$20,d3			;' '
 Lff409a:
 	move.w	(a1)+,d0
 	beq.s	Lff40c6
@@ -24472,6 +25129,7 @@ Lff409a:
 	beq.s	Lff40a8
 	lea.l	($0014,a1),a1
 	bra.s	Lff409a
+
 Lff40a8:
 	move.l	($00000944).l,-(a7)
 	move.l	#$00e60000,($00000944).l
@@ -24625,6 +25283,7 @@ Lff44b0:
 	bsr.s	Lff44c2
 	clr.b	($00000bc4).l
 	bra.s	Lff449c
+
 Lff44c2:
 	cmpi.b	#$02,($00000bc2).l
 	bne.s	Lff44ae
@@ -24633,6 +25292,7 @@ Lff44c2:
 	bsr.w	Lff4de2
 	bsr.w	Lff4a6a
 	bra.w	Lffa33e
+
 Lff44e8:
 	cmpi.b	#$02,($00000bc2).l
 	beq.s	Lff4542
@@ -24659,6 +25319,7 @@ Lff452a:
 	clr.b	($00000bc4).l
 Lff4542:
 	bra.w	Lff449c
+
 Lff4546:
 	cmpi.b	#$02,($000009dd).l
 	beq.s	Lff45a6
@@ -24748,11 +25409,11 @@ Lff467c:
 	move.w	($00000bb8).l,d0
 	tst.b	d0
 	beq.s	Lff46a6
-	cmp.w	#$0070,d0
+	cmp.w	#$0070,d0		;'p'
 	bcc.s	Lff46a6
-	cmp.w	#$0061,d0
+	cmp.w	#$0061,d0		;'a'
 	bcc.s	Lff469c
-	cmp.w	#$005a,d0
+	cmp.w	#$005a,d0		;'Z'
 	bcc.s	Lff46a6
 Lff469c:
 	movea.l	($00000bba).l,a0
@@ -24788,14 +25449,14 @@ Lff46e8:
 	bcc.s	Lff472c
 	tst.b	d0
 	bmi.s	Lff477a
-	cmp.w	#$005a,d0
+	cmp.w	#$005a,d0		;'Z'
 	bcs.s	Lff477a
 	beq.s	Lff477c
-	cmp.w	#$005b,d0
+	cmp.w	#$005b,d0		;'['
 	beq.w	Lff478c
-	cmp.w	#$0061,d0
+	cmp.w	#$0061,d0		;'a'
 	bcs.s	Lff4760
-	cmp.w	#$0070,d0
+	cmp.w	#$0070,d0		;'p'
 	bcs.s	Lff477a
 	move.w	d0,-(a7)
 	move.b	d0,d1
@@ -24805,6 +25466,7 @@ Lff46e8:
 	beq.s	Lff473c
 	clr.w	(a7)
 	bra.s	Lff473c
+
 Lff472c:
 	move.w	d0,-(a7)
 	move.b	d0,d1
@@ -24817,13 +25479,14 @@ Lff473c:
 	move.w	(a7)+,d0
 	beq.s	Lff477a
 	and.w	#$007f,d0
-	cmp.w	#$0070,d0
+	cmp.w	#$0070,d0		;'p'
 	bne.s	Lff4760
 	lea.l	(Lff5410),a0
 	bsr.w	Lff4892
 	lea.l	(Lff541a),a0
 	bsr.w	Lff4892
 	bra.s	Lff4776
+
 Lff4760:
 	lea.l	(Lff53c8),a0
 Lff4766:
@@ -24833,6 +25496,7 @@ Lff4766:
 	beq.s	Lff4772
 	addq.l	#8,a0
 	bra.s	Lff4766
+
 Lff4772:
 	bsr.w	Lff4892
 Lff4776:
@@ -24846,6 +25510,7 @@ Lff477c:
 	move.l	a0,-(a7)
 	lea.l	(Lff53d4),a0
 	bra.s	Lff479a
+
 Lff478c:
 	btst.l	#$08,d2
 	beq.s	Lff4760
@@ -24855,6 +25520,7 @@ Lff479a:
 	bsr.w	Lff4892
 	movea.l	(a7)+,a0
 	bra.s	Lff4760
+
 Lff47a2:
 	clr.b	($00000bc3).l
 	move.w	#$ffff,($00000bb8).l
@@ -24866,7 +25532,7 @@ Lff47a2:
 	beq.w	Lff4890
 	and.w	#$007f,d0
 	beq.w	Lff4890
-	cmp.w	#$0070,d0
+	cmp.w	#$0070,d0		;'p'
 	bcc.w	Lff4890
 	movea.l	($00000bba).l,a0
 	or.w	#$0080,d0
@@ -24875,6 +25541,7 @@ Lff47a2:
 	cmp.b	#$e1,d0
 	bcc.w	Lff4888
 	bra.w	Lff488a
+
 Lff47f4:
 	move.b	#$01,($00000bc3).l
 	tst.w	d0
@@ -24885,14 +25552,14 @@ Lff47f4:
 	beq.w	Lff44c2
 	and.w	#$007f,d0
 	beq.s	Lff4890
-	cmp.w	#$005a,d0
+	cmp.w	#$005a,d0		;'Z'
 	bcs.s	Lff4888
 	beq.w	Lff48ae
-	cmp.w	#$005b,d0
+	cmp.w	#$005b,d0		;'['
 	beq.w	Lff48c2
-	cmp.w	#$0061,d0
+	cmp.w	#$0061,d0		;'a'
 	bcs.s	Lff486c
-	cmp.w	#$0070,d0
+	cmp.w	#$0070,d0		;'p'
 	bcs.s	Lff4888
 	move.w	d0,-(a7)
 	move.b	d0,d1
@@ -24905,13 +25572,14 @@ Lff484c:
 	move.w	(a7)+,d0
 	move.w	d0,d1
 	and.w	#$007f,d1
-	cmp.w	#$0070,d1
+	cmp.w	#$0070,d1		;'p'
 	bne.s	Lff486c
 	lea.l	(Lff5410),a0
 	bsr.s	Lff4892
 	lea.l	(Lff541a),a0
 	bsr.s	Lff4892
 	bra.s	Lff486e
+
 Lff486c:
 	bsr.s	Lff4892
 Lff486e:
@@ -24953,6 +25621,7 @@ Lff48ae:
 	move.l	a0,-(a7)
 	lea.l	(Lff53d4),a0
 	bra.s	Lff48d4
+
 Lff48c2:
 	btst.b	#$00,($00000810).l
 	beq.s	Lff486c
@@ -24962,6 +25631,7 @@ Lff48d4:
 	bsr.s	Lff4892
 	movea.l	(a7)+,a0
 	bra.s	Lff486c
+
 Lff48da:
 	btst.l	#$00,d1
 	bne.s	Lff492e
@@ -24983,6 +25653,7 @@ Lff48da:
 Lff4926:
 	movem.l	(a7)+,d1-d4
 	bra.w	Lff45de
+
 Lff492e:
 	cmpi.w	#$0700,($00000bb8).l
 	beq.w	Lff45de
@@ -25005,13 +25676,13 @@ Lff492e:
 	tst.w	d0
 	beq.s	Lff49ac
 	movea.l	($00000bba).l,a0
-	cmp.b	#$5a,d0
+	cmp.b	#$5a,d0			;'Z'
 	bcs.s	Lff49a2
-	cmp.b	#$61,d0
+	cmp.b	#$61,d0			;'a'
 	bcs.s	Lff49ac
-	cmp.b	#$70,d0
+	cmp.b	#$70,d0			;'p'
 	bcs.s	Lff49a2
-	cmp.b	#$74,d0
+	cmp.b	#$74,d0			;'t'
 	bcs.s	Lff4926
 Lff49a2:
 	bsr.w	Lff4892
@@ -25019,6 +25690,7 @@ Lff49a2:
 Lff49ac:
 	bsr.w	Lff47f4
 	bra.w	Lff4926
+
 Lff49b4:
 	tst.b	($00000bc1).l
 	bpl.w	Lff45bc
@@ -25033,6 +25705,7 @@ Lff49b4:
 	movea.l	(a0,d0.w),a0
 	jsr	(a0)
 	bra.w	Lff45de
+
 Lff49ea:
 	.dc.b	$00,$ff,$a3,$6e,$00,$ff,$a3,$3e
 	.dc.b	$00,$ff,$4a,$62,$00,$ff,$4a,$66
@@ -25068,9 +25741,11 @@ Lff4a58:
 Lff4a5a:
 	move.w	d0,($00000bb2).l
 	bra.s	Lff4ac8
+
 Lff4a62:
 	bsr.s	Lff4a9a
 	bra.s	Lff4ac8
+
 Lff4a66:
 	bsr.w	Lff4de2
 Lff4a6a:
@@ -25158,18 +25833,19 @@ Lff4b62:
 	move.w	(a0)+,($0006,a7)
 	bsr.w	Lff6028
 	move.w	(-$000a,a0),d0
-	cmp.b	#$5a,d0
+	cmp.b	#$5a,d0			;'Z'
 	bcs.s	Lff4b62
-	cmp.b	#$61,d0
+	cmp.b	#$61,d0			;'a'
 	bcs.s	Lff4bae
-	cmp.b	#$70,d0
+	cmp.b	#$70,d0			;'p'
 	bcs.s	Lff4b62
-	cmp.b	#$74,d0
+	cmp.b	#$74,d0			;'t'
 	bcc.s	Lff4b62
-	sub.b	#$70,d0
+	sub.b	#$70,d0			;'p'
 	bra.s	Lff4bb2
+
 Lff4bae:
-	sub.b	#$52,d0
+	sub.b	#$52,d0			;'R'
 Lff4bb2:
 	move.w	d0,d1
 	move.w	($00000810).l,d0
@@ -25180,6 +25856,7 @@ Lff4bb2:
 	bsr.s	Lff4c02
 	movea.l	a1,a0
 	bra.s	Lff4b62
+
 Lff4bc8:
 	addq.l	#8,a7
 	tst.b	($00000bc6).l
@@ -25228,6 +25905,7 @@ Lff4c3e:
 	bsr.w	Lff4d14
 	addq.l	#8,a0
 	bra.s	Lff4c3e
+
 Lff4c4a:
 	movem.l	(a7)+,d0-d2/a0-a1
 	rts
@@ -25247,6 +25925,7 @@ Lff4c74:
 	bsr.s	Lff4c9a
 	addq.l	#8,a0
 	bra.s	Lff4c74
+
 Lff4c7e:
 	clr.b	($00000bc4).l
 	move.w	(a7)+,d0
@@ -25270,6 +25949,7 @@ Lff4c9a:
 	bne.s	Lff4ccc
 	lea.l	(Lff5964),a1
 	bra.s	Lff4ccc
+
 Lff4cbe:
 	movem.l	d0-d2/a0-a1,-(a7)
 	and.w	#$ff00,d0
@@ -25291,9 +25971,11 @@ Lff4ccc:
 	bsr.w	Lff718c
 	move.l	(a7)+,($00000944).l
 	bra.s	Lff4d0e
+
 Lff4d08:
 	lea.l	(a1,d2.w),a1
 	bra.s	Lff4ccc
+
 Lff4d0e:
 	movem.l	(a7)+,d0-d2/a0-a1
 Lff4d12:
@@ -25397,6 +26079,7 @@ Lff4e10:
 	bsr.w	Lff61ee
 	lea.l	($000a,a7),a7
 	bra.w	Lff4bf8
+
 Lff4e6e:
 	moveq.l	#$ff,d0
 	sub.w	($00000bb0).l,d1
@@ -25425,6 +26108,7 @@ Lff4e8e:
 Lff4eac:
 	addq.l	#4,a0
 	bra.s	Lff4e8e
+
 Lff4eb0:
 	subq.l	#4,a0
 Lff4eb2:
@@ -25434,7 +26118,7 @@ Lff4eb2:
 Lff4eb6:
 	and.w	#$00ff,d0
 	clr.w	d1
-	cmp.b	#$35,d0
+	cmp.b	#$35,d0			;'5'
 	bcs.s	Lff4eca
 	cmp.b	#$80,d0
 	bcs.s	Lff4f1e
@@ -25458,13 +26142,13 @@ Lff4ef8:
 	bsr.s	Lff4f2a
 	btst.l	#$07,d2
 	bne.s	Lff4f1c
-	cmp.b	#$41,d1
+	cmp.b	#$41,d1			;'A'
 	bcs.s	Lff4f1c
-	cmp.b	#$5b,d1
+	cmp.b	#$5b,d1			;'['
 	bcs.s	Lff4f18
-	cmp.b	#$61,d1
+	cmp.b	#$61,d1			;'a'
 	bcs.s	Lff4f1c
-	cmp.b	#$7b,d1
+	cmp.b	#$7b,d1			;'{'
 	bcc.s	Lff4f1c
 Lff4f18:
 	eori.b	#$20,d1
@@ -25494,6 +26178,7 @@ Lff4f3c:
 	lea.l	(Lff5d4e),a0
 	move.w	#$000f,d2
 	bra.s	Lff4f7a
+
 Lff4f60:
 	lea.l	(Lff5d5e),a0
 	move.b	(a0,d0.w),d1
@@ -25517,7 +26202,7 @@ Lff4f8c:
 	bsr.s	Lff4f30
 	tst.b	d1
 	beq.s	Lff4fa2
-	cmp.b	#$41,d1
+	cmp.b	#$41,d1			;'A'
 	bcs.s	Lff4fa4
 	cmp.b	#$7f,d1
 	bcc.s	Lff4fa4
@@ -25526,7 +26211,7 @@ Lff4fa2:
 	rts
 
 Lff4fa4:
-	move.w	#$0020,d1
+	move.w	#$0020,d1		;' '
 	rts
 
 Lff4faa:
@@ -26034,6 +26719,7 @@ Lff5e24:
 	bsr.w	Lff6086
 	lea.l	($0008,a7),a7
 	bra.s	Lff5e14
+
 Lff5e42:
 	move.w	(a1)+,d0
 	and.l	#$00000003,d0
@@ -26190,6 +26876,7 @@ Lff5fd2:
 	move.b	#$80,d4
 	and.w	#$0007,d0
 	bra.s	Lff6000
+
 Lff5ffe:
 	lsr.b	#1,d4
 Lff6000:
@@ -26197,6 +26884,7 @@ Lff6000:
 	move.b	d4,d5
 	not.b	d5
 	bra.s	Lff6022
+
 Lff600a:
 	move.b	(a0),d0
 	and.b	d5,d0
@@ -26244,6 +26932,7 @@ Lff604e:
 	add.w	d4,d0
 	subq.w	#1,d0
 	bra.w	Lff5f7c
+
 Lff6086:
 	link.w	a6,#-$0008
 	movem.l	d0-d6/a0-a1,-(a7)
@@ -26364,6 +27053,7 @@ Lff61d4:
 	move.w	($00000940).l,d0
 	lea.l	(a0,d0.w),a0
 	bra.w	Lff6150
+
 Lff61e6:
 	movem.l	(a7)+,d0-d6/a0-a1
 	unlk	a6
@@ -26493,6 +27183,7 @@ Lff634c:
 	lea.l	(a0,d0.w),a0
 	ror.w	#8,d7
 	bra.w	Lff62cc
+
 Lff6360:
 	movem.l	(a7)+,d0-d7/a0-a1
 	unlk	a6
@@ -26578,13 +27269,13 @@ Lff63fe:
 	asl.b	#4,d0
 	move.b	d0,($00000811).l
 	bsr.w	Lff1964
-	move.b	#$41,d1
+	move.b	#$41,d1			;'A'
 	bsr.w	Lff6502
-	move.b	#$49,d1
+	move.b	#$49,d1			;'I'
 	bsr.w	Lff6502
-	move.b	#$59,d1
+	move.b	#$59,d1			;'Y'
 	bsr.w	Lff6502
-	move.b	#$51,d1
+	move.b	#$51,d1			;'Q'
 	bsr.w	Lff6502
 	move.b	($00ed0027),d1
 	and.b	#$01,d1
@@ -26611,6 +27302,7 @@ Lff64ac:
 Lff64ba:
 	move.l	d1,d0
 	bra.w	Lff1978
+
 Lff64c0:
 	move.l	d1,-(a7)
 	eori.b	#$ff,d1
@@ -26621,6 +27313,7 @@ Lff64c0:
 
 Lff64d0:
 	bra.w	Lff1964
+
 Lff64d4:
 	move.l	d1,-(a7)
 	and.b	#$0f,d1
@@ -26640,7 +27333,7 @@ Lff64e4:
 Lff64f4:
 	move.l	d1,-(a7)
 	move.b	d0,d1
-	add.b	#$52,d1
+	add.b	#$52,d1			;'R'
 	bsr.s	Lff6502
 	move.l	(a7)+,d1
 	rts
@@ -26696,10 +27389,12 @@ Lff6578:
 Lff6582:
 	moveq.l	#$0e,d1
 	bra.s	Lff6570
+
 Lff6586:
 	btst.b	#$03,($00e8e003)
 	bne.s	Lff6572
 	bra.s	Lff6582
+
 Lff6592:
 	move.w	sr,-(a7)
 	ori.w	#$0700,sr
@@ -26723,7 +27418,7 @@ Lff6592:
 
 Lff65c0:
 	moveq.l	#$0c,d3
-	moveq.l	#$2f,d4
+	moveq.l	#$2f,d4			;'/'
 Lff65c4:
 	move.l	d1,d0
 	move.b	#$08,(a0)
@@ -26771,6 +27466,7 @@ Lff6632:
 	bne.s	Lff6648
 	add.w	#$005a,d1
 	bra.s	Lff6648
+
 Lff663c:
 	bclr.l	d3,d0
 	bclr.l	d1,d0
@@ -26783,7 +27479,7 @@ Lff6648:
 	move.w	d0,(a0)
 	move.w	d1,d0
 	move.w	(a7)+,d1
-	cmp.w	#$005a,d0
+	cmp.w	#$005a,d0		;'Z'
 	bcs.s	Lff665c
 	bsr.w	Lff4644
 Lff665c:
@@ -26859,7 +27555,7 @@ Lff66d6:
 	lea.l	($00e00000),a0
 	lea.l	($00e20000),a1
 	bsr.w	Lffaeec
-	move.w	#$0033,($00e8002a)
+	move.w	#$0033,($00e8002a)	;'3'
 	bsr.w	Lff67d4
 	move.w	#$0000,($00e80480)
 	bsr.w	Lff68d4
@@ -26884,7 +27580,7 @@ Lff66d6:
 	move.w	(a0)+,(a1)+
 	move.b	($00ed0028),($00e8e001)
 	move.w	#$0010,($00eb0808)
-	move.w	#$0020,($00e82600)
+	move.w	#$0020,($00e82600)	;' '
 	move.w	#$06e4,($00e82500)
 Lff6786:
 	movem.l	(a7)+,d1-d3/a1-a2
@@ -26905,6 +27601,7 @@ Lff678c:
 Lff67b8:
 	move.w	(a7)+,($00e82600)
 	bra.s	Lff6786
+
 Lff67c0:
 	clr.l	d0
 	move.b	($0000093c).l,d0
@@ -26937,6 +27634,7 @@ Lff67d4:
 	bsr.w	Lff6900
 	move.w	d3,(a1)
 	bra.s	Lff6820
+
 Lff6816:
 	move.w	d3,(a1)
 	bsr.w	Lff6900
@@ -26990,17 +27688,20 @@ Lff6820:
 	move.w	($0000096e).l,d2
 	clr.l	d1
 	bra.w	Lffa476
+
 Lff68d4:
 	move.w	($00e80028),d0
 	and.w	#$0003,d0
 	bne.s	Lff68e6
 	bsr.w	Lffaea2
 	bra.s	Lff68f6
+
 Lff68e6:
 	cmp.w	#$0001,d0
 	bne.s	Lff68f2
 	bsr.w	Lffaeb8
 	bra.s	Lff68f6
+
 Lff68f2:
 	bsr.w	Lffaed0
 Lff68f6:
@@ -27019,7 +27720,7 @@ Lff6912:
 	clr.w	(a1)+
 	dbra.w	d1,Lff6912
 	addq.l	#2,a1
-	move.w	#$0033,(a1)+
+	move.w	#$0033,(a1)+		;'3'
 	clr.w	(a1)+
 	clr.w	(a1)+
 	clr.w	(a1)+
@@ -27132,6 +27833,7 @@ Lff6bb4:
 	rol.w	#5,d0
 	or.b	d1,d0
 	bra.w	Lff6c8c
+
 Lff6be8:
 	move.w	d1,d5
 	asl.w	#1,d5
@@ -27171,6 +27873,7 @@ Lff6be8:
 	rol.w	#5,d0
 	or.b	d7,d0
 	bra.s	Lff6c8c
+
 Lff6c3a:
 	subq.w	#1,d4
 	bcc.s	Lff6c4a
@@ -27180,6 +27883,7 @@ Lff6c3a:
 	rol.w	#5,d0
 	or.b	d7,d0
 	bra.s	Lff6c8c
+
 Lff6c4a:
 	subq.w	#1,d4
 	bcc.s	Lff6c5a
@@ -27189,6 +27893,7 @@ Lff6c4a:
 	rol.w	#5,d0
 	or.b	d5,d0
 	bra.s	Lff6c8c
+
 Lff6c5a:
 	subq.w	#1,d4
 	bcc.s	Lff6c6a
@@ -27198,6 +27903,7 @@ Lff6c5a:
 	rol.w	#5,d0
 	or.b	d1,d0
 	bra.s	Lff6c8c
+
 Lff6c6a:
 	subq.w	#1,d4
 	bcc.s	Lff6c7a
@@ -27207,6 +27913,7 @@ Lff6c6a:
 	rol.w	#5,d0
 	or.b	d1,d0
 	bra.s	Lff6c8c
+
 Lff6c7a:
 	subq.w	#1,d4
 	bcc.s	Lff6c8a
@@ -27216,6 +27923,7 @@ Lff6c7a:
 	rol.w	#5,d0
 	or.b	d6,d0
 	bra.s	Lff6c8c
+
 Lff6c8a:
 	moveq.l	#$ff,d0
 Lff6c8c:
@@ -27321,7 +28029,7 @@ Lff6d6c:
 	rts
 
 Lff6d76:
-	cmp.w	#$2121,d1
+	cmp.w	#$2121,d1		;'!!'
 	bcs.w	Lff6eca
 	cmp.w	#$7e7f,d1
 	bcs.s	Lff6d9c
@@ -27335,25 +28043,25 @@ Lff6d76:
 Lff6d9c:
 	move.w	d1,d0
 	ror.w	#8,d0
-	cmp.b	#$21,d0
+	cmp.b	#$21,d0			;'!'
 	bcs.s	Lff6db8
 	cmp.b	#$7f,d0
 	bcc.s	Lff6db8
-	cmp.b	#$21,d1
+	cmp.b	#$21,d1			;'!'
 	bcs.s	Lff6db8
 	cmp.b	#$7f,d1
 	bcs.s	Lff6dbc
 Lff6db8:
-	move.w	#$2228,d1
+	move.w	#$2228,d1		;'"('
 Lff6dbc:
 	clr.l	d0
 	move.b	d1,d0
 	lsr.w	#8,d1
-	cmp.b	#$2c,d1
+	cmp.b	#$2c,d1			;','
 	beq.w	Lff6e56
-	cmp.b	#$2d,d1
+	cmp.b	#$2d,d1			;'-'
 	beq.w	Lff6e56
-	cmp.b	#$30,d1
+	cmp.b	#$30,d1			;'0'
 	bcs.s	Lff6dda
 	subq.w	#7,d1
 Lff6dda:
@@ -27406,17 +28114,19 @@ Lff6e56:
 	mulu.w	#$0048,d1
 	move.l	($000009a6).l,d0
 	bra.s	Lff6e0c
+
 Lff6e76:
 	mulu.w	#$0020,d1
 	move.l	($0000099a).l,d0
 	bra.s	Lff6e4a
+
 Lff6e82:
 	and.w	#$00ff,d1
-	cmp.w	#$005c,d1
+	cmp.w	#$005c,d1		;'\'
 	beq.s	Lff6e9a
-	cmp.w	#$007e,d1
+	cmp.w	#$007e,d1		;'~'
 	beq.s	Lff6eaa
-	cmp.w	#$007c,d1
+	cmp.w	#$007c,d1		;'|'
 	beq.s	Lff6eba
 Lff6e98:
 	rts
@@ -27474,6 +28184,7 @@ Lff6f12:
 	mulu.w	#$000c,d1
 	add.l	d1,d0
 	bra.s	Lff6f08
+
 Lff6f20:
 	move.l	#$00f3a800,d0
 Lff6f26:
@@ -27490,7 +28201,7 @@ Lff6f36:
 	move.l	a1,-(a7)
 	lea.l	($00000c46).l,a0
 	movea.l	a0,a1
-	move.w	#$0047,d0
+	move.w	#$0047,d0		;'G'
 Lff6f4c:
 	clr.b	(a0)+
 	dbra.w	d0,Lff6f4c
@@ -27517,6 +28228,7 @@ Lff6f7c:
 	adda.l	d1,a0
 	move.w	#$0017,d1
 	bra.s	Lff6fa8
+
 Lff6f98:
 	movea.l	#$00f3a000,a0
 	mulu.w	#$0008,d1
@@ -27530,6 +28242,7 @@ Lff6fa8:
 	cmp.b	#$08,d2
 	beq.w	Lff6f2c
 	bra.w	Lff6ef4
+
 Lff6fc2:
 	and.w	#$01ff,d1
 	move.l	($000009ae).l,d0
@@ -27537,6 +28250,7 @@ Lff6fc2:
 	bne.w	Lff6eee
 	move.l	($000009a2).l,d0
 	bra.w	Lff6f26
+
 Lff6fde:
 	movem.l	d3-d4/a1,-(a7)
 	movea.l	d0,a0
@@ -27684,6 +28398,7 @@ Lff710e:
 	adda.l	d7,a2
 	dbra.w	d3,Lff710c
 	bra.s	Lff7186
+
 Lff7122:
 	move.b	(a2),d0
 	and.b	d6,d0
@@ -27691,6 +28406,7 @@ Lff7122:
 	adda.l	d7,a2
 	dbra.w	d3,Lff7122
 	bra.s	Lff7186
+
 Lff7130:
 	move.w	#$0008,d1
 	sub.w	d4,d1
@@ -27722,6 +28438,7 @@ Lff7156:
 	adda.l	d7,a2
 	dbra.w	d3,Lff7150
 	bra.s	Lff7186
+
 Lff7172:
 	move.b	(a2),d0
 	rol.w	#8,d0
@@ -27773,6 +28490,7 @@ Lff71d4:
 	adda.l	d7,a2
 	dbra.w	d3,Lff71d2
 	bra.s	Lff7262
+
 Lff71ea:
 	move.b	(a2),d0
 	and.b	d6,d0
@@ -27781,6 +28499,7 @@ Lff71ea:
 	adda.l	d7,a2
 	dbra.w	d3,Lff71ea
 	bra.s	Lff7262
+
 Lff71fa:
 	move.w	#$0008,d1
 	sub.w	d4,d1
@@ -27818,6 +28537,7 @@ Lff7222:
 	adda.l	d7,a2
 	dbra.w	d3,Lff721a
 	bra.s	Lff7262
+
 Lff7248:
 	move.b	(a2)+,d0
 	rol.w	#8,d0
@@ -28002,6 +28722,7 @@ Lff740e:
 	swap.w	d2
 	swap.w	d3
 	bra.s	Lff7462
+
 Lff7420:
 	swap.w	d2
 Lff7422:
@@ -28093,6 +28814,7 @@ Lff74d2:
 	cmp.w	#$0004,d1
 	bcc.s	Lff7502
 	bra.s	Lff74fa
+
 Lff74f2:
 	lea.l	($00e80014),a0
 	bne.s	Lff7502
@@ -28145,6 +28867,7 @@ Lff7570:
 	beq.s	Lff757c
 	bsr.w	Lff779e
 	bra.s	Lff7570
+
 Lff757c:
 	move.l	($00000974).l,d0
 	movem.l	(a7)+,d1
@@ -28187,46 +28910,55 @@ Lff75dc:
 	bsr.w	Lff7532
 	bsr.w	Lff7f4c
 	bra.s	Lff7666
+
 Lff75ea:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff7f72
 	bra.s	Lff7666
+
 Lff75f8:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff7f8e
 	bra.s	Lff7666
+
 Lff7606:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff7faa
 	bra.s	Lff7666
+
 Lff7614:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff7fd0
 	bra.s	Lff7666
+
 Lff7622:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff7ff6
 	bra.s	Lff7666
+
 Lff7630:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff8010
 	bra.s	Lff7666
+
 Lff763e:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff8050
 	bra.s	Lff7666
+
 Lff764c:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
 	bsr.w	Lff813a
 	bra.s	Lff7666
+
 Lff765a:
 	movem.l	d1-d4,-(a7)
 	bsr.w	Lff7532
@@ -28268,16 +29000,17 @@ Lff76d4:
 	move.l	d0,d2
 	clr.l	d0
 	bra.w	Lff750a
+
 Lff76dc:
 	clr.w	d0
 	move.b	(a1)+,d0
 	bne.s	Lff76e6
 	subq.l	#1,a1
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 Lff76e6:
 	cmp.b	#$fe,d0
 	bne.s	Lff76ee
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 Lff76ee:
 	cmp.b	#$80,d0
 	bcs.s	Lff7718
@@ -28303,7 +29036,7 @@ Lff7718:
 	rts
 
 Lff7720:
-	moveq.l	#$20,d0
+	moveq.l	#$20,d0			;' '
 	bsr.s	Lff7726
 	rts
 
@@ -28336,7 +29069,7 @@ Lff7726:
 	movea.l	(a3,d0.w),a3
 	move.w	d1,-(a7)
 	move.w	($00e8002a),-(a7)
-	move.w	#$0033,($00e8002a)
+	move.w	#$0033,($00e8002a)	;'3'
 	jsr	(a3)
 	move.w	(a7)+,($00e8002a)
 	move.w	(a7)+,d0
@@ -28379,8 +29112,9 @@ Lff77ea:
 Lff77f6:
 	bsr.s	Lff77fc
 	bra.w	Lff750a
+
 Lff77fc:
-	cmpi.w	#$0020,d1
+	cmpi.w	#$0020,d1		;' '
 	bcs.w	Lff7bec
 	cmpi.w	#$8140,d1
 	bcs.s	Lff7830
@@ -28390,7 +29124,7 @@ Lff77fc:
 	cmp.w	($00000970).l,d0
 	bne.s	Lff782a
 	move.w	d1,-(a7)
-	move.w	#$0020,d1
+	move.w	#$0020,d1		;' '
 	bsr.s	Lff7886
 	bsr.s	Lff785c
 	move.w	(a7)+,d1
@@ -28398,6 +29132,7 @@ Lff782a:
 	bsr.s	Lff7886
 	bsr.s	Lff7832
 	bra.s	Lff7832
+
 Lff7830:
 	bsr.s	Lff7886
 Lff7832:
@@ -28442,7 +29177,7 @@ Lff7886:
 	lea.l	(Lff78ce),a3
 	movea.l	(a3,d0.w),a3
 	move.w	($00e8002a),-(a7)
-	move.w	#$0033,($00e8002a)
+	move.w	#$0033,($00e8002a)	;'3'
 	jsr	(a3)
 	move.w	(a7)+,($00e8002a)
 	movem.l	(a7)+,d2-d5/a1-a3
@@ -28473,11 +29208,13 @@ Lff794a:
 	bsr.s	Lff7966
 	movem.l	(a7)+,d2/a2
 	bra.w	Lff79e0
+
 Lff7958:
 	movem.l	d2/a2,-(a7)
 	bsr.s	Lff7966
 	movem.l	(a7)+,d2/a2
 	bra.w	Lff79f2
+
 Lff7966:
 	bset.b	#$00,($00e8002a)
 Lff796e:
@@ -28490,16 +29227,19 @@ Lff7970:
 	adda.l	d3,a2
 	dbra.w	d2,Lff796e
 	bra.s	Lff7940
+
 Lff7982:
 	movem.l	d2/a2,-(a7)
 	bsr.s	Lff799a
 	movem.l	(a7)+,d2/a2
 	bra.s	Lff79e0
+
 Lff798e:
 	movem.l	d2/a2,-(a7)
 	bsr.s	Lff799a
 	movem.l	(a7)+,d2/a2
 	bra.s	Lff79f2
+
 Lff799a:
 	bset.b	#$00,($00e8002a)
 	tst.w	d1
@@ -28513,6 +29253,7 @@ Lff79a6:
 	adda.l	d3,a2
 	dbra.w	d2,Lff79a6
 	bra.s	Lff7940
+
 Lff79b8:
 	move.b	(a1)+,d0
 	asl.w	#8,d0
@@ -28527,6 +29268,7 @@ Lff79b8:
 	adda.l	d3,a2
 	dbra.w	d2,Lff79b8
 	bra.w	Lff7940
+
 Lff79d6:
 	movem.l	d2/a2,-(a7)
 	bsr.s	Lff7a10
@@ -28534,6 +29276,7 @@ Lff79d6:
 Lff79e0:
 	adda.l	#$00020000,a2
 	bra.s	Lff79f2
+
 Lff79e8:
 	movem.l	d2/a2,-(a7)
 	bsr.s	Lff7a10
@@ -28551,6 +29294,7 @@ Lff7a02:
 	bset.b	#$00,($00e8002a)
 	bsr.s	Lff79f2
 	bra.w	Lff7940
+
 Lff7a10:
 	bset.b	#$00,($00e8002a)
 	tst.w	d1
@@ -28565,6 +29309,7 @@ Lff7a1c:
 	adda.l	d3,a2
 	dbra.w	d2,Lff7a1c
 	bra.w	Lff7940
+
 Lff7a32:
 	move.b	(a1)+,d0
 	asl.w	#8,d0
@@ -28580,6 +29325,7 @@ Lff7a32:
 	adda.l	d3,a2
 	dbra.w	d2,Lff7a32
 	bra.w	Lff7940
+
 Lff7a52:
 	clr.l	d5
 	clr.l	d4
@@ -28631,6 +29377,7 @@ Lff7ae2:
 	dbra.w	d0,Lff7ae2
 	movem.l	(a7)+,d1-d2/a1
 	bra.w	Lff7940
+
 Lff7af0:
 	movem.l	d1-d2,-(a7)
 	move.l	($00000948).l,d0
@@ -28713,6 +29460,7 @@ Lff7bd6:
 	beq.s	Lff7bd6
 	clr.w	($00e80480)
 	bra.w	Lff7940
+
 Lff7bea:
 	rts
 
@@ -28789,24 +29537,25 @@ Lff7c9e:
 	move.l	a1,($00000982).l
 Lff7cb8:
 	move.b	($00000986).l,d0
-	cmp.b	#$5b,d0
+	cmp.b	#$5b,d0			;'['
 	beq.s	Lff7ce8
-	cmp.b	#$3d,d0
+	cmp.b	#$3d,d0			;'='
 	beq.s	Lff7d26
 	bsr.w	Lff7532
-	cmp.b	#$2a,d0
+	cmp.b	#$2a,d0			;'*'
 	beq.s	Lff7d0e
-	cmp.b	#$44,d0
+	cmp.b	#$44,d0			;'D'
 	beq.s	Lff7d14
-	cmp.b	#$45,d0
+	cmp.b	#$45,d0			;'E'
 	beq.s	Lff7d1a
-	cmp.b	#$4d,d0
+	cmp.b	#$4d,d0			;'M'
 	beq.s	Lff7d20
 	bra.s	Lff7cfe
+
 Lff7ce8:
 	move.b	d1,d0
 	or.b	#$20,d0
-	sub.b	#$61,d0
+	sub.b	#$61,d0			;'a'
 	cmp.b	#$1a,d0
 	bcc.s	Lff7d08
 	bsr.w	Lff7532
@@ -28821,15 +29570,19 @@ Lff7d08:
 Lff7d0e:
 	bsr.w	Lff7c84
 	bra.s	Lff7cfe
+
 Lff7d14:
 	bsr.w	Lff7f4c
 	bra.s	Lff7cfe
+
 Lff7d1a:
 	bsr.w	Lff785c
 	bra.s	Lff7cfe
+
 Lff7d20:
 	bsr.w	Lff7f72
 	bra.s	Lff7cfe
+
 Lff7d26:
 	cmpa.l	#$00000989,a1
 	bne.s	Lff7d08
@@ -28842,18 +29595,19 @@ Lff7d26:
 	sub.w	#$0020,d2
 	bsr.w	Lff7f28
 	bra.s	Lff7cfe
+
 Lff7d50:
 	lea.l	($00000986).l,a0
-	cmpi.b	#$5b,(a0)+
+	cmpi.b	#$5b,(a0)+		;'['
 	bne.w	Lff7e62
-	cmpi.b	#$3e,(a0)
+	cmpi.b	#$3e,(a0)		;'>'
 	bne.s	Lff7d90
 	move.w	($0001,a0),d0
 	clr.w	d1
-	cmp.w	#$356c,d0
+	cmp.w	#$356c,d0		;'5l'
 	beq.s	Lff7d78
 	not.w	d1
-	cmp.w	#$3568,d0
+	cmp.w	#$3568,d0		;'5h'
 	bne.s	Lff7d80
 Lff7d78:
 	move.b	d1,($00000993).l
@@ -28867,51 +29621,52 @@ Lff7d80:
 
 Lff7d90:
 	bsr.w	Lff7f00
-	cmp.b	#$41,d0
+	cmp.b	#$41,d0			;'A'
 	beq.w	Lff7f8e
-	cmp.b	#$42,d0
+	cmp.b	#$42,d0			;'B'
 	beq.w	Lff7faa
-	cmp.b	#$43,d0
+	cmp.b	#$43,d0			;'C'
 	beq.w	Lff7fd0
-	cmp.b	#$44,d0
+	cmp.b	#$44,d0			;'D'
 	beq.w	Lff7ff6
-	cmp.b	#$6e,d0
+	cmp.b	#$6e,d0			;'n'
 	beq.w	Lff7e62
-	cmp.b	#$73,d0
+	cmp.b	#$73,d0			;'s'
 	beq.w	Lff7eb4
-	cmp.b	#$75,d0
+	cmp.b	#$75,d0			;'u'
 	beq.w	Lff7eda
-	cmp.b	#$4a,d0
+	cmp.b	#$4a,d0			;'J'
 	beq.w	Lff8010
-	cmp.b	#$4b,d0
+	cmp.b	#$4b,d0			;'K'
 	beq.w	Lff8050
-	cmp.b	#$4d,d0
+	cmp.b	#$4d,d0			;'M'
 	beq.w	Lff81ac
-	cmp.b	#$4c,d0
+	cmp.b	#$4c,d0			;'L'
 	beq.w	Lff813a
-	cmp.b	#$6d,d0
+	cmp.b	#$6d,d0			;'m'
 	beq.s	Lff7e38
-	cmp.b	#$3b,d0
+	cmp.b	#$3b,d0			;';'
 	bne.s	Lff7d80
 	move.w	d1,d2
 	bsr.w	Lff7f00
-	cmp.b	#$48,d0
+	cmp.b	#$48,d0			;'H'
 	beq.w	Lff7e9a
-	cmp.b	#$66,d0
+	cmp.b	#$66,d0			;'f'
 	beq.w	Lff7e9a
-	cmp.b	#$6d,d0
+	cmp.b	#$6d,d0			;'m'
 	beq.s	Lff7e34
-	cmp.b	#$3b,d0
+	cmp.b	#$3b,d0			;';'
 	bne.w	Lff7d80
 	move.w	d1,d3
 	bsr.w	Lff7f00
-	cmp.b	#$6d,d0
+	cmp.b	#$6d,d0			;'m'
 	bne.w	Lff7d80
 	move.w	d2,d0
 	bsr.s	Lff7e3a
 	move.w	d3,d0
 	bsr.s	Lff7e3a
 	bra.s	Lff7e38
+
 Lff7e34:
 	move.w	d2,d0
 	bsr.s	Lff7e3a
@@ -28926,11 +29681,11 @@ Lff7e3a:
 	beq.s	Lff7e78
 	cmp.b	#$1e,d0
 	bcs.s	Lff7e62
-	cmp.b	#$26,d0
+	cmp.b	#$26,d0			;'&'
 	bcs.s	Lff7e82
-	cmp.b	#$28,d0
+	cmp.b	#$28,d0			;'('
 	bcs.s	Lff7e62
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lff7e8e
 Lff7e62:
 	rts
@@ -28953,7 +29708,7 @@ Lff7e82:
 	rts
 
 Lff7e8e:
-	sub.b	#$20,d0
+	sub.b	#$20,d0			;' '
 	move.b	d0,($00000994).l
 	rts
 
@@ -28971,6 +29726,7 @@ Lff7eaa:
 	subq.w	#1,d2
 	bmi.s	Lff7e62
 	bra.s	Lff7f28
+
 Lff7eb4:
 	cmp.w	#$8000,d1
 	bne.s	Lff7e62
@@ -28992,16 +29748,17 @@ Lff7f00:
 	clr.w	d0
 Lff7f06:
 	move.b	(a0)+,d0
-	cmp.b	#$20,d0
+	cmp.b	#$20,d0			;' '
 	beq.s	Lff7f06
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lff7f26
-	cmp.b	#$3a,d0
+	cmp.b	#$3a,d0			;':'
 	bcc.s	Lff7f26
-	sub.b	#$30,d0
+	sub.b	#$30,d0			;'0'
 	mulu.w	#$000a,d1
 	add.w	d0,d1
 	bra.s	Lff7f06
+
 Lff7f26:
 	rts
 
@@ -29112,12 +29869,14 @@ Lff8024:
 	addq.w	#1,d1
 	bsr.w	Lff811e
 	bra.s	Lff8070
+
 Lff8040:
 	clr.l	d1
 	move.w	($00000976).l,d0
 	beq.s	Lff8084
 	bsr.w	Lff811e
 	bra.s	Lff8084
+
 Lff8050:
 	tst.b	d1
 	beq.s	Lff8070
@@ -29139,6 +29898,7 @@ Lff8070:
 	sub.w	d2,d0
 	bcs.s	Lff8022
 	bra.s	Lff808c
+
 Lff8084:
 	clr.l	d2
 	move.w	($00000974).l,d0
@@ -29193,6 +29953,7 @@ Lff810c:
 	dbra.w	d4,Lff810a
 	clr.l	d0
 	bra.w	Lff7940
+
 Lff811e:
 	asl.l	#7,d1
 	asl.l	#4,d1
@@ -29203,6 +29964,7 @@ Lff811e:
 	asl.w	#5,d0
 	subq.w	#1,d0
 	bra.w	Lff7a92
+
 Lff813a:
 	tst.b	d1
 	bne.s	Lff8140
@@ -29433,6 +30195,7 @@ Lff83b8:
 	btst.b	#$01,($00000929).l
 	beq.s	Lff83ce
 	bra.s	Lff83b8
+
 Lff83ce:
 	btst.b	#$00,($00000926).l
 	beq.s	Lff842a
@@ -29597,7 +30360,7 @@ Lff857e:
 	beq.w	Lff86be
 	cmp.b	#$1a,d1
 	beq.w	Lff86f6
-	cmp.b	#$20,d1
+	cmp.b	#$20,d1			;' '
 	bcs.s	Lff85f2
 	cmp.b	#$80,d1
 	bcs.w	Lff874c
@@ -29657,14 +30420,17 @@ Lff863e:
 	btst.b	#$01,($00000a77).l
 	bne.w	Lff87ba
 	bra.s	Lff8690
+
 Lff8668:
 	btst.b	#$03,($00000a77).l
 	bne.w	Lff87ba
 	bra.s	Lff8690
+
 Lff8676:
 	btst.b	#$02,($00000a77).l
 	bne.w	Lff87ba
 	bra.s	Lff8690
+
 Lff8684:
 	btst.b	#$00,($00000a77).l
 	bne.w	Lff87ba
@@ -29675,6 +30441,7 @@ Lff8690:
 	bsr.w	Lff85ec
 	move.w	(a7)+,d1
 	bra.w	Lff85ec
+
 Lff86a2:
 	bsr.s	Lff870e
 	bsr.w	Lff89a8
@@ -29708,8 +30475,9 @@ Lff86e8:
 Lff86f6:
 	bsr.s	Lff86d4
 	bra.s	Lff86a2
+
 Lff86fa:
-	moveq.l	#$20,d1
+	moveq.l	#$20,d1			;' '
 	bsr.w	Lff85ec
 	move.w	($00000a14).l,d0
 	and.w	#$0007,d0
@@ -29723,6 +30491,7 @@ Lff870e:
 	movem.l	d0-d1/a0,-(a7)
 	lea.l	($00000a30).l,a0
 	bra.s	Lff8742
+
 Lff8728:
 	tst.b	($00000a11).l
 	bne.s	Lff874a
@@ -29914,6 +30683,7 @@ Lff891a:
 	move.w	d3,d4
 	lea.l	($00000a54).l,a0
 	bra.s	Lff8954
+
 Lff893c:
 	move.l	($00000a22).l,d2
 	beq.s	Lff898c
@@ -30032,7 +30802,7 @@ Lff8a2c:
 	lsr.b	#2,d1
 	btst.b	d5,(a2)
 	beq.s	Lff8a36
-	add.b	#$40,d1
+	add.b	#$40,d1			;'@'
 Lff8a36:
 	adda.l	d0,a2
 	btst.b	d5,(a2)
@@ -30108,7 +30878,7 @@ Lff8acc:
 	btst.b	d5,(a2)
 	suba.l	d0,a2
 	beq.s	Lff8ae2
-	add.b	#$40,d1
+	add.b	#$40,d1			;'@'
 	btst.b	d5,(a2)
 	beq.s	Lff8ae2
 	add.b	#$80,d1
@@ -30124,12 +30894,14 @@ Lff8aee:
 	bsr.w	Lff85f2
 	rol.l	#8,d1
 	bra.w	Lff85f2
+
 Lff8b00:
 	btst.l	#$0c,d1
 	beq.w	Lff949c
 	bsr.w	Lff93e6
 	bsr.s	Lff8b12
 	bra.w	Lff944c
+
 Lff8b12:
 	bsr.s	Lff8b28
 	btst.l	#$1b,d0
@@ -30149,6 +30921,7 @@ Lff8b28:
 	swap.w	d2
 	moveq.l	#$02,d0
 	bra.w	Lff8fa2
+
 Lff8b42:
 	swap.w	d2
 	swap.w	d0
@@ -30195,6 +30968,7 @@ Lff8b72:
 Lff8bba:
 	movem.l	(a7)+,d1/d4-d7
 	bra.w	Lff944c
+
 Lff8bc2:
 	btst.l	#$1f,d0
 	bne.s	Lff8bba
@@ -30218,6 +30992,7 @@ Lff8bc2:
 	btst.l	#$1b,d0
 	bne.s	Lff8bba
 	bra.w	Lff8b72
+
 Lff8c00:
 	btst.l	#$0c,d1
 	beq.w	Lff1e52
@@ -30264,6 +31039,7 @@ Lff8c2a:
 Lff8c84:
 	movem.l	(a7)+,d1/d4-d7
 	bra.w	Lff944c
+
 Lff8c8c:
 	btst.l	#$1f,d0
 	bne.s	Lff8c84
@@ -30287,6 +31063,7 @@ Lff8c8c:
 	btst.l	#$1b,d0
 	bne.s	Lff8c84
 	bra.w	Lff8c2a
+
 Lff8ccc:
 	btst.l	#$0c,d1
 	beq.w	Lff9526
@@ -30313,6 +31090,7 @@ Lff8d0e:
 	moveq.l	#$02,d0
 	bsr.w	Lff93ac
 	bra.w	Lff944c
+
 Lff8d18:
 	btst.l	#$0c,d1
 	beq.w	Lff9606
@@ -30320,6 +31098,7 @@ Lff8d20:
 	bsr.w	Lff93e6
 	bsr.s	Lff8d2a
 	bra.w	Lff944c
+
 Lff8d2a:
 	move.l	d1,-(a7)
 	move.b	#$04,d1
@@ -30351,6 +31130,7 @@ Lff8d58:
 	and.b	#$c0,d1
 	or.b	#$05,d1
 	bra.s	Lff8d90
+
 Lff8d84:
 	move.w	($00000cb8).l,d0
 	lsr.w	#1,d0
@@ -30383,6 +31163,7 @@ Lff8d90:
 Lff8dd8:
 	movem.l	(a7)+,d1/d4-d7
 	bra.w	Lff944c
+
 Lff8de0:
 	btst.l	#$1f,d0
 	bne.s	Lff8dd8
@@ -30406,6 +31187,7 @@ Lff8de0:
 	btst.l	#$1b,d0
 	bne.s	Lff8dd8
 	bra.w	Lff8d90
+
 Lff8e20:
 	btst.l	#$0c,d1
 	beq.w	Lff96ce
@@ -30447,6 +31229,7 @@ Lff8e8a:
 Lff8e92:
 	movem.l	(a7)+,d1/d4-d7
 	bra.w	Lff944c
+
 Lff8e9a:
 	btst.l	#$1f,d0
 	bne.s	Lff8e92
@@ -30470,6 +31253,7 @@ Lff8e9a:
 	btst.l	#$1b,d0
 	bne.s	Lff8e92
 	bra.w	Lff8e4a
+
 Lff8ed8:
 	btst.l	#$0c,d1
 	beq.w	Lff9772
@@ -30498,6 +31282,7 @@ Lff8f3a:
 	bsr.w	Lff93e6
 	bsr.s	Lff8f8e
 	bra.w	Lff944c
+
 Lff8f44:
 	move.l	d0,-(a7)
 	and.l	#$0035ff00,d0
@@ -30549,6 +31334,7 @@ Lff8fc4:
 	btst.l	#$0c,d1
 	beq.w	Lff9784
 	bra.w	Lff1e52
+
 Lff8fd0:
 	btst.l	#$0c,d1
 	beq.w	Lff1e52
@@ -30563,6 +31349,7 @@ Lff8fd0:
 	and.b	#$c0,d1
 	or.b	#$09,d1
 	bra.w	Lff8d90
+
 Lff9002:
 	btst.l	#$0c,d1
 	beq.w	Lff1e52
@@ -30593,10 +31380,12 @@ Lff9044:
 Lff9054:
 	movem.l	(a7)+,d1/d4
 	bra.w	Lff944c
+
 Lff905c:
 	btst.l	#$0c,d1
 	beq.w	Lff97b4
 	bra.w	Lff1e52
+
 Lff9068:
 	btst.l	#$0c,d1
 	beq.w	Lff1e52
@@ -30611,6 +31400,7 @@ Lff9068:
 	and.b	#$c0,d1
 	or.b	#$0c,d1
 	bra.w	Lff8e4a
+
 Lff909a:
 	btst.l	#$0c,d1
 	beq.w	Lff97dc
@@ -30665,6 +31455,7 @@ Lff9102:
 Lff9138:
 	movem.l	(a7)+,d1/d4-d6
 	bra.w	Lff944c
+
 Lff9140:
 	btst.l	#$0c,d1
 	beq.w	Lff1e52
@@ -30699,6 +31490,7 @@ Lff9184:
 	move.b	(a4),d0
 	move.b	#$01,(a4)
 	bra.s	Lff917e
+
 Lff9198:
 	bsr.s	Lff91c4
 	btst.l	#$01,d0
@@ -30713,9 +31505,11 @@ Lff9198:
 	move.l	(a7)+,d1
 	or.l	d1,d0
 	bra.s	Lff917e
+
 Lff91be:
 	or.b	#$0c,d0
 	bra.s	Lff917e
+
 Lff91c4:
 	move.w	d1,-(a7)
 	and.w	#$0003,d1
@@ -30767,8 +31561,9 @@ Lff9280:
 
 Lff92a0:
 	move.b	#$ff,($00e84000)
-	move.b	#$32,($00e84005)
+	move.b	#$32,($00e84005)	;'2'
 	bra.s	Lff92c2
+
 Lff92b2:
 	move.b	#$ff,($00e84000)
 	move.b	#$b2,($00e84005)
@@ -30912,7 +31707,7 @@ Lff942e:
 	bsr.w	Lff8d2a
 	btst.l	#$1d,d0
 	bne.s	Lff9442
-	cmpi.w	#$0064,($000009c4).l
+	cmpi.w	#$0064,($000009c4).l	;'d'
 	bcc.s	Lff942e
 Lff9442:
 	bclr.b	#$06,($000009e1).l
@@ -30922,7 +31717,7 @@ Lff944c:
 	tst.b	($000009e1).l
 	beq.s	Lff9466
 	move.w	($000009c2).l,($000009c4).l
-	move.b	#$40,($000009e1).l
+	move.b	#$40,($000009e1).l	;'@'
 Lff9466:
 	rts
 
@@ -30969,6 +31764,7 @@ Lff94c8:
 	bne.s	Lff94c8
 	clr.l	d0
 	bra.s	Lff94f8
+
 Lff94f6:
 	bsr.s	Lff94fe
 Lff94f8:
@@ -31016,7 +31812,7 @@ Lff9526:
 	bsr.w	Lff9736
 	move.l	d0,-(a7)
 	lea.l	(Lff9d28),a1
-	cmpi.l	#$5836384b,($0004,a7)
+	cmpi.l	#$5836384b,($0004,a7)	;'X68K'
 	bne.s	Lff959c
 	lea.l	(Lff9d28),a1
 	move.l	($0008,a7),d0
@@ -31054,7 +31850,7 @@ Lff95d2:
 	ror.w	#8,d0
 	and.l	#$0000000f,d0
 	adda.l	d0,a4
-	move.b	#$28,d0
+	move.b	#$28,d0			;'('
 	cmpi.b	#$07,($0003,a1)
 	beq.s	Lff9600
 	move.b	#$14,d0
@@ -31098,6 +31894,7 @@ Lff9632:
 	bne.s	Lff9632
 	clr.l	d0
 	bra.s	Lff9662
+
 Lff9660:
 	bsr.s	Lff9668
 Lff9662:
@@ -31108,7 +31905,7 @@ Lff9668:
 	bsr.s	Lff967e
 	cmp.b	#$06,d0
 	beq.s	Lff9676
-	cmp.b	#$21,d0
+	cmp.b	#$21,d0			;'!'
 	bne.s	Lff967c
 Lff9676:
 	bsr.w	Lff9804
@@ -31117,7 +31914,7 @@ Lff967c:
 	rts
 
 Lff967e:
-	move.w	#$0064,-(a7)
+	move.w	#$0064,-(a7)		;'d'
 Lff9682:
 	bsr.s	Lff9692
 	cmp.b	#$04,d0
@@ -31144,6 +31941,7 @@ Lff9692:
 	move.w	(a7)+,sr
 	bsr.w	Lff9a7a
 	bra.s	Lff96c8
+
 Lff96c6:
 	move.w	(a7)+,sr
 Lff96c8:
@@ -31169,6 +31967,7 @@ Lff96d6:
 	bne.s	Lff96d6
 	clr.l	d0
 	bra.s	Lff9706
+
 Lff9704:
 	bsr.s	Lff970c
 Lff9706:
@@ -31179,7 +31978,7 @@ Lff970c:
 	bsr.s	Lff9722
 	cmp.b	#$06,d0
 	beq.s	Lff971a
-	cmp.b	#$21,d0
+	cmp.b	#$21,d0			;'!'
 	bne.s	Lff9720
 Lff971a:
 	bsr.w	Lff9804
@@ -31188,7 +31987,7 @@ Lff9720:
 	rts
 
 Lff9722:
-	move.w	#$0064,-(a7)
+	move.w	#$0064,-(a7)		;'d'
 Lff9726:
 	bsr.s	Lff9736
 	cmp.b	#$04,d0
@@ -31215,6 +32014,7 @@ Lff9736:
 	move.w	(a7)+,sr
 	bsr.w	Lff9a7a
 	bra.s	Lff976c
+
 Lff976a:
 	move.w	(a7)+,sr
 Lff976c:
@@ -31286,7 +32086,7 @@ Lff9804:
 	cmp.b	#$14,d0
 	beq.s	Lff988e
 	lea.l	(Lff9d50),a1
-	cmp.b	#$28,d0
+	cmp.b	#$28,d0			;'('
 	beq.s	Lff988e
 	lea.l	(Lff9d28),a1
 	cmp.b	#$0a,d0
@@ -31298,7 +32098,7 @@ Lff9804:
 	bsr.w	Lff9736
 	move.l	d0,-(a7)
 	lea.l	(Lff9d28),a1
-	cmpi.l	#$5836384b,($0004,a7)
+	cmpi.l	#$5836384b,($0004,a7)	;'X68K'
 	bne.s	Lff9884
 	move.l	($0008,a7),d0
 	cmp.l	#$00009fd9,d0
@@ -31345,7 +32145,7 @@ Lff98b6:
 	beq.s	Lff990e
 	move.l	#$0002acc0,d2
 	lea.l	(Lff9d5a),a1
-	cmp.b	#$28,d0
+	cmp.b	#$28,d0			;'('
 	beq.s	Lff990e
 	move.l	#$0000af50,d2
 	lea.l	(Lff9d32),a1
@@ -31479,7 +32279,7 @@ Lff9a64:
 	rts
 
 Lff9a7a:
-	move.l	#$004c4b40,d5
+	move.l	#$004c4b40,d5		;'LK@'
 Lff9a80:
 	moveq.l	#$0f,d6
 	bsr.w	Lff9b5e
@@ -31556,6 +32356,7 @@ Lff9b2a:
 	bsr.w	Lff9966
 	moveq.l	#$ff,d0
 	bra.s	Lff9b54
+
 Lff9b46:
 	move.b	($00e96001),(a1)+
 	dbra.w	d3,Lff9b24
@@ -31614,6 +32415,7 @@ Lff9bb2:
 	bsr.w	Lff9966
 	moveq.l	#$ff,d0
 	bra.s	Lff9bda
+
 Lff9bce:
 	move.b	(a4)+,($00e96001)
 	dbra.w	d1,Lff9bac
@@ -31643,6 +32445,7 @@ Lff9c00:
 	bsr.w	Lff9966
 	moveq.l	#$ff,d0
 	bra.s	Lff9bda
+
 Lff9c1c:
 	move.b	(a4)+,($00e96001)
 	dbra.w	d1,Lff9bfa
@@ -31657,18 +32460,20 @@ Lff9c2c:
 	bsr.w	Lff9966
 	moveq.l	#$ff,d0
 	bra.s	Lff9bda
+
 Lff9c48:
 	ori.w	#$0700,sr
 	move.b	(a4)+,($00e96001)
 	clr.l	d0
 	bra.s	Lff9bda
+
 Lff9c56:
 	bsr.w	Lff99fa
 	bmi.s	Lff9c72
 	lea.l	(Lff9cf8),a4
 	bsr.w	Lff9b92
 	bmi.s	Lff9c72
-	move.l	#$004c4b40,d5
+	move.l	#$004c4b40,d5		;'LK@'
 	bsr.w	Lff9a80
 Lff9c72:
 	rts
@@ -31678,6 +32483,7 @@ Lff9c74:
 	movea.l	a4,a1
 	moveq.l	#$03,d3
 	bra.s	Lff9c86
+
 Lff9c7e:
 	movem.l	d3-d4/a1,-(a7)
 	movea.l	a4,a1
@@ -31694,6 +32500,7 @@ Lff9c8c:
 	bsr.w	Lff9966
 	moveq.l	#$ff,d0
 	bra.s	Lff9cb4
+
 Lff9ca8:
 	move.b	(a1)+,($00e96001)
 	dbra.w	d3,Lff9c86
@@ -31706,9 +32513,10 @@ Lff9cba:
 	move.b	#$ff,($00e84040)
 	move.b	#$b2,($00e84045)
 	bra.s	Lff9cdc
+
 Lff9ccc:
 	move.b	#$ff,($00e84040)
-	move.b	#$32,($00e84045)
+	move.b	#$32,($00e84045)	;'2'
 Lff9cdc:
 	move.l	a1,($00e8404c)
 	move.w	d3,($00e8404a)
@@ -31790,7 +32598,7 @@ Lff9de8:
 	bne.s	Lff9de8
 	addq.b	#2,d0
 	move.b	d0,($00000c32).l
-	move.b	#$32,($00e840c5)
+	move.b	#$32,($00e840c5)	;'2'
 	bsr.s	Lff9e0c
 	move.b	#$02,($00e92001)
 	rts
@@ -31836,10 +32644,10 @@ Lff9e8c:
 	tst.w	d1
 	bmi.s	Lff9eb8
 	move.w	d1,-(a7)
-	moveq.l	#$34,d0
+	moveq.l	#$34,d0			;'4'
 	tst.w	($00000cb6).l
 	beq.s	Lff9e9e
-	moveq.l	#$58,d0
+	moveq.l	#$58,d0			;'X'
 Lff9e9e:
 	move.w	d0,-(a7)
 	lsr.w	#7,d1
@@ -31869,7 +32677,7 @@ Lff9ef4:
 	bne.s	Lff9ef4
 	bsr.s	Lff9e8c
 	move.b	#$12,($00000c32).l
-	move.b	#$3a,($00e840c5)
+	move.b	#$3a,($00e840c5)	;':'
 	bsr.s	Lff9f1a
 	move.b	#$02,($00e92001)
 	rts
@@ -31879,11 +32687,12 @@ Lff9f1a:
 	move.l	a1,($00e840dc)
 	move.w	d2,($00e840da)
 	bra.w	Lff9e20
+
 Lff9f32:
 	tst.b	($00000c32).l
 	bne.s	Lff9f32
 	bsr.w	Lff9e8c
-	move.b	#$24,($00000c32).l
+	move.b	#$24,($00000c32).l	;'$'
 	move.b	#$be,($00e840c5)
 	bsr.s	Lff9f1a
 	move.b	#$04,($00e92001)
@@ -31893,8 +32702,8 @@ Lff9f5a:
 	tst.b	($00000c32).l
 	bne.s	Lff9f5a
 	bsr.w	Lff9e8c
-	move.b	#$22,($00000c32).l
-	move.b	#$3e,($00e840c5)
+	move.b	#$22,($00000c32).l	;'"'
+	move.b	#$3e,($00e840c5)	;'>'
 	bsr.s	Lff9f1a
 	move.b	#$02,($00e92001)
 	rts
@@ -31927,7 +32736,7 @@ Lff9fa4:
 
 Lff9fd2:
 	ori.w	#$0700,sr
-	move.b	#$20,($00e840c7)
+	move.b	#$20,($00e840c7)	;' '
 	clr.l	d0
 	rts
 
@@ -32043,7 +32852,7 @@ Lffa0d0:
 Lffa11c:
 	move.l	a0,-(a7)
 	lea.l	($00e88000),a0
-	move.b	#$70,($001d,a0)
+	move.b	#$70,($001d,a0)		;'p'
 	move.b	($0009,a0),d0
 	and.b	#$ef,d0
 	move.b	d0,($0009,a0)
@@ -32327,6 +33136,7 @@ Lffa466:
 Lffa472:
 	moveq.l	#$ff,d0
 	bra.s	Lffa466
+
 Lffa476:
 	move.l	a5,-(a7)
 	movem.l	d1-d7/a0-a4,-(a7)
@@ -32395,6 +33205,7 @@ Lffa506:
 Lffa512:
 	moveq.l	#$ff,d0
 	bra.s	Lffa506
+
 Lffa516:
 	move.l	a5,-(a7)
 	movem.l	d1-d7/a0-a4,-(a7)
@@ -32402,6 +33213,7 @@ Lffa516:
 	movem.l	d1-d2/a1,($006a,a5)
 	clr.w	d7
 	bra.s	Lffa542
+
 Lffa52c:
 	move.l	a5,-(a7)
 	movem.l	d1-d7/a0-a4,-(a7)
@@ -32416,7 +33228,7 @@ Lffa542:
 	lea.l	($0002,a0),a0
 Lffa556:
 	move.w	#$0001,d1
-	move.w	#$0064,d2
+	move.w	#$0064,d2		;'d'
 	tst.w	($00000cb6).l
 	beq.s	Lffa56a
 	move.w	#$0096,d2
@@ -32440,6 +33252,7 @@ Lffa56a:
 	tst.w	(a0)
 	beq.s	Lffa5d0
 	bra.s	Lffa5a4
+
 Lffa5a0:
 	tst.w	(a0)
 	bne.s	Lffa5d0
@@ -32452,15 +33265,17 @@ Lffa5a4:
 	cmp.w	($0070,a5),d1
 	beq.s	Lffa5c8
 Lffa5b6:
-	move.w	#$0064,d2
+	move.w	#$0064,d2		;'d'
 	tst.w	($00000cb6).l
 	beq.s	Lffa5c6
 	move.w	#$0096,d2
 Lffa5c6:
 	bra.s	Lffa56a
+
 Lffa5c8:
 	move.w	#$ffff,d1
 	bra.s	Lffa5d0
+
 Lffa5ce:
 	clr.w	d1
 Lffa5d0:
@@ -32600,6 +33415,7 @@ Lffa73e:
 	tst.l	d2
 	bne.s	Lffa772
 	bra.w	Lffa7f4
+
 Lffa746:
 	addq.w	#1,($0048,a5)
 	move.w	($0048,a5),d0
@@ -32652,7 +33468,7 @@ Lffa7b8:
 Lffa7ca:
 	btst.b	#$04,($00e88001)
 	bne.s	Lffa7ca
-	cmpi.w	#$0070,($0056,a5)
+	cmpi.w	#$0070,($0056,a5)	;'p'
 	bge.s	Lffa7e6
 	move.l	#$00000b00,d0
 Lffa7e2:
@@ -32803,6 +33619,7 @@ Lffa94e:
 	suba.w	d0,a2
 	move.w	#$0080,d4
 	bra.s	Lffa98a
+
 Lffa970:
 	moveq.l	#$0f,d2
 	cmp.w	#$03f0,d0
@@ -32823,6 +33640,7 @@ Lffa98a:
 	move.w	d0,d3
 	moveq.l	#$00,d1
 	bra.s	Lffa9fa
+
 Lffa99c:
 	move.w	d0,d1
 	lsr.w	#4,d1
@@ -32833,7 +33651,7 @@ Lffa99c:
 	beq.s	Lffaa1a
 	moveq.l	#$10,d3
 	sub.w	d0,d3
-	cmp.w	#$007e,d1
+	cmp.w	#$007e,d1		;'~'
 	bcc.s	Lffa9d6
 Lffa9b6:
 	moveq.l	#$ff,d0
@@ -32923,7 +33741,7 @@ Lffaa64:
 	lsr.w	#4,d0
 	add.w	d0,d0
 	adda.w	d0,a0
-	cmp.w	#$007e,d0
+	cmp.w	#$007e,d0		;'~'
 	bcc.s	Lffaa7a
 Lffaa70:
 	move.l	(a0),(a1)+
@@ -32963,7 +33781,7 @@ Lffaab6:
 	lsr.w	#4,d0
 	add.w	d0,d0
 	adda.w	d0,a1
-	cmp.w	#$007e,d0
+	cmp.w	#$007e,d0		;'~'
 	bcc.s	Lffaacc
 Lffaac2:
 	move.l	(a0)+,(a1)
@@ -33029,6 +33847,7 @@ Lffac14:
 	move.w	-(a0),-(a1)
 	andi.w	#$dfff,(a1)
 	bra.s	Lffac46
+
 Lffac2c:
 	moveq.l	#$ff,d0
 	btst.b	#$05,($0008,a7)
@@ -33166,6 +33985,7 @@ Lffad66:
 	or.b	#$0d,d0
 	move.b	d0,($00e84085)
 	bra.s	Lffad36
+
 Lffad88:
 	clr.l	d0
 	move.b	($00000c34).l,d0
@@ -33198,7 +34018,7 @@ Lffadbe:
 
 Lffadcc:
 	movem.l	d1-d2/a1,-(a7)
-	move.w	#$0020,($00e82600)
+	move.w	#$0020,($00e82600)	;' '
 	bset.b	#$03,($00e80028)
 	lea.l	($00c00000),a0
 	move.l	a0,($0000095c).l
@@ -33210,16 +34030,18 @@ Lffadcc:
 	bne.s	Lffae0c
 	bsr.w	Lffaea2
 	bra.s	Lffae1c
+
 Lffae0c:
 	cmp.w	#$0001,d0
 	bne.s	Lffae18
 	bsr.w	Lffaeb8
 	bra.s	Lffae1c
+
 Lffae18:
 	bsr.w	Lffaed0
 Lffae1c:
 	bclr.b	#$03,($00e80028)
-	move.w	#$003f,($00e82600)
+	move.w	#$003f,($00e82600)	;'?'
 	movem.l	(a7)+,d1-d2/a1
 	rts
 
@@ -33428,6 +34250,7 @@ Lffb1bc:
 	beq.s	Lffb1d8
 	move.b	d2,(a0,d0.w)
 	bra.s	Lffb1de
+
 Lffb1d8:
 	move.b	(a0,d0.w),d3
 	rol.w	#8,d3
@@ -33442,6 +34265,7 @@ Lffb1de:
 	beq.s	Lffb1f8
 	move.b	d2,($02,a0,d0.w)
 	bra.s	Lffb1fe
+
 Lffb1f8:
 	move.b	(a0,d0.w),d3
 	ror.w	#8,d3
@@ -33757,6 +34581,7 @@ Lffb46a:
 Lffb470:
 	dbra.w	d2,Lffb456
 	bra.s	Lffb450
+
 Lffb476:
 	movem.l	d1-d5/a1,-(a7)
 	move.w	d3,d0
@@ -33774,6 +34599,7 @@ Lffb490:
 	bcc.s	Lffb498
 	move.w	d0,(a0)
 	bra.s	Lffb49e
+
 Lffb498:
 	swap.w	d0
 	move.w	d0,(a0)
@@ -33785,9 +34611,11 @@ Lffb49e:
 	swap.w	d2
 	dbra.w	d2,Lffb486
 	bra.s	Lffb46a
+
 Lffb4ae:
 	dbra.w	d2,Lffb490
 	bra.s	Lffb48a
+
 Lffb4b4:
 	move.l	($00000960).l,d3
 	and.l	#$0000ffff,d1
@@ -33860,9 +34688,11 @@ Lffb556:
 	swap.w	d2
 	dbra.w	d2,Lffb51e
 	bra.s	Lffb56a
+
 Lffb564:
 	dbra.w	d2,Lffb52a
 	bra.s	Lffb524
+
 Lffb56a:
 	movem.l	(a7)+,d1-d7/a1-a2
 	rts
@@ -33936,11 +34766,13 @@ Lffb62c:
 	beq.s	Lffb5fe
 	or.w	#$0003,d1
 	bra.s	Lffb5fe
+
 Lffb638:
 	tst.b	d1
 	beq.s	Lffb5fe
 	moveq.l	#$0f,d1
 	bra.s	Lffb5fe
+
 Lffb640:
 	tst.w	($00000964).l
 	beq.w	Lffb708
@@ -34013,11 +34845,13 @@ Lffb6f4:
 	beq.s	Lffb69e
 	or.w	#$0003,d1
 	bra.s	Lffb69e
+
 Lffb700:
 	tst.b	d1
 	beq.s	Lffb69e
 	moveq.l	#$0f,d1
 	bra.s	Lffb69e
+
 Lffb708:
 	moveq.l	#$ff,d0
 	rts
@@ -34065,31 +34899,32 @@ Lffb75a:
 	move.b	d1,d0
 	lsr.w	#8,d1
 	subi.b	#$81,d1
-	cmpi.b	#$6f,d1
+	cmpi.b	#$6f,d1			;'o'
 	bcc.s	Lffb7ae
 	cmpi.b	#$1f,d1
 	bcs.s	Lffb77a
-	cmpi.b	#$3f,d1
+	cmpi.b	#$3f,d1			;'?'
 	bcs.s	Lffb7ae
-	subi.b	#$40,d1
+	subi.b	#$40,d1			;'@'
 Lffb77a:
 	add.b	d1,d1
-	add.b	#$21,d1
-	subi.b	#$40,d0
+	add.b	#$21,d1			;'!'
+	subi.b	#$40,d0			;'@'
 	cmpi.b	#$bd,d0
 	bcc.s	Lffb7ae
-	cmpi.b	#$3f,d0
+	cmpi.b	#$3f,d0			;'?'
 	beq.s	Lffb7ae
 	bcc.s	Lffb794
 	addq.b	#1,d0
 Lffb794:
-	cmpi.b	#$5f,d0
+	cmpi.b	#$5f,d0			;'_'
 	bcc.s	Lffb7a0
-	addi.b	#$20,d0
+	addi.b	#$20,d0			;' '
 	bra.s	Lffb7a6
+
 Lffb7a0:
 	addq.b	#1,d1
-	subi.b	#$3e,d0
+	subi.b	#$3e,d0			;'>'
 Lffb7a6:
 	asl.w	#8,d1
 	or.w	d1,d0
@@ -34097,7 +34932,7 @@ Lffb7a6:
 	rts
 
 Lffb7ae:
-	move.l	#$ffff2228,d0
+	move.l	#$ffff2228.l,d0
 	move.l	d0,d1
 	rts
 
@@ -34105,33 +34940,33 @@ Lffb7b8:
 	clr.l	d0
 	move.w	d1,d0
 	lsr.w	#8,d0
-	cmp.b	#$21,d1
+	cmp.b	#$21,d1			;'!'
 	bcs.s	Lffb80e
 	cmp.b	#$7f,d1
 	bcc.s	Lffb80e
-	cmp.b	#$21,d0
+	cmp.b	#$21,d0			;'!'
 	bcs.s	Lffb80e
 	cmp.b	#$7f,d0
 	bcc.s	Lffb80e
-	cmp.b	#$29,d0
+	cmp.b	#$29,d0			;')'
 	bcs.s	Lffb7e2
-	cmp.b	#$30,d0
+	cmp.b	#$30,d0			;'0'
 	bcs.s	Lffb80e
 Lffb7e2:
 	add.b	#$1f,d1
 	addq.b	#1,d0
 	lsr.b	#1,d0
 	bcc.s	Lffb7f0
-	add.b	#$5e,d1
+	add.b	#$5e,d1			;'^'
 Lffb7f0:
 	cmp.b	#$7f,d1
 	bcs.s	Lffb7f8
 	addq.b	#1,d1
 Lffb7f8:
-	add.b	#$70,d0
+	add.b	#$70,d0			;'p'
 	cmp.b	#$a0,d0
 	bcs.s	Lffb806
-	add.b	#$40,d0
+	add.b	#$40,d0			;'@'
 Lffb806:
 	asl.w	#8,d0
 	move.b	d1,d0
@@ -34139,26 +34974,26 @@ Lffb806:
 	rts
 
 Lffb80e:
-	move.l	#$ffff81a6,d0
+	move.l	#$ffff81a6.l,d0
 	move.l	d0,d1
 	rts
 
 Lffb818:
 	move.l	d1,-(a7)
 	clr.l	d0
-	cmp.b	#$20,d1
+	cmp.b	#$20,d1			;' '
 	bcs.s	Lffb86a
-	cmp.b	#$30,d1
+	cmp.b	#$30,d1			;'0'
 	bcs.s	Lffb86e
-	cmp.b	#$3a,d1
+	cmp.b	#$3a,d1			;':'
 	bcs.s	Lffb89e
-	cmp.b	#$41,d1
+	cmp.b	#$41,d1			;'A'
 	bcs.s	Lffb874
-	cmp.b	#$5b,d1
+	cmp.b	#$5b,d1			;'['
 	bcs.s	Lffb89e
-	cmp.b	#$61,d1
+	cmp.b	#$61,d1			;'a'
 	bcs.s	Lffb87a
-	cmp.b	#$7b,d1
+	cmp.b	#$7b,d1			;'{'
 	bcs.s	Lffb89e
 	cmp.b	#$7f,d1
 	bcs.s	Lffb880
@@ -34170,22 +35005,27 @@ Lffb818:
 	cmp.b	#$e0,d1
 	bcs.s	Lffb8b2
 Lffb860:
-	move.l	#$ffff81a6,d0
+	move.l	#$ffff81a6.l,d0
 	bra.w	Lffb8f6
+
 Lffb86a:
-	move.w	#$0020,d1
+	move.w	#$0020,d1		;' '
 Lffb86e:
-	sub.b	#$20,d1
+	sub.b	#$20,d1			;' '
 	bra.s	Lffb88a
+
 Lffb874:
-	sub.b	#$2a,d1
+	sub.b	#$2a,d1			;'*'
 	bra.s	Lffb88a
+
 Lffb87a:
-	sub.b	#$44,d1
+	sub.b	#$44,d1			;'D'
 	bra.s	Lffb88a
+
 Lffb880:
-	sub.b	#$5e,d1
+	sub.b	#$5e,d1			;'^'
 	bra.s	Lffb88a
+
 Lffb886:
 	sub.b	#$80,d1
 Lffb88a:
@@ -34195,6 +35035,7 @@ Lffb88a:
 Lffb898:
 	or.w	#$8100,d0
 	bra.s	Lffb8f6
+
 Lffb89e:
 	move.w	#$8200,d0
 	add.b	#$1f,d1
@@ -34204,11 +35045,12 @@ Lffb89e:
 Lffb8ae:
 	move.b	d1,d0
 	bra.s	Lffb8f6
+
 Lffb8b2:
-	moveq.l	#$5b,d0
+	moveq.l	#$5b,d0			;'['
 	cmp.b	#$b0,d1
 	beq.s	Lffb898
-	moveq.l	#$4a,d0
+	moveq.l	#$4a,d0			;'J'
 	cmp.b	#$de,d1
 	beq.s	Lffb898
 	addq.b	#1,d0
@@ -34222,7 +35064,7 @@ Lffb8b2:
 	swap.w	d1
 	tst.w	d1
 	beq.s	Lffb8f6
-	sub.b	#$5f,d0
+	sub.b	#$5f,d0			;'_'
 	cmp.b	#$7f,d0
 	bcs.s	Lffb8f2
 	addq.b	#1,d0
@@ -34236,29 +35078,30 @@ Lffb8fa:
 	movem.l	d1-d7/a1-a4,-(a7)
 	movea.l	a1,a3
 	movea.l	a2,a4
-	cmp.b	#$27,d1
+	cmp.b	#$27,d1			;'''
 	beq.s	Lffb946
-	cmp.b	#$2c,d1
+	cmp.b	#$2c,d1			;','
 	beq.s	Lffb96e
-	cmp.b	#$2e,d1
+	cmp.b	#$2e,d1			;'.'
 	beq.s	Lffb96e
-	cmp.b	#$2f,d1
+	cmp.b	#$2f,d1			;'/'
 	beq.s	Lffb96e
-	cmp.b	#$2d,d1
+	cmp.b	#$2d,d1			;'-'
 	beq.s	Lffb96e
-	cmp.b	#$5b,d1
+	cmp.b	#$5b,d1			;'['
 	beq.s	Lffb96e
-	cmp.b	#$5d,d1
+	cmp.b	#$5d,d1			;']'
 	beq.s	Lffb96e
-	cmp.b	#$40,d1
+	cmp.b	#$40,d1			;'@'
 	bcs.s	Lffb94a
-	cmp.b	#$5a,d1
+	cmp.b	#$5a,d1			;'Z'
 	bls.s	Lffb96e
-	cmp.b	#$60,d1
+	cmp.b	#$60,d1			;'`'
 	bcs.s	Lffb94a
-	cmp.b	#$7a,d1
+	cmp.b	#$7a,d1			;'z'
 	bls.s	Lffb96e
 	bra.s	Lffb94a
+
 Lffb946:
 	tst.b	(a1)
 	bne.s	Lffb96e
@@ -34266,7 +35109,7 @@ Lffb94a:
 	moveq.l	#$01,d0
 	move.b	(a1),d2
 	and.b	#$df,d2
-	cmp.b	#$4e,d2
+	cmp.b	#$4e,d2			;'N'
 	bne.s	Lffb964
 	tst.b	($0001,a1)
 	bne.s	Lffb964
@@ -34277,6 +35120,7 @@ Lffb964:
 	move.b	d1,(a2)+
 	clr.b	(a2)
 	bra.w	Lffc17e
+
 Lffb96e:
 	tst.b	(a1)+
 	bne.s	Lffb96e
@@ -34285,182 +35129,185 @@ Lffb96e:
 	movea.l	a3,a1
 	move.b	(a1)+,d2
 	move.b	d2,d3
-	cmp.b	#$61,d2
+	cmp.b	#$61,d2			;'a'
 	bcs.s	Lffb98e
-	cmp.b	#$7a,d2
+	cmp.b	#$7a,d2			;'z'
 	bhi.s	Lffb98e
 	and.b	#$df,d2
 Lffb98e:
 	move.b	#$b1,d1
-	cmp.b	#$61,d3
+	cmp.b	#$61,d3			;'a'
 	beq.w	Lffba44
-	cmp.b	#$41,d3
+	cmp.b	#$41,d3			;'A'
 	beq.w	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$69,d3
+	cmp.b	#$69,d3			;'i'
 	beq.w	Lffba44
-	cmp.b	#$49,d3
+	cmp.b	#$49,d3			;'I'
 	beq.w	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$75,d3
+	cmp.b	#$75,d3			;'u'
 	beq.w	Lffba44
-	cmp.b	#$55,d3
+	cmp.b	#$55,d3			;'U'
 	beq.w	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$65,d3
+	cmp.b	#$65,d3			;'e'
 	beq.s	Lffba44
-	cmp.b	#$45,d3
+	cmp.b	#$45,d3			;'E'
 	beq.s	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$6f,d3
+	cmp.b	#$6f,d3			;'o'
 	beq.s	Lffba44
-	cmp.b	#$4f,d3
+	cmp.b	#$4f,d3			;'O'
 	beq.s	Lffba48
 	move.b	#$dd,d1
-	cmp.b	#$58,d2
+	cmp.b	#$58,d2			;'X'
 	beq.s	Lffba48
-	cmp.b	#$6e,d3
+	cmp.b	#$6e,d3			;'n'
 	beq.s	Lffba48
 	move.b	#$af,d1
-	cmp.b	#$7a,d3
+	cmp.b	#$7a,d3			;'z'
 	beq.s	Lffba48
 	move.b	#$a1,d1
-	cmp.b	#$2e,d2
+	cmp.b	#$2e,d2			;'.'
 	beq.s	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$5b,d2
+	cmp.b	#$5b,d2			;'['
 	beq.s	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$5d,d2
+	cmp.b	#$5d,d2			;']'
 	beq.s	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$2c,d2
+	cmp.b	#$2c,d2			;','
 	beq.s	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$2f,d2
+	cmp.b	#$2f,d2			;'/'
 	beq.s	Lffba48
 	move.b	#$b0,d1
-	cmp.b	#$2d,d2
+	cmp.b	#$2d,d2			;'-'
 	beq.s	Lffba48
 	move.b	#$de,d1
-	cmp.b	#$40,d2
+	cmp.b	#$40,d2			;'@'
 	beq.s	Lffba48
 	addq.b	#1,d1
-	cmp.b	#$60,d2
+	cmp.b	#$60,d2			;'`'
 	beq.s	Lffba48
 	bra.s	Lffba50
+
 Lffba44:
 	sub.b	#$0a,d1
 Lffba48:
 	move.b	d1,(a2)+
 	moveq.l	#$01,d0
 	bra.w	Lffc174
+
 Lffba50:
 	move.b	#$dc,d1
-	cmp.b	#$57,d2
+	cmp.b	#$57,d2			;'W'
 	beq.w	Lffbae6
 	move.b	#$b1,d1
-	cmp.b	#$56,d2
+	cmp.b	#$56,d2			;'V'
 	beq.w	Lffbae6
 	addq.b	#5,d1
-	cmp.b	#$4b,d2
+	cmp.b	#$4b,d2			;'K'
 	beq.s	Lffbae6
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffbae6
-	cmp.b	#$43,d2
+	cmp.b	#$43,d2			;'C'
 	beq.s	Lffbae6
-	cmp.b	#$51,d2
-	beq.s	Lffbae6
-	addq.b	#5,d1
-	cmp.b	#$53,d2
-	beq.s	Lffbae6
-	cmp.b	#$4a,d2
-	beq.s	Lffbae6
-	cmp.b	#$5a,d2
+	cmp.b	#$51,d2			;'Q'
 	beq.s	Lffbae6
 	addq.b	#5,d1
-	cmp.b	#$54,d2
+	cmp.b	#$53,d2			;'S'
 	beq.s	Lffbae6
-	cmp.b	#$44,d2
+	cmp.b	#$4a,d2			;'J'
 	beq.s	Lffbae6
-	addq.b	#5,d1
-	cmp.b	#$4e,d2
-	beq.s	Lffbae6
-	addq.b	#5,d1
-	cmp.b	#$48,d2
-	beq.s	Lffbae6
-	cmp.b	#$42,d2
-	beq.s	Lffbae6
-	cmp.b	#$50,d2
-	beq.s	Lffbae6
-	cmp.b	#$46,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffbae6
 	addq.b	#5,d1
-	cmp.b	#$4d,d2
+	cmp.b	#$54,d2			;'T'
+	beq.s	Lffbae6
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbae6
 	addq.b	#5,d1
-	cmp.b	#$59,d2
+	cmp.b	#$4e,d2			;'N'
+	beq.s	Lffbae6
+	addq.b	#5,d1
+	cmp.b	#$48,d2			;'H'
+	beq.s	Lffbae6
+	cmp.b	#$42,d2			;'B'
+	beq.s	Lffbae6
+	cmp.b	#$50,d2			;'P'
+	beq.s	Lffbae6
+	cmp.b	#$46,d2			;'F'
+	beq.s	Lffbae6
+	addq.b	#5,d1
+	cmp.b	#$4d,d2			;'M'
+	beq.s	Lffbae6
+	addq.b	#5,d1
+	cmp.b	#$59,d2			;'Y'
 	beq.s	Lffbae6
 	addq.b	#3,d1
-	cmp.b	#$52,d2
+	cmp.b	#$52,d2			;'R'
 	beq.s	Lffbae6
-	cmp.b	#$4c,d2
+	cmp.b	#$4c,d2			;'L'
 	bne.w	Lffc16c
 Lffbae6:
 	move.b	(a1),d4
 	beq.w	Lffc17c
 	move.b	d4,d3
-	cmp.b	#$41,d4
+	cmp.b	#$41,d4			;'A'
 	bcs.s	Lffbb06
-	cmp.b	#$5a,d4
+	cmp.b	#$5a,d4			;'Z'
 	bls.s	Lffbb72
-	cmp.b	#$61,d4
+	cmp.b	#$61,d4			;'a'
 	bcs.s	Lffbb06
-	cmp.b	#$7a,d4
+	cmp.b	#$7a,d4			;'z'
 	bls.s	Lffbb6e
 Lffbb06:
-	cmp.b	#$4e,d2
+	cmp.b	#$4e,d2			;'N'
 	bne.w	Lffc16c
 	move.b	#$dd,(a2)+
 	addq.l	#1,a1
 	moveq.l	#$01,d0
-	cmp.b	#$27,d4
+	cmp.b	#$27,d4			;'''
 	beq.w	Lffc174
 	addq.l	#1,d0
 	move.b	#$a1,d1
-	cmp.b	#$2e,d4
+	cmp.b	#$2e,d4			;'.'
 	beq.s	Lffbb68
 	addq.b	#1,d1
-	cmp.b	#$5b,d4
+	cmp.b	#$5b,d4			;'['
 	beq.s	Lffbb68
 	addq.b	#1,d1
-	cmp.b	#$5d,d4
+	cmp.b	#$5d,d4			;']'
 	beq.s	Lffbb68
 	addq.b	#1,d1
-	cmp.b	#$2c,d4
+	cmp.b	#$2c,d4			;','
 	beq.s	Lffbb68
 	addq.b	#1,d1
-	cmp.b	#$2f,d4
+	cmp.b	#$2f,d4			;'/'
 	beq.s	Lffbb68
 	move.b	#$b0,d1
-	cmp.b	#$2d,d4
+	cmp.b	#$2d,d4			;'-'
 	beq.s	Lffbb68
 	move.b	#$de,d1
-	cmp.b	#$40,d4
+	cmp.b	#$40,d4			;'@'
 	beq.s	Lffbb68
 	addq.b	#1,d1
-	cmp.b	#$60,d4
+	cmp.b	#$60,d4			;'`'
 	bne.w	Lffc16c
 Lffbb68:
 	move.b	d1,(a2)+
 	bra.w	Lffc174
+
 Lffbb6e:
 	and.b	#$df,d4
 Lffbb72:
 	cmp.b	d2,d4
 	bne.s	Lffbb8e
 	move.b	#$af,d1
-	cmp.b	#$4e,d4
+	cmp.b	#$4e,d4			;'N'
 	bne.s	Lffbb86
 	move.b	#$dd,d1
 	addq.l	#1,a1
@@ -34468,15 +35315,16 @@ Lffbb86:
 	move.b	d1,(a2)+
 	moveq.l	#$01,d0
 	bra.w	Lffc174
+
 Lffbb8e:
-	cmp.b	#$41,d4
+	cmp.b	#$41,d4			;'A'
 	bne.w	Lffbc2e
 	addq.l	#1,a1
-	cmp.b	#$46,d2
+	cmp.b	#$46,d2			;'F'
 	beq.s	Lffbbbc
-	cmp.b	#$51,d2
+	cmp.b	#$51,d2			;'Q'
 	beq.s	Lffbbbc
-	cmp.b	#$56,d2
+	cmp.b	#$56,d2			;'V'
 	bne.s	Lffbbca
 	addq.b	#2,d1
 	move.b	d1,(a2)+
@@ -34484,35 +35332,39 @@ Lffbb8e:
 	move.b	#$a7,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbbbc:
 	addq.b	#2,d1
 	move.b	d1,(a2)+
 	move.b	#$a7,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbbca:
-	cmp.b	#$50,d2
+	cmp.b	#$50,d2			;'P'
 	bne.s	Lffbbdc
 	move.b	d1,(a2)+
 	move.b	#$df,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbbdc:
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffbbf4
-	cmp.b	#$5a,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffbbf4
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbbf4
-	cmp.b	#$42,d2
+	cmp.b	#$42,d2			;'B'
 	bne.s	Lffbc00
 Lffbbf4:
 	move.b	d1,(a2)+
 	move.b	#$de,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbc00:
-	cmp.b	#$4a,d2
+	cmp.b	#$4a,d2			;'J'
 	bne.s	Lffbc18
 	addq.b	#1,d1
 	move.b	d1,(a2)+
@@ -34520,34 +35372,37 @@ Lffbc00:
 	move.b	#$ac,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbc18:
-	cmp.b	#$59,d2
+	cmp.b	#$59,d2			;'Y'
 	bne.w	Lffba48
 	cmp.b	d3,d4
 	beq.w	Lffba48
-	sub.b	#$28,d1
+	sub.b	#$28,d1			;'('
 	bra.w	Lffba48
+
 Lffbc2e:
-	cmp.b	#$55,d4
+	cmp.b	#$55,d4			;'U'
 	bne.w	Lffbcc6
 	addq.l	#1,a1
-	cmp.b	#$50,d2
+	cmp.b	#$50,d2			;'P'
 	bne.s	Lffbc4c
 	addq.b	#2,d1
 	move.b	d1,(a2)+
 	move.b	#$df,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbc4c:
-	cmp.b	#$56,d2
+	cmp.b	#$56,d2			;'V'
 	beq.s	Lffbc6a
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffbc6a
-	cmp.b	#$5a,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffbc6a
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbc6a
-	cmp.b	#$42,d2
+	cmp.b	#$42,d2			;'B'
 	bne.s	Lffbc78
 Lffbc6a:
 	addq.b	#2,d1
@@ -34555,8 +35410,9 @@ Lffbc6a:
 	move.b	#$de,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbc78:
-	cmp.b	#$4a,d2
+	cmp.b	#$4a,d2			;'J'
 	bne.s	Lffbc90
 	addq.b	#1,d1
 	move.b	d1,(a2)+
@@ -34564,36 +35420,40 @@ Lffbc78:
 	move.b	#$ad,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbc90:
-	cmp.b	#$57,d2
+	cmp.b	#$57,d2			;'W'
 	beq.s	Lffbcbc
-	cmp.b	#$54,d2
+	cmp.b	#$54,d2			;'T'
 	bne.s	Lffbca8
 	cmp.b	d3,d4
 	beq.s	Lffbcc0
 	move.b	#$af,d1
 	bra.w	Lffba48
+
 Lffbca8:
-	cmp.b	#$59,d2
+	cmp.b	#$59,d2			;'Y'
 	bne.s	Lffbcc0
 	cmp.b	d3,d4
 	beq.w	Lffbe1a
 	move.b	#$ad,d1
 	bra.w	Lffba48
+
 Lffbcbc:
-	sub.b	#$2b,d1
+	sub.b	#$2b,d1			;'+'
 Lffbcc0:
 	addq.b	#2,d1
 	bra.w	Lffba48
+
 Lffbcc6:
-	cmp.b	#$4f,d4
+	cmp.b	#$4f,d4			;'O'
 	bne.w	Lffbd78
 	addq.l	#1,a1
-	cmp.b	#$46,d2
+	cmp.b	#$46,d2			;'F'
 	beq.s	Lffbcf4
-	cmp.b	#$51,d2
+	cmp.b	#$51,d2			;'Q'
 	beq.s	Lffbcf4
-	cmp.b	#$56,d2
+	cmp.b	#$56,d2			;'V'
 	bne.s	Lffbd02
 	addq.b	#2,d1
 	move.b	d1,(a2)+
@@ -34601,28 +35461,31 @@ Lffbcc6:
 	move.b	#$ab,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbcf4:
 	addq.b	#2,d1
 	move.b	d1,(a2)+
 	move.b	#$ab,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbd02:
-	cmp.b	#$50,d2
+	cmp.b	#$50,d2			;'P'
 	bne.s	Lffbd16
 	addq.b	#4,d1
 	move.b	d1,(a2)+
 	move.b	#$df,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbd16:
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffbd2e
-	cmp.b	#$5a,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffbd2e
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbd2e
-	cmp.b	#$42,d2
+	cmp.b	#$42,d2			;'B'
 	bne.s	Lffbd3c
 Lffbd2e:
 	addq.b	#4,d1
@@ -34630,8 +35493,9 @@ Lffbd2e:
 	move.b	#$de,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbd3c:
-	cmp.b	#$4a,d2
+	cmp.b	#$4a,d2			;'J'
 	bne.s	Lffbd54
 	addq.b	#1,d1
 	move.b	d1,(a2)+
@@ -34639,31 +35503,34 @@ Lffbd3c:
 	move.b	#$ae,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbd54:
-	cmp.b	#$57,d2
+	cmp.b	#$57,d2			;'W'
 	beq.s	Lffbd6e
-	cmp.b	#$59,d2
+	cmp.b	#$59,d2			;'Y'
 	bne.s	Lffbd72
 	cmp.b	d3,d4
 	beq.w	Lffbcc0
 	move.b	#$ae,d1
 	bra.w	Lffba48
+
 Lffbd6e:
-	sub.b	#$3a,d1
+	sub.b	#$3a,d1			;':'
 Lffbd72:
 	addq.b	#4,d1
 	bra.w	Lffba48
+
 Lffbd78:
-	cmp.b	#$49,d4
+	cmp.b	#$49,d4			;'I'
 	bne.w	Lffbe20
 	addq.l	#1,a1
-	cmp.b	#$57,d2
+	cmp.b	#$57,d2			;'W'
 	beq.s	Lffbdac
-	cmp.b	#$46,d2
+	cmp.b	#$46,d2			;'F'
 	beq.s	Lffbdb0
-	cmp.b	#$51,d2
+	cmp.b	#$51,d2			;'Q'
 	beq.s	Lffbdb0
-	cmp.b	#$56,d2
+	cmp.b	#$56,d2			;'V'
 	bne.s	Lffbdbe
 	addq.b	#2,d1
 	move.b	d1,(a2)+
@@ -34671,32 +35538,35 @@ Lffbd78:
 	move.b	#$a8,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbdac:
-	sub.b	#$2b,d1
+	sub.b	#$2b,d1			;'+'
 Lffbdb0:
 	addq.b	#2,d1
 	move.b	d1,(a2)+
 	move.b	#$a8,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbdbe:
-	cmp.b	#$50,d2
+	cmp.b	#$50,d2			;'P'
 	bne.s	Lffbdd2
 	addq.b	#1,d1
 	move.b	d1,(a2)+
 	move.b	#$df,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbdd2:
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffbdf0
-	cmp.b	#$5a,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffbdf0
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbdf0
-	cmp.b	#$42,d2
+	cmp.b	#$42,d2			;'B'
 	beq.s	Lffbdf0
-	cmp.b	#$4a,d2
+	cmp.b	#$4a,d2			;'J'
 	bne.s	Lffbdfe
 Lffbdf0:
 	addq.b	#1,d1
@@ -34704,31 +35574,34 @@ Lffbdf0:
 	move.b	#$de,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbdfe:
-	cmp.b	#$59,d2
+	cmp.b	#$59,d2			;'Y'
 	bne.s	Lffbe12
 	move.b	#$b2,d1
 	cmp.b	d3,d4
 	beq.w	Lffba48
 	bra.w	Lffba44
+
 Lffbe12:
-	cmp.b	#$43,d2
+	cmp.b	#$43,d2			;'C'
 	bne.s	Lffbe1a
 	addq.b	#5,d1
 Lffbe1a:
 	addq.b	#1,d1
 	bra.w	Lffba48
+
 Lffbe20:
-	cmp.b	#$45,d4
+	cmp.b	#$45,d4			;'E'
 	bne.w	Lffbeda
 	addq.l	#1,a1
-	cmp.b	#$57,d2
+	cmp.b	#$57,d2			;'W'
 	beq.s	Lffbe54
-	cmp.b	#$46,d2
+	cmp.b	#$46,d2			;'F'
 	beq.s	Lffbe5a
-	cmp.b	#$51,d2
+	cmp.b	#$51,d2			;'Q'
 	beq.s	Lffbe5a
-	cmp.b	#$56,d2
+	cmp.b	#$56,d2			;'V'
 	bne.s	Lffbe68
 	addq.b	#2,d1
 	move.b	d1,(a2)+
@@ -34736,8 +35609,9 @@ Lffbe20:
 	move.b	#$aa,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbe54:
-	sub.b	#$31,d1
+	sub.b	#$31,d1			;'1'
 Lffbe58:
 	addq.b	#6,d1
 Lffbe5a:
@@ -34746,22 +35620,24 @@ Lffbe5a:
 	move.b	#$aa,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbe68:
-	cmp.b	#$50,d2
+	cmp.b	#$50,d2			;'P'
 	bne.s	Lffbe7c
 	addq.b	#3,d1
 	move.b	d1,(a2)+
 	move.b	#$df,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbe7c:
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffbe94
-	cmp.b	#$5a,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffbe94
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbe94
-	cmp.b	#$42,d2
+	cmp.b	#$42,d2			;'B'
 	bne.s	Lffbea2
 Lffbe94:
 	addq.b	#3,d1
@@ -34769,8 +35645,9 @@ Lffbe94:
 	move.b	#$de,(a2)+
 	moveq.l	#$02,d0
 	bra.w	Lffc174
+
 Lffbea2:
-	cmp.b	#$4a,d2
+	cmp.b	#$4a,d2			;'J'
 	bne.s	Lffbeba
 	addq.b	#1,d1
 	move.b	d1,(a2)+
@@ -34778,32 +35655,35 @@ Lffbea2:
 	move.b	#$aa,(a2)+
 	moveq.l	#$03,d0
 	bra.w	Lffc174
+
 Lffbeba:
-	cmp.b	#$59,d2
+	cmp.b	#$59,d2			;'Y'
 	bne.s	Lffbecc
 	move.b	#$aa,d1
 	cmp.b	d3,d4
 	bne.w	Lffba48
 	bra.s	Lffbe58
+
 Lffbecc:
-	cmp.b	#$43,d2
+	cmp.b	#$43,d2			;'C'
 	bne.s	Lffbed4
 	addq.b	#5,d1
 Lffbed4:
 	addq.b	#3,d1
 	bra.w	Lffba48
+
 Lffbeda:
-	cmp.b	#$48,d4
+	cmp.b	#$48,d4			;'H'
 	bne.w	Lffbf88
-	cmp.b	#$4e,d2
+	cmp.b	#$4e,d2			;'N'
 	beq.w	Lffbf7e
-	cmp.b	#$53,d2
+	cmp.b	#$53,d2			;'S'
 	beq.s	Lffbf08
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbf06
-	cmp.b	#$54,d2
+	cmp.b	#$54,d2			;'T'
 	beq.s	Lffbf06
-	cmp.b	#$43,d2
+	cmp.b	#$43,d2			;'C'
 	bne.w	Lffc16c
 	addq.b	#8,d1
 Lffbf06:
@@ -34812,32 +35692,32 @@ Lffbf08:
 	addq.b	#1,d1
 	move.b	($0001,a1),d5
 	beq.w	Lffc17c
-	cmp.b	#$61,d5
+	cmp.b	#$61,d5			;'a'
 	bcs.s	Lffbf22
-	cmp.b	#$7a,d5
+	cmp.b	#$7a,d5			;'z'
 	bhi.s	Lffbf22
 	and.b	#$df,d5
 Lffbf22:
 	move.b	#$a8,d6
-	cmp.b	#$49,d5
+	cmp.b	#$49,d5			;'I'
 	beq.s	Lffbf68
 	addq.b	#2,d6
-	cmp.b	#$45,d5
+	cmp.b	#$45,d5			;'E'
 	beq.s	Lffbf4e
 	addq.b	#2,d6
-	cmp.b	#$41,d5
+	cmp.b	#$41,d5			;'A'
 	beq.s	Lffbf4e
 	addq.b	#1,d6
-	cmp.b	#$55,d5
+	cmp.b	#$55,d5			;'U'
 	beq.s	Lffbf4e
 	addq.b	#1,d6
-	cmp.b	#$4f,d5
+	cmp.b	#$4f,d5			;'O'
 	bne.w	Lffc16c
 Lffbf4e:
 	addq.l	#2,a1
 	move.b	d1,(a2)+
 	moveq.l	#$01,d0
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	bne.s	Lffbf60
 Lffbf5a:
 	addq.l	#1,d0
@@ -34846,56 +35726,59 @@ Lffbf60:
 	addq.l	#1,d0
 	move.b	d6,(a2)+
 	bra.w	Lffc174
+
 Lffbf68:
 	addq.l	#2,a1
 	move.b	d1,(a2)+
 	moveq.l	#$01,d0
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffbf5a
-	cmp.b	#$54,d2
+	cmp.b	#$54,d2			;'T'
 	beq.s	Lffbf60
 	bra.w	Lffc174
+
 Lffbf7e:
 	move.b	#$dd,(a2)+
 	moveq.l	#$01,d0
 	bra.w	Lffc174
+
 Lffbf88:
-	cmp.b	#$59,d4
+	cmp.b	#$59,d4			;'Y'
 	bne.w	Lffc05a
 	move.b	#$df,d6
-	cmp.b	#$50,d2
+	cmp.b	#$50,d2			;'P'
 	beq.s	Lffc000
 	subq.b	#1,d6
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffc000
-	cmp.b	#$5a,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffc000
-	cmp.b	#$4a,d2
+	cmp.b	#$4a,d2			;'J'
 	beq.s	Lffc000
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffc000
-	cmp.b	#$42,d2
+	cmp.b	#$42,d2			;'B'
 	beq.s	Lffc000
 	clr.b	d6
-	cmp.b	#$4b,d2
+	cmp.b	#$4b,d2			;'K'
 	beq.s	Lffc000
-	cmp.b	#$53,d2
+	cmp.b	#$53,d2			;'S'
 	beq.s	Lffc000
-	cmp.b	#$54,d2
+	cmp.b	#$54,d2			;'T'
 	beq.s	Lffc000
-	cmp.b	#$4e,d2
+	cmp.b	#$4e,d2			;'N'
 	beq.s	Lffc000
-	cmp.b	#$48,d2
+	cmp.b	#$48,d2			;'H'
 	beq.s	Lffc000
-	cmp.b	#$4d,d2
+	cmp.b	#$4d,d2			;'M'
 	beq.s	Lffc000
-	cmp.b	#$52,d2
+	cmp.b	#$52,d2			;'R'
 	beq.s	Lffc000
-	cmp.b	#$4c,d2
+	cmp.b	#$4c,d2			;'L'
 	beq.s	Lffc000
-	cmp.b	#$46,d2
+	cmp.b	#$46,d2			;'F'
 	beq.s	Lffbffe
-	cmp.b	#$43,d2
+	cmp.b	#$43,d2			;'C'
 	bne.w	Lffc16c
 	add.b	#$09,d1
 Lffbffe:
@@ -34904,26 +35787,26 @@ Lffc000:
 	addq.b	#1,d1
 	move.b	($0001,a1),d5
 	beq.w	Lffc17c
-	cmp.b	#$61,d5
+	cmp.b	#$61,d5			;'a'
 	bcs.s	Lffc01a
-	cmp.b	#$7a,d5
+	cmp.b	#$7a,d5			;'z'
 	bhi.s	Lffc01a
 	and.b	#$df,d5
 Lffc01a:
 	move.b	#$a8,d7
-	cmp.b	#$49,d5
+	cmp.b	#$49,d5			;'I'
 	beq.s	Lffc046
 	addq.b	#2,d7
-	cmp.b	#$45,d5
+	cmp.b	#$45,d5			;'E'
 	beq.s	Lffc046
 	addq.b	#2,d7
-	cmp.b	#$41,d5
+	cmp.b	#$41,d5			;'A'
 	beq.s	Lffc046
 	addq.b	#1,d7
-	cmp.b	#$55,d5
+	cmp.b	#$55,d5			;'U'
 	beq.s	Lffc046
 	addq.b	#1,d7
-	cmp.b	#$4f,d5
+	cmp.b	#$4f,d5			;'O'
 	bne.w	Lffc16c
 Lffc046:
 	move.b	d1,(a2)+
@@ -34936,54 +35819,55 @@ Lffc052:
 	move.b	d7,(a2)+
 	addq.l	#2,a1
 	bra.w	Lffc174
+
 Lffc05a:
-	cmp.b	#$57,d4
+	cmp.b	#$57,d4			;'W'
 	bne.w	Lffc0fa
 	move.b	#$df,d6
-	cmp.b	#$50,d2
+	cmp.b	#$50,d2			;'P'
 	beq.s	Lffc0a2
 	subq.b	#1,d6
-	cmp.b	#$47,d2
+	cmp.b	#$47,d2			;'G'
 	beq.s	Lffc0a2
-	cmp.b	#$5a,d2
+	cmp.b	#$5a,d2			;'Z'
 	beq.s	Lffc0a2
-	cmp.b	#$44,d2
+	cmp.b	#$44,d2			;'D'
 	beq.s	Lffc0a2
-	cmp.b	#$42,d2
+	cmp.b	#$42,d2			;'B'
 	beq.s	Lffc0a2
 	clr.b	d6
-	cmp.b	#$4b,d2
+	cmp.b	#$4b,d2			;'K'
 	beq.s	Lffc0a2
-	cmp.b	#$53,d2
+	cmp.b	#$53,d2			;'S'
 	beq.s	Lffc0a2
-	cmp.b	#$54,d2
+	cmp.b	#$54,d2			;'T'
 	beq.s	Lffc0a2
-	cmp.b	#$48,d2
+	cmp.b	#$48,d2			;'H'
 	bne.w	Lffc16c
 Lffc0a2:
 	addq.b	#2,d1
 	move.b	($0001,a1),d5
 	beq.w	Lffc17c
-	cmp.b	#$61,d5
+	cmp.b	#$61,d5			;'a'
 	bcs.s	Lffc0bc
-	cmp.b	#$7a,d5
+	cmp.b	#$7a,d5			;'z'
 	bhi.s	Lffc0bc
 	and.b	#$df,d5
 Lffc0bc:
 	move.b	#$a7,d7
-	cmp.b	#$41,d5
+	cmp.b	#$41,d5			;'A'
 	beq.s	Lffc0e8
 	addq.b	#1,d7
-	cmp.b	#$49,d5
+	cmp.b	#$49,d5			;'I'
 	beq.s	Lffc0e8
 	addq.b	#1,d7
-	cmp.b	#$55,d5
+	cmp.b	#$55,d5			;'U'
 	beq.s	Lffc0e8
 	addq.b	#1,d7
-	cmp.b	#$45,d5
+	cmp.b	#$45,d5			;'E'
 	beq.s	Lffc0e8
 	addq.b	#1,d7
-	cmp.b	#$4f,d5
+	cmp.b	#$4f,d5			;'O'
 	bne.w	Lffc16c
 Lffc0e8:
 	move.b	d1,(a2)+
@@ -34996,33 +35880,34 @@ Lffc0f4:
 	move.b	d7,(a2)+
 	addq.l	#2,a1
 	bra.s	Lffc174
+
 Lffc0fa:
-	cmp.b	#$53,d4
+	cmp.b	#$53,d4			;'S'
 	bne.s	Lffc164
-	cmp.b	#$54,d2
+	cmp.b	#$54,d2			;'T'
 	bne.s	Lffc164
 	move.b	($0001,a1),d3
 	beq.s	Lffc17c
 	move.b	d3,d5
-	cmp.b	#$61,d5
+	cmp.b	#$61,d5			;'a'
 	bcs.s	Lffc11e
-	cmp.b	#$7a,d5
+	cmp.b	#$7a,d5			;'z'
 	bhi.s	Lffc11e
 	and.b	#$df,d5
 Lffc11e:
-	cmp.b	#$55,d5
+	cmp.b	#$55,d5			;'U'
 	beq.s	Lffc152
 	move.b	#$a7,d6
-	cmp.b	#$41,d5
+	cmp.b	#$41,d5			;'A'
 	beq.s	Lffc146
 	addq.b	#1,d6
-	cmp.b	#$49,d5
+	cmp.b	#$49,d5			;'I'
 	beq.s	Lffc146
 	addq.b	#2,d6
-	cmp.b	#$45,d5
+	cmp.b	#$45,d5			;'E'
 	beq.s	Lffc146
 	addq.b	#1,d6
-	cmp.b	#$4f,d5
+	cmp.b	#$4f,d5			;'O'
 	bne.s	Lffc16c
 Lffc146:
 	addq.b	#2,d1
@@ -35031,6 +35916,7 @@ Lffc146:
 	addq.l	#2,a1
 	moveq.l	#$02,d0
 	bra.s	Lffc174
+
 Lffc152:
 	addq.b	#2,d1
 	cmp.b	d3,d5
@@ -35041,20 +35927,23 @@ Lffc15c:
 	addq.l	#2,a1
 	moveq.l	#$01,d0
 	bra.s	Lffc174
+
 Lffc164:
-	cmp.b	#$4e,d2
+	cmp.b	#$4e,d2			;'N'
 	beq.w	Lffbf7e
 Lffc16c:
 	clr.b	(a3)
 	clr.b	(a4)
 	moveq.l	#$ff,d0
 	bra.s	Lffc17e
+
 Lffc174:
 	clr.b	(a2)
 Lffc176:
 	move.b	(a1)+,(a3)+
 	bne.s	Lffc176
 	bra.s	Lffc17e
+
 Lffc17c:
 	clr.l	d0
 Lffc17e:
@@ -35075,7 +35964,7 @@ Lffc184:
 	bcs.s	Lffc1a8
 	subq.b	#1,d0
 Lffc1a8:
-	add.b	#$5f,d0
+	add.b	#$5f,d0			;'_'
 Lffc1ac:
 	bsr.s	Lffc21c
 	bne.s	Lffc1b8
@@ -35085,7 +35974,7 @@ Lffc1ac:
 
 Lffc1b8:
 	move.b	#$81,(a1)+
-	move.b	#$4b,(a1)+
+	move.b	#$4b,(a1)+		;'K'
 	clr.b	(a1)
 	moveq.l	#$02,d0
 	rts
@@ -35104,7 +35993,7 @@ Lffc1c6:
 	bcs.s	Lffc1ea
 	subq.b	#1,d0
 Lffc1ea:
-	add.b	#$5f,d0
+	add.b	#$5f,d0			;'_'
 	cmp.b	#$a4,d0
 	beq.s	Lffc212
 Lffc1f4:
@@ -35119,7 +36008,7 @@ Lffc1fc:
 
 Lffc204:
 	move.b	#$81,(a1)+
-	move.b	#$4a,(a1)+
+	move.b	#$4a,(a1)+		;'J'
 	clr.b	(a1)
 	moveq.l	#$02,d0
 	rts
@@ -35156,7 +36045,7 @@ Lffc24e:
 	rts
 
 Lffc254:
-	move.w	#$0032,($000009bc).l
+	move.w	#$0032,($000009bc).l	;'2'
 	move.w	sr,-(a7)
 	ori.w	#$0700,sr
 	tst.b	($00000993).l
@@ -35240,7 +36129,7 @@ Lffc3a4:
 	lea.l	($00eb8000),a0
 	lsl.w	#7,d1
 	adda.w	d1,a0
-	moveq.l	#$3f,d0
+	moveq.l	#$3f,d0			;'?'
 	moveq.l	#$00,d1
 Lffc3be:
 	move.w	d1,(a0)+
@@ -35263,11 +36152,12 @@ Lffc3e8:
 	move.w	(a1)+,(a0)+
 	dbra.w	d0,Lffc3e8
 	bra.s	Lffc402
+
 Lffc3f0:
 	lea.l	($00eb8000),a0
 	lsl.w	#7,d1
 	adda.w	d1,a0
-	moveq.l	#$3f,d0
+	moveq.l	#$3f,d0			;'?'
 Lffc3fc:
 	move.w	(a1)+,(a0)+
 	dbra.w	d0,Lffc3fc
@@ -35290,11 +36180,12 @@ Lffc428:
 	move.w	(a0)+,(a1)+
 	dbra.w	d0,Lffc428
 	bra.s	Lffc442
+
 Lffc430:
 	lea.l	($00eb8000),a0
 	lsl.w	#7,d1
 	adda.w	d1,a0
-	moveq.l	#$3f,d0
+	moveq.l	#$3f,d0			;'?'
 Lffc43c:
 	move.w	(a0)+,(a1)+
 	dbra.w	d0,Lffc43c
@@ -35362,6 +36253,7 @@ Lffc4ba:
 	bne.s	Lffc4cc
 	lea.l	($00eb0800),a0
 	bra.s	Lffc4d2
+
 Lffc4cc:
 	lea.l	($00eb0804),a0
 Lffc4d2:
@@ -35387,6 +36279,7 @@ Lffc4ec:
 	bne.s	Lffc4fe
 	lea.l	($00eb0800),a0
 	bra.s	Lffc504
+
 Lffc4fe:
 	lea.l	($00eb0804),a0
 Lffc504:
@@ -35405,6 +36298,7 @@ Lffc510:
 	moveq.l	#$fe,d0
 	moveq.l	#$00,d2
 	bra.s	Lffc52a
+
 Lffc522:
 	moveq.l	#$f8,d0
 	andi.w	#$0001,d2
@@ -35414,6 +36308,7 @@ Lffc52a:
 	bpl.s	Lffc534
 	ori.w	#$0001,d0
 	bra.s	Lffc53a
+
 Lffc534:
 	beq.s	Lffc53a
 	ori.w	#$0001,d2
@@ -35452,6 +36347,7 @@ Lffc584:
 	lea.l	($00ebc000),a0
 	move.l	#$00ebe000,d0
 	bra.s	Lffc5a8
+
 Lffc59c:
 	lea.l	($00ebe000),a0
 	move.l	#$00ec0000,d0
@@ -35469,6 +36365,7 @@ Lffc5b2:
 	bne.s	Lffc5c8
 	lea.l	($00ebc000),a0
 	bra.s	Lffc5ce
+
 Lffc5c8:
 	lea.l	($00ebe000),a0
 Lffc5ce:
@@ -35490,6 +36387,7 @@ Lffc5e8:
 	bne.s	Lffc5fe
 	lea.l	($00ebc000),a0
 	bra.s	Lffc604
+
 Lffc5fe:
 	lea.l	($00ebe000),a0
 Lffc604:
@@ -35804,6 +36702,7 @@ Lffc8ce:
 Lffc8ea:
 	bsr.s	Lffc902
 	bra.s	Lffc8ce
+
 Lffc8ee:
 	tst.w	d6
 	beq.s	Lffc8f6
@@ -35816,6 +36715,7 @@ Lffc8f6:
 Lffc8fc:
 	ori.b	#$01,ccr
 	bra.s	Lffc8f6
+
 Lffc902:
 	move.w	d4,ccr
 	bcs.s	Lffc926
@@ -35823,6 +36723,7 @@ Lffc902:
 	beq.s	Lffc912
 	move.w	($0000096e).l,d7
 	bra.s	Lffc918
+
 Lffc912:
 	move.w	($0000096a).l,d7
 Lffc918:
@@ -35837,6 +36738,7 @@ Lffc918:
 Lffc926:
 	move.w	($00000968).l,d7
 	bra.s	Lffc934
+
 Lffc92e:
 	move.w	($0000096c).l,d7
 Lffc934:
@@ -35872,10 +36774,12 @@ Lffc960:
 	movea.w	d0,a2
 	movea.w	d1,a3
 	bra.s	Lffc960
+
 Lffc978:
 	movea.w	d0,a0
 	movea.w	d1,a1
 	bra.s	Lffc960
+
 Lffc97e:
 	exg.l	a0,a2
 	exg.l	a1,a3
@@ -35956,6 +36860,7 @@ Lffca1e:
 	move.l	(a1)+,(-$0004,a6)
 	bsr.s	Lffcab6
 	bra.s	Lffca1e
+
 Lffca58:
 	move.l	a0,-(a7)
 	move.w	d1,-(a7)
@@ -35994,6 +36899,7 @@ Lffca86:
 	lsr.w	#1,d0
 	subq.w	#1,d0
 	bra.s	Lffcaaa
+
 Lffcaa6:
 	addq.l	#2,a0
 	lsr.w	#1,d0
@@ -36038,6 +36944,7 @@ Lffcaf2:
 	movea.l	(-$0004,a6),a0
 	move.w	(-$0012,a6),d3
 	bra.s	Lffcb40
+
 Lffcb04:
 	cmpa.w	($0000096a).l,a4
 	beq.s	Lffcb14
@@ -36063,6 +36970,7 @@ Lffcb30:
 Lffcb3c:
 	adda.l	d0,a0
 	bra.s	Lffcb44
+
 Lffcb40:
 	addq.l	#2,a0
 	addq.w	#1,d1
@@ -36073,6 +36981,7 @@ Lffcb44:
 	bne.s	Lffcb40
 	bsr.s	Lffcb50
 	bra.s	Lffcb40
+
 Lffcb50:
 	bsr.w	Lffca58
 	movea.l	(-$0034,a6),a1
@@ -36155,7 +37064,7 @@ Lffcc0e:
 	move.w	d3,d0
 	bsr.s	Lffcc4a
 	move.w	d1,(-$000c,a6)
-	move.b	#$20,(a0)
+	move.b	#$20,(a0)		;' '
 	move.w	d2,d0
 	bsr.s	Lffcc4a
 	move.w	d1,(-$000e,a6)
@@ -36172,6 +37081,7 @@ Lffcc36:
 	bne.s	Lffcbf6
 	bset.b	#$07,(a0)
 	bra.s	Lffcc36
+
 Lffcc4a:
 	clr.w	d1
 	cmp.w	#$0168,d0
@@ -36182,6 +37092,7 @@ Lffcc56:
 	bls.s	Lffcc60
 	addq.w	#1,d1
 	bra.s	Lffcc56
+
 Lffcc60:
 	add.w	#$002d,d0
 	move.w	d1,-(a7)
@@ -36191,7 +37102,7 @@ Lffcc60:
 	neg.w	d0
 Lffcc70:
 	moveq.l	#$ff,d1
-	cmp.w	#$002d,d0
+	cmp.w	#$002d,d0		;'-'
 	beq.s	Lffcc84
 	clr.w	d1
 	move.b	(Lffcc92,pc,d0.w),d1
@@ -36265,6 +37176,7 @@ Lffcd20:
 	bne.s	Lffcd4a
 	bcs.s	Lffcd58
 	bra.s	Lffcd4c
+
 Lffcd4a:
 	bcc.s	Lffcd58
 Lffcd4c:
@@ -36273,6 +37185,7 @@ Lffcd4c:
 	tst.w	(-$0014,a6)
 	beq.s	Lffcd7e
 	bra.s	Lffcd62
+
 Lffcd58:
 	lsl.b	#1,d2
 	bcc.s	Lffcd78
@@ -36286,6 +37199,7 @@ Lffcd62:
 	beq.s	Lffcd76
 	bcs.s	Lffcd78
 	bra.s	Lffcd7e
+
 Lffcd76:
 	bcs.s	Lffcd7e
 Lffcd78:
@@ -36300,6 +37214,7 @@ Lffcd7e:
 Lffcd8a:
 	tst.w	(-$0012,a6)
 	bra.s	Lffcd94
+
 Lffcd90:
 	tst.w	(-$0010,a6)
 Lffcd94:
@@ -36311,6 +37226,7 @@ Lffcd94:
 	moveq.l	#$ff,d6
 	bsr.w	Lffd0be
 	bra.s	Lffcd7e
+
 Lffcdac:
 	move.w	(a4),d4
 	move.w	($0010,a4),d5
@@ -36477,6 +37393,7 @@ Lffcf10:
 	muls.w	(a1),d0
 	add.w	d0,(a4)
 	bra.w	Lffce92
+
 Lffcf36:
 	unlk	a6
 	rts
@@ -36536,16 +37453,19 @@ Lffcfa6:
 	move.w	d1,d5
 	move.w	d2,d1
 	bra.s	Lffcfc0
+
 Lffcfae:
 	move.w	d0,d4
 	move.w	d1,d5
 	move.w	d3,d1
 	bra.s	Lffd002
+
 Lffcfb6:
 	cmp.w	d4,d1
 	bcc.s	Lffcfbe
 	addq.w	#1,d1
 	bra.s	Lffcfc0
+
 Lffcfbe:
 	subq.w	#1,d1
 Lffcfc0:
@@ -36590,6 +37510,7 @@ Lffcff8:
 	bcc.s	Lffd000
 	addq.w	#1,d1
 	bra.s	Lffd002
+
 Lffd000:
 	subq.w	#1,d1
 Lffd002:
@@ -36733,6 +37654,7 @@ Lffd114:
 	sub.w	d2,d1
 	jsr	(a2)
 	bra.s	Lffd10e
+
 Lffd126:
 	addq.l	#2,a7
 Lffd128:
@@ -36792,6 +37714,7 @@ Lffd1a6:
 	swap.w	d7
 	move.w	d6,d7
 	bra.s	Lffd1c8
+
 Lffd1ae:
 	move.w	($00000968).l,d0
 	move.w	($0000096a).l,d1
@@ -36850,6 +37773,7 @@ Lffd220:
 Lffd224:
 	clr.w	d7
 	bra.s	Lffd22a
+
 Lffd228:
 	moveq.l	#$ff,d7
 Lffd22a:
