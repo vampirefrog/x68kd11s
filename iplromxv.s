@@ -9,7 +9,7 @@
 ;  Bss  size    000000 byte(s)
 ;  4751 Labels
 ;
-;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q -B -M --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite iplromxv.dat iplromxv.s
+;  Commandline dis  -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q1 -B -M --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite iplromxv.dat iplromxv.s
 ;          DIS version 3.16
 ;=============================================
 
