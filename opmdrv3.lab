@@ -1261,7 +1261,7 @@
 006bc7	DB
 006bc8	DL
 006bcc	DB
-006bce	DL
+006bce	DW
 006bde	P	Start
 006c84	P
 006c98	P
@@ -1370,8 +1370,8 @@
 0074c0	DL
 0074c8	DB
 0074ca	DU
-0074ee	DU
-007500	DU
+0074ee	DW
+007500	DL
 007550	DW
 007552	DB
 007553	DB
@@ -1402,7 +1402,7 @@
 00771e	DL
 007722	DL
 007726	DB
-007728	DU
+007728	DB
 007828	DU
 00782c	DW
 00782e	DW
@@ -1464,214 +1464,215 @@
 007a4a	DS
 007a4e	DS
 007a52	DS
-007a56	DS
-007a60	DS
-007a6a	DS
-007a74	DS
-007a7e	DS
-007a88	DS
-007a92	DS
-007a9c	DS
-007aa6	DS
-007ab0	DS
-007aba	DS
-007ac4	DS
-007ace	DS
-007ad8	DS
-007ae2	DS
-007aec	DS
-007af6	DS
-007b00	DS
-007b0a	DS
-007b14	DS
-007b1e	DS
-007b28	DS
-007b32	DS
-007b3c	DS
-007b46	DS
-007b50	DS
-007b5a	DS
-007b64	DS
-007b6e	DS
-007b78	DS
-007b82	DS
-007b8c	DS
-007b96	DS
-007ba0	DS
-007baa	DS
-007bb4	DS
-007bbe	DS
-007bc8	DS
-007bd2	DS
-007bdc	DS
-007be6	DS
-007bf0	DS
-007bfa	DS
-007c04	DS
-007c0e	DS
-007c18	DS
-007c22	DS
-007c2c	DS
-007c36	DS
-007c40	DS
-007c4a	DS
-007c54	DS
-007c5e	DS
-007c68	DS
-007c72	DS
-007c7c	DS
-007c86	DS
-007c90	DS
-007c9a	DS
-007ca4	DS
-007cae	DS
-007cb8	DS
-007cc2	DS
-007ccc	DS
-007cd6	DS
-007ce0	DS
-007cea	DS
-007cf4	DS
+
+007a56	DS	APianoStr1
+007a60	DS	HPianoStr1
+007a6a	DS	EPianoStr1
+007a74	DS	ClavinetStr1
+007a7e	DS	CelestaStr1
+007a88	DS	HarpsichordStr1
+007a92	DS	AGuitarStr1
+007a9c	DS	EGuitarStr1
+007aa6	DS	WoodbassStr1
+007ab0	DS	EBassStr1
+007aba	DS	BanjoStr1
+007ac4	DS	SitarStr1
+007ace	DS	HarpStr1
+007ad8	DS	KotoStr1
+007ae2	DS	POrgan1Str1
+007aec	DS	POrgan2Str1
+007af6	DS	EOrganStr1
+007b00	DS	AccordionStr1
+007b0a	DS	ViolinStr1
+007b14	DS	CelloStr1
+007b1e	DS	Strings1Str1
+007b28	DS	Strings2Str1
+007b32	DS	PizzicatoStr1
+007b3c	DS	VoiceStr1
+007b46	DS	ChorusStr1
+007b50	DS	GrassharpStr1
+007b5a	DS	WhistleStr1
+007b64	DS	PiccoloStr1
+007b6e	DS	FluteStr1
+007b78	DS	OboeStr1
+007b82	DS	ClarinetStr1
+007b8c	DS	BassoonStr1
+007b96	DS	SaxophoneStr1
+007ba0	DS	TrumpetStr1
+007baa	DS	HornStr1
+007bb4	DS	TromboneStr1
+007bbe	DS	TubaStr1
+007bc8	DS	Brass1Str1
+007bd2	DS	Brass2Str1
+007bdc	DS	HarmonicaStr1
+007be6	DS	OcarinaStr1
+007bf0	DS	RecorderStr1
+007bfa	DS	SambaWhistleStr1
+007c04	DS	PanfluteStr1
+007c0e	DS	SnaredrumStr1
+007c18	DS	RimshotStr1
+007c22	DS	BassdrumStr1
+007c2c	DS	TomtomStr1
+007c36	DS	TimpaniStr1
+007c40	DS	BongoStr1
+007c4a	DS	TingPalaceStr1
+007c54	DS	TriangleStr1
+007c5e	DS	CowbellStr1
+007c68	DS	TubelabelStr1
+007c72	DS	SteeldrumStr1
+007c7c	DS	GlockenStr1
+007c86	DS	VibraphoneStr1
+007c90	DS	MarimbaStr1
+007c9a	DS	ClosedHHStr1
+007ca4	DS	OpenHHStr1
+007cae	DS	CymbalStr1
+007cb8	DS	Synthesizer1Str1
+007cc2	DS	Synthesizer2Str1
+007ccc	DS	SE1Str1
+007cd6	DS	SE2Str1
+007ce0	DS	SE3Str1
+007cea	DS	SE4Str1
+007cf4	DS	SE5Str1
 007cfe	DS
 007d08	DS
 
-007d12	DB
-007d49	DB
-007d80	DB
-007db7	DB
-007dee	DB
-007e25	DB
-007e5c	DB
-007e93	DB
-007eca	DB
-007f01	DB
-007f38	DB
-007f6f	DB
-007fa6	DB
-007fdd	DB
-008014	DB
-00804b	DB
-008082	DB
-0080b9	DB
-0080f0	DB
-008127	DB
-00815e	DB
-008195	DB
-0081cc	DB
-008203	DB
-00823a	DB
-008271	DB
-0082a8	DB
-0082df	DB
-008316	DB
-00834d	DB
-008384	DB
-0083bb	DB
-0083f2	DB
-008429	DB
-008460	DB
-008497	DB
-0084ce	DB
-008505	DB
-00853c	DB
-008573	DB
-0085aa	DB
-0085e1	DB
-008618	DB
-00864f	DB
-008686	DB
-0086bd	DB
-0086f4	DB
-00872b	DB
-008762	DB
-008799	DB
-0087d0	DB
-008807	DB
-00883e	DB
-008875	DB
-0088ac	DB
-0088e3	DB
-00891a	DB
-008951	DB
-008988	DB
-0089bf	DB
-0089f6	DB
-008a2d	DB
-008a64	DB
-008a9b	DB
-008ad2	DB
-008b09	DB
-008b40	DB
-008b77	DB
+007d12	DB	APianoData1
+007d49	DB	HPianoData1
+007d80	DB	EPianoData1
+007db7	DB	ClavinetData1
+007dee	DB	CelestaData1
+007e25	DB	HarpsichordData1
+007e5c	DB	AGuitarData1
+007e93	DB	EGuitarData1
+007eca	DB	WoodbassData1
+007f01	DB	EBassData1
+007f38	DB	BanjoData1
+007f6f	DB	SitarData1
+007fa6	DB	HarpData1
+007fdd	DB	KotoData1
+008014	DB	POrgan1Data1
+00804b	DB	POrgan2Data1
+008082	DB	EOrganData1
+0080b9	DB	AccordionData1
+0080f0	DB	ViolinData1
+008127	DB	CelloData1
+00815e	DB	Strings1Data1
+008195	DB	Strings2Data1
+0081cc	DB	PizzicatoData1
+008203	DB	VoiceData1
+00823a	DB	ChorusData1
+008271	DB	GrassharpData1
+0082a8	DB	WhistleData1
+0082df	DB	PiccoloData1
+008316	DB	FluteData1
+00834d	DB	OboeData1
+008384	DB	ClarinetData1
+0083bb	DB	BassoonData1
+0083f2	DB	SaxophoneData1
+008429	DB	TrumpetData1
+008460	DB	HornData1
+008497	DB	TromboneData1
+0084ce	DB	TubaData1
+008505	DB	Brass1Data1
+00853c	DB	Brass2Data1
+008573	DB	HarmonicaData1
+0085aa	DB	OcarinaData1
+0085e1	DB	RecorderData1
+008618	DB	SambaWhistleData1
+00864f	DB	PanfluteData1
+008686	DB	SnaredrumData1
+0086bd	DB	RimshotData1
+0086f4	DB	BassdrumData1
+00872b	DB	TomtomData1
+008762	DB	TimpaniData1
+008799	DB	BongoData1
+0087d0	DB	TingPalaceData1
+008807	DB	TriangleData1
+00883e	DB	CowbellData1
+008875	DB	TubelabelData1
+0088ac	DB	SteeldrumData1
+0088e3	DB	GlockenData1
+00891a	DB	VibraphoneData1
+008951	DB	MarimbaData1
+008988	DB	ClosedHHData1
+0089bf	DB	OpenHHData1
+0089f6	DB	CymbalData1
+008a2d	DB	Synthesizer1Data1
+008a64	DB	Synthesizer2Data1
+008a9b	DB	SE1Data1
+008ad2	DB	SE2Data1
+008b09	DB	SE3Data1
+008b40	DB	SE4Data1
+008b77	DB	SE5Data1
 
-008bae	DS
-008bb8	DS
-008bc2	DS
-008bcc	DS
-008bd6	DS
-008be0	DS
-008bea	DS
-008bf4	DS
-008bfe	DS
-008c08	DS
-008c12	DS
-008c1c	DS
-008c26	DS
-008c30	DS
-008c3a	DS
-008c44	DS
-008c4e	DS
-008c58	DS
-008c62	DS
-008c6c	DS
-008c76	DS
-008c80	DS
-008c8a	DS
-008c94	DS
-008c9e	DS
-008ca8	DS
-008cb2	DS
-008cbc	DS
-008cc6	DS
-008cd0	DS
-008cda	DS
-008ce4	DS
-008cee	DS
-008cf8	DS
-008d02	DS
-008d0c	DS
-008d16	DS
-008d20	DS
-008d2a	DS
-008d34	DS
-008d3e	DS
-008d48	DS
-008d52	DS
-008d5c	DS
-008d66	DS
-008d70	DS
-008d7a	DS
-008d84	DS
-008d8e	DS
-008d98	DS
-008da2	DS
-008dac	DS
-008db6	DS
-008dc0	DS
-008dca	DS
-008dd4	DS
-008dde	DS
-008de8	DS
-008df2	DS
-008dfc	DS
-008e06	DS
-008e10	DS
-008e1a	DS
-008e24	DS
-008e2e	DS
-008e38	DS
-008e42	DS
-008e4c	DS
+008bae	DS	APianoStr2
+008bb8	DS	HPianoStr2
+008bc2	DS	EPianoStr2
+008bcc	DS	ClavinetStr2
+008bd6	DS	SelestatStr2
+008be0	DS	HarpsichordStr2
+008bea	DS	AGuitarStr2
+008bf4	DS	EGuitarStr2
+008bfe	DS	WoodbaseStr2
+008c08	DS	EBaseStr2
+008c12	DS	BanjoStr2
+008c1c	DS	SitarStr2
+008c26	DS	HarpStr2
+008c30	DS	KotoStr2
+008c3a	DS	POrgan1Str2
+008c44	DS	POrgan2Str2
+008c4e	DS	EOrganStr2
+008c58	DS	AccordionStr2
+008c62	DS	AviolinStr2
+008c6c	DS	CelloStr2
+008c76	DS	Strings1Str2
+008c80	DS	Strings2Str2
+008c8a	DS	PizzicatoStr2
+008c94	DS	VoiceStr2
+008c9e	DS	ChorusStr2
+008ca8	DS	GrassharpStr2
+008cb2	DS	WhistleStr2
+008cbc	DS	PiccoloStr2
+008cc6	DS	FluteStr2
+008cd0	DS	OboeStr2
+008cda	DS	ClarinetStr2
+008ce4	DS	BassoonStr2
+008cee	DS	SaxophoneStr2
+008cf8	DS	TrumpetStr2
+008d02	DS	AhornStr2
+008d0c	DS	TromboneStr2
+008d16	DS	TubaStr2
+008d20	DS	Brass1Str2
+008d2a	DS	Brass2Str2
+008d34	DS	HarmonicaStr2
+008d3e	DS	OcarinaStr2
+008d48	DS	RecorderStr2
+008d52	DS	SambaWhistleStr2
+008d5c	DS	PanfluteStr2
+008d66	DS	SnaredrumStr2
+008d70	DS	RimshotStr2
+008d7a	DS	BassdrumStr2
+008d84	DS	TomtomStr2
+008d8e	DS	TimpaniStr2
+008d98	DS	BongoStr2
+008da2	DS	TingPalaceStr2
+008dac	DS	TriangleStr2
+008db6	DS	CowbellStr2
+008dc0	DS	TubelabelStr2
+008dca	DS	SteeldrumStr2
+008dd4	DS	GlockenStr2
+008dde	DS	VibraphoneStr2
+008de8	DS	MarimbaStr2
+008df2	DS	ClosedHHStr2
+008dfc	DS	OpenHHStr2
+008e06	DS	CymbalStr2
+008e10	DS	Synthesizer1Str2
+008e1a	DS	Synthesizer2Str2
+008e24	DS	SE1Str2
+008e2e	DS	SE2Str2
+008e38	DS	SE3Str2
+008e42	DS	SE4Str2
+008e4c	DS	SE5Str2
 008e56	DS
 008e60	DS
 008e6a	DS
@@ -1804,75 +1805,75 @@
 009360	DS
 00936a	DS
 009374	DS
-00937e	DB
-0093b5	DB
-0093ec	DB
-009423	DB
-00945a	DB
-009491	DB
-0094c8	DB
-0094ff	DB
-009536	DB
-00956d	DB
-0095a4	DB
-0095db	DB
-009612	DB
-009649	DB
-009680	DB
-0096b7	DB
-0096ee	DB
-009725	DB
-00975c	DB
-009793	DB
-0097ca	DB
-009801	DB
-009838	DB
-00986f	DB
-0098a6	DB
-0098dd	DB
-009914	DB
-00994b	DB
-009982	DB
-0099b9	DB
-0099f0	DB
-009a27	DB
-009a5e	DB
-009a95	DB
-009acc	DB
-009b03	DB
-009b3a	DB
-009b71	DB
-009ba8	DB
-009bdf	DB
-009c16	DB
-009c4d	DB
-009c84	DB
-009cbb	DB
-009cf2	DB
-009d29	DB
-009d60	DB
-009d97	DB
-009dce	DB
-009e05	DB
-009e3c	DB
-009e73	DB
-009eaa	DB
-009ee1	DB
-009f18	DB
-009f4f	DB
-009f86	DB
-009fbd	DB
-009ff4	DB
-00a02b	DB
-00a062	DB
-00a099	DB
-00a0d0	DB
-00a107	DB
-00a13e	DB
-00a175	DB
-00a1ac	DB
-00a1e3	DB
-00a21a	DB
+00937e	DB	APianoData2
+0093b5	DB	HPianoData2
+0093ec	DB	EPianoData2
+009423	DB	ClavinetData2
+00945a	DB	CelestaData2
+009491	DB	HarpsichordData2
+0094c8	DB	AGuitarData2
+0094ff	DB	EGuitarData2
+009536	DB	WoodbassData2
+00956d	DB	EBassData2
+0095a4	DB	BanjoData2
+0095db	DB	SitarData2
+009612	DB	HarpData2
+009649	DB	KotoData2
+009680	DB	POrgan1Data2
+0096b7	DB	POrgan2Data2
+0096ee	DB	EOrganData2
+009725	DB	AccordionData2
+00975c	DB	ViolinData2
+009793	DB	CelloData2
+0097ca	DB	Strings1Data2
+009801	DB	Strings2Data2
+009838	DB	PizzicatoData2
+00986f	DB	VoiceData2
+0098a6	DB	ChorusData2
+0098dd	DB	GrassharpData2
+009914	DB	WhistleData2
+00994b	DB	PiccoloData2
+009982	DB	FluteData2
+0099b9	DB	OboeData2
+0099f0	DB	ClarinetData2
+009a27	DB	BassoonData2
+009a5e	DB	SaxophoneData2
+009a95	DB	TrumpetData2
+009acc	DB	HornData2
+009b03	DB	TromboneData2
+009b3a	DB	TubaData2
+009b71	DB	Brass1Data2
+009ba8	DB	Brass2Data2
+009bdf	DB	HarmonicaData2
+009c16	DB	OcarinaData2
+009c4d	DB	RecorderData2
+009c84	DB	SambaWhistleData2
+009cbb	DB	PanfluteData2
+009cf2	DB	SnaredrumData2
+009d29	DB	RimshotData2
+009d60	DB	BassdrumData2
+009d97	DB	TomtomData2
+009dce	DB	TimpaniData2
+009e05	DB	BongoData2
+009e3c	DB	TingPalaceData2
+009e73	DB	TriangleData2
+009eaa	DB	CowbellData2
+009ee1	DB	TubelabelData2
+009f18	DB	SteeldrumData2
+009f4f	DB	GlockenData2
+009f86	DB	VibraphoneData2
+009fbd	DB	MarimbaData2
+009ff4	DB	ClosedHHData2
+00a02b	DB	OpenHHData2
+00a062	DB	CymbalData2
+00a099	DB	Synthesizer1Data2
+00a0d0	DB	Synthesizer2Data2
+00a107	DB	SE1Data2
+00a13e	DB	SE2Data2
+00a175	DB	SE3Data2
+00a1ac	DB	SE4Data2
+00a1e3	DB	SE5Data2
+00a21a	DB	EmptyVoice
 00a251	DS
 00a2a4	DS
 00a314	DS

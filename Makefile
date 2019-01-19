@@ -39,6 +39,9 @@ human.s: human.sys human.lab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68030 --sp -s2 -q1 -B -M -o$(COLUMNS) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
 	sed -i -f const.sed $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
+
+opmdrv3.s: opmdrv3.x opmdrv3.lab opmdrv3.tab
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -w16  -g$(patsubst %.s,%.lab,$@) -T$(patsubst %.s,%.tab,$@) --overwrite $< $@
 	sed -i -f const.sed $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
