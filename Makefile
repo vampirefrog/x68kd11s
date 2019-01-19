@@ -23,6 +23,7 @@ iplromxv.s: iplromxv.dat iplromxv.lab iplromxv.tab
 
 %.s: %.x %.lab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
+	sed -i -f const.sed $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
 # Useful for new .x files
@@ -36,6 +37,7 @@ mdxp.s: mdxp.r mdxp.lab
 
 human.s: human.sys human.lab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68030 --sp -q1 -B -M -o$(COLUMNS) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
+	sed -i -f const.sed $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
 clean:
