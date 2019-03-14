@@ -9,7 +9,7 @@
 ;  Bss  size    000000 byte(s)
 ;  2683 Labels
 ;
-;  Commandline dis  -b2 -h -m68030 --sp -s2 -q1 -B -M -o120 -ghuman.lab --overwrite human.sys human.s
+;  Commandline dis  -b2 -h -m68030 --sp -q1 -B -M -o120 -ghuman.lab --overwrite human.sys human.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -57,18 +57,18 @@ L006818:
 HelloString:
 	.dc.b	$1b,'*',$1b,'[1mHuman68k for X680x0',$1b,'[m version 3.02',$0d,$0a
 	.dc.b	'Copyright 1987,88,89,90,91,92,93 SHARP/Hudson',$0d,$0a,$00
-L006874:
-	tst.b	(IOCSWorkMPUType)
+SetupTrap14:
+	tst.b	($0cbc)
 	bne.s	L006890
-	move.l	#L006892,(Trap14VecAddr)
+	move.l	#Trap14Handler,($00b8)
 	move.l	#$4b756d61,-(sp)	;'Kuma'
 	trap	#14
 	addq.l	#4,sp
-	move.b	d0,(IOCSWorkMPUType)
+	move.b	d0,($0cbc)
 L006890:
 	rts
 
-L006892:
+Trap14Handler:
 	clr.l	d0
 	cmpi.l	#$4b756d61,($0006,sp)	;'Kuma'
 	beq.s	L0068a0
@@ -78,15 +78,15 @@ L0068a0:
 
 Start2:
 	movea.l	#Start,sp
-	bsr.s	L006874
+	bsr.s	SetupTrap14
 	bsr.w	L0078fc
 	bsr.w	SetupCallHandlers
 	bsr.w	L008290
 	bsr.w	L007e70
-	move.l	a1,(DOSWorkLastDeviceDrvHeaderAddr)
-	tst.b	(DOSWorkConnectedDrivesNum)
+	move.l	a1,($1c1c)
+	tst.b	($1c75)
 	beq.s	CTRLVCHandler
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	add.b	d0,(L0083f2)
 	bsr.w	L007a7c
 	bsr.w	L0081e2
@@ -108,7 +108,7 @@ Start2:
 	bsr.w	L006cf8
 	bsr.w	L006d10
 	bsr.w	L006a88
-	move.b	(L014074),(DOSWorkBreakMode)
+	move.b	(L014074),($1c12)
 	bra.w	L008472
 
 CTRLVCHandler:
@@ -316,7 +316,7 @@ L006a88:
 	rts
 
 L006a96:
-	move.l	(DOSWorkHuman68kEndAddr),d0
+	move.l	($1c24),d0
 	add.l	#$00001fff,d0
 	and.l	#$00ffe000,d0
 	move.l	d0,(L00837a)
@@ -365,9 +365,9 @@ L006b1a:
 	eor.l	d1,d0
 	and.l	#$00ffff00,d0
 	beq.s	L006b3a
-	movea.l	(DOSWorkLastDeviceDrvHeaderAddr),a2
+	movea.l	($1c1c),a2
 	bsr.w	L006fea
-	move.l	a2,(DOSWorkLastDeviceDrvHeaderAddr)
+	move.l	a2,($1c1c)
 L006b3a:
 	rts
 
@@ -431,7 +431,7 @@ L006bda:
 L006bdc:
 	lea.l	(-$00c8,sp),sp
 	movea.l	sp,a6
-	move.w	(L006806),(DOSWorkBuffersArg2)
+	move.w	(L006806),($1c70)
 	clr.l	d0
 	move.b	d0,(L007c02)
 	clr.l	d2
@@ -454,20 +454,20 @@ L006bdc:
 	movem.l	(sp)+,d2-d4
 L006c36:
 	addq.w	#2,d2
-	move.w	d2,(DOSWorkMaxFileHandle)
-	move.b	d3,(DOSWorkBuffersArg2)
-	move.b	d4,(DOSWorkLastdriveSetting)
+	move.w	d2,($1c6e)
+	move.b	d3,($1c72)
+	move.b	d4,($1c73)
 	clr.l	d0
-	move.w	(DOSWorkBuffersArg2),d0
+	move.w	($1c70),d0
 	add.w	#$0010,d0
 	mulu.w	d3,d0
-	add.l	(DOSWorkHuman68kEndAddr),d0
+	add.l	($1c24),d0
 	move.l	d2,d1
 	subq.l	#5,d1
 	mulu.w	#$0062,d1
 	add.l	d1,d0
 	add.l	#$00010000,d0
-	cmp.l	(DOSWorkCurProcEndAddr),d0
+	cmp.l	($1c00),d0
 	bcc.w	CTRLVCHandler
 	bra.s	L006ce4
 
@@ -492,13 +492,13 @@ L006c6e:
 	bra.s	L006ce4
 
 L006cb0:
-	movea.l	(DOSWorkLastDeviceDrvHeaderAddr),a2
+	movea.l	($1c1c),a2
 	clr.l	d6
 L006cb6:
 	lea.l	(L007e6b),a5
 	bsr.w	L006f38
 	beq.s	L006cb6
-	move.l	a2,(DOSWorkLastDeviceDrvHeaderAddr)
+	move.l	a2,($1c1c)
 	rts
 
 L006cc8:
@@ -507,11 +507,11 @@ L006cc8:
 	bsr.w	L00769c
 	move.l	d0,d7
 	bmi.s	L006cf2
-	movea.l	(DOSWorkLastDeviceDrvHeaderAddr),a2
+	movea.l	($1c1c),a2
 L006cda:
 	bsr.w	L006f6c
 	beq.s	L006cda
-	move.l	a2,(DOSWorkLastDeviceDrvHeaderAddr)
+	move.l	a2,($1c1c)
 L006ce4:
 	move.w	d7,-(sp)
 	bmi.s	L006cea
@@ -544,7 +544,7 @@ L006d10:
 	movea.l	d0,a0
 	lea.l	($00f0,a0),a0
 	move.l	a0,usp
-	movea.l	(DOSWorkThreadManStructTblddr),a6
+	movea.l	($1c50),a6
 	cmpa.l	#$00000000,a6
 	beq.s	L006d3c
 	move.l	a0,($000c,a6)
@@ -738,7 +738,7 @@ L006f38:
 	move.l	#$48756d61,(a0)		;'Huma'
 	move.l	#$6e2e7379,($0004,a0)	;'n.sy'
 	move.l	#$73000000,($0008,a0)
-	movea.l	(DOSWorkHuman68kEndAddr),a1
+	movea.l	($1c24),a1
 	move.l	d6,d0
 	bsr.w	L007170
 	bpl.s	L006fa6
@@ -758,7 +758,7 @@ L006f6c:
 	or.l	#$00202020,d0
 	cmp.l	#$5b726f6d,d0		;'[rom'
 	beq.s	L006fce
-	movea.l	(DOSWorkHuman68kEndAddr),a1
+	movea.l	($1c24),a1
 	clr.l	d0
 	bsr.w	L007170
 	bmi.w	L007128
@@ -807,9 +807,9 @@ L006fea:
 	movea.l	sp,a5
 	movea.l	a2,a1
 	move.l	d1,d0
-	move.b	(DOSWorkCurDriveNum),d2
+	move.b	($1c15),d2
 	bsr.w	L007f0c
-	move.b	d2,(DOSWorkCurDriveNum)
+	move.b	d2,($1c15)
 	lea.l	($001a,sp),sp
 	cmpa.l	a1,a2
 	beq.s	L007028
@@ -878,12 +878,12 @@ L0070b8:
 L0070ba:
 	move.l	($000e,a5),d0
 	add.l	#$00010000,d0
-	cmp.l	(DOSWorkCurProcEndAddr),d0
+	cmp.l	($1c00),d0
 	bcc.w	CTRLVCHandler
 	sub.l	#$00010022,d0
 	cmp.l	a1,d0
 	bcs.w	CTRLVCHandler
-	move.l	($000e,a5),(DOSWorkHuman68kEndAddr)
+	move.l	($000e,a5),($1c24)
 	move.l	a1,(a2)
 L0070e0:
 	move.l	a2,-(sp)
@@ -943,7 +943,7 @@ L007140:
 	move.b	#$40,($0002,a5)		;'@'
 L00715a:
 	move.l	d0,($0012,a5)
-	move.b	(DOSWorkConnectedDrivesNum),d0
+	move.b	($1c75),d0
 	addq.b	#1,d0
 	move.b	d0,($0016,a5)
 	move.l	a1,d1
@@ -953,7 +953,7 @@ L00715a:
 L007170:
 	or.b	#$03,d0
 	adda.l	#$03000000,a0
-	move.l	(DOSWorkCurProcEndAddr),-(sp)
+	move.l	($1c00),-(sp)
 	move.l	a1,-(sp)
 	move.l	a0,-(sp)
 	move.w	d0,-(sp)
@@ -974,7 +974,7 @@ L00718e:
 	tst.l	d0
 	bmi.s	L0071fa
 	move.w	d0,d2
-	movea.l	(DOSWorkHuman68kEndAddr),a0
+	movea.l	($1c24),a0
 	move.l	#$0000ffff,-(sp)
 	move.l	a0,-(sp)
 	move.w	d2,-(sp)
@@ -995,10 +995,10 @@ L00718e:
 	addq.l	#1,d0
 	bclr.l	#$00,d0
 	adda.l	d0,a0
-	move.l	a0,(DOSWorkHuman68kEndAddr)
+	move.l	a0,($1c24)
 	move.l	a0,d0
 	add.l	#$00010000,d0
-	cmp.l	(DOSWorkCurProcEndAddr),d0
+	cmp.l	($1c00),d0
 	bcc.w	CTRLVCHandler
 L0071f8:
 	rts
@@ -1017,7 +1017,7 @@ L007204:
 	cmp.l	#$00000002,d0
 	bne.s	L00722c
 L007220:
-	move.b	d0,(DOSWorkNewfatSetting)
+	move.b	d0,($1c0b)
 	move.b	d0,(L00cc2a)
 L00722a:
 	rts
@@ -1034,7 +1034,7 @@ L007236:
 	bsr.s	L0072aa
 	tst.w	d0
 	bmi.s	L007252
-	move.b	d0,(DOSWorkFflushMode)
+	move.b	d0,($1cba)
 L007250:
 	rts
 
@@ -1066,7 +1066,7 @@ L007284:
 	bsr.s	L0072aa
 	tst.w	d0
 	bmi.s	L0072a0
-	move.w	d0,(DOSWorkVerifyMode)
+	move.w	d0,($1c10)
 L00729e:
 	rts
 
@@ -1129,23 +1129,23 @@ L0072f0:
 	bra.w	L00768c
 
 L007332:
-	move.w	#$0103,(DOSWorkBreakKeyCode)
+	move.w	#$0103,($1cbc)
 	bra.s	L0072f0
 
 L00733a:
-	move.w	#$010e,(DOSWorkDisablePrnCode)
+	move.w	#$010e,($1cbe)
 	bra.s	L0072f0
 
 L007342:
-	move.w	#$0110,(DOSWorkEnablePrnCode)
+	move.w	#$0110,($1cc0)
 	bra.s	L0072f0
 
 L00734a:
-	move.w	#$0111,(DOSWorkResumeScroll)
+	move.w	#$0111,($1cc2)
 	bra.s	L0072f0
 
 L007352:
-	move.w	#$0113,(DOSWorkStopScroll)
+	move.w	#$0113,($1cc4)
 	bra.s	L0072f0
 
 L00735a:
@@ -1221,15 +1221,15 @@ L0073e6:
 	bcc.s	L007470
 	move.l	d0,d4
 L00742c:
-	move.w	d3,(DOSWorkShareArg2)
+	move.w	d3,($1c76)
 	beq.s	L00746e
-	move.w	d4,(DOSWorkShareArg1)
+	move.w	d4,($1c78)
 	beq.s	L00746e
-	movea.l	(DOSWorkHuman68kEndAddr),a0
-	move.l	a0,(DOSWorkShareManStructAddr)
+	movea.l	($1c24),a0
+	move.l	a0,($1c40)
 	mulu.w	#$000c,d4
 	add.l	#$0000005c,d4
-	move.l	d4,(DOSWorkShareBytesPerStruct)
+	move.l	d4,($1c7a)
 	subq.w	#1,d3
 	bmi.s	L00745a
 L007452:
@@ -1237,10 +1237,10 @@ L007452:
 	adda.l	d4,a0
 	dbra.w	d3,L007452
 L00745a:
-	move.l	a0,(DOSWorkHuman68kEndAddr)
+	move.l	a0,($1c24)
 	move.l	a0,d0
 	add.l	#$00010000,d0
-	cmp.l	(DOSWorkCurProcEndAddr),d0
+	cmp.l	($1c00),d0
 	bcc.w	CTRLVCHandler
 L00746e:
 	rts
@@ -1268,16 +1268,16 @@ L00748c:
 L0074b0:
 	tst.l	d3
 	beq.s	L0074dc
-	movea.l	(DOSWorkHuman68kEndAddr),a0
-	move.l	a0,(DOSWorkCommonAreaAddr)
-	move.l	a0,(DOSWorkCommonAreaEndAddr)
+	movea.l	($1c24),a0
+	move.l	a0,($1c44)
+	move.l	a0,($1c48)
 	clr.l	(a0)
 	adda.l	d3,a0
-	move.l	a0,(DOSWorkCommonAddrEndAddr)
-	move.l	a0,(DOSWorkHuman68kEndAddr)
+	move.l	a0,($1c4c)
+	move.l	a0,($1c24)
 	move.l	a0,d0
 	add.l	#$00010000,d0
-	cmp.l	(DOSWorkCurProcEndAddr),d0
+	cmp.l	($1c00),d0
 	bcc.w	CTRLVCHandler
 L0074dc:
 	rts
@@ -1359,7 +1359,7 @@ L00758c:
 	bcs.s	L0075d4
 	cmp.l	#$00008001,d0
 	bcc.s	L0075d4
-	move.w	d0,(DOSWorkBuffersArg2)
+	move.w	d0,($1c70)
 L0075d2:
 	rts
 
@@ -1377,7 +1377,7 @@ L0075e0:
 	sub.b	#$61,d0			;'a'
 	cmp.b	#$1a,d0
 	bcc.s	L007606
-	cmp.b	(DOSWorkConnectedDrivesNum),d0
+	cmp.b	($1c75),d0
 	bcs.s	L007606
 	move.b	d0,d4
 L007604:
@@ -1386,7 +1386,7 @@ L007604:
 L007606:
 	lea.l	(LastdriveStr),a0
 	bsr.s	L00768c
-	move.b	(DOSWorkConnectedDrivesNum),d4
+	move.b	($1c75),d4
 	rts
 
 L007614:
@@ -1452,7 +1452,7 @@ L00769c:
 L0076aa:
 	tst.b	(UskcgSysStr)
 	beq.w	L0077be
-	movea.l	(DOSWorkHuman68kEndAddr),a1
+	movea.l	($1c24),a1
 	move.l	a1,d1
 	clr.l	d2
 	moveq.l	#$38,d0			;'8'
@@ -1489,10 +1489,10 @@ L0076aa:
 	trap	#15
 	move.w	#$5fff,d1
 	bsr.w	L00694a
-	move.l	a1,(DOSWorkHuman68kEndAddr)
+	move.l	a1,($1c24)
 	move.l	a1,d0
 	add.l	#$00010000,d0
-	cmp.l	(DOSWorkCurProcEndAddr),d0
+	cmp.l	($1c00),d0
 	bcc.w	CTRLVCHandler
 	clr.w	-(sp)
 	pea.l	(UskcgSysStr)
@@ -1501,7 +1501,7 @@ L0076aa:
 	tst.l	d0
 	bmi.w	L0077be
 	move.w	d0,d2
-	movea.l	(DOSWorkHuman68kEndAddr),a2
+	movea.l	($1c24),a2
 	move.l	#$000126a2,-(sp)
 	move.l	a2,-(sp)
 	move.w	d2,-(sp)
@@ -1593,7 +1593,7 @@ L0077fc:
 	addq.l	#6,sp
 	tst.l	d0
 	bmi.w	L0078e6
-	movea.l	(DOSWorkHuman68kEndAddr),a0
+	movea.l	($1c24),a0
 	move.w	d0,d2
 	move.l	#$00010044,-(sp)
 	move.l	a0,-(sp)
@@ -1689,66 +1689,66 @@ L0078fc:
 
 SetupCallHandlers:
 	lea.l	(DosCallTable),a0
-	lea.l	(DOSCallVecTable),a1
+	lea.l	($1800),a1
 	move.w	#$00ff,d1
 L007910:
 	move.l	(a0)+,(a1)+
 	dbra.w	d1,L007910
-	lea.l	(DOSWorkCurProcEndAddr),a0
+	lea.l	($1c00),a0
 	move.w	#$00ff,d1
 L00791e:
 	clr.l	(a0)+
 	dbra.w	d1,L00791e
-	move.l	#LineFExceptionHandler,(LineFVec)
-	tst.b	(IOCSWorkMPUType)
+	move.l	#LineFExceptionHandler,($002c)
+	tst.b	($0cbc)
 	beq.s	L00793a
-	move.l	#LineFExceptionHandler,(PrivilegeViolationVecAddr)
+	move.l	#LineFExceptionHandler,($0020)
 L00793a:
-	move.l	#Trap14Handler,(Trap14VecAddr)
-	move.l	#L0086f2,(IOCSAbortFuncAddr)
+	move.l	#Trap14Handler,($00b8)
+	move.l	#L0086f2,($07fc)
 	move.l	#$ffffffff,(L014076)
-	lea.l	(Trap11VecAddr),a0
-	move.l	(a0),(DOSWorkTrap11PreviousAddr)
+	lea.l	($00ac),a0
+	move.l	(a0),($1c66)
 	move.l	#Trap11Handler,(a0)
-	lea.l	(Trap10VecAddr),a0
-	move.l	(a0),(DOSWorkTrap10PreviousAddr)
+	lea.l	($00a8),a0
+	move.l	(a0),($1c6a)
 	move.l	#Trap10Handler,(a0)
 	lea.l	($00100000),a0
 	bsr.w	L007a3c
-	move.l	a0,(DOSWorkCurProcEndAddr)
-	move.l	#DosCallTable,(DOSWorkHuman68kEndAddr)
+	move.l	a0,($1c00)
+	move.l	#DosCallTable,($1c24)
 	lea.l	(L008372),a0
-	move.l	a0,(DOSWorkCurProcStartAddr)
+	move.l	a0,($1c04)
 	bsr.w	L00a0ec
 	pea.l	(CTRLVCHandler)
 	move.w	#$fff1,-(sp)
 	DOS	_INTVCS
 	addq.l	#6,sp
-	move.w	#$0003,(DOSWorkBreakKeyCode)
-	move.w	#$000e,(DOSWorkDisablePrnCode)
-	move.w	#$0010,(DOSWorkEnablePrnCode)
-	move.w	#$0011,(DOSWorkResumeScroll)
-	move.w	#$0013,(DOSWorkStopScroll)
-	move.w	(L006806),(DOSWorkBuffersArg2)
+	move.w	#$0003,($1cbc)
+	move.w	#$000e,($1cbe)
+	move.w	#$0010,($1cc0)
+	move.w	#$0011,($1cc2)
+	move.w	#$0013,($1cc4)
+	move.w	(L006806),($1c70)
 	move.b	(L00680a),(L014074)
 	clr.w	d0
 	move.b	(L00680b),d0
-	move.w	d0,(DOSWorkVerifyMode)
-	move.b	#$02,(DOSWorkBreakMode)
-	move.b	#$01,(DOSWorkFflushMode)
+	move.w	d0,($1c10)
+	move.b	#$02,($1c12)
+	move.b	#$01,($1cba)
 	lea.l	(CurProgBlock),a0
-	move.l	a0,(DOSWorkCurProcPtrAddr)
-	move.w	#$0003,(DOSWork_IOCTRLArg1_Retries)
-	move.w	#$0064,(DOSWork_IOCTRLArg2_WaitTime)		;'d'
-	move.l	#L008372,(DOSWorkHuman68kPDB)
-	move.b	(L006809),(DOSWorkMaxDries)
-	move.b	(L006817),(DOSWorkNewfatSetting)
+	move.l	a0,($1c28)
+	move.w	#$0003,($1c0c)
+	move.w	#$0064,($1c0e)		;'d'
+	move.l	#L008372,($1c20)
+	move.b	(L006809),($1c74)
+	move.b	(L006817),($1c0b)
 	move.b	(L006817),(L00cc2a)
 	move.b	#$01,(L01120a)
 	bsr.w	L00a6ea
-	tst.b	(SCCTxBufferEmptyVecAddr)
+	tst.b	($0160)
 	beq.s	L007a3a
-	move.w	#$00ff,(SCCTxBufferEmptyVecAddr)
+	move.w	#$00ff,($0160)
 L007a3a:
 	rts
 
@@ -1759,27 +1759,27 @@ L007a42:
 	bcc.s	L007a7a
 	movea.l	sp,a6
 	lea.l	(L007a74),a1
-	movea.l	(BusErrVecAddr),a2
-	move.l	a1,(BusErrVecAddr)
+	movea.l	($0008),a2
+	move.l	a1,($0008)
 	move.l	(a0),d0
 	move.l	#$5836386b,(a0)		;'X68k'
 	cmpi.l	#$5836386b,(a0)		;'X68k'
 	bne.s	L007a74
 	move.l	d0,(a0)
-	move.l	a2,(BusErrVecAddr)
+	move.l	a2,($0008)
 	adda.l	#$00100000,a0
 	bra.s	L007a42
 
 L007a74:
 	movea.l	a6,sp
-	move.l	a2,(BusErrVecAddr)
+	move.l	a2,($0008)
 L007a7a:
 	rts
 
 L007a7c:
 	lea.l	(ClockStr),a0
 	bsr.w	L00e7b6
-	move.l	d0,(DOSWorkClockDeviceHeader)
+	move.l	d0,($1cb6)
 	rts
 
 L007a8c:
@@ -1934,7 +1934,7 @@ L007e9a:
 	bsr.w	L007f78
 	move.b	($0016,a5),d0
 	subq.b	#1,d0
-	move.b	d0,(DOSWorkCurDriveNum)
+	move.b	d0,($1c15)
 	move.l	#L010da2,d1
 	bra.s	L007ef0
 
@@ -1944,7 +1944,7 @@ L007ed4:
 	bsr.w	L007f78
 	move.b	($0016,a5),d0
 	subq.b	#1,d0
-	move.b	d0,(DOSWorkCurDriveNum)
+	move.b	d0,($1c15)
 	move.l	#L01097e,d1
 L007ef0:
 	move.l	d1,(a1)
@@ -1976,7 +1976,7 @@ L007f0c:
 	movea.l	-(a1),a3
 	clr.l	d2
 L007f34:
-	movea.l	(DOSWorkHuman68kEndAddr),a4
+	movea.l	($1c24),a4
 	movea.l	a4,a1
 	jsr	(a3)
 	cmp.l	#$ffffffff,d2
@@ -1988,7 +1988,7 @@ L007f34:
 	bne.s	L007f34
 	move.b	($0016,a5),d0
 	subq.b	#1,d0
-	move.b	d0,(DOSWorkCurDriveNum)
+	move.b	d0,($1c15)
 	movem.l	d2/a3,-(sp)
 	bsr.w	L0070ba
 	movem.l	(sp)+,d2/a3
@@ -2003,7 +2003,7 @@ L007f76:
 	.dc.b	$00,$00
 L007f78:
 	movea.l	d1,a1
-	move.b	(DOSWorkConnectedDrivesNum),d0
+	move.b	($1c75),d0
 	addq.b	#1,d0
 	move.b	d0,($0016,a5)
 	bsr.w	L00defa
@@ -2215,33 +2215,33 @@ L0081d0:
 	bra.w	L00fadc
 
 L0081e2:
-	move.b	#$03,(DOSWorkBuffersArg2)
-	move.b	(DOSWorkConnectedDrivesNum),(DOSWorkLastdriveSetting)
-	move.w	#$0005,(DOSWorkMaxFileHandle)
+	move.b	#$03,($1c72)
+	move.b	($1c75),($1c73)
+	move.w	#$0005,($1c6e)
 	clr.l	d0
-	move.l	d0,(DOSWorkFCBIdxTblAddr)
-	move.l	d0,(DOSWorkFCBTblAddr)
-	movea.l	(DOSWorkHuman68kEndAddr),a0
+	move.l	d0,($1c2c)
+	move.l	d0,($1c30)
+	movea.l	($1c24),a0
 L008202:
-	move.l	a0,(DOSWorkDiskIOBufAddr)
+	move.l	a0,($1c34)
 	clr.l	d2
-	move.b	(DOSWorkBuffersArg2),d2
+	move.b	($1c72),d2
 	clr.l	d3
-	move.w	(DOSWorkBuffersArg2),d3
+	move.w	($1c70),d3
 	bra.w	L00b6f2
 
 L008216:
-	movea.l	(DOSWorkHuman68kEndAddr),a0
+	movea.l	($1c24),a0
 	bsr.s	L008202
-	move.w	(DOSWorkMaxFileHandle),d1
+	move.w	($1c6e),d1
 	subq.w	#6,d1
 	bcs.s	L008242
-	move.l	a0,(DOSWorkFCBIdxTblAddr)
+	move.l	a0,($1c2c)
 	move.w	d1,d0
 L00822a:
 	move.w	#$ffff,(a0)+
 	dbra.w	d1,L00822a
-	move.l	a0,(DOSWorkFCBTblAddr)
+	move.l	a0,($1c30)
 L008236:
 	moveq.l	#$5f,d1			;'_'
 L008238:
@@ -2249,23 +2249,23 @@ L008238:
 	dbra.w	d1,L008238
 	dbra.w	d0,L008236
 L008242:
-	move.l	a0,(DOSWorkHuman68kEndAddr)
+	move.l	a0,($1c24)
 	rts
 
 L008248:
 	movem.l	d0-d1/a0-a1,-(sp)
-	move.b	(DOSWorkMaxDries),d0
-	sub.b	(DOSWorkConnectedDrivesNum),d0
+	move.b	($1c74),d0
+	sub.b	($1c75),d0
 	bmi.s	L00828a
-	move.b	(DOSWorkConnectedDrivesNum),d0
-	cmp.b	(DOSWorkLastdriveSetting),d0
+	move.b	($1c75),d0
+	cmp.b	($1c73),d0
 	bcs.s	L008264
-	move.b	d0,(DOSWorkLastdriveSetting)
+	move.b	d0,($1c73)
 L008264:
-	movea.l	(DOSWorkDPBTblAddr),a1
-	movea.l	(DOSWorkCurDirTblAddr),a0
+	movea.l	($1c3c),a1
+	movea.l	($1c38),a0
 	clr.l	d1
-	move.b	(DOSWorkConnectedDrivesNum),d1
+	move.b	($1c75),d1
 L008272:
 	move.l	a1,($0046,a0)
 	move.b	#$40,($0045,a0)		;'@'
@@ -2278,16 +2278,16 @@ L00828a:
 	rts
 
 L008290:
-	movea.l	(DOSWorkHuman68kEndAddr),a0
-	move.l	a0,(DOSWorkCurDirTblAddr)
+	movea.l	($1c24),a0
+	move.l	a0,($1c38)
 	move.l	#$413a0900,d0
 	clr.w	d2
-	move.b	(DOSWorkMaxDries),d2
+	move.b	($1c74),d2
 L0082a4:
 	clr.l	d3
 	bsr.s	L0082b2
 	dbra.w	d2,L0082a4
-	move.l	a0,(DOSWorkHuman68kEndAddr)
+	move.l	a0,($1c24)
 	rts
 
 L0082b2:
@@ -2305,10 +2305,10 @@ L0082bc:
 
 L0082d0:
 	movem.l	d0-d7/a0-a6,-(sp)
-	move.l	(DOSWorkDPBTblAddr),d1
+	move.l	($1c3c),d1
 	bne.s	L0082e6
-	movea.l	(DOSWorkHuman68kEndAddr),a2
-	move.l	a2,(DOSWorkDPBTblAddr)
+	movea.l	($1c24),a2
+	move.l	a2,($1c3c)
 	clr.l	d6
 	bra.s	L0082fc
 
@@ -2316,7 +2316,7 @@ L0082e6:
 	movea.l	d1,a3
 	move.l	($0006,a3),d1
 	bpl.s	L0082e6
-	movea.l	(DOSWorkHuman68kEndAddr),a2
+	movea.l	($1c24),a2
 	move.l	a2,($0006,a3)
 	move.b	($0000.w,a3),d6
 	addq.b	#1,d6
@@ -2361,8 +2361,8 @@ L008344:
 L008358:
 	move.l	#$ffffffff,($0006,a3)
 	movea.l	(sp)+,a3
-	move.b	d6,(DOSWorkConnectedDrivesNum)
-	move.l	a2,(DOSWorkHuman68kEndAddr)
+	move.b	d6,($1c75)
+	move.l	a2,($1c24)
 	tst.l	d0
 	movem.l	(sp)+,d0-d7/a0-a6
 L008370:
@@ -2504,7 +2504,7 @@ LineFExceptionHandler:
 	cmpi.w	#$ff00,d0
 	bcs.s	L008624
 	move.l	a5,(a6)+
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L0085b4
 	addq.l	#2,a6
 L0085b4:
@@ -2519,28 +2519,28 @@ L0085cc:
 	clr.l	d1
 	move.b	d0,d1
 	move.l	d1,d0
-	lea.l	(DOSCallVecTable),a0
+	lea.l	($1800),a0
 	add.w	d1,d1
 	add.w	d1,d1
 	adda.l	d1,a0
 	movea.l	(a0),a0
-	tst.w	(DOSWorkRecursionCount)
+	tst.w	($1c08)
 	bne.s	L0085ec
-	move.l	sp,(DOSWorkPrevSSPVal)
-	move.b	d0,(DOSWorkCurrentCallNum)
+	move.l	sp,($1c5c)
+	move.b	d0,($1c0a)
 L0085ec:
-	addq.w	#1,(DOSWorkRecursionCount)
-	clr.l	(DOSWorkFCBOpened)
+	addq.w	#1,($1c08)
+	clr.l	($1c98)
 	jsr	(a0)
-	clr.l	(DOSWorkFCBOpened)
-	subq.w	#1,(DOSWorkRecursionCount)
+	clr.l	($1c98)
+	subq.w	#1,($1c08)
 	bne.s	L008604
-	clr.b	(DOSWorkCurrentCallNum)
+	clr.b	($1c0a)
 L008604:
 	move.l	d0,-(sp)
 	bsr.w	L008740
 	movem.l	(sp)+,d0-d7/a0-a6
-	tst.b	(DOSWorkThreadSwitchReqFlag)
+	tst.b	($1c14)
 	bne.w	L00e050
 L008616:
 	btst.b	#$07,(sp)
@@ -2561,7 +2561,7 @@ L008624:
 	cmp.w	#$fe00,d0
 	beq.s	L008646
 	movem.l	(sp)+,d0/a5-a6
-	move.l	(ImproperOrderVecAddr),-(sp)
+	move.l	($0010),-(sp)
 	rts
 
 L008646:
@@ -2585,96 +2585,96 @@ Call_Reserved:
 	rts
 
 Trap11Handler:
-	tst.b	(DOSWorkStopKeyFlag)
+	tst.b	($1c16)
 	bne.s	L00868c
 	or.b	#$80,d0
-	move.b	d0,(DOSWorkStopKeyFlag)
-	tst.w	(DOSWorkRecursionCount)
+	move.b	d0,($1c16)
+	tst.w	($1c08)
 	bne.s	L00868c
 	bsr.w	L008760
-	clr.b	(DOSWorkStopKeyFlag)
+	clr.b	($1c16)
 L00868c:
 	rte
 
 Trap10Handler:
-	move.l	d0,(DOSWorkTrap10d0)
-	move.b	#$01,(DOSWorkTrap10ExecFlag)
-	tst.w	(DOSWorkRecursionCount)
+	move.l	d0,($1c18)
+	move.b	#$01,($1c17)
+	tst.w	($1c08)
 	bne.s	L0086a2
 	bsr.w	L008798
 L0086a2:
 	rte
 
 L0086a4:
-	tst.b	(DOSWork_EXECState)
+	tst.b	($1ca0)
 	beq.s	L0086b0
 	bsr.w	L0087d4
 	bmi.s	L0086d8
 L0086b0:
-	movea.l	(DOSWorkPrevSSPVal),sp
+	movea.l	($1c5c),sp
 	bsr.w	L009020
 	lea.l	(L0111ec),a1
 	bsr.w	L008818
-	move.l	(DOSCallAddr_CTRLVC),d0
+	move.l	($1bc4),d0
 	move.l	d0,($003a,sp)
 	cmp.l	(L00837a),d0
 	bcc.s	L0086d8
 	ori.w	#$2000,($0038,sp)
 L0086d8:
-	movea.l	(DOSWorkPrevSSPVal),sp
-	clr.w	(DOSWorkRecursionCount)
-	clr.b	(DOSWorkCurrentCallNum)
+	movea.l	($1c5c),sp
+	clr.w	($1c08)
+	clr.b	($1c0a)
 	move.l	#$00002000,d0
 	movem.l	(sp)+,d1-d7/a0-a6
 	bra.w	L008616
 
 L0086f2:
-	move.l	(DOSWorkFCBOpened),d0
+	move.l	($1c98),d0
 	beq.s	L00870a
 	movea.l	d0,a0
-	move.l	(DOSWorkFCBFileHandle),d0
+	move.l	($1c9c),d0
 	bsr.w	L00aba4
 	bsr.w	L00dd02
-	clr.l	(DOSWorkFCBOpened)
+	clr.l	($1c98)
 L00870a:
-	tst.b	(DOSWork_EXECState)
+	tst.b	($1ca0)
 	beq.s	L008716
 	bsr.w	L0087d4
 	bmi.s	L0086d8
 L008716:
-	movea.l	(DOSWorkAbortSSP),sp
+	movea.l	($1c62),sp
 	bsr.w	L00882e
-	clr.w	(DOSWorkRecursionCount)
-	clr.b	(DOSWorkCurrentCallNum)
-	tst.b	(IOCSWorkMPUType)
+	clr.w	($1c08)
+	clr.b	($1c0a)
+	tst.b	($0cbc)
 	beq.s	L008730
 	move.w	#$0000,-(sp)
 L008730:
-	move.l	(DOSCallAddr_ERRJVC),-(sp)
-	move.w	(DOSWorkAbortSR),-(sp)
+	move.l	($1bc8),-(sp)
+	move.w	($1c60),-(sp)
 	move.l	#$00004000,d0
 	rte
 
 L008740:
 	bsr.s	L008752
-	tst.b	(DOSWorkTrap10ExecFlag)
+	tst.b	($1c17)
 	beq.s	L008750
-	tst.w	(DOSWorkRecursionCount)
+	tst.w	($1c08)
 	bne.s	L008750
 	bsr.s	L008798
 L008750:
 	rts
 
 L008752:
-	tst.b	(DOSWorkStopKeyFlag)
+	tst.b	($1c16)
 	beq.s	L00875e
 	bsr.s	L008760
-	clr.b	(DOSWorkStopKeyFlag)
+	clr.b	($1c16)
 L00875e:
 	rts
 
 L008760:
-	move.b	(DOSWorkStopKeyFlag),d0
+	move.b	($1c16),d0
 	and.l	#$0000007f,d0
 	move.l	d0,-(sp)
 	btst.l	#$00,d0
@@ -2687,34 +2687,34 @@ L008778:
 	bsr.w	L009030
 L008780:
 	move.l	(sp)+,d0
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L008790
 	movea.l	(sp)+,a0
 	move.w	#$0000,-(sp)
 	move.l	a0,-(sp)
 L008790:
 	move.w	sr,-(sp)
-	movea.l	(DOSWorkTrap11PreviousAddr),a0
+	movea.l	($1c66),a0
 	jmp	(a0)
 
 L008798:
 	bsr.w	L008834
-	clr.b	(DOSWorkTrap10ExecFlag)
+	clr.b	($1c17)
 	bsr.s	L0087c0
 	bsr.w	L00b6ba
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L0087b4
 	movea.l	(sp)+,a0
 	move.w	#$0000,-(sp)
 	move.l	a0,-(sp)
 L0087b4:
 	move.w	sr,-(sp)
-	move.l	(DOSWorkTrap10d0),d0
-	movea.l	(DOSWorkTrap10PreviousAddr),a0
+	move.l	($1c18),d0
+	movea.l	($1c6a),a0
 	jmp	(a0)
 
 L0087c0:
-	move.w	(DOSWorkMaxFileHandle),d2
+	move.w	($1c6e),d2
 L0087c4:
 	move.w	d2,-(sp)
 	move.w	d2,d0
@@ -2732,8 +2732,8 @@ L0087d4:
 	addq.l	#2,sp
 	move.l	#$ffffffff,(L014076)
 L0087ec:
-	move.b	(DOSWork_EXECState),d0
-	clr.b	(DOSWork_EXECState)
+	move.b	($1ca0),d0
+	clr.b	($1ca0)
 	cmp.b	#-$03,d0
 	beq.s	L008814
 	cmp.b	#-$02,d0
@@ -2741,9 +2741,9 @@ L0087ec:
 	moveq.l	#$01,d0
 	bsr.w	L0099d8
 	bmi.s	L008816
-	move.l	a0,(DOSWork_EXECCurPDBAddr)
+	move.l	a0,($1caa)
 L00880c:
-	movea.l	(DOSWork_EXECCurPDBAddr),a0
+	movea.l	($1caa),a0
 	bsr.w	L009384
 L008814:
 	clr.l	d0
@@ -2791,9 +2791,9 @@ L00884e:
 Call_GETCHAR:
 	bsr.w	Call_INKEY
 	move.l	d0,d1
-	cmp.w	(DOSWorkEnablePrnCode),d0
+	cmp.w	($1cc0),d0
 	beq.s	L00887c
-	cmp.w	(DOSWorkDisablePrnCode),d0
+	cmp.w	($1cbe),d0
 	beq.s	L008882
 	bsr.w	L0088a6
 	bsr.w	L008f48
@@ -2801,11 +2801,11 @@ Call_GETCHAR:
 	rts
 
 L00887c:
-	not.b	(DOSWorkCTRLPFlag)
+	not.b	($1c13)
 	bra.s	Call_GETCHAR
 
 L008882:
-	clr.b	(DOSWorkCTRLPFlag)
+	clr.b	($1c13)
 	bra.s	Call_GETCHAR
 
 Call_PUTCHAR:
@@ -2814,20 +2814,20 @@ L00888a:
 	bsr.w	L008f48
 L00888e:
 	bsr.w	L009014
-	cmp.w	(DOSWorkStopScroll),d1
+	cmp.w	($1cc4),d1
 	beq.s	L0088c0
 L008898:
 	clr.l	d0
-	cmp.w	(DOSWorkEnablePrnCode),d1
+	cmp.w	($1cc0),d1
 	beq.s	L0088cc
-	cmp.w	(DOSWorkDisablePrnCode),d1
+	cmp.w	($1cbe),d1
 	beq.s	L0088d8
 L0088a6:
-	tst.b	(DOSWorkTrap10ExecFlag)
+	tst.b	($1c17)
 	bne.w	L008798
-	cmpi.b	#$02,(DOSWorkBreakMode)
+	cmpi.b	#$02,($1c12)
 	beq.s	L0088be
-	cmp.w	(DOSWorkBreakKeyCode),d1
+	cmp.w	($1cbc),d1
 	beq.w	L0086a4
 L0088be:
 	rts
@@ -2840,13 +2840,13 @@ L0088c0:
 
 L0088cc:
 	bsr.w	L008f62
-	not.b	(DOSWorkCTRLPFlag)
+	not.b	($1c13)
 	clr.l	d0
 	rts
 
 L0088d8:
 	bsr.w	L008f62
-	clr.b	(DOSWorkCTRLPFlag)
+	clr.b	($1c13)
 	clr.l	d0
 	rts
 
@@ -2915,7 +2915,7 @@ L008952:
 L00895a:
 	DOS	_CHANGE_PR
 Call_INKEY:
-	tst.b	(DOSWorkTrap10ExecFlag)
+	tst.b	($1c17)
 	bne.w	L008798
 	bsr.w	L008f62
 	tst.l	d1
@@ -2924,24 +2924,24 @@ Call_INKEY:
 	rts
 
 L008970:
-	cmpi.b	#$02,(DOSWorkBreakMode)
+	cmpi.b	#$02,($1c12)
 	bne.w	L0086a4
 Call_GETC:
 	bsr.w	Call_INKEY
-	cmp.w	(DOSWorkBreakKeyCode),d0
+	cmp.w	($1cbc),d0
 	beq.s	L008970
-	cmp.w	(DOSWorkEnablePrnCode),d0
+	cmp.w	($1cc0),d0
 	beq.s	L008992
-	cmp.w	(DOSWorkDisablePrnCode),d0
+	cmp.w	($1cbe),d0
 	beq.s	L008998
 	rts
 
 L008992:
-	not.b	(DOSWorkCTRLPFlag)
+	not.b	($1c13)
 	bra.s	Call_GETC
 
 L008998:
-	clr.b	(DOSWorkCTRLPFlag)
+	clr.b	($1c13)
 	bra.s	Call_GETC
 
 Call_PRINT:
@@ -3022,7 +3022,7 @@ L008a22:
 	cmp.b	d2,d0
 	bcc.s	L0089f8
 	clr.w	d0
-	tst.b	(DOSWorkInsKeyMode)
+	tst.b	($1ca2)
 	bne.s	L008a44
 	move.b	(a1),d0
 	beq.s	L008a44
@@ -3431,14 +3431,14 @@ L008d8a:
 	rts
 
 L008d94:
-	not.b	(DOSWorkInsKeyMode)
+	not.b	($1ca2)
 	clr.w	d0
-	move.b	(DOSWorkInsKeyMode),d0
+	move.b	($1ca2),d0
 	bra.s	L008da6
 
 L008da0:
 	clr.w	d0
-	move.b	d0,(DOSWorkInsKeyMode)
+	move.b	d0,($1ca2)
 L008da6:
 	move.w	d0,-(sp)
 	move.w	#$0004,-(sp)
@@ -3447,7 +3447,7 @@ L008da6:
 	rts
 
 L008db2:
-	move.w	(DOSWorkReadRemainingBytes),d0
+	move.w	($1ca8),d0
 	bne.s	L008e0a
 	lea.l	(L013f70),a1
 	clr.w	d0
@@ -3471,23 +3471,23 @@ L008db2:
 	lea.l	(L013f71),a1
 	clr.l	d0
 	move.b	(a1)+,d0
-	move.l	a1,(DOSWorkReadRow)
+	move.l	a1,($1ca4)
 	adda.l	d0,a1
 	move.b	#$0d,(a1)+
 	move.b	#$0a,(a1)
 	addq.w	#2,d0
 L008e0a:
 	subq.l	#1,d0
-	move.w	d0,(DOSWorkReadRemainingBytes)
+	move.w	d0,($1ca8)
 	asl.w	#8,d0
-	movea.l	(DOSWorkReadRow),a1
+	movea.l	($1ca4),a1
 	move.b	(a1)+,d0
-	move.l	a1,(DOSWorkReadRow)
+	move.l	a1,($1ca4)
 	cmp.b	#$1a,d0
 	bne.s	L008e2a
 	and.w	#$00ff,d0
 L008e26:
-	clr.w	(DOSWorkReadRemainingBytes)
+	clr.w	($1ca8)
 L008e2a:
 	rts
 
@@ -3521,7 +3521,7 @@ L008e52:
 L008e5e:
 	DOS	_CHANGE_PR
 L008e60:
-	tst.b	(DOSWorkTrap10ExecFlag)
+	tst.b	($1c17)
 	bne.w	L008798
 	bsr.s	L008e40
 	tst.l	d1
@@ -3532,25 +3532,25 @@ L008e60:
 L008e72:
 	bsr.s	L008e60
 	or.w	($0006,a3),d0
-	cmp.w	(DOSWorkBreakKeyCode),d0
+	cmp.w	($1cbc),d0
 	beq.s	L008e8c
-	cmp.w	(DOSWorkEnablePrnCode),d0
+	cmp.w	($1cc0),d0
 	beq.s	L008e98
-	cmp.w	(DOSWorkDisablePrnCode),d0
+	cmp.w	($1cbe),d0
 	beq.s	L008e9e
 	rts
 
 L008e8c:
-	cmpi.b	#$02,(DOSWorkBreakMode)
+	cmpi.b	#$02,($1c12)
 	bne.w	L0086a4
 	rts
 
 L008e98:
-	not.b	(DOSWorkCTRLPFlag)
+	not.b	($1c13)
 	bra.s	L008e72
 
 L008e9e:
-	clr.b	(DOSWorkCTRLPFlag)
+	clr.b	($1c13)
 	bra.s	L008e72
 
 L008ea4:
@@ -3559,7 +3559,7 @@ L008ea4:
 	moveq.l	#$01,d0
 	bsr.w	L008f7e
 L008eb0:
-	tst.b	(DOSWorkCTRLPFlag)
+	tst.b	($1c13)
 	beq.s	L008eba
 	bsr.w	L008f78
 L008eba:
@@ -3584,9 +3584,9 @@ Call_KEYSNS:
 	clr.l	d0
 	tst.l	d1
 	beq.s	L008efc
-	cmp.w	(DOSWorkEnablePrnCode),d1
+	cmp.w	($1cc0),d1
 	beq.s	L008efe
-	cmp.w	(DOSWorkDisablePrnCode),d1
+	cmp.w	($1cbe),d1
 	beq.s	L008f0a
 	bsr.w	L0088a6
 	subq.l	#1,d0
@@ -3595,13 +3595,13 @@ L008efc:
 
 L008efe:
 	bsr.w	L008f62
-	not.b	(DOSWorkCTRLPFlag)
+	not.b	($1c13)
 	clr.l	d0
 	rts
 
 L008f0a:
 	bsr.w	L008f62
-	clr.b	(DOSWorkCTRLPFlag)
+	clr.b	($1c13)
 	clr.l	d0
 	rts
 
@@ -3623,7 +3623,7 @@ Call_KFLUSH:
 
 L008f48:
 	bsr.s	L008f7c
-	tst.b	(DOSWorkCTRLPFlag)
+	tst.b	($1c13)
 	beq.s	L008f52
 	bsr.s	L008f78
 L008f52:
@@ -3631,7 +3631,7 @@ L008f52:
 
 L008f54:
 	bsr.s	L008f7e
-	tst.b	(DOSWorkCTRLPFlag)
+	tst.b	($1c13)
 	beq.s	L008f5e
 	bsr.s	L008f78
 L008f5e:
@@ -3717,7 +3717,7 @@ L008fd2:
 	move.l	a2,($000e,a5)
 	move.l	#$00000004,($0012,a5)
 	move.l	d2,($0016,a5)
-	move.l	(DOSWorkClockDeviceHeader),d0
+	move.l	($1cb6),d0
 	bmi.s	L00900c
 	movea.l	d0,a1
 	bsr.w	L00defa
@@ -3830,8 +3830,8 @@ Call_MALLOC2:
 Call_MALLOC:
 	clr.w	d4
 L0090e0:
-	move.l	(DOSWorkCurProcStartAddr),d3
-	move.l	(DOSWorkCurProcEndAddr),d5
+	move.l	($1c04),d3
+	move.l	($1c00),d5
 L0090e8:
 	move.l	(a6)+,d0
 	cmp.l	#$01000000,d0
@@ -3997,7 +3997,7 @@ L009268:
 	rts
 
 Call_MFREE:
-	move.l	(DOSWorkCurProcStartAddr),d1
+	move.l	($1c04),d1
 L009274:
 	move.l	(a6),d0
 	beq.s	L0092ac
@@ -4052,7 +4052,7 @@ L0092e0:
 	rts
 
 L0092e6:
-	move.l	(DOSWorkCurProcStartAddr),d1
+	move.l	($1c04),d1
 L0092ea:
 	movea.l	d1,a0
 	move.l	($000c,a0),d1
@@ -4091,7 +4091,7 @@ L00933a:
 	and.l	#$00ffffff,d0
 	add.l	#$00000010,d0
 	sub.l	#$00000010,d1
-	move.l	(DOSWorkCurProcStartAddr),d2
+	move.l	($1c04),d2
 L009350:
 	movea.l	d2,a0
 	cmp.l	d1,d2
@@ -4104,7 +4104,7 @@ L009350:
 L009360:
 	move.l	($000c,a0),d2
 	bne.s	L00936a
-	move.l	(DOSWorkCurProcEndAddr),d2
+	move.l	($1c00),d2
 L00936a:
 	sub.l	a0,d2
 	cmp.l	d0,d2
@@ -4143,10 +4143,10 @@ L0093be:
 	clr.l	(a6)+
 	clr.l	(a6)+
 	clr.l	(a6)
-	movea.l	(DOSWorkPrevSSPVal),a5
-	move.l	($003a,a5),(DOSCallAddr_EXITVC)
+	movea.l	($1c5c),a5
+	move.l	($003a,a5),($1bc0)
 	lea.l	($003e,a5),a6
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L0093e6
 	addq.l	#2,a6
 L0093e6:
@@ -4162,14 +4162,14 @@ L0093e6:
 	rts
 
 Call_EXEC:
-	cmpi.b	#$01,(IOCSWorkMPUType)
+	cmpi.b	#$01,($0cbc)
 	bls.s	L00941a
 	moveq.l	#$ac,d0
 	moveq.l	#$03,d1
 	trap	#15
 L00941a:
 	move.b	(a6)+,d0
-	move.b	d0,(DOSWork_EXECModuleNum)
+	move.b	d0,($1ca1)
 	clr.w	d1
 	move.b	(a6)+,d1
 	movea.l	(a6)+,a1
@@ -4372,13 +4372,13 @@ L0095fe:
 	rts
 
 L00960c:
-	move.b	#-$01,(DOSWork_EXECState)
+	move.b	#-$01,($1ca0)
 	bsr.s	L00961a
-	clr.b	(DOSWork_EXECState)
+	clr.b	($1ca0)
 	rts
 
 L00961a:
-	move.l	a1,(DOSWork_EXECCmdlineAddr)
+	move.l	a1,($1cb2)
 	bsr.w	L00997c
 	cmp.b	#$78,d0			;'x'
 	beq.w	L009812
@@ -4403,19 +4403,19 @@ L00964e:
 	bsr.w	L009b40
 	tst.l	d0
 	bne.w	L009a5a
-	move.b	#-$02,(DOSWork_EXECState)
-	move.l	a0,(DOSWork_EXECCurPDBAddr)
+	move.b	#-$02,($1ca0)
+	move.l	a0,($1caa)
 	bsr.w	L009a62
 	tst.l	d0
 	bmi.w	L0097b6
 L00967e:
 	bsr.w	L0098a0
-	move.b	#-$03,(DOSWork_EXECState)
+	move.b	#-$03,($1ca0)
 	bsr.w	L00938c
-	clr.b	(DOSWork_EXECState)
+	clr.b	($1ca0)
 	movem.l	d1/a0-a5,-(sp)
-	move.b	(DOSWork_EXECModuleNum),($0064,a0)
-	movea.l	(DOSWork_EXECCmdlineAddr),a1
+	move.b	($1ca1),($0064,a0)
+	movea.l	($1cb2),a1
 	lea.l	(-$005a,sp),sp
 	movea.l	sp,a2
 	bsr.w	L00ad68
@@ -4496,10 +4496,10 @@ L009770:
 	movea.l	($0038,a0),a1
 	movea.l	($0020,a0),a2
 	movea.l	($0010,a0),a3
-	movea.l	(DOSWorkPrevSSPVal),a5
-	move.l	($003a,a5),(DOSCallAddr_EXITVC)
+	movea.l	($1c5c),a5
+	move.l	($003a,a5),($1bc0)
 	lea.l	($003e,a5),a6
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L009798
 	addq.l	#2,a6
 L009798:
@@ -4520,7 +4520,7 @@ L0097b6:
 	DOS	_MFREE
 	addq.l	#4,sp
 	move.l	(sp)+,d0
-	clr.b	(DOSWork_EXECState)
+	clr.b	($1ca0)
 	rts
 
 L0097ca:
@@ -4532,8 +4532,8 @@ L0097ca:
 	add.l	#$000000f0,d0
 	bsr.w	L0099d8
 	bmi.w	L009a5a
-	move.b	#-$02,(DOSWork_EXECState)
-	move.l	a0,(DOSWork_EXECCurPDBAddr)
+	move.b	#-$02,($1ca0)
+	move.l	a0,($1caa)
 	move.l	d3,-(sp)
 	move.l	a4,-(sp)
 	move.w	d2,-(sp)
@@ -4571,8 +4571,8 @@ L009812:
 	add.l	#$000000f0,d0
 	bsr.w	L0099b2
 	bmi.w	L00995c
-	move.b	#-$02,(DOSWork_EXECState)
-	move.l	a0,(DOSWork_EXECCurPDBAddr)
+	move.b	#-$02,($1ca0)
+	move.l	a0,($1caa)
 	move.l	d3,-(sp)
 	move.l	a4,-(sp)
 	move.w	d2,-(sp)
@@ -4863,7 +4863,7 @@ L009ab4:
 L009ac6:
 	movem.l	d1,-(sp)
 	clr.l	d1
-	move.b	(DOSWork_EXECModuleNum),d1
+	move.b	($1ca1),d1
 	beq.s	L009b3a
 	move.l	($003c,a5),d0
 	beq.s	L009b36
@@ -4936,7 +4936,7 @@ L009b7a:
 	add.l	#$00000100,d1
 	sub.l	#$00000100,d0
 	add.l	d0,d1
-	move.l	(DOSWorkCurProcStartAddr),d3
+	move.l	($1c04),d3
 L009b8c:
 	movea.l	d3,a1
 	move.l	($0008,a1),d4
@@ -4955,7 +4955,7 @@ L009b8c:
 	rts
 
 L009bae:
-	move.l	(DOSWorkCurProcEndAddr),d5
+	move.l	($1c00),d5
 	cmp.l	d4,d0
 	bcs.s	L009bc0
 	cmp.l	d1,d5
@@ -5496,14 +5496,14 @@ Call_EXIT2:
 	clr.l	d0
 	move.w	(a6),d0
 L00a000:
-	move.l	d0,(DOSWorkProcessExitCode)
+	move.l	d0,($1cae)
 	bsr.w	Call_ALLCLOSE
 	movea.l	(CurProgBlock),a0
 	bsr.w	L0092b8
 	movea.l	($0040,a0),sp
 	movea.l	($003c,a0),a5
 	move.l	a5,usp
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00a026
 	move.w	#$0000,-(sp)
 L00a026:
@@ -5513,8 +5513,8 @@ L00a026:
 	clr.l	($0068,a0)
 	bsr.w	L00a11e
 	bsr.w	L010134
-	move.l	(DOSWorkProcessExitCode),d0
-	clr.w	(DOSWorkRecursionCount)
+	move.l	($1cae),d0
+	clr.w	($1c08)
 	rte
 
 Call_KEEPPR:
@@ -5522,7 +5522,7 @@ Call_KEEPPR:
 	moveq.l	#$01,d0
 	swap.w	d0
 	move.w	(a6),d0
-	move.l	d0,(DOSWorkProcessExitCode)
+	move.l	d0,($1cae)
 	movea.l	(CurProgBlock),a0
 	move.l	($0004,a0),(CurProgBlock)
 	ori.l	#$ff000000,($0004,a0)
@@ -5535,7 +5535,7 @@ L00a07e:
 	movea.l	($0040,a0),sp
 	movea.l	($003c,a0),a5
 	move.l	a5,usp
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00a092
 	move.w	#$0000,-(sp)
 L00a092:
@@ -5545,12 +5545,12 @@ L00a092:
 	clr.l	($0068,a0)
 	bsr.w	L00a150
 	bsr.w	L010134
-	move.l	(DOSWorkProcessExitCode),d0
-	clr.w	(DOSWorkRecursionCount)
+	move.l	($1cae),d0
+	clr.w	($1c08)
 	rte
 
 Call_WAIT:
-	move.l	(DOSWorkProcessExitCode),d0
+	move.l	($1cae),d0
 	rts
 
 Call_SETPDB:
@@ -5574,16 +5574,16 @@ Call_GETPDB:
 
 L00a0ec:
 	movem.l	d1/a1-a2,-(sp)
-	lea.l	(DOSCallAddr_EXITVC),a1
+	lea.l	($1bc0),a1
 	lea.l	($0014,a0),a2
 	moveq.l	#$02,d1
 L00a0fa:
 	move.l	(a1)+,(a2)+
 	dbra.w	d1,L00a0fa
-	lea.l	(Trap10VecAddr),a1
+	lea.l	($00a8),a1
 	lea.l	($0046,a0),a2
-	move.w	(DOSWorkAbortSR),(a2)+
-	move.l	(DOSWorkAbortSSP),(a2)+
+	move.w	($1c60),(a2)+
+	move.l	($1c62),(a2)+
 	moveq.l	#$04,d1
 L00a112:
 	move.l	(a1)+,(a2)+
@@ -5593,16 +5593,16 @@ L00a112:
 
 L00a11e:
 	movem.l	d1/a1-a2,-(sp)
-	lea.l	(DOSCallAddr_EXITVC),a2
+	lea.l	($1bc0),a2
 	lea.l	($0014,a0),a1
 	moveq.l	#$02,d1
 L00a12c:
 	move.l	(a1)+,(a2)+
 	dbra.w	d1,L00a12c
-	lea.l	(Trap10VecAddr),a2
+	lea.l	($00a8),a2
 	lea.l	($0046,a0),a1
-	move.w	(a1)+,(DOSWorkAbortSR)
-	move.l	(a1)+,(DOSWorkAbortSSP)
+	move.w	(a1)+,($1c60)
+	move.l	(a1)+,($1c62)
 	moveq.l	#$04,d1
 L00a144:
 	move.l	(a1)+,(a2)+
@@ -5612,16 +5612,16 @@ L00a144:
 
 L00a150:
 	movem.l	d0-d1/a0-a2,-(sp)
-	lea.l	(DOSCallAddr_EXITVC),a2
+	lea.l	($1bc0),a2
 	lea.l	($0014,a0),a1
 	moveq.l	#$02,d1
 L00a15e:
 	move.l	(a1)+,(a2)+
 	dbra.w	d1,L00a15e
 	lea.l	($0046,a0),a1
-	move.w	(a1)+,(DOSWorkAbortSR)
-	move.l	(a1)+,(DOSWorkAbortSSP)
-	lea.l	(Trap10VecAddr),a2
+	move.w	(a1)+,($1c60)
+	move.l	(a1)+,($1c62)
+	lea.l	($00a8),a2
 	clr.l	d1
 L00a176:
 	move.l	(a2)+,d0
@@ -5881,10 +5881,10 @@ L00a360:
 	beq.s	L00a370
 	cmp.b	#$03,d0
 	bcc.s	L00a378
-	move.b	d0,(DOSWorkBreakMode)
+	move.b	d0,($1c12)
 L00a370:
 	clr.l	d0
-	move.b	(DOSWorkBreakMode),d0
+	move.b	($1c12),d0
 	rts
 
 L00a378:
@@ -5900,7 +5900,7 @@ L00a37c:
 	subq.w	#1,d1
 	and.l	#$000000ff,d1
 	add.l	d1,d1
-	lea.l	(DOSWorkBreakKeyCode),a0
+	lea.l	($1cbc),a0
 	adda.w	d1,a0
 	move.b	(a0),d1
 	tst.b	d0
@@ -5983,7 +5983,7 @@ Call_SUPER:
 	move.l	(a6),d0
 	beq.s	L00a46c
 	sub.l	#$00000042,d0
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00a44a
 	subq.l	#2,d0
 L00a44a:
@@ -5997,7 +5997,7 @@ L00a450:
 	and.w	#$dfff,d1
 	move.w	d1,(a1)+
 	move.l	(a0)+,(a1)+
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00a468
 	move.w	(a0)+,(a1)+
 L00a468:
@@ -6009,7 +6009,7 @@ L00a46c:
 	bne.s	L00a4a8
 	move.l	usp,a1
 	suba.l	#$00000042,a1
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00a484
 	subq.l	#2,a1
 L00a484:
@@ -6023,7 +6023,7 @@ L00a48a:
 	or.w	#$2000,d1
 	move.w	d1,(a1)+
 	move.l	(a0)+,(a1)+
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00a4a2
 	move.w	(a0)+,(a1)+
 L00a4a2:
@@ -6075,11 +6075,11 @@ L00a512:
 	move.l	d1,($0004,a1)
 L00a51a:
 	move.l	d1,($001c,a2)
-	movea.l	(DOSWorkPrevSSPVal),a1
-	move.w	($0038,a1),(DOSWorkAbortSR)
+	movea.l	($1c5c),a1
+	move.w	($0038,a1),($1c60)
 	move.w	($0038,a1),($0046,a2)
 	lea.l	($003e,a1),a0
-	move.l	a0,(DOSWorkAbortSSP)
+	move.l	a0,($1c62)
 	move.l	a0,($0048,a2)
 	rts
 
@@ -6277,7 +6277,7 @@ Call_DRVXCHG:
 	move.l	d0,d1
 	bsr.s	L00a6fa
 	bhi.s	L00a6d2
-	lea.l	(DOSWorkDrvReplacementTbl),a0
+	lea.l	($1c7e),a0
 	move.b	(a0,d0.w),d2
 	move.b	(a0,d1.w),d3
 	move.b	d3,(a0,d0.w)
@@ -6290,16 +6290,16 @@ L00a6d2:
 	rts
 
 L00a6d6:
-	lea.l	(DOSWorkDrvReplacementTbl),a0
+	lea.l	($1c7e),a0
 	clr.w	d0
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	move.b	(a0,d0.w),d1
 	bsr.s	L00a6ea
 	move.b	d1,d0
 	rts
 
 L00a6ea:
-	lea.l	(DOSWorkFCBOpened),a0
+	lea.l	($1c98),a0
 	moveq.l	#$19,d0
 L00a6f0:
 	move.b	d0,-(a0)
@@ -6310,19 +6310,19 @@ L00a6f0:
 L00a6fa:
 	move.w	(a6)+,d0
 	bne.s	L00a704
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	addq.w	#1,d0
 L00a704:
 	subq.w	#1,d0
-	cmp.b	(DOSWorkLastdriveSetting),d0
+	cmp.b	($1c73),d0
 	rts
 
 L00a70c:
 	and.w	#$00ff,d0
-	cmp.b	(DOSWorkLastdriveSetting),d0
+	cmp.b	($1c73),d0
 	bhi.s	L00a726
 	movem.l	a0,-(sp)
-	lea.l	(DOSWorkDrvReplacementTbl),a0
+	lea.l	($1c7e),a0
 	move.b	(a0,d0.w),d0
 	movem.l	(sp)+,a0
 L00a726:
@@ -6330,9 +6330,9 @@ L00a726:
 
 L00a728:
 	movem.l	d1-d2/a0,-(sp)
-	lea.l	(DOSWorkDrvReplacementTbl),a0
+	lea.l	($1c7e),a0
 	clr.w	d1
-	move.b	(DOSWorkLastdriveSetting),d1
+	move.b	($1c73),d1
 	clr.l	d2
 L00a738:
 	cmp.b	(a0)+,d0
@@ -6374,7 +6374,7 @@ L00a77e:
 L00a780:
 	move.w	(a6)+,d0
 	bne.s	L00a78a
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	addq.w	#1,d0
 L00a78a:
 	subq.w	#1,d0
@@ -6388,10 +6388,10 @@ L00a792:
 	rts
 
 L00a79e:
-	cmp.b	(DOSWorkLastdriveSetting),d0
+	cmp.b	($1c73),d0
 	bhi.s	L00a7d2
 	and.w	#$00ff,d0
-	movea.l	(DOSWorkCurDirTblAddr),a0
+	movea.l	($1c38),a0
 	mulu.w	#$004e,d0
 	adda.l	d0,a0
 	move.b	($0045,a0),d0
@@ -6541,7 +6541,7 @@ L00a8d8:
 
 L00a8dc:
 	movem.l	d1/a0,-(sp)
-	move.l	(DOSWorkDPBTblAddr),d1
+	move.l	($1c3c),d1
 L00a8e4:
 	movea.l	d1,a0
 	cmp.b	(a0),d0
@@ -6556,16 +6556,16 @@ L00a8f6:
 
 Call_CHGDRV:
 	move.w	(a6),d0
-	cmp.b	(DOSWorkLastdriveSetting),d0
+	cmp.b	($1c73),d0
 	bhi.s	L00a916
 	move.w	d0,d1
 	bsr.w	L00a70c
 	bsr.w	L00a792
 	bmi.s	L00a920
-	move.b	d1,(DOSWorkCurDriveNum)
+	move.b	d1,($1c15)
 L00a916:
 	clr.l	d0
-	move.b	(DOSWorkLastdriveSetting),d0
+	move.b	($1c73),d0
 	addq.w	#1,d0
 	rts
 
@@ -6576,7 +6576,7 @@ L00a920:
 
 Call_CURDRV:
 	clr.l	d0
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	rts
 
 Call_DUP:
@@ -6596,7 +6596,7 @@ L00a94c:
 
 Call_DUP0:
 	move.w	(a6)+,d1
-	cmp.w	(DOSWorkMaxFileHandle),d1
+	cmp.w	($1c6e),d1
 	bhi.s	L00a984
 	move.w	d1,d0
 	rol.w	#8,d1
@@ -6661,13 +6661,13 @@ L00a9d6:
 	rts
 
 L00a9d8:
-	cmp.w	(DOSWorkMaxFileHandle),d0
+	cmp.w	($1c6e),d0
 	bhi.s	L00aa26
 	movea.l	#L013d24,a1
 	cmp.w	#$0006,d0
 	bcs.s	L00a9f0
 	subq.w	#6,d0
-	movea.l	(DOSWorkFCBIdxTblAddr),a1
+	movea.l	($1c2c),a1
 L00a9f0:
 	add.w	d0,d0
 	lea.l	(a1,d0.w),a1
@@ -6680,7 +6680,7 @@ L00a9f0:
 	cmp.w	#$0006,d0
 	bcs.s	L00aa18
 	subq.w	#6,d0
-	movea.l	(DOSWorkFCBTblAddr),a0
+	movea.l	($1c30),a0
 L00aa18:
 	mulu.w	#$0060,d0
 	adda.l	d0,a0
@@ -6702,8 +6702,8 @@ L00aa2e:
 	moveq.l	#$05,d0
 	cmpi.w	#$ffff,(a0)
 	beq.s	L00aa66
-	movea.l	(DOSWorkFCBIdxTblAddr),a0
-	move.w	(DOSWorkMaxFileHandle),d0
+	movea.l	($1c2c),a0
+	move.w	($1c6e),d0
 	subq.w	#2,d0
 	subq.w	#6,d0
 	bcs.s	L00aa58
@@ -6731,11 +6731,11 @@ L00aa68:
 	moveq.l	#$05,d0
 	tst.b	(a0)
 	beq.s	L00aa9e
-	move.w	(DOSWorkMaxFileHandle),d0
+	move.w	($1c6e),d0
 	subq.w	#2,d0
 	subq.w	#6,d0
 	bcs.s	L00aa92
-	movea.l	(DOSWorkFCBTblAddr),a0
+	movea.l	($1c30),a0
 	move.w	d0,-(sp)
 L00aa84:
 	tst.b	(a0)
@@ -6819,15 +6819,15 @@ L00ab2e:
 L00ab44:
 	movem.l	(sp)+,d1/a1
 	bmi.s	L00ab52
-	move.l	a0,(DOSWorkFCBOpened)
-	move.l	d0,(DOSWorkFCBFileHandle)
+	move.l	a0,($1c98)
+	move.l	d0,($1c9c)
 L00ab52:
 	rts
 
 L00ab54:
-	movea.l	(DOSWorkFCBIdxTblAddr),a0
+	movea.l	($1c2c),a0
 	clr.l	d0
-	move.w	(DOSWorkMaxFileHandle),d0
+	move.w	($1c6e),d0
 	move.w	d0,-(sp)
 	subq.w	#6,d0
 	add.w	d0,d0
@@ -6845,11 +6845,11 @@ L00ab76:
 L00ab7a:
 	movea.l	a0,a1
 	move.l	d0,d1
-	move.w	(DOSWorkMaxFileHandle),d0
+	move.w	($1c6e),d0
 	move.w	d0,-(sp)
 	subq.w	#6,d0
 	mulu.w	#$0060,d0
-	movea.l	(DOSWorkFCBTblAddr),a0
+	movea.l	($1c30),a0
 	adda.l	d0,a0
 	move.w	(sp)+,d0
 	tst.b	(a0)
@@ -6957,19 +6957,19 @@ L00ac78:
 Call_FFLUSH_SET:
 	move.w	(a6),d1
 	clr.l	d0
-	move.b	(DOSWorkFflushMode),d0
+	move.b	($1cba),d0
 	cmp.w	#$ffff,d1
 	beq.s	L00ac92
-	move.b	d1,(DOSWorkFflushMode)
+	move.b	d1,($1cba)
 L00ac92:
 	rts
 
 Call_FFLUSH:
-	tst.b	(DOSWorkFflushMode)
+	tst.b	($1cba)
 	beq.s	L00acb8
 	bsr.w	L00b6ba
 	bsr.w	L008e26
-	move.l	(DOSWorkDPBTblAddr),d0
+	move.l	($1c3c),d0
 L00aca6:
 	movea.l	d0,a0
 	tst.w	($000a,a0)
@@ -7016,12 +7016,12 @@ L00ad04:
 	rts
 
 Call_VERIFY:
-	move.w	(a6),(DOSWorkVerifyMode)
+	move.w	(a6),($1c10)
 	rts
 
 Call_VERIFYG:
 	clr.l	d0
-	move.w	(DOSWorkVerifyMode),d0
+	move.w	($1c10),d0
 	rts
 
 Call_NAMESTS:
@@ -7149,7 +7149,7 @@ L00ae1e:
 	bra.s	L00ae44
 
 L00ae40:
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 L00ae44:
 	bsr.w	L00a70c
 	move.b	d0,d1
@@ -7378,8 +7378,8 @@ L00b04a:
 	rts
 
 L00b04c:
-	move.w	(a6)+,(DOSWork_IOCTRLArg1_Retries)
-	move.w	(a6),(DOSWork_IOCTRLArg2_WaitTime)
+	move.w	(a6)+,($1c0c)
+	move.w	(a6),($1c0e)
 	clr.l	d0
 	rts
 
@@ -7652,9 +7652,9 @@ L00b29c:
 	add.b	#$41,d0			;'A'
 	move.b	d0,(a2)
 	move.b	#$3a,($0001,a2)		;':'
-	movea.l	(DOSWorkCurDirTblAddr),a4
+	movea.l	($1c38),a4
 	clr.w	d1
-	move.b	(DOSWorkLastdriveSetting),d1
+	move.b	($1c73),d1
 L00b2b6:
 	bsr.s	L00b2fa
 	beq.s	L00b2c8
@@ -9196,7 +9196,7 @@ L00c0ba:
 L00c0c8:
 	movem.l	d0-d7/a0-a6,-(sp)
 	move.w	#$400f,d7
-	movea.l	(DOSWorkPrevSSPVal),a6
+	movea.l	($1c5c),a6
 	lea.l	($0038,a6),a6
 	trap	#14
 	movem.l	(sp)+,d0-d7/a0-a6
@@ -9545,12 +9545,12 @@ L00c3b6:
 L00c3f8:
 	move.l	(sp)+,d0
 L00c3fa:
-	cmpi.b	#$01,(DOSWorkBreakMode)
+	cmpi.b	#$01,($1c12)
 	bne.s	L00c412
 	move.l	d0,-(sp)
 	bsr.w	L009014
 	move.l	(sp)+,d0
-	cmp.w	(DOSWorkBreakKeyCode),d1
+	cmp.w	($1cbc),d1
 	beq.w	L0086a4
 L00c412:
 	rts
@@ -10348,14 +10348,14 @@ L00cb32:
 	tst.w	($000a,a0)
 	bne.s	L00cb46
 	moveq.l	#$54,d0			;'T'
-	tst.w	(DOSWorkVerifyMode)
+	tst.w	($1c10)
 	beq.s	L00cb5e
 	or.b	#$80,d0
 	bra.s	L00cb5e
 
 L00cb46:
 	moveq.l	#$08,d0
-	tst.w	(DOSWorkVerifyMode)
+	tst.w	($1c10)
 	beq.s	L00cb5e
 	moveq.l	#$09,d0
 	bra.s	L00cb5e
@@ -10401,14 +10401,14 @@ L00cbb4:
 
 L00cbb8:
 	movem.l	d1-d7/a0-a6,-(sp)
-	clr.b	(DOSWorkErrExecFlag)
+	clr.b	($1ca3)
 	move.b	($0004,a5),d7
 	asl.w	#8,d7
 	move.b	d0,d7
-	movea.l	(DOSWorkPrevSSPVal),a6
+	movea.l	($1c5c),a6
 	lea.l	($0038,a6),a6
 	trap	#14
-	move.b	#-$01,(DOSWorkErrExecFlag)
+	move.b	#-$01,($1ca3)
 	cmp.b	#$02,d7
 	movem.l	(sp)+,d1-d7/a0-a6
 	rts
@@ -10421,7 +10421,7 @@ L00cbe6:
 	move.w	#$700e,d7
 	btst.l	#$03,d0
 	beq.s	L00cc0e
-	movea.l	(DOSWorkPrevSSPVal),a6
+	movea.l	($1c5c),a6
 	lea.l	($0038,a6),a6
 	move.l	a0,-(sp)
 	trap	#14
@@ -10590,7 +10590,7 @@ Call_DRVCTRL:
 	clr.w	d0
 	move.b	(a6)+,d0
 	bne.s	L00cdae
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	addq.w	#1,d0
 L00cdae:
 	subq.w	#1,d0
@@ -10655,7 +10655,7 @@ L00ce3e:
 L00ce44:
 	movem.l	d7/a0,-(sp)
 	movea.l	a0,a5
-	move.w	(DOSWorkMaxFileHandle),d6
+	move.w	($1c6e),d6
 L00ce4e:
 	move.w	d6,d0
 	bsr.w	L00a9d8
@@ -11050,9 +11050,9 @@ L00d1d6:
 	pea.l	(a2)
 	bsr.w	L009f32
 	addq.l	#4,sp
-	movea.l	(DOSWorkCurDirTblAddr),a1
+	movea.l	($1c38),a1
 	clr.w	d2
-	move.b	(DOSWorkLastdriveSetting),d2
+	move.b	($1c73),d2
 L00d206:
 	bsr.s	L00d222
 	lea.l	($004e,a1),a1
@@ -11186,7 +11186,7 @@ L00d318:
 	rts
 
 L00d322:
-	move.w	(DOSWorkBuffersArg2),d0
+	move.w	($1c70),d0
 	cmp.w	($0000.w,a3),d0
 	bcc.s	L00d330
 L00d32c:
@@ -11387,9 +11387,9 @@ L00d538:
 L00d544:
 	movem.l	d1/a1,-(sp)
 L00d548:
-	movea.l	(DOSWorkCurDirTblAddr),a1
+	movea.l	($1c38),a1
 	clr.l	d1
-	move.b	(DOSWorkLastdriveSetting),d1
+	move.b	($1c73),d1
 L00d552:
 	cmpa.l	($0046,a1),a0
 	bne.w	L00d5ec
@@ -11402,7 +11402,7 @@ L00d552:
 	and.b	#$1f,d0
 	subq.b	#1,d0
 	mulu.w	#$004e,d0
-	movea.l	(DOSWorkCurDirTblAddr),a3
+	movea.l	($1c38),a3
 	adda.l	d0,a3
 	movem.l	d1/a1/a3,-(sp)
 	subq.l	#1,d1
@@ -11484,12 +11484,12 @@ Call_ASSIGN:
 	sub.b	#$61,d1			;'a'
 	cmp.b	#$1a,d1
 	bcc.s	L00d686
-	cmp.b	(DOSWorkLastdriveSetting),d1
+	cmp.b	($1c73),d1
 	bhi.s	L00d68a
 	move.w	d1,d0
 	bsr.w	L00a70c
 	move.w	d0,d1
-	movea.l	(DOSWorkCurDirTblAddr),a0
+	movea.l	($1c38),a0
 	moveq.l	#$4e,d0			;'N'
 	mulu.w	d1,d0
 	adda.l	d0,a0
@@ -11520,7 +11520,7 @@ L00d69a:
 	move.w	d1,d0
 	bsr.w	L00a8dc
 	bpl.s	L00d6b4
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	bsr.w	L00a70c
 	cmp.b	d0,d1
 	beq.s	L00d686
@@ -11546,7 +11546,7 @@ L00d6d6:
 	bne.s	L00d686
 	cmp.b	#$40,d0			;'@'
 	bne.s	L00d686
-	move.b	(DOSWorkCurDriveNum),d0
+	move.b	($1c15),d0
 	bsr.w	L00a70c
 	cmp.b	d0,d2
 	beq.s	L00d686
@@ -11619,7 +11619,7 @@ L00d78e:
 L00d792:
 	clr.l	d1
 	move.b	d0,d1
-	movea.l	(DOSWorkCurDirTblAddr),a1
+	movea.l	($1c38),a1
 	mulu.w	#$004e,d1
 	adda.l	d1,a1
 	cmpa.l	a1,a6
@@ -11874,7 +11874,7 @@ L00d990:
 	clr.l	d4
 	moveq.l	#$44,d0			;'D'
 L00d99e:
-	tst.w	(DOSWorkVerifyMode)
+	tst.w	($1c10)
 	beq.s	L00d9a8
 	or.b	#$80,d0
 L00d9a8:
@@ -12015,13 +12015,13 @@ L00daac:
 	bclr.l	#$00,d1
 	move.l	d1,d2
 	sub.l	(-$0020,a1),d2
-	movea.l	(DOSWorkCommonAreaEndAddr),a4
+	movea.l	($1c48),a4
 	movea.l	a4,a5
 	adda.l	d2,a5
-	move.l	(DOSWorkCommonAddrEndAddr),d3
+	move.l	($1c4c),d3
 	cmp.l	a5,d3
 	bcs.s	L00db0c
-	move.l	a5,(DOSWorkCommonAreaEndAddr)
+	move.l	a5,($1c48)
 	move.l	d1,(-$0020,a1)
 	add.l	d0,(-$0010,a1)
 	move.l	a4,d0
@@ -12053,8 +12053,8 @@ L00db10:
 	move.l	d0,(-$0020,a1)
 	sub.l	d0,d1
 	beq.s	L00db3e
-	move.l	(DOSWorkCommonAreaEndAddr),d0
-	sub.l	d1,(DOSWorkCommonAreaEndAddr)
+	move.l	($1c48),d0
+	sub.l	d1,($1c48)
 	movea.l	a0,a1
 	adda.l	d1,a0
 	sub.l	a0,d0
@@ -12073,13 +12073,13 @@ L00db42:
 	moveq.l	#$21,d0			;'!'
 	add.l	d5,d0
 	bclr.l	#$00,d0
-	movea.l	(DOSWorkCommonAreaEndAddr),a0
+	movea.l	($1c48),a0
 	movea.l	a0,a1
 	adda.l	d0,a1
-	move.l	(DOSWorkCommonAddrEndAddr),d1
+	move.l	($1c4c),d1
 	cmp.l	a1,d1
 	bcs.s	L00db0c
-	move.l	a1,(DOSWorkCommonAreaEndAddr)
+	move.l	a1,($1c48)
 	subq.l	#4,d0
 	move.l	d0,(a0)+
 	moveq.l	#$0b,d1
@@ -12133,8 +12133,8 @@ L00dbb0:
 	move.l	(a1),d1
 	addq.l	#4,d1
 	lea.l	(a1,d1.l),a2
-	move.l	(DOSWorkCommonAreaEndAddr),d2
-	sub.l	d1,(DOSWorkCommonAreaEndAddr)
+	move.l	($1c48),d2
+	sub.l	d1,($1c48)
 	clr.l	d0
 	sub.l	a2,d2
 	beq.s	L00dbd0
@@ -12146,9 +12146,9 @@ L00dbd0:
 	rts
 
 L00dbd2:
-	move.l	(DOSWorkCommonAreaAddr),d7
+	move.l	($1c44),d7
 	beq.s	L00dbfe
-	move.l	(DOSWorkCommonAreaEndAddr),d6
+	move.l	($1c48),d6
 L00dbdc:
 	cmp.l	d6,d7
 	beq.s	L00dbfa
@@ -12173,7 +12173,7 @@ L00dbfe:
 	rts
 
 L00dc02:
-	move.l	(DOSWorkShareManStructAddr),d0
+	move.l	($1c40),d0
 	beq.s	L00dc1e
 	bsr.w	L00dd4a
 	beq.s	L00dc1e
@@ -12188,7 +12188,7 @@ L00dc1e:
 L00dc20:
 	movem.l	a0,-(sp)
 	clr.l	($000a,a3)
-	move.l	(DOSWorkShareManStructAddr),d0
+	move.l	($1c40),d0
 	beq.s	L00dc46
 	bsr.w	L00dd4a
 	beq.s	L00dc54
@@ -12208,14 +12208,14 @@ L00dc46:
 	bra.s	L00dc40
 
 L00dc54:
-	movea.l	(DOSWorkShareManStructAddr),a0
-	move.w	(DOSWorkShareArg2),d0
+	movea.l	($1c40),a0
+	move.w	($1c76),d0
 	subq.w	#1,d0
 	bmi.s	L00dcb2
 L00dc60:
 	tst.b	(a0)
 	beq.s	L00dc6e
-	adda.l	(DOSWorkShareBytesPerStruct),a0
+	adda.l	($1c7a),a0
 	dbra.w	d0,L00dc60
 	bra.s	L00dcb2
 
@@ -12233,7 +12233,7 @@ L00dc80:
 	movem.l	(sp)+,a1-a2
 L00dc8a:
 	move.w	($0002,a0),d0
-	cmp.w	(DOSWorkShareArg1),d0
+	cmp.w	($1c78),d0
 	bcc.s	L00dcb2
 	addq.b	#1,(a0)
 	move.l	a0,($000a,a3)
@@ -12320,10 +12320,10 @@ L00dd48:
 
 L00dd4a:
 	movem.l	d1-d4/a0/a3,-(sp)
-	movea.l	(DOSWorkShareManStructAddr),a0
-	move.w	(DOSWorkShareArg2),d3
+	movea.l	($1c40),a0
+	move.w	($1c76),d3
 	beq.s	L00dd76
-	move.l	(DOSWorkShareBytesPerStruct),d4
+	move.l	($1c7a),d4
 	subq.w	#1,d3
 L00dd5e:
 	tst.b	(a0)
@@ -12461,7 +12461,7 @@ L00deae:
 	lea.l	($005c,a5),a1
 	clr.l	d1
 	move.w	($0002,a5),d1
-	move.w	(DOSWorkShareArg1),d0
+	move.w	($1c78),d0
 	cmp.w	d0,d1
 	bcc.s	L00de82
 	addq.w	#1,($0002,a5)
@@ -12496,7 +12496,7 @@ Call_CHANGE_KILL_OPEN_PR:
 	rts
 
 L00defa:
-	cmpi.b	#$01,(IOCSWorkMPUType)
+	cmpi.b	#$01,($0cbc)
 	bls.s	L00df42
 	movem.l	d1-d3,-(sp)
 	moveq.l	#$ac,d0
@@ -12533,8 +12533,8 @@ L00df42:
 	rts
 
 Call_S_MALLOC:
-	movea.l	(DOSWorkThreadManStructTblddr),a0
-	cmpa.l	(DOSWorkCurThreadManStructAddr),a0
+	movea.l	($1c50),a0
+	cmpa.l	($1c54),a0
 	beq.w	Call_MALLOC2
 	move.l	($0074,a0),d3
 	move.l	($0078,a0),d5
@@ -12545,8 +12545,8 @@ Call_S_MALLOC:
 	rts
 
 Call_S_MFREE:
-	movea.l	(DOSWorkThreadManStructTblddr),a0
-	movea.l	(DOSWorkCurThreadManStructAddr),a1
+	movea.l	($1c50),a0
+	movea.l	($1c54),a1
 	cmpa.l	a1,a0
 	beq.w	Call_MFREE
 	move.l	($0074,a0),d1
@@ -12554,8 +12554,8 @@ Call_S_MFREE:
 	move.l	($0074,a1),d0
 	cmp.l	d2,d0
 	bne.w	L009274
-	move.l	d1,(DOSWorkCurProcStartAddr)
-	move.l	($0078,a0),(DOSWorkCurProcEndAddr)
+	move.l	d1,($1c04)
+	move.l	($0078,a0),($1c00)
 	movea.l	d2,a0
 	movea.l	(-$0010,a0),a1
 	movea.l	(-$0004,a0),a2
@@ -12576,7 +12576,7 @@ L00dfba:
 
 Call_S_PROCESS:
 	moveq.l	#$ff,d0
-	move.w	(DOSWorkMaxThreads),d0
+	move.w	($1c58),d0
 	beq.s	L00e016
 	clr.l	d1
 	move.w	(a6)+,d1
@@ -12584,7 +12584,7 @@ Call_S_PROCESS:
 	bcs.s	L00e016
 	moveq.l	#$7c,d2			;'|'
 	mulu.w	d2,d1
-	movea.l	(DOSWorkThreadManStructTblddr),a5
+	movea.l	($1c50),a5
 	adda.l	d1,a5
 	tst.l	($0008,a5)
 	beq.s	L00e016
@@ -12620,38 +12620,38 @@ L00e034:
 	movem.l	(sp)+,d0-d2
 	btst.b	#$05,($0008,sp)
 	beq.s	L00e05a
-	move.b	#$01,(DOSWorkThreadSwitchReqFlag)
+	move.b	#$01,($1c14)
 	movem.l	(sp)+,a5-a6
 L00e04e:
 	rte
 
 L00e050:
-	tst.w	(DOSWorkRecursionCount)
+	tst.w	($1c08)
 	bne.s	L00e04e
 	movem.l	a5-a6,-(sp)
 L00e05a:
 	lea.l	($000e,sp),a6
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00e066
 	addq.l	#2,a6
 L00e066:
-	clr.b	(DOSWorkThreadSwitchReqFlag)
-	movea.l	(DOSWorkCurThreadManStructAddr),a5
+	clr.b	($1c14)
+	movea.l	($1c54),a5
 L00e06e:
 	clr.b	(L00e782)
-	move.l	(Level7IntVecAddr),(L00e784)
-	move.l	#L00e204,(Level7IntVecAddr)
+	move.l	($007c),(L00e784)
+	move.l	#L00e204,($007c)
 	ori.w	#$0700,sr
-	cmpa.l	(DOSWorkThreadManStructTblddr),a5
+	cmpa.l	($1c50),a5
 	bne.s	L00e09a
-	move.l	(DOSWorkCurProcStartAddr),($0074,a5)
-	move.l	(DOSWorkCurProcEndAddr),($0078,a5)
+	move.l	($1c04),($0074,a5)
+	move.l	($1c00),($0078,a5)
 L00e09a:
 	lea.l	($0058,a5),a5
-	move.l	(DOSWorkPrevSSPVal),(a5)
-	move.w	(DOSWorkRecursionCount),-(a5)
+	move.l	($1c5c),(a5)
+	move.w	($1c08),-(a5)
 	move.l	a6,-(a5)
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00e0b0
 	subq.l	#2,a6
 L00e0b0:
@@ -12664,24 +12664,24 @@ L00e0b0:
 	move.l	a0,-(a5)
 	movea.l	(CurProgBlock),a0
 	move.l	a0,-(a5)
-	lea.l	(DOSCallAddr_EXITVC),a1
+	lea.l	($1bc0),a1
 	lea.l	($0014,a0),a2
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	lea.l	($0046,a0),a2
-	move.w	(DOSWorkAbortSR),(a2)+
-	move.l	(DOSWorkAbortSSP),(a2)+
-	lea.l	(Trap10VecAddr),a1
+	move.w	($1c60),(a2)+
+	move.l	($1c62),(a2)+
+	lea.l	($00a8),a1
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
-	move.b	(DOSWorkCurrentCallNum),-(a5)
+	move.b	($1c0a),-(a5)
 	subq.l	#3,a5
 	move.l	-(a5),d0
-	tst.w	(DOSWorkCurGeneratedThreadsNum)
+	tst.w	($1c5a)
 	bne.s	L00e10c
 	move.b	($0006,a5),($0005,a5)
 	lea.l	($0010,a5),a5
@@ -12690,7 +12690,7 @@ L00e0b0:
 L00e10c:
 	movea.l	d0,a5
 L00e10e:
-	move.w	(DOSWorkMaxThreads),d7
+	move.w	($1c58),d7
 	move.l	d7,d2
 	move.w	#$0100,d6
 	suba.l	a1,a1
@@ -12707,7 +12707,7 @@ L00e128:
 	tst.b	d6
 	beq.s	L00e146
 	moveq.l	#$7c,d1			;'|'
-	movea.l	(DOSWorkThreadManStructTblddr),a0
+	movea.l	($1c50),a0
 	addq.l	#5,a0
 L00e13a:
 	sub.b	d6,(a0)
@@ -12717,17 +12717,17 @@ L00e13a:
 	bra.s	L00e14a
 
 L00e146:
-	movea.l	(DOSWorkThreadManStructTblddr),a5
+	movea.l	($1c50),a5
 L00e14a:
-	move.l	a5,(DOSWorkCurThreadManStructAddr)
+	move.l	a5,($1c54)
 	ori.w	#$0700,sr
-	move.l	($0074,a5),(DOSWorkCurProcStartAddr)
-	move.l	($0078,a5),(DOSWorkCurProcEndAddr)
+	move.l	($0074,a5),($1c04)
+	move.l	($0078,a5),($1c00)
 	lea.l	($0058,a5),a6
-	move.l	(a6),(DOSWorkPrevSSPVal)
-	move.w	-(a6),(DOSWorkRecursionCount)
+	move.l	(a6),($1c5c)
+	move.w	-(a6),($1c08)
 	movea.l	-(a6),sp
-	tst.b	(IOCSWorkMPUType)
+	tst.b	($0cbc)
 	beq.s	L00e176
 	move.w	#$0000,-(sp)
 L00e176:
@@ -12736,19 +12736,19 @@ L00e176:
 	move.l	-(a6),-(sp)
 	move.l	-(a6),-(sp)
 	move.b	($0006,a5),($0005,a5)
-	move.b	($0007,a5),(DOSWorkCurrentCallNum)
+	move.b	($0007,a5),($1c0a)
 	addq.l	#8,a5
 	movea.l	(a5)+,a0
 	move.l	a0,(CurProgBlock)
-	lea.l	(DOSCallAddr_EXITVC),a2
+	lea.l	($1bc0),a2
 	lea.l	($0014,a0),a1
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	lea.l	($0046,a0),a1
-	move.w	(a1)+,(DOSWorkAbortSR)
-	move.l	(a1)+,(DOSWorkAbortSSP)
-	lea.l	(Trap10VecAddr),a2
+	move.w	(a1)+,($1c60)
+	move.l	(a1)+,($1c62)
+	lea.l	($00a8),a2
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
 	move.l	(a1)+,(a2)+
@@ -12756,21 +12756,21 @@ L00e176:
 	move.l	(a1)+,(a2)+
 	movea.l	(a5)+,a0
 	move.l	a0,usp
-	move.l	(DOSWorkCurThreadManStructAddr),d0
-	sub.l	(DOSWorkThreadManStructTblddr),d0
+	move.l	($1c54),d0
+	sub.l	($1c50),d0
 	divu.w	#$007c,d0
-	movea.l	(DOSCallAddr_CHANGE_PR),a0
+	movea.l	($1bfc),a0
 	jsr	(a0)
 L00e1d2:
 	bsr.s	L00e216
 	move.b	(L00e791),(L00e790)
 	movem.l	(a5)+,d0-d7/a0-a4
 	movem.l	(sp)+,a5-a6
-	move.l	(L00e784),(Level7IntVecAddr)
+	move.l	(L00e784),($007c)
 	tst.b	(L00e782)
 	beq.w	L008616
 	clr.b	(L00e782)
-	move.l	(Level7IntVecAddr),-(sp)
+	move.l	($007c),-(sp)
 	rts
 
 L00e204:
@@ -12780,8 +12780,8 @@ L00e20c:
 	rte
 
 L00e216:
-	movea.l	(DOSWorkThreadManStructTblddr),a6
-	move.w	(DOSWorkMaxThreads),d2
+	movea.l	($1c50),a6
+	move.w	($1c58),d2
 	move.l	(L00e788),d1
 	move.l	(L00e78c),d0
 	move.l	d1,(L00e78c)
@@ -12828,9 +12828,9 @@ L00e28a:
 	move.w	sr,-(sp)
 	ori.w	#$0700,sr
 	movea.l	sp,a6
-	movea.l	(BusErrVecAddr),a5
+	movea.l	($0008),a5
 	moveq.l	#$02,d0
-	move.l	#L00e2bc,(BusErrVecAddr)
+	move.l	#L00e2bc,($0008)
 	cmp.w	#$0001,d1
 	beq.s	L00e2c0
 	cmp.w	#$0002,d1
@@ -12840,7 +12840,7 @@ L00e28a:
 L00e2b2:
 	moveq.l	#$ff,d0
 L00e2b4:
-	move.l	a5,(BusErrVecAddr)
+	move.l	a5,($0008)
 	move.w	(sp)+,sr
 	rts
 
@@ -12897,7 +12897,7 @@ L00e31c:
 	cmp.w	#$fff8,d0
 	bcs.w	L00e25e
 	addq.l	#4,sp
-	tst.l	(DOSWorkCurThreadManStructAddr)
+	tst.l	($1c54)
 	beq.s	L00e362
 	cmp.w	#$fffe,d0
 	beq.s	L00e37a
@@ -12940,11 +12940,11 @@ L00e37a:
 
 L00e382:
 	move.l	(a5),d0
-	movea.l	(DOSWorkCurThreadManStructAddr),a5
+	movea.l	($1c54),a5
 	movea.l	($005c,a5),a5
 	cmpi.w	#$ffff,($000a,a5)
 	bne.s	L00e368
-	movea.l	(DOSWorkCurThreadManStructAddr),a5
+	movea.l	($1c54),a5
 	move.b	#$ff,($0004,a5)
 	move.l	d0,($0070,a5)
 	clr.l	d0
@@ -12954,13 +12954,13 @@ L00e3a8:
 	movem.l	d1-d2/a4,-(sp)
 	move.w	(a5)+,d2
 	moveq.l	#$ff,d0
-	move.w	(DOSWorkMaxThreads),d0
+	move.w	($1c58),d0
 	bcs.s	L00e42e
 	clr.l	d1
 	move.w	(a5)+,d1
 	cmp.w	d1,d0
 	bcs.s	L00e42e
-	movea.l	(DOSWorkThreadManStructTblddr),a6
+	movea.l	($1c50),a6
 	mulu.w	#$007c,d1
 	adda.l	d1,a6
 	tst.l	($0008,a6)
@@ -13013,7 +13013,7 @@ L00e42e:
 L00e436:
 	movem.l	d1-d2,-(sp)
 	moveq.l	#$ff,d0
-	move.w	(DOSWorkMaxThreads),d0
+	move.w	($1c58),d0
 	beq.s	L00e478
 	clr.l	d1
 	move.w	(a5)+,d1
@@ -13025,7 +13025,7 @@ L00e436:
 	bcs.s	L00e478
 	moveq.l	#$7c,d2			;'|'
 	mulu.w	d2,d1
-	movea.l	(DOSWorkThreadManStructTblddr),a6
+	movea.l	($1c50),a6
 	adda.l	d1,a6
 	tst.l	($0008,a6)
 	beq.s	L00e478
@@ -13042,18 +13042,18 @@ L00e478:
 	bra.w	L00e368
 
 L00e480:
-	move.l	(DOSWorkCurThreadManStructAddr),d0
+	move.l	($1c54),d0
 	movea.l	d0,a6
-	sub.l	(DOSWorkThreadManStructTblddr),d0
+	sub.l	($1c50),d0
 	moveq.l	#$7c,d2			;'|'
 	divu.w	d2,d0
 	movea.l	(a5),a5
 	bra.s	L00e46e
 
 L00e492:
-	movea.l	(DOSWorkThreadManStructTblddr),a6
+	movea.l	($1c50),a6
 	movea.l	(a5),a5
-	move.w	(DOSWorkMaxThreads),d1
+	move.w	($1c58),d1
 	clr.l	d2
 L00e49e:
 	movem.l	a5-a6,-(sp)
@@ -13084,18 +13084,18 @@ L00e4ca:
 
 L00e4d8:
 	moveq.l	#$ff,d0
-	move.w	(DOSWorkMaxThreads),d0
+	move.w	($1c58),d0
 	beq.w	L00e368
 	move.l	d1,-(sp)
 	clr.l	d1
 	move.w	(a5)+,d1
 	cmp.w	d1,d0
 	bcs.w	L00e366
-	movea.l	(DOSWorkThreadManStructTblddr),a5
+	movea.l	($1c50),a5
 	mulu.w	#$007c,d1
 	adda.l	d1,a5
 	movem.l	(sp)+,d1
-	cmpa.l	(DOSWorkCurThreadManStructAddr),a5
+	cmpa.l	($1c54),a5
 	beq.s	L00e516
 	tst.l	($0008,a5)
 	beq.w	L00e368
@@ -13113,10 +13113,10 @@ L00e51c:
 	movea.l	(a6)+,a4
 	tst.b	(a6)
 	bne.w	L00e5fe
-	movea.l	(DOSWorkThreadManStructTblddr),a2
-	move.w	(DOSWorkMaxThreads),d4
+	movea.l	($1c50),a2
+	move.w	($1c58),d4
 	beq.w	L00e602
-	cmp.w	(DOSWorkCurGeneratedThreadsNum),d4
+	cmp.w	($1c5a),d4
 	beq.w	L00e602
 	clr.l	d5
 	clr.l	d6
@@ -13153,8 +13153,8 @@ L00e572:
 	tst.l	d5
 	beq.w	L00e602
 	movea.l	d5,a5
-	move.l	(DOSWorkCurProcStartAddr),($0074,a5)
-	move.l	(DOSWorkCurProcEndAddr),($0078,a5)
+	move.l	($1c04),($0074,a5)
+	move.l	($1c00),($0078,a5)
 	lea.l	($0060,a5),a0
 	moveq.l	#$0e,d0
 L00e592:
@@ -13197,9 +13197,9 @@ L00e5b0:
 	clr.w	(a5)+
 	clr.l	(a5)+
 	move.l	($000a,a6),(a5)
-	addq.w	#1,(DOSWorkCurGeneratedThreadsNum)
+	addq.w	#1,($1c5a)
 	move.l	d6,d0
-	movea.l	(DOSCallAddr_OPEN_PR),a0
+	movea.l	($1be0),a0
 	jsr	(a0)
 	bra.s	L00e604
 
@@ -13218,19 +13218,19 @@ L00e60c:
 	bsr.w	Call_ALLCLOSE
 	movea.l	(CurProgBlock),a0
 	bsr.w	L0092b8
-	movea.l	(DOSWorkCurThreadManStructAddr),a5
+	movea.l	($1c54),a5
 	movea.l	(a5),a5
 	clr.b	(L00e782)
-	move.l	(Level7IntVecAddr),(L00e784)
-	move.l	#L00e204,(Level7IntVecAddr)
+	move.l	($007c),(L00e784)
+	move.l	#L00e204,($007c)
 	ori.w	#$0700,sr
 	bra.w	L00e10e
 
 L00e640:
-	movea.l	(DOSCallAddr_KILL_PR),a5
+	movea.l	($1be4),a5
 	movea.l	(CurProgBlock),a0
-	movea.l	(DOSWorkThreadManStructTblddr),a1
-	move.w	(DOSWorkMaxThreads),d1
+	movea.l	($1c50),a1
+	move.w	($1c58),d1
 	clr.l	d0
 L00e654:
 	lea.l	($007c,a1),a1
@@ -13242,7 +13242,7 @@ L00e662:
 	move.l	#$ffffffff,($0004,a1)
 	clr.l	($0070,a1)
 	clr.l	($0008,a1)
-	subq.w	#1,(DOSWorkCurGeneratedThreadsNum)
+	subq.w	#1,($1c5a)
 	jsr	(a5)
 L00e678:
 	addq.l	#1,d0
@@ -13257,17 +13257,17 @@ L00e68a:
 	rts
 
 L00e68c:
-	clr.b	(DOSWorkCurrentCallNum)
+	clr.b	($1c0a)
 	cmp.w	#$0002,d1
 	bcs.w	L00e770
 	cmp.w	#$0021,d1		;'!'
 	bcc.w	L00e770
 	subq.w	#1,d1
-	move.w	d1,(DOSWorkMaxThreads)
-	clr.w	(DOSWorkCurGeneratedThreadsNum)
-	movea.l	(DOSWorkHuman68kEndAddr),a0
-	move.l	a0,(DOSWorkThreadManStructTblddr)
-	move.l	a0,(DOSWorkCurThreadManStructAddr)
+	move.w	d1,($1c58)
+	clr.w	($1c5a)
+	movea.l	($1c24),a0
+	move.l	a0,($1c50)
+	move.l	a0,($1c54)
 L00e6b6:
 	movea.l	a0,a1
 	moveq.l	#$7b,d0			;'{'
@@ -13277,8 +13277,8 @@ L00e6ba:
 	move.l	a0,(a1)+
 	move.l	#$ffffffff,(a1)
 	dbra.w	d1,L00e6b6
-	move.l	a0,(DOSWorkHuman68kEndAddr)
-	movea.l	(DOSWorkThreadManStructTblddr),a0
+	move.l	a0,($1c24)
+	movea.l	($1c50),a0
 	move.l	a0,-(a1)
 	clr.w	($0004,a0)
 	move.b	d3,($0006,a0)
@@ -13286,8 +13286,8 @@ L00e6ba:
 	move.l	#L00e792,($005c,a0)
 	move.l	#$000067f2,($0052,a0)
 	move.l	#$00100000,($000c,a0)
-	move.l	(DOSWorkCurProcStartAddr),($0074,a0)
-	move.l	(DOSWorkCurProcEndAddr),($0078,a0)
+	move.l	($1c04),($0074,a0)
+	move.l	($1c00),($0078,a0)
 	lea.l	($0060,a0),a1
 	lea.l	(L00e7a6),a0
 	moveq.l	#$0f,d0
@@ -13304,9 +13304,9 @@ L00e716:
 	IOCS	_TIMERDST
 	tst.l	d0
 	bne.s	L00e76a
-	cmpi.w	#$00ff,(Level7IntVecAddr)
+	cmpi.w	#$00ff,($007c)
 	bne.s	L00e752
-	move.l	#L00e20c,(Level7IntVecAddr)
+	move.l	#L00e20c,($007c)
 L00e752:
 	lea.l	(TIMERDSTHandler),a1
 	move.w	#$016b,d1
@@ -13318,12 +13318,12 @@ TIMERDSTHandler:
 	rts
 
 L00e76a:
-	move.l	(DOSWorkThreadManStructTblddr),(DOSWorkHuman68kEndAddr)
+	move.l	($1c50),($1c24)
 L00e770:
-	clr.w	(DOSWorkMaxThreads)
-	clr.w	(DOSWorkCurGeneratedThreadsNum)
-	clr.l	(DOSWorkThreadManStructTblddr)
-	clr.l	(DOSWorkCurThreadManStructAddr)
+	clr.w	($1c58)
+	clr.w	($1c5a)
+	clr.l	($1c50)
+	clr.l	($1c54)
 	rts
 
 L00e782:
@@ -13527,9 +13527,9 @@ L00e954:
 L00e95c:
 	movea.l	#L013f10,a0
 	jsr	(a4)
-	move.w	(DOSWorkMaxFileHandle),d0
+	move.w	($1c6e),d0
 	subq.w	#6,d0
-	movea.l	(DOSWorkFCBTblAddr),a0
+	movea.l	($1c30),a0
 L00e96e:
 	jsr	(a4)
 	lea.l	($0060,a0),a0
@@ -17272,7 +17272,7 @@ L010c1c:
 	move.w	d0,d1
 	lsl.w	#8,d1
 	or.w	#$9070,d1
-	lea.l	(FD0ResultStatusRxBuf),a1
+	lea.l	($0c90),a1
 	lsl.l	#3,d0
 	adda.l	d0,a1
 	moveq.l	#$00,d2
