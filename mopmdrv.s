@@ -507,7 +507,7 @@ L0004aa:
 	bra.w	L00042c
 
 	move.l	#L000000,d0
-	lea.l	(DOSWorkClockDeviceHeader),a0
+	lea.l	($1cb6),a0
 	bra.s	L0004be
 
 L0004bc:
@@ -3572,7 +3572,7 @@ L002496:
 L0024a0:
 	move.l	a1,-(sp)
 	moveq.l	#$ff,d0
-	lea.l	(DOSWorkClockDeviceHeader),a0
+	lea.l	($1cb6),a0
 	bra.s	L0024ac
 
 L0024aa:
@@ -3856,7 +3856,7 @@ L002708:
 L00271a:
 	lea.l	(StackBottom,pc),a0
 	adda.l	(L003ac6,pc),a0
-	move.l	(DOSWorkCurProcEndAddr),d0
+	move.l	($1c00),d0
 	sub.l	#$00020000,d0
 	cmpa.l	d0,a0
 	bcc.s	L00274a
