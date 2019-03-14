@@ -8,7 +8,7 @@
 
 
 1000000	DU
-fe0000	P
+fe0000	P	DebuggerStart
 fe0004	P
 fe000c	P
 fe0016	P
@@ -166,7 +166,17 @@ fe09c0	P
 fe09f2	P
 fe09fe	P
 fe0a08	P
-fe0a48	DUF
+fe0a48	P
+fe0a96	DWF
+fe0a98	P
+fe0af0	DWF
+fe0af2	P
+fe0b44	DBF
+fe0b5a	P
+fe0b6a	P
+fe0bfe	DB
+fe0c08	DB
+fe0c16	P
 fe16d0	P
 fe16dc	P
 fe16fa	DSF
@@ -437,10 +447,19 @@ fe3d24	DSF
 fe3d2c	DUF
 fe3db4	DUF
 fe3e24	DSF
-fe3e34	DUF
-ff0000	DL
-ff0008	DL
-ff000c	DL
+fe3e34	DB
+ff0000	DLF	IPLRomStart
+ff0004	DL	BootPC
+ff0008	DL	BootBusErrVec
+ff000c	DL	BootAddressErrVec
+ff0010	DL	BootImproperOrderVec
+ff0014	DL	BootDivideBy0Vec
+ff0018	DL	BootCHKCmdVec
+ff001c	DL	BootTRAPVccVec
+ff0020	DL	BootPrivilegeViolationVec
+ff0024	DL	BootTraceExceptionVec
+ff0028	DL	BootLineAVec
+ff002c	DL	BootLineFVec
 ff0030	P	Call_ROMVER
 ff0038	P	Start
 ff0052	P
@@ -783,6 +802,12 @@ ff2586	P
 ff2596	P	Call_Unused
 ff25a8	DW	VecTable
 ff2768	P	Call_DATEBCD
+ff27e6	P
+ff2800	P
+ff2808	P
+ff2808	P
+ff2808	P
+ff2808	P
 ff2824	P
 ff2898	P
 ff28a0	DUF
@@ -828,6 +853,8 @@ ff2cc2	P	Call_DAYASC
 ff2cdc	DSF
 ff2cec	P	Call_ALARMMOD
 ff2cf1	DU
+ff2d02	P
+ff2d1c	P
 ff2d2e	P	Call_ALARMSET
 ff2d8c	P
 ff2d9a	P
@@ -1510,6 +1537,7 @@ ff6dc0	P
 ff6dc4	P
 ff6dca	DUF
 ff704a	P	Call_CONTRAST
+ff7068	P
 ff706a	P
 ff7076	P	Call_HSVTORGB
 ff70aa	P
@@ -1851,9 +1879,21 @@ ff8746	P	Call_B_VERIFY
 ff8770	P
 ff87ac	P
 ff87b0	P
-ff87b8	P
+ff87b8	DW
 ff87be	P	Call_B_READDI
+ff8836	P
+ff8836	P
+ff8836	P
+ff883a	P
+ff883a	P
+ff883a	P
+ff883a	P
+ff883a	P
+ff8842	DW
 ff8848	P	Call_B_DSKINI
+ff885c	P
+ff8878	P
+ff8882	P
 ff888c	P	Call_B_DRVSNS
 ff8894	P
 ff889e	P
@@ -1901,7 +1941,8 @@ ff8c5e	P
 ff8c70	P
 ff8c96	P
 ff8c9c	P
-ff8cca	DUF
+ff8cca	DB
+ff8cda	P
 ff8d48	P	Call_B_EJECT
 ff8d68	P
 ff8d9e	P
@@ -1987,9 +2028,11 @@ ff92bc	P
 ff9312	DUF
 ff9330	DUF
 ff933c	DL
+ff9340	P	BootTraceExceptionHandler
 ff9346	DSF
 ff934b	DU
 ff934e	DL
+ff935a	P	BootPrivilegeViolationHandler
 ff93e0	P
 ff93e2	P
 ff9422	P
@@ -2151,6 +2194,7 @@ ff9fbc	P
 ffa010	P
 ffa038	DUF
 ffa04a	P	Call_Unknown_df
+ffa06e	P
 ffa07a	P
 ffa092	P
 ffa09a	P
@@ -2403,6 +2447,10 @@ ffb1f4	P
 ffb1f6	DUF
 ffb306	DUF
 ffb326	P	Call_G_CLR_ON
+ffb364	P
+ffb370	P
+ffb374	P
+ffb374	P
 ffb38a	P
 ffb3a8	P
 ffb3c8	P
@@ -2417,6 +2465,8 @@ ffb43a	P
 ffb442	DUF
 ffb462	DUF
 ffb662	P	Call_Unknown_91
+ffb698	P
+ffb69c	P
 ffb6a2	P	Call_Unknown_92
 ffb6b6	P
 ffb6b8	P	Call_Unknown_93
