@@ -7,15 +7,38 @@ DIS_DEBUG=
 endif
 COLUMNS=120
 
-all: iplrom30.s iplromxv.s human.s commando.s cmd.s process.s bind.s opmdrv3.s mopmdrv.s mxdrv17.s mxdrv16.s pcm8.s mxp.s mdxp.s
+all: \
+	iplrom30.s \
+	iplromxv.s \
+	human.s \
+	commando.s \
+	cmd.s \
+	process.s \
+	bind.s \
+	opmdrv3.s \
+	mopmdrv.s \
+	pcm8.s \
+	mxp.s \
+	mdxp.s \
+	mxdrv/2.06+16_Rel2++/mxdrvpp.s \
+	mxdrv/2.06+16_Rel.3/mxdrv30.s \
+	mxdrv/2.06+16_Rel.3/mxdrv16.s \
+	mxdrv/2.06+162_03/mxdrv16x.s \
+	mxdrv/2.06+17_Rel.X5-S/mxdrv17.s \
+	mxdrv/2.06+16_Rel.1/mxdrv16.s \
+	mxdrv/2.06+16_Rel.2/mxdrv16.s
 
 translations: mxdrv17.en.s
 
+mxdrv/%.s: mxdrv/%.x mxdrv/%.lab
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -h -k -m68030 -q1 -B -M -w16 -o120 -g"$(patsubst %.s,%.lab,$@)" --overwrite "$<" "$@"
+	sed -i -e 's/;  Code Generate date .\+/;/' "$@"
+
 iplrom30.s: iplrom30.dat iplrom30.lab iplrom30.tab
-	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -i -m68030 -m68882 -zfe0000,ff0038 -q1 -B -M --exclude-fefunc-mac -Tiplrom30.tab -giplrom30.lab --overwrite $< $@
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -i -m68030 -m68882 -zfe0000,ff0038 -q1 -B -M -w16 --exclude-fefunc-mac -Tiplrom30.tab -giplrom30.lab --overwrite $< $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 iplromxv.s: iplromxv.dat iplromxv.lab iplromxv.tab
-	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q1 -B -M --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite $< $@
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -i -m68030 -m68882 -zfe0000,ff0010 -q1 -B -M -w16 --exclude-fefunc-mac -Tiplromxv.tab -giplromxv.lab --overwrite $< $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
 %.en.s: %.s %.en.sed
@@ -36,14 +59,14 @@ mdxp.s: mdxp.r mdxp.lab
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
 human.s: human.sys human.lab
-	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68030 --sp -s2 -q1 -B -M -o$(COLUMNS) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68030 --sp -q1 -B -M -o$(COLUMNS) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
 	sed -i -f const.sed $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
 opmdrv3.s: opmdrv3.x opmdrv3.lab opmdrv3.tab
-	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -w16  -g$(patsubst %.s,%.lab,$@) -T$(patsubst %.s,%.tab,$@) --overwrite $< $@
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -w16 -g$(patsubst %.s,%.lab,$@) -T$(patsubst %.s,%.tab,$@) --overwrite $< $@
 	sed -i -f const.sed $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 
 clean:
-	rm -f *.s
+	rm -f *.s mxdrv/*/*.s
