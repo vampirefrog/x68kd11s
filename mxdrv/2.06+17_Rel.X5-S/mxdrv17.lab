@@ -3,13 +3,12 @@
 *  Label file for mxdrv17.x
 *
 *********************************************
-000000	DSF
 
-
-000004	DSF
+000000	DS
+000004	DS
 00000c	P	Trap4Handler
 000024	P
-00002a	DR	TrapCallTable
+00002a	RW	MXDRVCallTable
 00006a	P	L_0A
 000070	P	L_0B
 000076	P	L_FadeOut
@@ -104,7 +103,7 @@
 000554	P
 00056a	P
 000596	P
-00059a	P	L_FREE
+00059a	P	MXDRVFree
 0005b2	P
 0005b4	P	L_SETMDX
 0005c4	P
@@ -150,7 +149,7 @@
 000910	P
 000916	P
 00094c	P
-000958	P	L_ERROR
+000958	P	MXDRVError
 00095a	P
 00095c	P	L_GetMDXTitle
 000968	P
@@ -182,7 +181,6 @@
 000b56	P
 000b6c	P
 000b82	P
-000b92	DW
 000b9c	P
 000bae	P
 000bbe	P
@@ -279,7 +277,7 @@
 001164	P
 001178	P
 00117a	P
-001190	DUF
+001190	DW
 001192	P
 00119e	P
 0011ac	P
@@ -294,94 +292,94 @@
 001240	P
 001252	RW	CommandFuncs
 001292	P	SetTempoCommandFunc
-0012a4 P
+0012a4	P
 0012a6	P	WriteOPMCommandFunc
-0012ba P
+0012ba	P
 0012be	P	SetVoiceCommandFunc
-0012cc P
-0012d0 P
-0012e0 P
+0012cc	P
+0012d0	P
+0012e0	P
 0012e6	P	PanCommandFunc
-001302 P
-00130c P
-001310 P
+001302	P
+00130c	P
+001310	P
 00131c	P	VolumeCommandFunc
 001328	P	VolumeDownCommandFunc
 001330	P
-00133a P
-00133c P
+00133a	P
+00133c	P
 001344	P	VolumeUpCommandFunc
-001350 P
-00135a P
-00135c P
+001350	P
+00135a	P
+00135c	P
 001364	P	SetNoteLengthCommandFunc
 00136a	P	SetLegatoCommandFunc
 001372	P	RepeatStartCommandFunc
 001376	P	RepeatEndCommandFunc
-001396 P
-001398 P
+001396	P
+001398	P
 00139a	P	RepeatEscapeCommandFunc
-0013b8 P
+0013b8	P
 0013ba	P	DetuneCommandFunc
 0013c6	P	PortamentoCommandFunc
 0013dc	P	PerformanceEndCommandFunc
 0013e6	P
-001410 P
-001416 P
-00142e P
-00143e P
-00143e P
-00143e P
+001410	P
+001416	P
+00142e	P
+00143e	P
+00143e	P
+00143e	P
 001440	P	InitFadeout
 001442	P	EndPlayCommand
-001472 P
-001480 P
-001490 P
+001472	P
+001480	P
+001490	P
 001492	P	KeyOnDelayCommandFunc
 001498	P	SyncSendCommandFunc
-0014ae P
+0014ae	P
 0014b0	P	SyncWaitCommandFunc
-0014c8 P
-0014d0 P
+0014c8	P
+0014d0	P
 0014dc	P	SetNoiseFreqCommandFunc
-0014ee P
+0014ee	P
 0014fc	P	PitchModulationCommandFunc
 001536	P
-001552 P
-00155e P
+001552	P
+00155e	P
 001562	P
 001576	P
-001588	DUF
+001588	RW
 001590	P	AmplitudeModulationCommandFunc
-0015c6 P
-0015cc P
+0015c6	P
+0015cc	P
 0015d0	P
 0015e4	P
-0015f6	DUF
+0015f6	RW
 0015fe	P	OPMLFOCommandFunc
-001614 P
-001640 P
-00164a P
+001614	P
+001640	P
+00164a	P
 001656	P	SetLFOKeyOnDelayCommandFunc
 00165c	P	EnablePCM8CommandFunc
-00167c P
-001692 P
+00167c	P
+001692	P
 001694	P	FadeOutCommandFunc
 0016aa	RW	FadeOutFuncs
 0016b8	P	EnableFadeout
 0016c6	P	AdvanceChannel
 0016e2	P
 0016fa	P
-001706 P
-00170e P
-001724 P
+001706	P
+00170e	P
+001724	P
 00176e	P
 00177a	P
 001782	P
 00178a	P
 0017a0	P
 0017ac	P
-0017b4	P	L_WRITEOPM
+0017b4	P	WriteOPM
 0017e4	P
 0017ea	P	Start
 001872	P
@@ -411,13 +409,13 @@
 0019a0	P	PrintInsufficientMemory
 0019a6	P	PrintHelp
 0019aa	P
-0019b2	DUF	EndPlayBytes
+0019b2	DB	EndPlayBytes
 0019b5	DS	VersionString
 001a15	DS	HelpString
-001b14	DSF	InsufficientMemoryString
-001b2e	DSF	MXDRVReleasedString
+001b14	DS	InsufficientMemoryString
+001b2e	DS	MXDRVReleasedString
 001b45	DS	MXDRVAlreadyLoadedString
-001b68	DSF	MXDRVNotLoadedString
+001b68	DS	MXDRVNotLoadedString
 001b87	DS	CouldNotReleaseString
 001ba6	DU
 001bb4	DU	pcm_work_area
@@ -443,7 +441,7 @@
 001e30	DL
 001e34	DL	mdx_data
 001e38	DL	pdx_data
-001e3c	DU
+001e3c	DU	OPMBuf
 001f3c	DU
 00220c	DU
 002218	DL	mdx_title

@@ -2,8 +2,6 @@
 *
 *  Label file for mxdrv16.x
 *
-*	DIS version 3.16
-*
 *********************************************
 
 000000	DS
@@ -128,7 +126,6 @@
 00082c	P
 000842	P
 000850	P
-000852	DW
 00085c	P
 00086e	P
 00087e	P
@@ -228,7 +225,7 @@
 000e4a	P
 000e5e	P
 000e60	P
-000e76	DB
+000e76	DW
 000e78	P
 000e80	P
 000e84	P
@@ -302,13 +299,13 @@
 00124e	P
 001252	P
 001266	P
-001278	DB
+001278	RW
 001280	P	AmplitudeModulationCommandFunc
 0012b6	P
 0012bc	P
 0012c0	P
 0012d4	P
-0012e6	DB
+0012e6	RW
 0012ee	P	OPMLFOCommandFunc
 001304	P
 001330	P
@@ -320,7 +317,7 @@
 001382	P	FadeOutCommandFunc
 001398	RW
 00139c	P
-0013aa	P
+0013aa	P	WriteOPM
 0013da	P
 0013e0	P	Start
 001458	P
@@ -347,7 +344,7 @@
 001562	P
 001568	P
 00156c	P
-001574	DU
+001574	DB
 001577	DS
 0015d4	DS
 0016b3	DS
@@ -355,14 +352,9 @@
 0016e4	DS
 001707	DS
 001726	DS
-001746	DU
-001758	DB
-00198a	DB
-0019ca	DU
-001da2	DU
-001dde	DU
 
 ; BSS stuff
+001746	DB
 001748	DB	UnknownArray1
 001758	DB	UnknownVar1
 00198A	DB	UnknownVar2

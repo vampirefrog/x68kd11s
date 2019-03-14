@@ -1,15 +1,15 @@
 ;=============================================
-;  Filename mxdrv16.x
-;  Time Stamp Wed Nov  6 00:00:00 1991
+;  Filename mxdrv/2.06+16_Rel.3/mxdrv16.x
+;  Time Stamp Sun Dec 29 04:06:40 1991
 ;
 ;  Base address 000000
-;  Exec address 0013e0
-;  Text size    001746 byte(s)
+;  Exec address 001356
+;  Text size    0016bc byte(s)
 ;  Data size    000000 byte(s)
 ;  Bss  size    000698 byte(s)
-;  356 Labels
+;  352 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gmxdrv16.lab --overwrite mxdrv16.x mxdrv16.s
+;  Commandline dis  -h -k -m68030 -q1 -B -M -w16 -o120 -gmxdrv/2.06+16_Rel.3/mxdrv16.lab --overwrite mxdrv/2.06+16_Rel.3/mxdrv16.x mxdrv/2.06+16_Rel.3/mxdrv16.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -17,7 +17,7 @@
 	.include	inc/iocscall.mac
 	.include	inc/fefunc.mac
 
-	.cpu	68000
+	.cpu	68030
 
 	.text
 
@@ -26,75 +26,75 @@ L000000:
 L000004:
 	.dc.b	'mxdrv206'
 Trap4Handler:
-	movem.l	d1-d7/a0-a6,-(sp)
-	lea.l	(WorkAreaEnd,pc),a5
+	movem.l	d1-d7/a0-a6,-(a7)
+	lea.l	(L001d18,pc),a5
 	and.w	#$001f,d0
 	add.w	d0,d0
-	move.w	(Trap4CallTable,pc,d0.w),d0
-	jsr	(Trap4CallTable,pc,d0.w)
-L_1A_1F:
-	movem.l	(sp)+,d1-d7/a0-a6
+	move.w	(MXDRVCallTable,pc,d0.w),d0
+	jsr	(MXDRVCallTable,pc,d0.w)
+L000022:
+	movem.l	(a7)+,d1-d7/a0-a6
 	rte
 
-Trap4CallTable:
-	.dc.w	L_FREE-Trap4CallTable
-	.dc.w	L_ERROR-Trap4CallTable
-	.dc.w	L_SETMDX-Trap4CallTable
-	.dc.w	L_SETPDX-Trap4CallTable
-	.dc.w	L_PLAY-Trap4CallTable
-	.dc.w	L_STOP-Trap4CallTable
-	.dc.w	L_PAUSE-Trap4CallTable
-	.dc.w	L_CONT-Trap4CallTable
-	.dc.w	L_GetMDXTitle-Trap4CallTable
-	.dc.w	L_GetPDXFilename-Trap4CallTable
-	.dc.w	L_0A-Trap4CallTable
-	.dc.w	L_0B-Trap4CallTable
-	.dc.w	L_FadeOut-Trap4CallTable
-	.dc.w	L_0D-Trap4CallTable
-	.dc.w	L_SetChannelMask-Trap4CallTable
-	.dc.w	L_PlayWithMask-Trap4CallTable
-	.dc.w	L_GetOPMBuf-Trap4CallTable
-	.dc.w	L_11-Trap4CallTable
-	.dc.w	L_GetPlaybackFlags-Trap4CallTable
-	.dc.w	L_SetIgnoreKeys-Trap4CallTable
-	.dc.w	L_14-Trap4CallTable
-	.dc.w	L_15-Trap4CallTable
-	.dc.w	L_16-Trap4CallTable
-	.dc.w	L_17-Trap4CallTable
-	.dc.w	L_GetPCMBuf-Trap4CallTable
-	.dc.w	L_19-Trap4CallTable
-	.dc.w	L_1A_1F-Trap4CallTable
-	.dc.w	L_1A_1F-Trap4CallTable
-	.dc.w	L_1A_1F-Trap4CallTable
-	.dc.w	L_1A_1F-Trap4CallTable
-	.dc.w	L_1A_1F-Trap4CallTable
-	.dc.w	L_1A_1F-Trap4CallTable
-L_0A:
+MXDRVCallTable:
+	.dc.w	L0002b2-MXDRVCallTable
+	.dc.w	L000624-MXDRVCallTable
+	.dc.w	L0002cc-MXDRVCallTable
+	.dc.w	L0002ee-MXDRVCallTable
+	.dc.w	L00049a-MXDRVCallTable
+	.dc.w	L00034e-MXDRVCallTable
+	.dc.w	L0003c6-MXDRVCallTable
+	.dc.w	L000406-MXDRVCallTable
+	.dc.w	L000628-MXDRVCallTable
+	.dc.w	L000646-MXDRVCallTable
+	.dc.w	L000068-MXDRVCallTable
+	.dc.w	L00006e-MXDRVCallTable
+	.dc.w	L000074-MXDRVCallTable
+	.dc.w	L000204-MXDRVCallTable
+	.dc.w	L00007e-MXDRVCallTable
+	.dc.w	L0004a0-MXDRVCallTable
+	.dc.w	L000084-MXDRVCallTable
+	.dc.w	L00008c-MXDRVCallTable
+	.dc.w	L00009c-MXDRVCallTable
+	.dc.w	L0000a8-MXDRVCallTable
+	.dc.w	L0000b2-MXDRVCallTable
+	.dc.w	L0000ba-MXDRVCallTable
+	.dc.w	L0000c4-MXDRVCallTable
+	.dc.w	L0000d2-MXDRVCallTable
+	.dc.w	L0001f4-MXDRVCallTable
+	.dc.w	L0001fc-MXDRVCallTable
+	.dc.w	L000022-MXDRVCallTable
+	.dc.w	L000022-MXDRVCallTable
+	.dc.w	L000022-MXDRVCallTable
+	.dc.w	L000022-MXDRVCallTable
+	.dc.w	L000022-MXDRVCallTable
+	.dc.w	L000022-MXDRVCallTable
+L000068:
 	move.b	d1,(-$03f8,a5)
 	rts
 
-L_0B:
+L00006e:
 	move.b	d1,(-$03f7,a5)
 	rts
 
-L_FadeOut:
+L000074:
 	move.w	d1,(-$03ee,a5)
 	st.b	(-$03f5,a5)
 	rts
 
-L_SetChannelMask:
+L00007e:
 	move.w	d1,(-$03f0,a5)
 	rts
 
-L_GetOPMBuf:
-	lea.l	($194c,pc),a0
+L000084:
+	lea.l	(L001948,pc),a0
 	move.l	a0,d0
 	rts
 
-L_11:
-	lea.l	($1916,pc),a0
+L00008c:
+	lea.l	(L00191a,pc),a0
 	tst.l	d1
-	bmi.s	L000098
+	bmi	L000098
 	move.b	d1,(a0)
 	rts
 
@@ -102,405 +102,399 @@ L000098:
 	move.b	(a0),d0
 	rts
 
-L_GetPlaybackFlags:
-	move.b	(-$03fa,a5),-(sp)
-	move.w	(sp)+,d0
+L00009c:
+	move.b	(-$03fa,a5),-(a7)
+	move.w	(a7)+,d0
 	move.b	(-$03f9,a5),d0
 	rts
 
-L_SetIgnoreKeys:
+L0000a8:
 	move.b	(-$0402,a5),d0
 	move.b	d1,(-$0402,a5)
 	rts
 
-L_14:
+L0000b2:
 	move.w	(-$0406,a5),d0
 	not.w	d0
-	andi.w	#$01ff,d0
 	rts
 
-L_15:
+L0000ba:
 	move.b	(-$0401,a5),d0
 	move.b	d1,(-$0401,a5)
 	rts
 
-L_16:
+L0000c4:
 	move.b	(-$0404,a5),d0
 	move.b	d1,(-$0404,a5)
-	bsr.w	L_STOP
+	bsr	L00034e
 	rts
 
-L_17:
+L0000d2:
 	move.b	(-$0404,a5),d0
-	beq.w	L0001ec
-	movem.l	d1-d7/a0-a6,-(sp)
+	beq	L0001e8
+	movem.l	d1-d7/a0-a6,-(a7)
 	st.b	($0039,a5)
-	lea.l	($18cc,pc),a0
-	lea.l	($18c1,pc),a1
+	lea.l	(L00192a,pc),a0
+	lea.l	(L001923,pc),a1
 	tst.b	(a1)
-	beq.w	L000176
-	bpl.s	L0000fe
+	beq	L000172
+	bpl	L0000fa
 	move.b	#$7f,(a1)
 	move.w	(a0),($0002,a0)
-L0000fe:
+L0000fa:
 	tst.w	($0002,a0)
-	bmi.s	L00010a
+	bmi	L000106
 	subq.w	#2,($0002,a0)
-	bra.s	L000176
+	bra	L000172
 
-L00010a:
-	lea.l	($189e,pc),a1
+L000106:
+	lea.l	(L001920,pc),a1
 	cmpi.b	#$0a,(a1)
-	bge.s	L000122
-L000114:
+	bge	L00011e
+L000110:
 	cmpi.b	#$3e,(a1)		;'>'
-	bge.s	L000128
+	bge	L000124
 	addq.b	#1,(a1)
 	move.w	(a0),($0002,a0)
-	bra.s	L000176
+	bra	L000172
 
-L000122:
+L00011e:
 	st.b	(-$03f7,a5)
-	bra.s	L000114
+	bra	L000110
 
-L000128:
+L000124:
 	tst.b	(-$03f4,a5)
-	beq.s	L000136
-	bsr.w	L000474
-	bra.w	L0001d4
+	beq	L000132
+	bsr	L00045e
+	bra	L0001d0
 
-L000136:
+L000132:
 	move.b	#$7f,(a1)
 	clr.b	(-$03f5,a5)
 	move.b	#$01,(-$03f9,a5)
-	bsr.w	L_PAUSE
+	bsr	L0003c6
 	movea.l	($0088),a0
 	move.l	(-$0008,a0),d0
 	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L000160
+	beq	L00015c
 	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L000166
-L000160:
+	bne	L000162
+L00015c:
 	move.w	#$0100,d0
 	trap	#2
-L000166:
+L000162:
 	tst.b	(-$0418,a5)
-	beq.s	L000176
+	beq	L000172
 	move.w	#$01ff,d0
 	trap	#2
 	clr.b	(-$0418,a5)
-L000176:
-	lea.l	(UnknownVar4,pc),a0
+L000172:
+	lea.l	(L001918,pc),a0
 	move.b	(a0),d2
 	moveq.l	#$12,d1
 	tst.b	(-$03f9,a5)
-	bne.s	L0001d4
-	lea.l	($194c,pc),a6
+	bne	L0001d0
+	lea.l	(L001a48,pc),a6
 	moveq.l	#$00,d7
-L00018a:
-	bsr.w	L000d36
-	bsr.w	L000e9a
-	move.w	(UnknownVar7,pc),d0
+L000186:
+	bsr	L000cd0
+	bsr	L000e34
+	move.w	(L001928,pc),d0
 	btst.l	d7,d0
-	bne.s	L00019e
-	bsr.w	L000922
-L00019e:
+	bne	L00019a
+	bsr	L00090c
+L00019a:
 	lea.l	($0050,a6),a6
 	addq.w	#1,d7
 	cmp.w	#$0009,d7
-	bcs.s	L00018a
+	bcs	L000186
 	tst.b	(-$0418,a5)
-	beq.s	L0001d4
-	lea.l	($15a8,pc),a6
-L0001b4:
-	bsr.w	L000d36
-	bsr.w	L000e9a
-	move.w	(UnknownVar7,pc),d0
+	beq	L0001d0
+	lea.l	(L0016d0,pc),a6
+L0001b0:
+	bsr	L000cd0
+	bsr	L000e34
+	move.w	(L001928,pc),d0
 	btst.l	d7,d0
-	bne.s	L0001c8
-	bsr.w	L000922
-L0001c8:
+	bne	L0001c4
+	bsr	L00090c
+L0001c4:
 	lea.l	($0050,a6),a6
 	addq.w	#1,d7
 	cmp.w	#$0010,d7
-	bcs.s	L0001b4
-L0001d4:
+	bcs	L0001b0
+L0001d0:
 	tst.b	($00e90003)
-	bmi.s	L0001d4
+	bmi	L0001d0
 	move.b	#$1b,($00e90001)
 	clr.b	($0039,a5)
-	movem.l	(sp)+,d1-d7/a0-a6
-L0001ec:
-	move.b	(-$03fa,a5),-(sp)
-	move.w	(sp)+,d0
+	movem.l	(a7)+,d1-d7/a0-a6
+L0001e8:
+	move.b	(-$03fa,a5),-(a7)
+	move.w	(a7)+,d0
 	move.b	(-$03f9,a5),d0
 	rts
 
-L_GetPCMBuf:
-	lea.l	($1560,pc),a0
+L0001f4:
+	lea.l	(L0016d0,pc),a0
 	move.l	a0,d0
 	rts
 
-L_19:
-	lea.l	($1548,pc),a0
+L0001fc:
+	lea.l	(L0016c0,pc),a0
 	move.l	a0,d0
 	rts
 
-L_0D:
+L000204:
 	cmp.b	#$f0,d1
-	beq.s	L00026e
+	beq	L00026a
 	cmp.b	#$fc,d1
-	beq.s	L00024a
+	beq	L000246
 	tst.l	d1
-	bmi.s	L000250
+	bmi	L00024c
 	tst.b	(-$03f4,a5)
-	bne.w	L_ERROR
+	bne	L000624
 	move.l	a2,(-$03dc,a5)
 	move.l	a1,(-$03e8,a5)
 	move.l	a1,(-$03e4,a5)
-L00022c:
+L000228:
 	tst.w	(a1)
-	beq.s	L000234
+	beq	L000230
 	addq.w	#6,a1
-	bra.s	L00022c
+	bra	L000228
 
-L000234:
+L000230:
 	subq.w	#6,a1
 	move.l	a1,(-$03e0,a5)
 	st.b	(-$03f4,a5)
 	st.b	(-$03f3,a5)
-	movea.l	($1776,pc),a0
-	bra.w	L000482
+	movea.l	(L001930,pc),a0
+	bra	L00046c
 
-L00024a:
-	move.b	($1763,pc),d0
+L000246:
+	move.b	(L001925,pc),d0
 	rts
 
-L000250:
+L00024c:
 	clr.b	(-$03f4,a5)
 	clr.b	($0024,a5)
 	clr.b	($0025,a5)
-	movea.l	(L0019ca,pc),a0
+	movea.l	(L001940,pc),a0
 	move.l	(a0),($000c,a5)
 	move.l	($0004,a0),($0010,a5)
-	bra.w	L00035a
+	bra	L000356
 
-L00026e:
-	bsr.s	L000250
-L000270:
-	movea.l	($1754,pc),a0
+L00026a:
+	bsr	L00024c
+L00026c:
+	movea.l	(L00193c,pc),a0
 	pea.l	(a0)
 	DOS	_MFREE
-	addq.w	#4,sp
+	addq.w	#4,a7
 	moveq.l	#$00,d0
 	move.l	d0,(-$03dc,a5)
 	move.b	d0,(-$03f3,a5)
 	rts
 
-L000286:
-	move.w	sr,-(sp)
+L000282:
+	move.w	sr,-(a7)
 	ori.w	#$0700,sr
 	clr.b	(-$03f9,a5)
 	tst.b	(-$0404,a5)
-	bne.s	L0002b2
-	lea.l	(L00067e,pc),a1
+	bne	L0002ae
+	lea.l	(L000668,pc),a1
 	suba.l	a0,a0
 	move.l	a1,($010c,a0)
 	movea.l	#$00e88000,a0
 	ori.b	#$08,($0009,a0)
 	ori.b	#$08,($0015,a0)
-L0002b2:
-	move.w	(sp)+,sr
+L0002ae:
+	move.w	(a7)+,sr
 	rts
 
-L_FREE:
-	bsr.w	L00035a
+L0002b2:
+	bsr	L000356
 	move.l	(a5),($0090,a0)
 	pea.l	(L000000-$0000f0,pc)
 	DOS	_MFREE
-	addq.w	#4,sp
+	addq.w	#4,a7
 	tst.b	(-$03f3,a5)
-	beq.s	L0002ce
-	bra.s	L000270
+	beq	L0002ca
+	bra	L00026c
 
-L0002ce:
+L0002ca:
 	rts
 
-L_SETMDX:
+L0002cc:
 	tst.b	(-$03f4,a5)
-	beq.s	L0002e0
-	movem.l	d1/a1,-(sp)
-	bsr.s	L00026e
-	movem.l	(sp)+,d1/a1
-L0002e0:
+	beq	L0002dc
+	movem.l	d1/a1,-(a7)
+	bsr	L00026a
+	movem.l	(a7)+,d1/a1
+L0002dc:
 	lea.l	($0024,a5),a2
-	movea.l	(L0019ca,pc),a0
+	movea.l	(L001940,pc),a0
 	move.l	a0,($000c,a5)
 	move.l	($0014,a5),d0
-	bra.s	L000314
+	bra	L000310
 
-L_SETPDX:
+L0002ee:
 	tst.b	(-$03f4,a5)
-	beq.s	L000304
-	movem.l	d1/a1,-(sp)
-	bsr.w	L00026e
-	movem.l	(sp)+,d1/a1
-L000304:
+	beq	L000300
+	movem.l	d1/a1,-(a7)
+	bsr	L00026a
+	movem.l	(a7)+,d1/a1
+L000300:
 	lea.l	($0025,a5),a2
-	movea.l	($16c4,pc),a0
+	movea.l	(L001944,pc),a0
 	move.l	a0,($0010,a5)
 	move.l	($0018,a5),d0
-L000314:
+L000310:
 	cmp.l	d1,d0
-	bcs.s	L00034c
-	movem.l	d1/a0-a2,-(sp)
-	bsr.s	L00035a
-	movem.l	(sp)+,d1/a0-a2
+	bcs	L000348
+	movem.l	d1/a0-a2,-(a7)
+	bsr	L000356
+	movem.l	(a7)+,d1/a0-a2
 	move.w	d1,d0
 	andi.w	#$0003,d0
 	lsr.l	#2,d1
 	swap.w	d1
-L00032c:
+L000328:
 	swap.w	d1
-L00032e:
+L00032a:
 	move.l	(a1)+,(a0)+
-	dbra.w	d1,L00032e
+	dbra	d1,L00032a
 	swap.w	d1
-	dbra.w	d1,L00032c
+	dbra	d1,L000328
 	tst.w	d0
-	beq.s	L000346
+	beq	L000342
 	subq.w	#1,d0
-L000340:
+L00033c:
 	move.b	(a1)+,(a0)+
-	dbra.w	d0,L000340
-L000346:
+	dbra	d0,L00033c
+L000342:
 	st.b	(a2)
 	moveq.l	#$00,d0
 	rts
 
-L00034c:
+L000348:
 	bset.l	#$1f,d0
 	rts
 
-L_STOP:
+L00034e:
 	tst.b	(-$03f4,a5)
-	bne.w	L00026e
-L00035a:
+	bne	L00026a
+L000356:
 	move.b	#$01,(-$03f9,a5)
-	move.w	sr,-(sp)
+	move.w	sr,-(a7)
 	ori.w	#$0700,sr
-	bsr.s	L0003e0
-	movea.l	($0088),a0
-	move.l	(-$0008,a0),d0
-	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L000380
-	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L000386
-L000380:
-	move.w	#$0100,d0
-	trap	#2
-L000386:
+	bsr	L0003ca
+	moveq.l	#$67,d0			;'g'
+	moveq.l	#$01,d1
+	trap	#15
+	moveq.l	#$67,d0			;'g'
+	moveq.l	#$00,d1
+	trap	#15
 	tst.b	(-$0418,a5)
-	beq.s	L000396
+	beq	L000380
 	move.w	#$01ff,d0
 	trap	#2
 	clr.b	(-$0418,a5)
-L000396:
+L000380:
 	moveq.l	#$0f,d2
 	moveq.l	#$e0,d1
-L00039a:
-	bsr.w	L0013aa
+L000384:
+	bsr	L001320
 	addq.b	#1,d1
-	bne.s	L00039a
-	lea.l	($1a2e,pc),a0
-	lea.l	($13a2,pc),a1
+	bne	L000384
+	lea.l	(L001d48,pc),a0
+	lea.l	(L0016c0,pc),a1
 	moveq.l	#$07,d3
 	moveq.l	#$00,d2
 	moveq.l	#$08,d1
-L0003b0:
-	bsr.w	L0013aa
+L00039a:
+	bsr	L001320
 	move.b	d2,(a0)+
 	move.b	d2,(a1)+
 	addq.b	#1,d2
-	dbra.w	d3,L0003b0
+	dbra	d3,L00039a
 	movea.l	#$00e88000,a0
 	andi.b	#$f7,($0009,a0)
 	andi.b	#$f7,($0015,a0)
 	suba.l	a0,a0
 	move.l	($0004,a5),($010c,a0)
-	move.w	(sp)+,sr
+	move.w	(a7)+,sr
 	rts
 
-L_PAUSE:
+L0003c6:
 	st.b	(-$03fa,a5)
-L0003e0:
+L0003ca:
 	moveq.l	#$07,d7
-	lea.l	($16ee,pc),a6
-L0003e6:
+	lea.l	(L001a48,pc),a6
+L0003d0:
 	moveq.l	#$7f,d0
-	bsr.w	L000ae4
+	bsr	L000ace
 	lea.l	($0050,a6),a6
-	dbra.w	d7,L0003e6
+	dbra	d7,L0003d0
 	movea.l	($0088),a0
 	move.l	(-$0008,a0),d0
 	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L00040c
+	beq	L0003f6
 	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L000414
-L00040c:
+	bne	L0003fe
+L0003f6:
 	move.w	#$0101,d0
 	trap	#2
 	rts
 
-L000414:
+L0003fe:
 	moveq.l	#$67,d0			;'g'
 	moveq.l	#$00,d1
-L000418:
 	trap	#15
 	rts
 
-L_CONT:
+L000406:
 	clr.b	(-$03fa,a5)
 	moveq.l	#$07,d7
-	lea.l	($16ae,pc),a6
-L000426:
-	bsr.w	L000aba
+	lea.l	(L001a48,pc),a6
+L000410:
+	bsr	L000aa4
 	lea.l	($0050,a6),a6
-	dbra.w	d7,L000426
+	dbra	d7,L000410
 	movea.l	($0088),a0
 	move.l	(-$0008,a0),d0
 	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L00044a
+	beq	L000434
 	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L000450
-L00044a:
+	bne	L00043a
+L000434:
 	move.w	#$0102,d0
 	trap	#2
-L000450:
+L00043a:
 	moveq.l	#$30,d2			;'0'
-	move.b	($154a,pc),d1
-	bne.s	L00045a
+	move.b	(L001914,pc),d1
+	bne	L000444
 	moveq.l	#$3a,d2			;':'
-L00045a:
+L000444:
 	moveq.l	#$14,d1
-	bra.w	L0013aa
+	bra	L001320
 
-L000460:
-	movea.l	($155c,pc),a0
-	movea.l	($1554,pc),a1
+L00044a:
+	movea.l	(L001934,pc),a0
+	movea.l	(L001930,pc),a1
 	subq.w	#6,a0
 	cmpa.l	a1,a0
-	bcc.s	L000482
-	movea.l	($1552,pc),a0
-	bra.s	L000482
+	bcc	L00046c
+	movea.l	(L001938,pc),a0
+	bra	L00046c
 
-L000474:
-	movea.l	($1548,pc),a0
+L00045e:
+	movea.l	(L001934,pc),a0
 	addq.w	#6,a0
 	tst.w	(a0)
-	bne.s	L000482
-	movea.l	($153a,pc),a0
-L000482:
+	bne	L00046c
+	movea.l	(L001930,pc),a0
+L00046c:
 	move.l	a0,(-$03e4,a5)
 	move.w	(a0),(-$03ea,a5)
 	movea.l	($0002,a0),a1
@@ -514,66 +508,66 @@ L000482:
 	move.b	d1,($0025,a5)
 	move.l	a1,($000c,a5)
 	clr.w	(-$03f0,a5)
-	bra.s	L0004ba
+	bra	L0004a4
 
-L_PLAY:
+L00049a:
 	clr.w	(-$03f0,a5)
-	bra.s	L0004ba
+	bra	L0004a4
 
-L_PlayWithMask:
+L0004a0:
 	move.w	d1,(-$03f0,a5)
-L0004ba:
+L0004a4:
 	clr.b	(-$03f8,a5)
 	clr.b	(-$03f7,a5)
 	clr.b	(-$03f5,a5)
 	clr.b	(-$03f9,a5)
 	tst.b	(-$03fa,a5)
-	beq.s	L0004ee
+	beq	L0004d8
 	movea.l	($0088),a0
 	move.l	(-$0008,a0),d0
 	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L0004e8
+	beq	L0004d2
 	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L0004ee
-L0004e8:
+	bne	L0004d8
+L0004d2:
 	move.w	#$0100,d0
 	trap	#2
-L0004ee:
+L0004d8:
 	clr.b	(-$03fa,a5)
 	clr.b	(-$0418,a5)
 	move.w	#$01ff,(-$03f2,a5)
 	move.w	#$01ff,(-$0406,a5)
 	clr.w	($003a,a5)
 	move.b	($0024,a5),d0
-	beq.w	L_ERROR
-	bsr.w	L00035a
+	beq	L000624
+	bsr	L000356
 	movea.l	($000c,a5),a2
 	move.w	($0002,a2),d1
-	bmi.s	L00053e
+	bmi	L000528
 	tst.b	($0025,a5)
-	beq.w	L_ERROR
+	beq	L000624
 	movea.l	($0010,a5),a0
-	bra.s	L000532
+	bra	L00051c
 
-L00052a:
+L000514:
 	tst.l	(a0)
-	beq.w	L_ERROR
+	beq	L000624
 	adda.l	(a0),a0
-L000532:
-	dbra.w	d1,L00052a
+L00051c:
+	dbra	d1,L000514
 	adda.w	($0004,a0),a0
 	move.l	a0,($0020,a5)
-L00053e:
+L000528:
 	adda.w	($0004,a2),a2
 	movea.l	a2,a1
 	movea.l	a2,a0
 	adda.w	(a1)+,a2
 	move.l	a2,($001c,a5)
-	lea.l	($1584,pc),a6
-	lea.l	($00ea,pc),a3
+	lea.l	(L001a48,pc),a6
+	lea.l	(L000626,pc),a3
 	moveq.l	#$ff,d6
 	moveq.l	#$00,d7
-L000558:
+L000542:
 	movea.l	a0,a2
 	adda.w	(a1)+,a2
 	move.l	a2,(a6)
@@ -595,447 +589,442 @@ L000558:
 	clr.b	($0019,a6)
 	clr.w	($0016,a6)
 	cmp.w	#$0008,d7
-	bcc.s	L0005c2
+	bcc	L0005ac
 	moveq.l	#$38,d1			;'8'
 	add.b	d7,d1
 	moveq.l	#$00,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	addq.w	#1,d7
 	lea.l	($0050,a6),a6
-	bra.s	L000558
+	bra	L000542
 
-L0005c2:
+L0005ac:
 	move.b	#$10,($001c,a6)
 	move.b	#$08,($0022,a6)
 	st.b	($0018,a6)
 	clr.b	($0004,a6)
 	cmp.w	#$000f,d7
-	beq.s	L0005f2
+	beq	L0005dc
 	addq.w	#1,d7
 	lea.l	($0050,a6),a6
 	cmp.w	#$0009,d7
-	bne.w	L000558
-	lea.l	($116e,pc),a6
-	bra.w	L000558
+	bne	L000542
+	lea.l	(L0016d0,pc),a6
+	bra	L000542
 
-L0005f2:
+L0005dc:
 	lea.l	(-$0416,a5),a0
 	moveq.l	#$0f,d0
-L0005f8:
+L0005e2:
 	clr.b	(a0)+
-	dbra.w	d0,L0005f8
+	dbra	d0,L0005e2
 	clr.b	($0026,a5)
 	moveq.l	#$00,d2
 	moveq.l	#$01,d1
-	bsr.w	L0013aa
+	bsr	L001320
 	moveq.l	#$0f,d1
-	bsr.w	L0013aa
+	bsr	L001320
 	moveq.l	#$19,d1
-	bsr.w	L0013aa
+	bsr	L001320
 	moveq.l	#$80,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	moveq.l	#$c8,d2
 	moveq.l	#$12,d1
 	move.b	d2,(-$0400,a5)
 	tst.b	(-$0404,a5)
-	bne.s	L00062e
-	bsr.w	L0013aa
-L00062e:
-	bsr.w	L000286
-	bsr.w	L000450
+	bne	L000618
+	bsr	L001320
+L000618:
+	bsr	L000282
+	bsr	L00043a
 	moveq.l	#$00,d0
 	rts
 
-L_ERROR:
+L000624:
 	moveq.l	#$ff,d0
+L000626:
 	rts
 
-L_GetMDXTitle:
+L000628:
 	tst.b	($0024,a5)
-	beq.s	L00067a
+	beq	L000664
 	movea.l	($000c,a5),a0
-	bra.s	L000650
+	bra	L00063a
 
-L00064a:
+L000634:
 	tst.w	(a0)
-	beq.s	L00067a
+	beq	L000664
 	adda.w	(a0),a0
-L000650:
-	dbra.w	d1,L00064a
+L00063a:
+	dbra	d1,L000634
 	adda.w	($0006,a0),a0
 	move.l	a0,d0
 	rts
 
-L_GetPDXFilename:
+L000646:
 	tst.b	($0025,a5)
-	beq.s	L00067a
+	beq	L000664
 	movea.l	($0010,a5),a0
-	bra.s	L00066e
+	bra	L000658
+
+L000652:
+	tst.l	(a0)
+	beq	L000664
+	adda.l	(a0),a0
+L000658:
+	dbra	d1,L000652
+	adda.w	($0006,a0),a0
+	move.l	a0,d0
+	rts
+
+L000664:
+	moveq.l	#$00,d0
+	rts
 
 L000668:
-	tst.l	(a0)
-	beq.s	L00067a
-	adda.l	(a0),a0
-L00066e:
-	dbra.w	d1,L000668
-	adda.w	($0006,a0),a0
-	move.l	a0,d0
-	rts
-
-L00067a:
-	moveq.l	#$00,d0
-	rts
-
-L00067e:
-	bclr.b	#$03,($00e88015)
-	move.l	a6,-(sp)
-	movea.l	($0006,sp),a6
+	andi.b	#$f7,($00e88015)
+	move.l	a6,-(a7)
+	movea.l	($0006,a7),a6
 	cmpa.l	($01a8),a6
-	bne.s	L0006a0
-	pea.l	($0006,pc)
-	move.w	sr,-(sp)
+	bne	L00068a
+	pea.l	(L000684,pc)
+	move.w	sr,-(a7)
 	jmp	(a6)
 
-	movea.l	(sp)+,a6
-	addq.w	#6,sp
-	move.l	a6,-(sp)
-L0006a0:
+L000684:
+	movea.l	(a7)+,a6
+	addq.w	#6,a7
+	move.l	a6,-(a7)
+L00068a:
 	andi.w	#$faff,sr
-	movem.l	d0-d7/a0-a5,-(sp)
-	lea.l	(WorkAreaEnd,pc),a5
+	movem.l	d0-d7/a0-a5,-(a7)
+	lea.l	(L001d18,pc),a5
 	st.b	($0039,a5)
 	tst.b	(-$03fa,a5)
-	bne.w	L000748
-	lea.l	($12fa,pc),a0
-	lea.l	($12ef,pc),a1
+	bne	L000732
+	lea.l	(L00192a,pc),a0
+	lea.l	(L001923,pc),a1
 	tst.b	(a1)
-	beq.w	L000748
-	bpl.s	L0006d0
+	beq	L000732
+	bpl	L0006ba
 	move.b	#$7f,(a1)
 	move.w	(a0),($0002,a0)
-L0006d0:
+L0006ba:
 	tst.w	($0002,a0)
-	bmi.s	L0006dc
+	bmi	L0006c6
 	subq.w	#2,($0002,a0)
-	bra.s	L000748
+	bra	L000732
 
-L0006dc:
-	lea.l	($12cc,pc),a1
+L0006c6:
+	lea.l	(L001920,pc),a1
 	cmpi.b	#$0a,(a1)
-	bge.s	L0006f4
-L0006e6:
+	bge	L0006de
+L0006d0:
 	cmpi.b	#$3e,(a1)		;'>'
-	bge.s	L0006fa
+	bge	L0006e4
 	addq.b	#1,(a1)
 	move.w	(a0),($0002,a0)
-	bra.s	L000748
+	bra	L000732
 
-L0006f4:
+L0006de:
 	st.b	(-$03f7,a5)
-	bra.s	L0006e6
+	bra	L0006d0
 
-L0006fa:
+L0006e4:
 	tst.b	(-$03f4,a5)
-	beq.s	L000708
-	bsr.w	L000474
-	bra.w	L0008fc
+	beq	L0006f2
+	bsr	L00045e
+	bra	L0008e6
 
-L000708:
+L0006f2:
 	move.b	#$7f,(a1)
 	clr.b	(-$03f5,a5)
 	move.b	#$01,(-$03f9,a5)
-	bsr.w	L_PAUSE
+	bsr	L0003c6
 	movea.l	($0088),a0
 	move.l	(-$0008,a0),d0
 	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L000732
+	beq	L00071c
 	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L000738
-L000732:
+	bne	L000722
+L00071c:
 	move.w	#$0100,d0
 	trap	#2
-L000738:
+L000722:
 	tst.b	(-$0418,a5)
-	beq.s	L000748
+	beq	L000732
 	move.w	#$01ff,d0
 	trap	#2
 	clr.b	(-$0418,a5)
-L000748:
-	lea.l	(UnknownVar4,pc),a0
+L000732:
+	lea.l	(L001918,pc),a0
 	move.b	(a0),d2
 	moveq.l	#$12,d1
 	tst.b	(-$0402,a5)
-	bne.w	L000890
+	bne	L00087a
 	move.b	($080e),d7
 	and.b	#$0f,d7
 	cmp.b	#$05,d7
-	beq.w	L0007f8
+	beq	L0007e2
 	cmp.b	#$09,d7
-	beq.s	L0007ec
+	beq	L0007d6
 	cmp.b	#$06,d7
-	beq.s	L0007e6
+	beq	L0007d0
 	cmp.b	#$0a,d7
-	beq.s	L0007de
+	beq	L0007c8
 	cmp.b	#$04,d7
-	beq.w	L00082c
+	beq	L000816
 	cmp.b	#$08,d7
-	beq.s	L000802
+	beq	L0007ec
 	cmp.b	#$02,d7
-	bne.w	L000890
+	bne	L00087a
 	move.b	($080b),d7
 	and.b	#$03,d7
 	cmpi.b	#$80,($080a)
-	beq.s	L0007ce
+	beq	L0007b8
 	cmp.b	#$02,d7
-	beq.s	L0007be
+	beq	L0007a8
 	cmp.b	#$01,d7
-	bne.w	L000890
+	bne	L00087a
 	tst.b	(-$03fc,a5)
-	bne.w	L00088a
+	bne	L000874
 	subq.b	#1,($0002,a0)
-	bra.w	L00088a
+	bra	L000874
 
-L0007be:
+L0007a8:
 	tst.b	(-$03fc,a5)
-	bne.w	L00088a
+	bne	L000874
 	addq.b	#1,($0002,a0)
-	bra.w	L00088a
+	bra	L000874
 
-L0007ce:
+L0007b8:
 	tst.b	(-$03fc,a5)
-	bne.w	L00088a
+	bne	L000874
 	clr.b	($0002,a0)
-	bra.w	L00088a
+	bra	L000874
 
-L0007de:
+L0007c8:
 	move.b	#$ff,d2
-	bra.w	L000898
+	bra	L000882
 
-L0007e6:
+L0007d0:
 	moveq.l	#$00,d2
-	bra.w	L000898
+	bra	L000882
 
-L0007ec:
+L0007d6:
 	neg.b	d2
 	lsr.b	#2,d2
 	addq.b	#1,d2
 	neg.b	d2
-	bra.w	L000898
+	bra	L000882
 
-L0007f8:
+L0007e2:
 	neg.b	d2
 	add.b	d2,d2
 	neg.b	d2
-	bra.w	L000898
+	bra	L000882
 
-L000802:
+L0007ec:
 	btst.b	#$01,($080b)
-	beq.w	L000890
+	beq	L00087a
 	tst.b	(-$03fa,a5)
-	beq.s	L000820
-	bpl.s	L00087e
+	beq	L00080a
+	bpl	L000868
 	tst.b	(-$03fc,a5)
-	bne.s	L00088a
-	bsr.w	L_CONT
-	bra.s	L00087e
+	bne	L000874
+	bsr	L000406
+	bra	L000868
 
-L000820:
+L00080a:
 	tst.b	(-$03fc,a5)
-	bne.s	L00088a
-	bsr.w	L_PAUSE
-	bra.s	L00087e
+	bne	L000874
+	bsr	L0003c6
+	bra	L000868
 
-L00082c:
+L000816:
 	move.b	($080b),d7
-	beq.s	L000842
+	beq	L00082c
 	and.b	#$03,d7
 	cmp.b	#$02,d7
-	beq.s	L00086e
+	beq	L000858
 	cmp.b	#$01,d7
-	beq.s	L00085c
-L000842:
+	beq	L000846
+L00082c:
 	cmpi.b	#$80,($080a)
-	bne.s	L000890
+	bne	L00087a
 	tst.b	(-$03fc,a5)
-	bne.s	L00088a
-L000850:
+	bne	L000874
 	move.w	#$0011,(-$03ee,a5)
 	st.b	(-$03f5,a5)
-	bra.s	L00088a
+	bra	L000874
 
-L00085c:
+L000846:
 	tst.b	(-$03fc,a5)
-	bne.s	L00088a
+	bne	L000874
 	tst.b	(-$03f4,a5)
-	beq.s	L000884
-	bsr.w	L000460
-	bra.s	L00087e
+	beq	L00086e
+	bsr	L00044a
+	bra	L000868
+
+L000858:
+	tst.b	(-$03fc,a5)
+	bne	L000874
+	tst.b	(-$03f4,a5)
+	beq	L00086e
+	bsr	L00045e
+L000868:
+	st.b	(-$03fc,a5)
+	bra	L0008e6
 
 L00086e:
-	tst.b	(-$03fc,a5)
-	bne.s	L00088a
-	tst.b	(-$03f4,a5)
-	beq.s	L000884
-	bsr.w	L000474
-L00087e:
+	bsr	L00049a
+	bra	L000868
+
+L000874:
 	st.b	(-$03fc,a5)
-	bra.s	L0008fc
+	bra	L00087e
 
-L000884:
-	bsr.w	L_PLAY
-	bra.s	L00087e
-
-L00088a:
-	st.b	(-$03fc,a5)
-	bra.s	L000894
-
-L000890:
+L00087a:
 	clr.b	(-$03fc,a5)
-L000894:
+L00087e:
 	add.b	($0002,a0),d2
-L000898:
+L000882:
 	tst.b	(-$03fa,a5)
-	bne.s	L0008a4
+	bne	L00088e
 	tst.b	(-$03f9,a5)
-	beq.s	L0008ac
-L0008a4:
+	beq	L000896
+L00088e:
 	moveq.l	#$00,d2
-	bsr.w	L0013aa
-	bra.s	L0008fc
+	bsr	L001320
+	bra	L0008e6
 
-L0008ac:
-	bsr.w	L0013aa
-	lea.l	($1220,pc),a6
+L000896:
+	bsr	L001320
+	lea.l	(L001a48,pc),a6
 	moveq.l	#$00,d7
-L0008b6:
-	bsr.w	L000d36
-	bsr.w	L000e9a
-	move.w	(UnknownVar7,pc),d0
+L0008a0:
+	bsr	L000cd0
+	bsr	L000e34
+	move.w	(L001928,pc),d0
 	btst.l	d7,d0
-	bne.s	L0008c8
-	bsr.s	L000922
-L0008c8:
+	bne	L0008b2
+	bsr	L00090c
+L0008b2:
 	lea.l	($0050,a6),a6
 	addq.w	#1,d7
 	cmp.w	#$0009,d7
-	bcs.s	L0008b6
+	bcs	L0008a0
 	tst.b	(-$0418,a5)
-	beq.s	L0008fc
-	lea.l	($0e7e,pc),a6
-L0008de:
-	bsr.w	L000d36
-	bsr.w	L000e9a
-	move.w	(UnknownVar7,pc),d0
+	beq	L0008e6
+	lea.l	(L0016d0,pc),a6
+L0008c8:
+	bsr	L000cd0
+	bsr	L000e34
+	move.w	(L001928,pc),d0
 	btst.l	d7,d0
-	bne.s	L0008f0
-	bsr.s	L000922
-L0008f0:
+	bne	L0008da
+	bsr	L00090c
+L0008da:
 	lea.l	($0050,a6),a6
 	addq.w	#1,d7
 	cmp.w	#$0010,d7
-	bcs.s	L0008de
-L0008fc:
-	bsr.w	L000450
-L000900:
+	bcs	L0008c8
+L0008e6:
+	bsr	L00043a
+L0008ea:
 	tst.b	($00e90003)
-	bmi.s	L000900
+	bmi	L0008ea
 	move.b	#$1b,($00e90001)
 	clr.b	($0039,a5)
-	movem.l	(sp)+,d0-d7/a0-a6
-	bset.b	#$03,($00e88015)
+	movem.l	(a7)+,d0-d7/a0-a6
+	ori.b	#$08,($00e88015)
 	rte
 
-L000922:
+L00090c:
 	btst.b	#$00,($0016,a6)
-	beq.s	L00098a
+	beq	L000974
 	tst.b	($0020,a6)
-	bne.s	L000986
+	bne	L000970
 	tst.b	($0018,a6)
-	bmi.s	L00097a
-	bsr.w	LoadVoice
-	bsr.w	WritePan
+	bmi	L000964
+	bsr	L000a2a
+	bsr	L000b10
 	btst.b	#$03,($0016,a6)
-	bne.s	L000970
+	bne	L00095a
 	move.b	($0024,a6),($0025,a6)
-	beq.s	L00095a
+	beq	L000944
 	clr.l	($0036,a6)
 	clr.w	($004a,a6)
-	bsr.w	L000d7a
-L00095a:
+	bsr	L000d14
+L000944:
 	btst.b	#$01,($0016,a6)
-	beq.s	L000970
+	beq	L00095a
 	moveq.l	#$01,d1
 	moveq.l	#$02,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	moveq.l	#$00,d2
-	bsr.w	L0013aa
-L000970:
+	bsr	L001320
+L00095a:
 	clr.l	($000c,a6)
-	bsr.s	L000998
-	bsr.w	L000aba
-L00097a:
-	bsr.w	L000b3e
-	bclr.b	#$00,($0016,a6)
+	bsr	L000982
+	bsr	L000aa4
+L000964:
+	bsr	L000b28
+	andi.b	#$fe,($0016,a6)
 	rts
 
-L000986:
+L000970:
 	subq.b	#1,($0020,a6)
-L00098a:
+L000974:
 	tst.b	($0018,a6)
-	bmi.s	L000996
-	bsr.s	L000998
-	bsr.w	L000aba
-L000996:
+	bmi	L000980
+	bsr	L000982
+	bsr	L000aa4
+L000980:
 	rts
 
-L000998:
+L000982:
 	move.w	($0012,a6),d2
 	add.w	($000c,a6),d2
 	add.w	($0036,a6),d2
 	cmp.w	($0014,a6),d2
-	beq.s	L0009de
+	beq	L0009c8
 	move.w	d2,($0014,a6)
 	move.w	#$17ff,d1
 	cmp.w	d1,d2
-	bls.s	L0009c0
+	bls	L0009aa
 	tst.w	d2
-	bpl.s	L0009be
+	bpl	L0009a8
 	moveq.l	#$00,d2
-	bra.s	L0009c0
+	bra	L0009aa
 
-L0009be:
+L0009a8:
 	move.w	d1,d2
-L0009c0:
+L0009aa:
 	add.w	d2,d2
 	add.w	d2,d2
 	moveq.l	#$30,d1			;'0'
 	add.b	($0018,a6),d1
-	bsr.w	L0013aa
+	bsr	L001320
 	subq.b	#8,d1
-	move.w	d2,-(sp)
+	move.w	d2,-(a7)
 	moveq.l	#$00,d2
-	move.b	(sp)+,d2
+	move.b	(a7)+,d2
 	move.b	(OPMNoteTable,pc,d2.w),d2
-	bsr.w	L0013aa
-L0009de:
+	bsr	L001320
+L0009c8:
 	rts
 
 OPMNoteTable:
-	.dc.b	$00,$01,$02,$04,$05,$06,$08,$09
-	.dc.b	$0a,$0c,$0d,$0e,$10,$11,$12,$14
-	.dc.b	$15,$16,$18,$19,$1a,$1c,$1d,$1e
-	.dc.b	$20,$21,$22,$24,$25,$26,$28,$29
-	.dc.b	$2a,$2c,$2d,$2e,$30,$31,$32,$34
-	.dc.b	$35,$36,$38,$39,$3a,$3c,$3d,$3e
-	.dc.b	$40,$41,$42,$44,$45,$46,$48,$49
-	.dc.b	$4a,$4c,$4d,$4e,$50,$51,$52,$54
-	.dc.b	$55,$56,$58,$59,$5a,$5c,$5d,$5e
-	.dc.b	$60,$61,$62,$64,$65,$66,$68,$69
-	.dc.b	$6a,$6c,$6d,$6e,$70,$71,$72,$74
-	.dc.b	$75,$76,$78,$79,$7a,$7c,$7d,$7e
-LoadVoice:
+	.dc.b	$00,$01,$02,$04,$05,$06,$08,$09,$0a,$0c,$0d,$0e,$10,$11,$12,$14
+	.dc.b	$15,$16,$18,$19,$1a,$1c,$1d,$1e,$20,$21,$22,$24,$25,$26,$28,$29
+	.dc.b	$2a,$2c,$2d,$2e,$30,$31,$32,$34,$35,$36,$38,$39,$3a,$3c,$3d,$3e
+	.dc.b	$40,$41,$42,$44,$45,$46,$48,$49,$4a,$4c,$4d,$4e,$50,$51,$52,$54
+	.dc.b	$55,$56,$58,$59,$5a,$5c,$5d,$5e,$60,$61,$62,$64,$65,$66,$68,$69
+	.dc.b	$6a,$6c,$6d,$6e,$70,$71,$72,$74,$75,$76,$78,$79,$7a,$7c,$7d,$7e
+L000a2a:
 	bclr.b	#$01,($0017,a6)
-	beq.s	L000ab0
+	beq	L000a9a
 	movea.l	($0004,a6),a0
 	andi.b	#$c0,($001c,a6)
 	move.b	(a0)+,d0
@@ -1050,56 +1039,56 @@ LoadVoice:
 	moveq.l	#$40,d1			;'@'
 	add.b	($0018,a6),d1
 	moveq.l	#$03,d0
-L000a78:
+L000a62:
 	move.b	(a0)+,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	addq.b	#8,d1
-	dbra.w	d0,L000a78
+	dbra	d0,L000a62
 	moveq.l	#$03,d0
-L000a86:
+L000a70:
 	move.b	(a0)+,d2
 	lsr.b	#1,d3
-	bcc.s	L000a8e
+	bcc	L000a78
 	moveq.l	#$7f,d2
-L000a8e:
-	bsr.w	L0013aa
+L000a78:
+	bsr	L001320
 	addq.b	#8,d1
-	dbra.w	d0,L000a86
+	dbra	d0,L000a70
 	moveq.l	#$0f,d0
-L000a9a:
+L000a84:
 	move.b	(a0)+,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	addq.b	#8,d1
-	dbra.w	d0,L000a9a
+	dbra	d0,L000a84
 	st.b	($0023,a6)
-	bset.b	#$02,($0017,a6)
-L000ab0:
+	ori.b	#$64,($0017,a6)
+L000a9a:
 	rts
 
 CarrierSlot:
 	.dc.b	$08,$08,$08,$08,$0c,$0e,$0e,$0f
-L000aba:
+L000aa4:
 	moveq.l	#$00,d0
 	move.b	($0022,a6),d0
 	bclr.l	#$07,d0
-	bne.s	L000aca
+	bne	L000ab4
 	move.b	(VolumeTable,pc,d0.w),d0
-L000aca:
-	add.b	($0ede,pc),d0
-	bcs.s	L000ad2
-	bpl.s	L000ad4
-L000ad2:
+L000ab4:
+	add.b	(L001920,pc),d0
+	bcs	L000abc
+	bpl	L000abe
+L000abc:
 	moveq.l	#$7f,d0
-L000ad4:
+L000abe:
 	add.b	($004a,a6),d0
-	bcs.s	L000adc
-	bpl.s	L000ade
-L000adc:
+	bcs	L000ac6
+	bpl	L000ac8
+L000ac6:
 	moveq.l	#$7f,d0
-L000ade:
+L000ac8:
 	cmp.b	($0023,a6),d0
-	beq.s	L000b14
-L000ae4:
+	beq	L000afe
+L000ace:
 	move.b	d0,($0023,a6)
 	movea.l	($0004,a6),a0
 	addq.w	#6,a0
@@ -1107,112 +1096,96 @@ L000ae4:
 	move.b	#$60,d1			;'`'
 	add.b	($0018,a6),d1
 	moveq.l	#$03,d4
-L000afc:
+L000ae6:
 	move.b	(a0)+,d2
 	lsr.b	#1,d3
-	bcc.s	L000b0e
+	bcc	L000af8
 	add.b	d0,d2
-	bpl.s	L000b0a
+	bpl	L000af4
 	move.b	#$7f,d2
-L000b0a:
-	bsr.w	L0013aa
-L000b0e:
+L000af4:
+	bsr	L001320
+L000af8:
 	addq.b	#8,d1
-	dbra.w	d4,L000afc
-L000b14:
+	dbra	d4,L000ae6
+L000afe:
 	rts
 
 VolumeTable:
-	.dc.b	$2a,$28,$25,$22,$20,$1d,$1a,$18
-	.dc.b	$15,$12,$10,$0d,$0a,$08,$05,$02
-WritePan:
+	.dc.b	$2a,$28,$25,$22,$20,$1d,$1a,$18,$15,$12,$10,$0d,$0a,$08,$05,$02
+L000b10:
 	bclr.b	#$02,($0017,a6)
-	beq.s	L000b3c
+	beq	L000b26
 	move.b	($001c,a6),d2
 	moveq.l	#$20,d1			;' '
 	add.b	($0018,a6),d1
-	bra.w	L0013aa
+	bra	L001320
 
-L000b3c:
+L000b26:
 	rts
 
-L000b3e:
+L000b28:
 	bset.b	#$03,($0016,a6)
-	bne.s	L000b3c
+	bne	L000b26
 	tst.b	($0018,a6)
-	bmi.s	L000b68
+	bmi	L000b52
 	move.b	($001d,a6),d2
-	lea.l	($1280,pc),a2
+	lea.l	(L001d48,pc),a2
 	move.b	d2,(a2,d7.w)
-	lea.l	($0bf0,pc),a2
+	lea.l	(L0016c0,pc),a2
 	move.b	d2,(a2,d7.w)
 	move.b	#$08,d1
-	bra.w	L0013aa
+	bra	L001320
 
-L000b68:
+L000b52:
 	move.b	($0025,a5),d0
-	beq.w	L000c06
+	beq	L000bc6
 	tst.b	(-$0403,a5)
-	bne.w	L000c06
+	bne	L000bc6
 	moveq.l	#$00,d0
 	move.w	($0012,a6),d0
 	lsr.w	#6,d0
 	move.b	($001c,a6),d2
 	move.b	d2,d1
 	and.w	#$0003,d1
-	beq.s	L000b92
+	beq	L000b78
 	cmp.w	#$0003,d1
-	bne.s	L000b96
-L000b92:
+	bne	L000b7c
+L000b78:
 	eori.w	#$0003,d1
-L000b96:
+L000b7c:
 	and.w	#$001c,d2
 	lsl.w	#6,d2
 	or.w	d1,d2
 	tst.b	(-$0418,a5)
-	bne.s	L000c08
+	bne	L000bc8
 	tst.b	(-$03f7,a5)
-	beq.s	L000bae
+	beq	L000b94
 	andi.b	#$fc,d2
-L000bae:
+L000b94:
 	lsl.w	#3,d0
 	movea.l	($0020,a5),a1
 	lea.l	(a1,d0.w),a0
 	adda.l	(a0)+,a1
 	addq.w	#2,a0
 	move.w	(a0)+,d3
-	beq.s	L000c06
-	movea.l	($0088),a2
-	move.l	(-$0008,a2),d0
-	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L000bd8
-	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L000be6
-L000bd8:
-	move.w	#$0101,d0
-	trap	#2
-	move.w	#$0100,d0
-	trap	#2
-	bra.s	L000bec
-
-L000be6:
+	beq	L000bc6
 	moveq.l	#$67,d0			;'g'
 	moveq.l	#$00,d1
 	trap	#15
-L000bec:
 	moveq.l	#$60,d0			;'`'
 	move.w	d2,d1
 	moveq.l	#$00,d2
 	move.w	d3,d2
 	trap	#15
-	lea.l	($11da,pc),a2
+	lea.l	(L001d48,pc),a2
 	clr.b	(a2,d7.w)
-	lea.l	($0b4a,pc),a2
+	lea.l	(L0016c0,pc),a2
 	clr.b	(a2,d7.w)
-L000c06:
+L000bc6:
 	rts
 
-L000c08:
+L000bc8:
 	moveq.l	#$00,d1
 	move.b	($0004,a6),d1
 	lsl.l	#5,d1
@@ -1223,37 +1196,37 @@ L000c08:
 	movea.l	($0020,a5),a1
 	lea.l	(a1,d0.l),a0
 	move.l	($0004,a0),d3
-	beq.s	L000c06
+	beq	L000bc6
 	adda.l	(a0),a1
-	lea.l	(L001dde,pc),a0
+	lea.l	(L001d54,pc),a0
 	cmpa.l	a0,a1
-	bcs.s	L000c90
+	bcs	L000c50
 	move.l	a1,d0
 	add.l	d3,d0
-	bcs.s	L000c90
+	bcs	L000c50
 	cmp.l	(-$065c,a5),d0
-	bcc.s	L000c90
+	bcc	L000c50
 	move.w	d7,d0
 	subq.w	#8,d0
 	moveq.l	#$00,d1
 	move.b	($0022,a6),d1
 	bclr.l	#$07,d1
-	bne.s	L000c54
+	bne	L000c14
 	lea.l	(VolumeTable,pc),a2
 	move.b	(a2,d1.w),d1
-L000c54:
-	add.b	($0d54,pc),d1
-	bmi.s	L000c60
+L000c14:
+	add.b	(L001920,pc),d1
+	bmi	L000c20
 	cmp.b	#$2b,d1			;'+'
-	bcs.s	L000c66
-L000c60:
+	bcs	L000c26
+L000c20:
 	moveq.l	#$00,d1
 	clr.b	d2
-	bra.s	L000c6a
+	bra	L000c2a
 
-L000c66:
+L000c26:
 	move.b	(PCMVolumeTable,pc,d1.w),d1
-L000c6a:
+L000c2a:
 	swap.w	d1
 	move.w	d2,d1
 	moveq.l	#$00,d2
@@ -1263,39 +1236,36 @@ L000c6a:
 	move.l	d3,d2
 	andi.l	#$00ffffff,d2
 	trap	#2
-	lea.l	($1150,pc),a2
+	lea.l	(L001d48,pc),a2
 	clr.b	($0008,a2)
-	lea.l	($0ac0,pc),a2
+	lea.l	(L0016c0,pc),a2
 	clr.b	(a2,d7.w)
-L000c90:
+L000c50:
 	rts
 
 PCMVolumeTable:
-	.dc.b	$0f,$0f,$0f,$0e,$0e,$0e,$0d,$0d
-	.dc.b	$0d,$0c,$0c,$0b,$0b,$0b,$0a,$0a
-	.dc.b	$0a,$09,$09,$08,$08,$08,$07,$07
-	.dc.b	$07,$06,$06,$05,$05,$05,$04,$04
-	.dc.b	$04,$03,$03,$02,$02,$02,$01,$01
-	.dc.b	$01,$00,$00,$ff
-L000cbe:
+	.dc.b	$0f,$0f,$0f,$0e,$0e,$0e,$0d,$0d,$0d,$0c,$0c,$0b,$0b,$0b,$0a,$0a
+	.dc.b	$0a,$09,$09,$08,$08,$08,$07,$07,$07,$06,$06,$05,$05,$05,$04,$04
+	.dc.b	$04,$03,$03,$02,$02,$02,$01,$01,$01,$00,$00,$ff
+L000c7e:
 	bclr.b	#$03,($0016,a6)
-	beq.s	L000d06
+	beq	L000cc6
 	move.b	($0018,a6),d2
-	bmi.s	L000ce2
+	bmi	L000ca2
 	moveq.l	#$08,d1
-	lea.l	($1102,pc),a2
+	lea.l	(L001d48,pc),a2
 	move.b	d2,(a2,d7.w)
-	lea.l	($0a72,pc),a2
+	lea.l	(L0016c0,pc),a2
 	move.b	d2,(a2,d7.w)
-	bra.w	L0013aa
+	bra	L001320
 
-L000ce2:
+L000ca2:
 	move.b	($0025,a5),d0
-	beq.s	L000d06
+	beq	L000cc6
 	tst.b	(-$0403,a5)
-	bne.s	L000d06
+	bne	L000cc6
 	tst.b	(-$0418,a5)
-	beq.s	L000d08
+	beq	L000cc8
 	move.w	d7,d0
 	subq.w	#8,d0
 	moveq.l	#$00,d1
@@ -1304,748 +1274,724 @@ L000ce2:
 	move.w	d2,d1
 	moveq.l	#$00,d2
 	trap	#2
-L000d06:
+L000cc6:
 	rts
 
-L000d08:
-	movea.l	($0088),a0
-	move.l	(-$0008,a0),d0
-	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L000d20
-	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L000d2e
-L000d20:
-	move.w	#$0101,d0
-	trap	#2
-	move.w	#$0100,d0
-	trap	#2
-	rts
-
-L000d2e:
+L000cc8:
 	moveq.l	#$67,d0			;'g'
 	moveq.l	#$00,d1
 	trap	#15
 	rts
 
-L000d36:
+L000cd0:
 	tst.b	($0018,a6)
-	bmi.s	L000d78
+	bmi	L000d12
 	tst.b	($0016,a6)
-	bpl.s	L000d50
+	bpl	L000cea
 	tst.b	($0020,a6)
-	bne.s	L000d50
+	bne	L000cea
 	move.l	($0008,a6),d0
 	add.l	d0,($000c,a6)
-L000d50:
+L000cea:
 	tst.b	($0024,a6)
-	beq.s	L000d62
+	beq	L000cfc
 	tst.b	($0020,a6)
-	bne.s	L000d78
+	bne	L000d12
 	tst.b	($0025,a6)
-	bne.s	L000d7a
-L000d62:
+	bne	L000d14
+L000cfc:
 	btst.b	#$05,($0016,a6)
-	beq.s	L000d6c
-	bsr.s	L000d9a
-L000d6c:
+	beq	L000d06
+	bsr	L000d34
+L000d06:
 	btst.b	#$06,($0016,a6)
-	beq.s	L000d78
-	bsr.w	L000dfc
-L000d78:
+	beq	L000d12
+	bsr	L000d96
+L000d12:
 	rts
 
-L000d7a:
+L000d14:
 	subq.b	#1,($0025,a6)
-	bne.s	L000d98
+	bne	L000d32
 	btst.b	#$05,($0016,a6)
-	beq.s	L000d8c
-	bsr.w	L001252
-L000d8c:
+	beq	L000d26
+	bsr	L0011c8
+L000d26:
 	btst.b	#$06,($0016,a6)
-	beq.s	L000d98
-	bsr.w	L0012c0
-L000d98:
+	beq	L000d32
+	bsr	L001236
+L000d32:
 	rts
 
-L000d9a:
+L000d34:
 	move.l	($0032,a6),d1
 	movea.l	($0026,a6),a0
 	jmp	(a0)
 
+L000d3e:
 	add.l	d1,($0036,a6)
 	subq.w	#1,($003e,a6)
-	bne.s	L000db8
+	bne	L000d52
 	move.w	($003c,a6),($003e,a6)
 	neg.l	($0036,a6)
-L000db8:
+L000d52:
 	rts
 
-L000dba:
+L000d54:
 	move.l	d1,($0036,a6)
 	subq.w	#1,($003e,a6)
-	bne.s	L000dce
+	bne	L000d68
 	move.w	($003c,a6),($003e,a6)
 	neg.l	($0032,a6)
-L000dce:
+L000d68:
 	rts
 
-L000dd0:
+L000d6a:
 	add.l	d1,($0036,a6)
 	subq.w	#1,($003e,a6)
-	bne.s	L000de4
+	bne	L000d7e
 	move.w	($003c,a6),($003e,a6)
 	neg.l	($0032,a6)
-L000de4:
+L000d7e:
 	rts
 
-L000de6:
+L000d80:
 	subq.w	#1,($003e,a6)
-	bne.s	L000dfa
-	bsr.s	L000e60
+	bne	L000d94
+	bsr	L000dfa
 	muls.w	d1,d0
 	move.l	d0,($0036,a6)
 	move.w	($003c,a6),($003e,a6)
-L000dfa:
+L000d94:
 	rts
 
-L000dfc:
+L000d96:
 	move.w	($0048,a6),d1
 	movea.l	($0040,a6),a0
 	jmp	(a0)
 
+L000da0:
 	add.w	d1,($004a,a6)
 	subq.w	#1,($004e,a6)
-	bne.s	L000e1c
+	bne	L000db6
 	move.w	($004c,a6),($004e,a6)
 	move.w	($0046,a6),($004a,a6)
-L000e1c:
+L000db6:
 	rts
 
-L000e1e:
+L000db8:
 	subq.w	#1,($004e,a6)
-	bne.s	L000e32
+	bne	L000dcc
 	move.w	($004c,a6),($004e,a6)
 	add.w	d1,($004a,a6)
 	neg.w	($0048,a6)
-L000e32:
+L000dcc:
 	rts
 
-L000e34:
+L000dce:
 	add.w	d1,($004a,a6)
 	subq.w	#1,($004e,a6)
-	bne.s	L000e48
+	bne	L000de2
 	move.w	($004c,a6),($004e,a6)
 	neg.w	($0048,a6)
-L000e48:
+L000de2:
 	rts
 
-L000e4a:
+L000de4:
 	subq.w	#1,($004e,a6)
-	bne.s	L000e5e
-	bsr.s	L000e60
+	bne	L000df8
+	bsr	L000dfa
 	muls.w	d0,d1
 	move.w	($004c,a6),($004e,a6)
 	move.w	d1,($004a,a6)
-L000e5e:
+L000df8:
 	rts
 
-L000e60:
-	move.w	(-$0f2c,a5),d0
+L000dfa:
+	move.w	(-$0f08,a5),d0
 	mulu.w	#$c549,d0
 	add.l	#$0000000c,d0
-	move.w	d0,(-$0f2c,a5)
+	move.w	d0,(-$0f08,a5)
 	lsr.l	#8,d0
 	rts
 
-L000e76:
-	.dc.b	$12,$34
-L000e78:
-	lea.l	($0b12,pc),a0
+L000e10:
+	.dc.w	$1234
+L000e12:
+	lea.l	(L001902,pc),a0
 	tst.b	(a0,d7.w)
-L000e80:
-	bne.s	L000e84
+	bne	L000e1e
 	rts
 
-L000e84:
+L000e1e:
 	clr.b	(a0,d7.w)
-L000e88:
 	cmp.w	#$0009,d7
-	bcc.s	L000e92
+	bcc	L000e2c
 	clr.b	($27,a5,d7.w)
-L000e92:
-	bclr.b	#$03,($0017,a6)
-	bra.s	L000eba
+L000e2c:
+	andi.b	#$f7,($0017,a6)
+	bra	L000e54
 
-L000e9a:
+L000e34:
 	btst.b	#$03,($0017,a6)
-	bne.s	L000e78
+	bne	L000e12
 	btst.b	#$02,($0016,a6)
-	bne.s	L000eb4
+	bne	L000e4e
 	subq.b	#1,($001b,a6)
-	bne.s	L000eb4
-	bsr.w	L000cbe
-L000eb4:
+	bne	L000e4e
+	bsr	L000c7e
+L000e4e:
 	subq.b	#1,($001a,a6)
-	bne.s	L000f10
-L000eba:
+	bne	L000ea4
+L000e54:
 	movea.l	(a6),a4
-	bclr.b	#$02,($0016,a6)
-	bclr.b	#$07,($0016,a6)
+	andi.b	#$7b,($0016,a6)
+L000e5c:
 	moveq.l	#$00,d0
 	moveq.l	#$00,d1
 	move.b	(a4)+,d0
 	move.b	d0,d1
-	bpl.s	L000f02
+	bpl	L000e96
 	cmp.b	#$e0,d0
-	bcc.s	L000f1a
+	bcc	L000eae
 	and.w	#$007f,d0
 	lsl.w	#6,d0
 	addq.w	#5,d0
 	add.w	($0010,a6),d0
 	move.w	d0,($0012,a6)
-	bset.b	#$00,($0016,a6)
+	ori.b	#$01,($0016,a6)
 	move.b	($001f,a6),($0020,a6)
 	moveq.l	#$00,d0
 	move.b	(a4)+,d0
 	move.b	($001e,a6),d1
-	bmi.s	L000f12
+	bmi	L000ea6
 	mulu.w	d0,d1
 	lsr.w	#3,d1
-L000f02:
+L000e96:
 	addq.w	#1,d1
 	move.b	d1,($001b,a6)
 	addq.w	#1,d0
 	move.b	d0,($001a,a6)
 	move.l	a4,(a6)
-L000f10:
+L000ea4:
 	rts
 
-L000f12:
+L000ea6:
 	add.b	d0,d1
-	bcs.s	L000f02
+	bcs	L000e96
 	moveq.l	#$00,d1
-	bra.s	L000f02
+	bra	L000e96
 
-L000f1a:
+L000eae:
 	ext.w	d0
 	not.w	d0
 	add.w	d0,d0
-	move.w	(L000f2c,pc,d0.w),d0
-	pea.l	(-$005e,pc)
-	jmp	(L000f2c,pc,d0.w)
+	move.w	(L000ec0,pc,d0.w),d0
+	pea.l	(L000e5c,pc)
+	jmp	(L000ec0,pc,d0.w)
 
-L000f2c:
-	.dc.w	SetTempoCommandFunc-L000f2c
-	.dc.w	WriteOPMCommandFunc-L000f2c
-	.dc.w	SetVoiceCommandFunc-L000f2c
-	.dc.w	PanCommandFunc-L000f2c
-	.dc.w	VolumeCommandFunc-L000f2c
-	.dc.w	VolumeDownCommandFunc-L000f2c
-	.dc.w	VolumeUpCommandFunc-L000f2c
-	.dc.w	SetNoteLengthCommandFunc-L000f2c
-	.dc.w	SetLegatoCommandFunc-L000f2c
-	.dc.w	RepeatStartCommandFunc-L000f2c
-	.dc.w	RepeatEndCommandFunc-L000f2c
-	.dc.w	RepeatEscapeCommandFunc-L000f2c
-	.dc.w	DetuneCommandFunc-L000f2c
-	.dc.w	PortamentoCommandFunc-L000f2c
-	.dc.w	PerformanceEndCommandFunc-L000f2c
-	.dc.w	KeyOnDelayCommandFunc-L000f2c
-	.dc.w	SyncSendCommandFunc-L000f2c
-	.dc.w	SyncWaitCommandFunc-L000f2c
-	.dc.w	SetNoiseFreqCommandFunc-L000f2c
-	.dc.w	PitchModulationCommandFunc-L000f2c
-	.dc.w	AmplitudeModulationCommandFunc-L000f2c
-	.dc.w	OPMLFOCommandFunc-L000f2c
-	.dc.w	SetLFOKeyOnDelayCommandFunc-L000f2c
-	.dc.w	EnablePCM8CommandFunc-L000f2c
-	.dc.w	FadeOutCommandFunc-L000f2c
-	.dc.w	EndPlayCommand-L000f2c
-	.dc.w	EndPlayCommand-L000f2c
-	.dc.w	EndPlayCommand-L000f2c
-	.dc.w	EndPlayCommand-L000f2c
-	.dc.w	EndPlayCommand-L000f2c
-	.dc.w	EndPlayCommand-L000f2c
-	.dc.w	EndPlayCommand-L000f2c
-SetTempoCommandFunc:
+L000ec0:
+	.dc.w	L000f00-L000ec0
+	.dc.w	L000f14-L000ec0
+	.dc.w	L000f2c-L000ec0
+	.dc.w	L000f54-L000ec0
+	.dc.w	L000f8a-L000ec0
+	.dc.w	L000f96-L000ec0
+	.dc.w	L000fb2-L000ec0
+	.dc.w	L000fd2-L000ec0
+	.dc.w	L000fd8-L000ec0
+	.dc.w	L000fe0-L000ec0
+	.dc.w	L000fe4-L000ec0
+	.dc.w	L001006-L000ec0
+	.dc.w	L001022-L000ec0
+	.dc.w	L00102e-L000ec0
+	.dc.w	L001044-L000ec0
+	.dc.w	L0010f8-L000ec0
+	.dc.w	L0010fe-L000ec0
+	.dc.w	L001116-L000ec0
+	.dc.w	L001142-L000ec0
+	.dc.w	L001162-L000ec0
+	.dc.w	L0011f6-L000ec0
+	.dc.w	L001264-L000ec0
+	.dc.w	L0012ba-L000ec0
+	.dc.w	L0012c0-L000ec0
+	.dc.w	L0012f8-L000ec0
+	.dc.w	L0010a8-L000ec0
+	.dc.w	L0010a8-L000ec0
+	.dc.w	L0010a8-L000ec0
+	.dc.w	L0010a8-L000ec0
+	.dc.w	L0010a8-L000ec0
+	.dc.w	L0010a8-L000ec0
+	.dc.w	L0010a8-L000ec0
+L000f00:
 	moveq.l	#$12,d1
 	move.b	(a4)+,d2
 	tst.b	(-$0404,a5)
-	bne.s	L000f7e
+	bne	L000f12
 	move.b	d2,(-$0400,a5)
-	bra.w	L0013aa
+	bra	L001320
 
-L000f7e:
+L000f12:
 	rts
 
-WriteOPMCommandFunc:
+L000f14:
 	move.b	(a4)+,d1
 	move.b	(a4)+,d2
 	cmp.b	#$12,d1
-	bne.s	L000f94
+	bne	L000f28
 	tst.b	(-$0404,a5)
-	bne.s	L000f7e
+	bne	L000f12
 	move.b	d2,(-$0400,a5)
-L000f94:
-	bra.w	L0013aa
+L000f28:
+	bra	L001320
 
-SetVoiceCommandFunc:
+L000f2c:
 	tst.b	($0018,a6)
-	bmi.s	L000fba
+	bmi	L000f4e
 	move.b	(a4)+,d0
 	movea.l	($001c,a5),a0
-	bra.s	L000faa
+	bra	L000f3e
 
-L000fa6:
+L000f3a:
 	lea.l	($001a,a0),a0
-L000faa:
+L000f3e:
 	cmp.b	(a0)+,d0
-	bne.s	L000fa6
+	bne	L000f3a
 	move.l	a0,($0004,a6)
-	bset.b	#$01,($0017,a6)
+	ori.b	#$02,($0017,a6)
 	rts
 
-L000fba:
+L000f4e:
 	move.b	(a4)+,($0004,a6)
 	rts
 
-PanCommandFunc:
+L000f54:
 	tst.b	($0018,a6)
-	bmi.s	L000fdc
+	bmi	L000f70
 	move.b	($001c,a6),d0
 	ror.w	#6,d0
 	move.b	(a4)+,d0
 	rol.w	#6,d0
 	move.b	d0,($001c,a6)
-	bset.b	#$02,($0017,a6)
+	ori.b	#$04,($0017,a6)
 	rts
 
-L000fdc:
+L000f70:
 	move.b	(a4)+,d0
-	beq.s	L000fe6
+	beq	L000f7a
 	cmp.b	#$03,d0
-	bne.s	L000fea
-L000fe6:
+	bne	L000f7e
+L000f7a:
 	eori.b	#$03,d0
-L000fea:
+L000f7e:
 	andi.b	#$fc,($001c,a6)
 	or.b	d0,($001c,a6)
 	rts
 
-VolumeCommandFunc:
+L000f8a:
 	move.b	(a4)+,($0022,a6)
-	bset.b	#$00,($0017,a6)
+	ori.b	#$01,($0017,a6)
 	rts
 
-VolumeDownCommandFunc:
+L000f96:
 	move.b	($0022,a6),d2
-	bmi.s	L001016
-	beq.s	L001014
-L00100a:
+	bmi	L000faa
+	beq	L000fa8
+L000f9e:
 	subq.b	#1,($0022,a6)
-	bset.b	#$00,($0017,a6)
-L001014:
+	ori.b	#$01,($0017,a6)
+L000fa8:
 	rts
 
-L001016:
+L000faa:
 	cmp.b	#-$01,d2
-	bne.s	L00102a
+	bne	L000fbe
 	rts
 
-VolumeUpCommandFunc:
+L000fb2:
 	move.b	($0022,a6),d2
-	bmi.s	L001036
+	bmi	L000fca
 	cmp.b	#$0f,d2
-	beq.s	L001034
-L00102a:
+	beq	L000fc8
+L000fbe:
 	addq.b	#1,($0022,a6)
-	bset.b	#$00,($0017,a6)
-L001034:
+	ori.b	#$01,($0017,a6)
+L000fc8:
 	rts
 
-L001036:
+L000fca:
 	cmp.b	#$80,d2
-	bne.s	L00100a
+	bne	L000f9e
 	rts
 
-SetNoteLengthCommandFunc:
+L000fd2:
 	move.b	(a4)+,($001e,a6)
 	rts
 
-SetLegatoCommandFunc:
-	bset.b	#$02,($0016,a6)
+L000fd8:
+	ori.b	#$04,($0016,a6)
 	rts
 
-RepeatStartCommandFunc:
+L000fe0:
 	move.b	(a4)+,(a4)+
 	rts
 
-RepeatEndCommandFunc:
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d0
+L000fe4:
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d0
 	move.b	(a4)+,d0
 	subq.b	#1,(-$01,a4,d0.w)
-	beq.s	L00106a
+	beq	L001004
+	tst.b	(-$0401,a5)
+	beq	L001002
+	cmpi.b	#$f1,(a4)
+	bne	L001002
+	tst.b	($0001,a4)
+	beq	L00104c
+L001002:
 	adda.w	d0,a4
-	move.b	(-$0401,a5),d0
-	beq.s	L00106a
-	cmp.b	(-$0002,a4),d0
-	bls.s	L0010b4
-L00106a:
+L001004:
 	rts
 
-RepeatEscapeCommandFunc:
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d0
+L001006:
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d0
 	move.b	(a4)+,d0
 	lea.l	(a4,d0.w),a0
-	move.b	(a0)+,-(sp)
-	move.w	(sp)+,d0
+	move.b	(a0)+,-(a7)
+	move.w	(a7)+,d0
 	move.b	(a0)+,d0
 	cmpi.b	#$01,(-$01,a0,d0.w)
-	bne.s	L001086
+	bne	L001020
 	movea.l	a0,a4
-L001086:
+L001020:
 	rts
 
-DetuneCommandFunc:
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d0
+L001022:
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d0
 	move.b	(a4)+,d0
 	move.w	d0,($0010,a6)
 	rts
 
-PortamentoCommandFunc:
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d0
+L00102e:
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d0
 	move.b	(a4)+,d0
 	ext.l	d0
 	asl.l	#8,d0
 	move.l	d0,($0008,a6)
-	bset.b	#$07,($0016,a6)
+	ori.b	#$80,($0016,a6)
 	rts
 
-PerformanceEndCommandFunc:
-	move.b	(a4)+,-(sp)
-	beq.s	L00110a
-	move.w	(sp)+,d0
+L001044:
+	move.b	(a4)+,-(a7)
+	beq	L0010a6
+	move.w	(a7)+,d0
 	move.b	(a4)+,d0
+L00104c:
 	adda.w	d0,a4
-L0010b4:
-	move.w	($08fa,pc),d0
+	move.w	(L001926,pc),d0
 	bclr.l	d7,d0
 	move.w	d0,(-$03f2,a5)
-	tst.w	d0
-	bne.s	L001108
+	and.w	(L001912,pc),d0
+	bne	L0010a4
 	tst.b	(-$03f4,a5)
-	bne.s	L0010e0
+	bne	L00107c
 	move.w	#$01ff,(-$03f2,a5)
 	tst.b	(-$0418,a5)
-	beq.s	L0010da
+	beq	L001076
 	ori.w	#$fe00,(-$03f2,a5)
-L0010da:
+L001076:
 	addq.w	#1,($003a,a5)
-	bra.s	L001108
+	bra	L0010a4
 
-L0010e0:
+L00107c:
 	tst.b	(-$03f5,a5)
-	bne.s	L001108
+	bne	L0010a4
 	move.w	#$01ff,(-$03f2,a5)
 	tst.b	(-$0418,a5)
-	beq.s	L0010f8
+	beq	L001094
 	ori.w	#$fe00,(-$03f2,a5)
-L0010f8:
+L001094:
 	subq.w	#1,(-$03ea,a5)
-	bne.s	L001108
+	bne	L0010a4
 	move.w	#$0011,(-$03ee,a5)
 	st.b	(-$03f5,a5)
-L001108:
+L0010a4:
 	rts
 
-L00110a:
-	addq.w	#2,sp
-EndPlayCommand:
-	lea.l	(L001574,pc),a4
-	move.w	($089e,pc),d0
+L0010a6:
+	addq.w	#2,a7
+L0010a8:
+	lea.l	(L0014ea,pc),a4
+	move.w	(L001926,pc),d0
 	bclr.l	d7,d0
 	move.w	d0,(-$03f2,a5)
-	move.w	($0880,pc),d0
+	move.w	(L001912,pc),d0
 	bclr.l	d7,d0
 	move.w	d0,(-$0406,a5)
-	tst.w	d0
-	bne.s	L001180
+	bne	L0010f6
 	move.b	#$01,(-$03f9,a5)
-	movea.l	($0088),a0
-	move.l	(-$0008,a0),d0
-	cmp.l	#$50434d34,d0		;'PCM4'
-	beq.s	L001146
-	cmp.l	#$50434d38,d0		;'PCM8'
-	bne.s	L001152
-L001146:
-	move.w	#$0101,d0
-	trap	#2
-	move.w	#$0100,d0
-	trap	#2
-L001152:
 	tst.b	(-$0418,a5)
-	beq.s	L001162
+	beq	L0010d8
 	move.w	#$01ff,d0
 	trap	#2
 	clr.b	(-$0418,a5)
-L001162:
+L0010d8:
 	tst.b	(-$03f4,a5)
-	bne.s	L001170
+	bne	L0010e6
 	move.w	#$ffff,($003a,a5)
-	bra.s	L001180
+	bra	L0010f6
 
-L001170:
+L0010e6:
 	move.w	#$ffff,(-$03ee,a5)
 	st.b	(-$03f5,a5)
 	move.w	#$0037,(-$03f8,a5)	;'7'
-L001180:
+L0010f6:
 	rts
 
-KeyOnDelayCommandFunc:
+L0010f8:
 	move.b	(a4)+,($001f,a6)
 	rts
 
-SyncSendCommandFunc:
+L0010fe:
 	moveq.l	#$00,d0
 	move.b	(a4)+,d0
-	lea.l	($07fe,pc),a0
+	lea.l	(L001902,pc),a0
 	st.b	(a0,d0.w)
 	cmp.w	#$0009,d0
-	bcc.s	L00119e
+	bcc	L001114
 	st.b	($27,a5,d0.w)
-L00119e:
+L001114:
 	rts
 
-SyncWaitCommandFunc:
-	lea.l	($07ea,pc),a0
+L001116:
+	lea.l	(L001902,pc),a0
 	tst.b	(a0,d7.w)
-	beq.s	L0011c0
+	beq	L001136
 	clr.b	(a0,d7.w)
 	cmp.w	#$0009,d7
-	bcc.s	L0011b8
+	bcc	L00112e
 	clr.b	($27,a5,d7.w)
-L0011b8:
-	bclr.b	#$03,($0017,a6)
+L00112e:
+	andi.b	#$f7,($0017,a6)
 	rts
 
-L0011c0:
-	bset.b	#$03,($0017,a6)
+L001136:
+	ori.b	#$08,($0017,a6)
 	move.l	a4,(a6)
-	addq.w	#4,sp
+	addq.w	#4,a7
 	rts
 
-SetNoiseFreqCommandFunc:
+L001142:
 	move.b	(a4)+,d2
 	tst.b	($0018,a6)
-	bmi.s	L0011de
+	bmi	L001154
 	move.b	d2,($0026,a5)
 	moveq.l	#$0f,d1
-	bra.w	L0013aa
+	bra	L001320
 
-L0011de:
+L001154:
 	lsl.b	#2,d2
 	andi.b	#$03,($001c,a6)
 	or.b	d2,($001c,a6)
 	rts
 
-PitchModulationCommandFunc:
-	bset.b	#$05,($0016,a6)
+L001162:
+	ori.b	#$20,($0016,a6)
 	moveq.l	#$00,d1
 	move.b	(a4)+,d1
-	bmi.s	L001266
-	move.w	d1,-(sp)
+	bmi	L0011dc
+	move.w	d1,-(a7)
 	andi.b	#$03,d1
 	add.w	d1,d1
-	move.w	(L001278,pc,d1.w),d0
-	lea.l	(L001278,pc,d0.w),a0
+	move.w	(L0011ee,pc,d1.w),d0
+	lea.l	(L0011ee,pc,d0.w),a0
 	move.l	a0,($0026,a6)
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d2
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d2
 	move.b	(a4)+,d2
 	move.w	d2,($003c,a6)
 	cmp.b	#$02,d1
-	beq.s	L001226
+	beq	L00119c
 	lsr.w	#1,d2
 	cmpi.b	#$06,d1
-	bne.s	L001226
+	bne	L00119c
 	moveq.l	#$01,d2
-L001226:
+L00119c:
 	move.w	d2,($003a,a6)
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d0
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d0
 	move.b	(a4)+,d0
 	ext.l	d0
 	asl.l	#8,d0
-	move.w	(sp)+,d1
+	move.w	(a7)+,d1
 	cmpi.b	#$04,d1
-	bcs.s	L001242
+	bcs	L0011b8
 	asl.l	#8,d0
 	andi.b	#$03,d1
-L001242:
+L0011b8:
 	move.l	d0,($002e,a6)
 	cmp.b	#$02,d1
-	beq.s	L00124e
+	beq	L0011c4
 	moveq.l	#$00,d0
-L00124e:
+L0011c4:
 	move.l	d0,($002a,a6)
-L001252:
+L0011c8:
 	move.w	($003a,a6),($003e,a6)
 	move.l	($002e,a6),($0032,a6)
 	move.l	($002a,a6),($0036,a6)
 	rts
 
-L001266:
+L0011dc:
 	and.b	#$01,d1
-	bne.s	L001252
-	bclr.b	#$05,($0016,a6)
+	bne	L0011c8
+	andi.b	#$df,($0016,a6)
 	clr.l	($0036,a6)
 	rts
 
-L001278:
-	.dc.b	$fb,$2c,$fb,$42,$fb,$58,$fb,$6e
-AmplitudeModulationCommandFunc:
-	bset.b	#$06,($0016,a6)
+L0011ee:
+	.dc.w	L000d3e-L0011ee
+	.dc.w	L000d54-L0011ee
+	.dc.w	L000d6a-L0011ee
+	.dc.w	L000d80-L0011ee
+L0011f6:
+	ori.b	#$40,($0016,a6)
 	moveq.l	#$00,d2
 	move.b	(a4)+,d2
-	bmi.s	L0012d4
+	bmi	L00124a
 	add.w	d2,d2
-	move.w	(L0012e6,pc,d2.w),d0
-	lea.l	(L0012e6,pc,d0.w),a0
+	move.w	(L00125c,pc,d2.w),d0
+	lea.l	(L00125c,pc,d0.w),a0
 	move.l	a0,($0040,a6)
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d1
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d1
 	move.b	(a4)+,d1
 	move.w	d1,($004c,a6)
-	move.b	(a4)+,-(sp)
-	move.w	(sp)+,d0
+	move.b	(a4)+,-(a7)
+	move.w	(a7)+,d0
 	move.b	(a4)+,d0
 	move.w	d0,($0044,a6)
 	btst.l	#$01,d2
-	bne.s	L0012b6
+	bne	$0000122c
 	muls.w	d1,d0
-L0012b6:
 	neg.w	d0
-	bpl.s	L0012bc
+	bpl	$00001232
 	moveq.l	#$00,d0
-L0012bc:
 	move.w	d0,($0046,a6)
-L0012c0:
+L001236:
 	move.w	($004c,a6),($004e,a6)
 	move.w	($0044,a6),($0048,a6)
 	move.w	($0046,a6),($004a,a6)
 	rts
 
-L0012d4:
+L00124a:
 	and.b	#$01,d2
-	bne.s	L0012c0
-	bclr.b	#$06,($0016,a6)
+	bne	L001236
+	andi.b	#$bf,($0016,a6)
 	clr.w	($004a,a6)
 	rts
 
-L0012e6:
-	.dc.b	$fb,$20,$fb,$38,$fb,$4e,$fb,$64
-OPMLFOCommandFunc:
+L00125c:
+	.dc.w	L000da0-L00125c
+	.dc.w	L000db8-L00125c
+	.dc.w	L000dce-L00125c
+	.dc.w	L000de4-L00125c
+L001264:
 	move.b	(a4)+,d2
-	bmi.s	L001338
-	bclr.b	#$01,($0016,a6)
+	bmi	$000012ae
+	andi.b	#$fd,($0016,a6)
 	bclr.l	#$06,d2
-	beq.s	L001304
-	bset.b	#$01,($0016,a6)
-L001304:
+	beq	$0000127a
+	ori.b	#$02,($0016,a6)
 	move.b	($09da),d0
 	and.b	#$c0,d0
 	or.b	d0,d2
 	moveq.l	#$1b,d1
-	bsr.w	L0013aa
+	bsr	L001320
 	moveq.l	#$18,d1
 	move.b	(a4)+,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	moveq.l	#$19,d1
 	move.b	(a4)+,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	move.b	(a4)+,d2
-	bsr.w	L0013aa
+	bsr	L001320
 	move.b	(a4)+,d2
 	move.b	d2,($0021,a6)
-L001330:
 	moveq.l	#$38,d1			;'8'
 	add.b	($0018,a6),d1
-	bra.s	L0013aa
+	bra	L001320
 
-L001338:
 	and.b	#$01,d2
-	beq.s	L001330
+	beq	$000012a6
 	move.b	($0021,a6),d2
-	bra.s	L001330
+	bra	$000012a6
 
-SetLFOKeyOnDelayCommandFunc:
 	move.b	(a4)+,($0024,a6)
 	rts
 
-EnablePCM8CommandFunc:
+L0012c0:
 	movea.l	($0088),a0
 	cmpa.l	#$00f00000,a0
-	bcc.s	L001380
+	bcc	L0012f6
 	cmpi.l	#$50434d34,(-$0008,a0)	;'PCM4'
-	beq.s	L00136a
+	beq	L0012e0
 	cmpi.l	#$50434d38,(-$0008,a0)	;'PCM8'
-	bne.s	L001380
-L00136a:
+	bne	L0012f6
+L0012e0:
 	st.b	(-$0418,a5)
 	move.w	#$01fe,d0
 	trap	#2
 	ori.w	#$fe00,(-$03f2,a5)
 	ori.w	#$fe00,(-$0406,a5)
-L001380:
+L0012f6:
 	rts
 
-FadeOutCommandFunc:
+L0012f8:
 	moveq.l	#$00,d0
 	move.b	(a4)+,d0
 	cmp.w	#$0002,d0
-	bcc.w	EndPlayCommand
+	bcc	L0010a8
 	add.w	d0,d0
-	move.w	(L001398,pc,d0.w),d0
-	jmp	(L001398,pc,d0.w)
+	move.w	(L00130e,pc,d0.w),d0
+	jmp	(L00130e,pc,d0.w)
 
-L001398:
-	.dc.w	EndPlayCommand-L001398
-	.dc.w	L00139c-L001398
-L00139c:
+L00130e:
+	.dc.w	L0010a8-L00130e
+	.dc.w	L001312-L00130e
+L001312:
 	moveq.l	#$00,d0
 	move.b	(a4)+,d0
 	move.w	d0,(-$03ee,a5)
 	st.b	(-$03f5,a5)
 	rts
 
-L0013aa:
+L001320:
 	ori.w	#$0300,sr
 	tst.b	($00e90003)
-	bmi.s	L0013aa
+	bmi	L001320
 	move.b	d1,($00e90001)
 	and.w	#$00ff,d1
-	lea.l	($0610,pc),a2
+	lea.l	(L001948,pc),a2
 	move.b	d2,(a2,d1.w)
 	move.b	d2,($00e90003)
 	andi.w	#$faff,sr
 	cmp.b	#$1b,d1
-	beq.s	L0013da
+	beq	L001350
 	rts
 
-L0013da:
+L001350:
 	move.b	d2,($09da)
 	rts
 
-Start:
-	clr.l	-(sp)
+L001356:
+	clr.l	-(a7)
 	DOS	_SUPER
-	pea.l	(L001577,pc)
+	pea.l	(L0014ed,pc)
 	DOS	_PRINT
-	lea.l	(WorkAreaEnd,pc),a5
+	lea.l	(L001d18,pc),a5
 	move.w	#$0001,(-$03fa,a5)
 	clr.l	(-$0404,a5)
 	move.l	($0008,a0),(-$065c,a5)
@@ -2054,15 +2000,15 @@ Start:
 	clr.b	($0024,a5)
 	clr.b	($0025,a5)
 	addq.w	#1,a2
-	bsr.s	L001478
-	lea.l	(L001dde,pc),a4
-	lea.l	(L0019ca,pc),a1
+	bsr	L0013ee
+	lea.l	(L001d54,pc),a4
+	lea.l	(L001940,pc),a1
 	move.l	a4,(a1)
 	adda.l	($0014,a5),a4
 	move.l	a4,($0004,a1)
 	adda.l	($0018,a5),a4
 	cmpa.l	($0008,a0),a4
-	bhi.w	L001562
+	bhi	L0014d8
 	suba.l	a0,a0
 	move.l	($0090,a0),(a5)
 	move.l	($010c,a0),($0004,a5)
@@ -2070,200 +2016,220 @@ Start:
 	move.l	a1,($0090,a0)
 	lea.l	(L000000,pc),a1
 	suba.l	a1,a4
-	clr.w	-(sp)
-	move.l	a4,-(sp)
+	clr.w	-(a7)
+	move.l	a4,-(a7)
 	DOS	_KEEPPR
 
-L001458:
+L0013ce:
 	movea.l	($0090),a4
 	cmpa.l	#$00fe0000,a4
-	bcc.s	L001476
+	bcc	L0013ec
 	subq.w	#8,a4
 	lea.l	(L000004,pc),a3
 	move.w	#$0004,d0
-L00146e:
+L0013e4:
 	cmpm.b	(a3)+,(a4)+
-	bne.s	L001476
-	dbra.w	d0,L00146e
-L001476:
+	bne	L0013ec
+	dbra	d0,L0013e4
+L0013ec:
 	rts
 
-L001478:
+L0013ee:
 	move.b	(a2)+,d0
-	bne.s	L001484
-	bsr.s	L001458
-	beq.w	L00155c
+	bne	L0013fa
+	bsr	L0013ce
+	beq	L0014d2
 	rts
 
-L001484:
+L0013fa:
 	cmp.b	#$20,d0			;' '
-	beq.s	L001478
+	beq	L0013ee
 	cmp.b	#$09,d0
-	beq.s	L001478
+	beq	L0013ee
 	cmp.b	#$2d,d0			;'-'
-	beq.s	L00149e
+	beq	L001414
 	cmp.b	#$2f,d0			;'/'
-	bne.w	L001568
-L00149e:
+	bne	L0014de
+L001414:
 	move.b	(a2)+,d0
-	beq.w	L001568
+	beq	L0014de
 	or.b	#$20,d0
 	cmp.b	#$72,d0			;'r'
-	bne.s	L0014ce
-	bsr.s	L001458
-	bne.w	L001556
+	bne	L001444
+	bsr	L0013ce
+	bne	L0014cc
 	moveq.l	#$00,d0
 	trap	#4
 	tst.l	d0
-	bne.s	L0014c8
-	pea.l	(L0016cd,pc)
-L0014c0:
+	bne	L00143e
+	pea.l	(L001643,pc)
+L001436:
 	DOS	_PRINT
-	addq.w	#4,sp
-	clr.w	-(sp)
+	addq.w	#4,a7
+	clr.w	-(a7)
 	DOS	_EXIT2
 
-L0014c8:
-	pea.l	(L001726,pc)
-	bra.s	L0014c0
+L00143e:
+	pea.l	(L00169c,pc)
+	bra	L001436
 
-L0014ce:
-	bsr.s	L001458
-	beq.w	L00155c
+L001444:
+	bsr	L0013ce
+	beq	L0014d2
 	cmp.b	#$6d,d0			;'m'
-	bne.s	L0014ea
+	bne	L001460
 	cmpi.b	#$3a,(a2)		;':'
-	bne.s	L0014e2
+	bne	L001458
 	addq.w	#1,a2
-L0014e2:
-	bsr.s	L001530
+L001458:
+	bsr	L0014a6
 	move.l	d0,($0014,a5)
-	bra.s	L001478
+	bra	L0013ee
 
-L0014ea:
+L001460:
 	cmp.b	#$70,d0			;'p'
-	bne.s	L001502
+	bne	L001478
 	cmpi.b	#$3a,(a2)		;':'
-	bne.s	L0014f8
+	bne	L00146e
 	addq.w	#1,a2
-L0014f8:
-	bsr.s	L001530
+L00146e:
+	bsr	L0014a6
 	move.l	d0,($0018,a5)
-	bra.w	L001478
+	bra	L0013ee
 
-L001502:
+L001478:
 	cmpi.b	#$66,d0			;'f'
-	bne.s	L001568
+	bne	L0014de
 	cmpi.b	#$3a,(a2)		;':'
-	bne.s	L001510
+	bne	L001486
 	addq.w	#1,a2
-L001510:
-	move.l	a2,-(sp)
-	bsr.s	L001530
-	cmpa.l	(sp)+,a2
-	beq.s	L001524
+L001486:
+	move.l	a2,-(a7)
+	bsr	L0014a6
+	cmpa.l	(a7)+,a2
+	beq	L00149a
 	lsr.l	#8,d0
 	lsr.l	#2,d0
 	andi.l	#$00007fff,d0
-	bra.s	L001526
+	bra	L00149c
 
-L001524:
+L00149a:
 	moveq.l	#$11,d0
-L001526:
-	move.w	d0,(L000850+$000002)
-	bra.w	L001478
+L00149c:
+	move.w	d0,($0000083c).l
+	bra	L0013ee
 
-L001530:
+L0014a6:
 	moveq.l	#$00,d0
-L001532:
+L0014a8:
 	moveq.l	#$00,d1
 	move.b	(a2),d1
 	sub.b	#$30,d1			;'0'
-	bcs.s	L00154c
+	bcs	L0014c2
 	cmp.b	#$09,d1
-	bhi.s	L00154c
+	bhi	L0014c2
 	mulu.w	#$000a,d0
 	add.l	d1,d0
 	addq.w	#1,a2
-	bra.s	L001532
+	bra	L0014a8
 
-L00154c:
+L0014c2:
 	tst.l	d0
-	bmi.s	L001568
+	bmi	L0014de
 	moveq.l	#$0a,d1
 	lsl.l	d1,d0
 	rts
 
-L001556:
-	pea.l	(L001707,pc)
-	bra.s	L00156c
+L0014cc:
+	pea.l	(L00167d,pc)
+	bra	L0014e2
 
-L00155c:
-	pea.l	(L0016e4,pc)
-	bra.s	L00156c
+L0014d2:
+	pea.l	(L00165a,pc)
+	bra	L0014e2
 
-L001562:
-	pea.l	(L0016b3,pc)
-	bra.s	L00156c
+L0014d8:
+	pea.l	(L001629,pc)
+	bra	L0014e2
 
-L001568:
-	pea.l	(L0015d4,pc)
-L00156c:
+L0014de:
+	pea.l	(L00154a,pc)
+L0014e2:
 	DOS	_PRINT
-	move.w	#$ffff,-(sp)
+	move.w	#$ffff,-(a7)
 	DOS	_EXIT2
 
-L001574:
+L0014ea:
 	.dc.b	$7f,$f1,$00
-L001577:
-	.dc.b	'X68k MXDRV music driver version 2.06+16 Rel.1 (c)1988-91 milk.,K.MAEKAWA, Missy.M, Yatsube',$0d,$0a,$00
-L0015d4:
+L0014ed:
+	.dc.b	'X68k MXDRV music driver version 2.06+16 Rel.3 (c)1988-91 milk.,K.MAEKAWA, Missy.M, Yatsube',$0d,$0a,$00
+L00154a:
 	.dc.b	'使い方: mxdrv [switch]',$0d,$0a
 	.dc.b	$09,'-m:<num> MMLバッファサイズ(Kbytes)           [省略時 64]',$0d,$0a
 	.dc.b	$09,'-p:<num> PCMバッファサイズ(Kbytes)           [省略時312]',$0d,$0a
 	.dc.b	$09,'-f:<num> FADEOUT SPEED (FAST 0 - 32767 SLOW) [省略時 23]',$0d,$0a
 	.dc.b	$09,'-r       mxdrv解除',$0d,$0a,$00
-L0016b3:
+L001629:
 	.dc.b	$09,'メモリが不足しています',$0d,$0a,$00
-L0016cd:
+L001643:
 	.dc.b	$09,'mxdrvを解除しました',$0d,$0a,$00
-L0016e4:
+L00165a:
 	.dc.b	$09,'mxdrvはすでに組み込まれています',$0d,$0a,$00
-L001707:
+L00167d:
 	.dc.b	$09,'mxdrvは組み込まれていません',$0d,$0a,$00
-L001726:
+L00169c:
 	.dc.b	$09,'mxdrvを解除出来ませんでした',$0d,$0a,$00,$00
 
 	.bss
 
-L001746:
-	.ds.b	2
-UnknownArray1:
+L0016bc:
+	.ds.b	4
+L0016c0:
 	.ds.b	16
-UnknownVar1:
+L0016d0:
 	.ds.b	562
-UnknownVar2:
-	.ds.b	22
-UnknownVar3:
+L001902:
+	.ds.b	16
+L001912:
+	.ds.w	1
+L001914:
+	.ds.b	4
+L001918:
 	.ds.b	2
-UnknownVar4:
+L00191a:
 	.ds.b	6
-UnknownVar5:
+L001920:
 	.ds.b	3
-UnknownVar6:
-	.ds.b	7
-UnknownVar7:
-	.ds.b	24
-L0019ca:
+L001923:
+	.ds.b	2
+L001925:
+	.ds.b	1
+L001926:
+	.ds.w	1
+L001928:
+	.ds.w	1
+L00192a:
 	.ds.b	6
-OPMBufPtr:
+L001930:
+	.ds.l	1
+L001934:
+	.ds.l	1
+L001938:
+	.ds.l	1
+L00193c:
+	.ds.l	1
+L001940:
+	.ds.l	1
+L001944:
+	.ds.l	1
+L001948:
 	.ds.b	256
-WorkArea:
-	.ds.b	722
-WorkAreaEnd:
-	.ds.b	46
-UnknownArray2:
-	.ds.b	14
-L001dde:
+L001a48:
+	.ds.b	720
+L001d18:
+	.ds.b	48
+L001d48:
+	.ds.b	12
+L001d54:
 
-	.end	Start
+	.end	L001356
