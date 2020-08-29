@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename mopmdrv.x
-;  Time Stamp Wed Aug 25 00:00:00 1993
+;
 ;
 ;  Base address 000000
 ;  Exec address 002458

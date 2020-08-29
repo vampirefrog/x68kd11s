@@ -1,0 +1,33 @@
+モジュール作成	Module creation
+モジュール追加	Module addition
+モジュール更新	Module update
+モジュール取出	Module removal
+モジュール削除	Module deletion
+ファイル消去	File erase
+ファイル読込	Read file
+ファイル作成	File creation
+bind:バインドされているＸファイルはバインドできません	bind: X file that is bound cannot be bound
+bind:取り出すべきＸファイルは含まれていません	bind: does not include X file to retrieve
+bind:ファイル名がありません	bind: file name is missing
+bind:ファイルが見つかりません	bind: file not found
+bind:すべてを削除することはできません	bind: can't remove everything
+bind:書き込みは禁止されています	bind: write prohibited
+bind:Ｘファイルの構造が不正です	bind: X file structure is invalid
+bind:バインドファイルの構造が不正です	bind: The structure of the bind file is invalid
+bind:ファイルはバインドされていません	bind: file is not bound
+bind:テンポラリファイルが作成できません	bind: Cannot create temporary file
+bind:取り出したＸファイルが作成できません	bind: Unable to create the extracted X file
+bind:取り出すＸファイル名とバインドファイル名が重複しています	bind: The X file name to be extracted and the bind file name are duplicate.
+bind:メモリが不足しています	bind: out of memory
+bind:バインドファイルが作成できません	bind: Cannot create bind file
+bind:削除すべきＸファイルは含まれていません	bind: does not include X files that should be deleted
+使用法：bind［スイッチ］ファイル名［ファイル名・・］	Usage: bind [switch] filename [filename...]
+ファイルの更新（ディフォルト）	Update file (default)
+Ｘファイルの取り出し	Extract X file
+Ｘファイルの削除	Delete X file
+リスト出力	List output
+バインドファイル名指定	Bind file name specification
+テンポラリパス名指定	Specify temporary path name
+/u /x /d /lのスイッチはどれか一つを指定します	Only one of the /u /x /d /l switches should be specified
+/lスイッチを付けた時はバインドファイルのみ指定します	When the /l switch is attached, only the bind file is specified
+/oスイッチを省略すると最初のファイルを操作します	If the /o switch is omitted, the first file will be operated
