@@ -29,7 +29,7 @@ L000000:
 	clr.l	-(sp)
 	DOS	_SUPER
 	addq.l	#4,sp
-	pea.l	(L0006a4)
+	pea.l	(HelpString)
 	DOS	_PRINT
 	addq.l	#4,sp
 	clr.b	(L0008e8)
@@ -634,7 +634,7 @@ L0006a1:
 
 	.data
 
-L0006a4:
+HelpString:
 	.dc.b	'X68k Process v2.10 Copyright 1989-93 SHARP/Hudson',$0d,$0a,$00
 L0006d8:
 	.dc.b	'使用法：process［スイッチ］',$0d,$0a
