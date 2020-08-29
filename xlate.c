@@ -21,7 +21,8 @@ int main(int argc, char **argv) {
 		}
 		printf("/");
 		for(unsigned char *c = to; *c; c++) {
-			if(*c == '/') printf("\\%c", *c);
+			if(strchr("/", *c)) printf("\\%c", *c);
+			else if(strchr("'", *c)) printf("',$%02x,'", *c);
 			else printf("%c", *c);
 		}
 		printf("/g\n");
