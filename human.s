@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename human.sys
-;  Time Stamp Wed Sep 15 00:00:00 1993
+;
 ;
 ;  Base address 006800
 ;  Exec address 006800
@@ -3993,7 +3993,7 @@ L00925a:
 	rts
 
 L009268:
-	move.l	#$82000000.l,d0
+	move.l	#$82000000,d0
 	rts
 
 Call_MFREE:

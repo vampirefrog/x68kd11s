@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename bind.x
-;  Time Stamp Mon Aug 24 00:26:25 2020
+;
 ;
 ;  Base address 000000
 ;  Exec address 000000

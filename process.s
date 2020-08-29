@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename process.x
-;  Time Stamp Mon Jan  2 12:00:00 1995
+;
 ;
 ;  Base address 000000
 ;  Exec address 000000

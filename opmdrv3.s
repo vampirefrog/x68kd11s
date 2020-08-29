@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename opmdrv3.x
-;  Time Stamp Tue Mar  3 00:00:00 1992
+;
 ;
 ;  Base address 000000
 ;  Exec address 006bde

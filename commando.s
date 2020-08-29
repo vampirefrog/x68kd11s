@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename commando.x
-;  Time Stamp Fri Jan 18 05:39:51 2019
+;
 ;
 ;  Base address 000000
 ;  Exec address 000010

@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename mxdrv/2.06+16_Rel2++/mxdrvpp.x
-;  Time Stamp Sun Feb 27 06:58:36 1994
+;
 ;
 ;  Base address 000000
 ;  Exec address 0013f0

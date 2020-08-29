@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename has.x
-;  Time Stamp Thu Jul 28 23:24:36 1994
+;
 ;
 ;  Base address 000000
 ;  Exec address 000000

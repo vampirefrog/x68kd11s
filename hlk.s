@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename hlk.r
-;  Time Stamp Fri Jul 16 03:48:16 1999
+;
 ;
 ;  Base address 000000
 ;  Exec address 000000

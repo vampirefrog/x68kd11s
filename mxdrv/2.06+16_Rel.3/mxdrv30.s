@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename mxdrv/2.06+16_Rel.3/mxdrv30.x
-;  Time Stamp Mon Dec 26 13:52:02 1994
+;
 ;
 ;  Base address 000000
 ;  Exec address 00136a

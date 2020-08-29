@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename cmd.x
-;  Time Stamp Fri Jan 18 05:42:11 2019
+;
 ;
 ;  Base address 000000
 ;  Exec address 00001a

@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename mxdrv/2.06+162_03/mxdrv16x.x
-;  Time Stamp Wed Jul  7 12:00:00 1993
+;
 ;
 ;  Base address 000000
 ;  Exec address 001488
