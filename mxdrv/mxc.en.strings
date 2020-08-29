@@ -1,0 +1,27 @@
+ステータスメッセージを表示しない	Suppress status message
+オクターブの上下をX-BASICと同じにする	Make top and bottom octave same as X-BASIC
+オクターブがオーバーフローしました	Octave overflow
+コマンドが定義されていません	Undefined command
+パラメータの指定に誤りがあります	Incorrect parameter
+音長の指定に誤りがあります	Note length error
+ノートが範囲を越えました	Loop command overload
+再演奏コマンドの多重定義	Replay command overload
+ループコマンドが無効です	Invalid loop command
+コマンドが無効です	Invalid command
+&コマンドが無効です	Invalid & command
+コマンドの多重定義	Command overloading
+Ch%cのループが閉じていません	Ch%c Loop not closed
+音色の多重定義	Tone overload
+オプションが間違っています	Invalid option
+ファイルがオープンできません	Could not open file
+メモリが不足しています	Out of memory
+ファイルが作成できません	Could not create file
+MDXタイトル	MDX Title
+PCMファイル	PCM File
+注意	Note
+クロックカウントが一致していません	Tick counts do not match
+使用音色番号	Tones used
+個のエラーがありました	Errors occured
+使い方	Usage
+オプション	options
+MMLファイル	MML File
