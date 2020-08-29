@@ -111,4 +111,4 @@ mxdrv/mxcen.x: mxdrv/mxc.en.s
 	$(HLK) mxdrv/mxden.o -o mxdrv/mxcen.x
 
 clean:
-	rm -f *.s mxdrv/*.s mxdrv/*/*.s *.en.sed mxdrv/*.en.sed mxdrv/*/*.en.sed
+	rm -f *.s *.o mxdrv/*.o mxdrv/*/*.o mxdrv/*.s mxdrv/*/*.s *.en.sed mxdrv/*.en.sed mxdrv/*/*.en.sed
