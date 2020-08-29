@@ -1,0 +1,10 @@
+このＯＳでは使用できません	Cannot be used with this OS
+バックグラウンドタスクマネージャーが組み込まれていません	No background task manager built in
+' 開始   終了   長さ  モード             ファイル名'	' Start  End   Length  Mode                     Filename'
+スイッチがない場合はフォアグラウンドプロセスを表示する	Show foreground processes if no switch
+/a,/bはどちらか１つを指定する	/a,/b specify either one
+全プロセスの表示	View all processes
+バックグラウンドプロセスの表示	View background processes
+使用法：process［スイッチ］	Usage: process [options]
+使用法：process	Usage: process
+'PSP ID ID  プログラム名  ﾓｰﾄﾞ ｽﾘｰﾌﾟ  SSP    USP   ﾊﾞｯﾌｧ   長さ'	'PSP ID ID program        mode sleep  SSP    USP   buffer length'
