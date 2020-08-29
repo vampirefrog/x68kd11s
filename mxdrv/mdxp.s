@@ -1,6 +1,6 @@
 ;=============================================
-;  Filename mdxp.r
-;  Time Stamp Sat Mar 22 00:00:00 1997
+;  Filename mxdrv/mdxp.r
+;
 ;
 ;  Base address 000000
 ;  Exec address 000000
@@ -9,7 +9,7 @@
 ;  Bss  size    000000 byte(s)
 ;  203 Labels
 ;
-;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gmdxp.lab --overwrite mdxp.r mdxp.s
+;  Commandline dis  -h -k -m68030 -q1 -B -M -w16 -o120 -gmxdrv/mdxp.lab --overwrite mxdrv/mdxp.r mxdrv/mdxp.s
 ;          DIS version 3.16
 ;=============================================
 
@@ -17,12 +17,12 @@
 	.include	inc/iocscall.mac
 	.include	inc/fefunc.mac
 
-	.cpu	68000
+	.cpu	68030
 
 	.text
 
 L000000:
-	bra.s	L000070
+	bra	L000070
 
 L000002:
 	.dc.b	$0d,$0a
@@ -32,35 +32,35 @@ L000070:
 	lea.l	($0010,a0),a0
 	lea.l	($162e,a1),a1
 	suba.l	a0,a1
-	movem.l	a0-a1,-(sp)
+	movem.l	a0-a1,-(a7)
 	DOS	_SETBLOCK
-	addq.w	#8,sp
+	addq.w	#8,a7
 	pea.l	(L000bc2,pc)
 	DOS	_PRINT
-	clr.l	(sp)
+	clr.l	(a7)
 	DOS	_SUPER
-	move.l	d0,(sp)
-	bmi.w	L0008ce
+	move.l	d0,(a7)
+	bmi	L0008ce
 	movea.l	($0090),a0
 	cmpi.l	#$6d786472,(-$0008,a0)	;'mxdr'
-	bne.w	L0008c8
+	bne	L0008c8
 	cmpi.l	#$76323036,(-$0004,a0)	;'v206'
-	bcs.w	L0008c2
+	bcs	L0008c2
 	tst.b	(a2)+
-	beq.w	L0008f8
+	beq	L0008f8
 L0000b6:
 	move.b	(a2)+,d6
 	cmp.b	#$20,d6			;' '
-	bls.s	L0000b6
+	bls	L0000b6
 	cmp.b	#$2d,d6			;'-'
-	beq.w	L0005c0
+	beq	L0005c0
 	cmp.b	#$2f,d6			;'/'
-	beq.w	L0005c0
+	beq	L0005c0
 	lea.l	(-$0001,a2),a3
 	lea.l	(L00116c+$000e2e,pc),a4
 L0000d6:
 	move.b	(a3)+,(a4)+
-	bne.s	L0000d6
+	bne	L0000d6
 	pea.l	(L00116c+$0001d2,pc)
 	pea.l	(L00116c+$000e2e,pc)
 	DOS	_NAMECK
@@ -68,33 +68,33 @@ L0000d6:
 	DOS	_PRINT
 	pea.l	(L00116c+$000215,pc)
 	DOS	_PRINT
-	lea.l	($0010,sp),sp
+	lea.l	($0010,a7),a7
 	lea.l	(L00116c+$000e2e,pc),a0
 L0000f8:
 	tst.b	(a0)+
-	bne.s	L0000f8
+	bne	L0000f8
 	subq.l	#1,a0
 	cmpi.b	#$20,(-$0001,a0)	;' '
-	bne.s	L00010e
+	bne	L00010e
 L000106:
 	cmpi.b	#$20,-(a0)		;' '
-	beq.s	L000106
+	beq	L000106
 	addq.l	#1,a0
 L00010e:
 	cmpi.b	#$2e,(-$0001,a0)	;'.'
-	bne.s	L000118
+	bne	L000118
 	subq.l	#1,a0
 L000118:
 	move.l	a0,($1156,a6)
-	bra.s	L000160
+	bra	L000160
 
 L00011e:
 	move.b	-(a2),d0
-	move.b	-(sp),d0
+	move.b	-(a7),d0
 L000122:
 	move.w	($1154,a6),d0
 	cmp.w	#$0002,d0
-	bcc.w	L0008da
+	bcc	L0008da
 	movea.l	(L001156,pc),a0
 	add.w	d0,d0
 	lea.l	(L00011e,pc),a1
@@ -102,36 +102,36 @@ L000122:
 	lea.l	(a1,d0.w),a1
 L000140:
 	move.b	(a1)+,(a0)+
-	bne.s	L000140
+	bne	L000140
 	addq.w	#1,($1154,a6)
 	tst.b	($1160,a6)
-	bne.s	L000154
+	bne	L000154
 	movea.l	a0,a4
-	bsr.w	L000826
+	bsr	L000826
 L000154:
 	pea.l	(L00116c+$0001d2,pc)
 	pea.l	(L00116c+$000e2e,pc)
 	DOS	_NAMECK
-	addq.l	#8,sp
+	addq.l	#8,a7
 L000160:
-	clr.w	-(sp)
+	clr.w	-(a7)
 	pea.l	(L00116c+$000e2e,pc)
 	DOS	_OPEN
-	addq.l	#6,sp
+	addq.l	#6,a7
 	move.l	d0,d5
-	bmi.s	L000122
+	bmi	L000122
 	pea.l	(L00116c+$000228,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
-	bsr.w	L0007a2
+	addq.l	#4,a7
+	bsr	L0007a2
 	andi.l	#$2edfdfdf,($1394,a6)
 	cmpi.l	#$2e5a4446,($1394,a6)	;'.ZDF'
-	beq.w	L00091c
+	beq	L00091c
 	move.l	d4,d3
 	lea.l	(L00116c+$000a2e,pc),a0
 	movea.l	a0,a1
 	move.w	#$03ff,d7
-	bra.s	L0001ae
+	bra	L0001ae
 
 L00019c:
 	subq.l	#1,d3
@@ -143,54 +143,54 @@ L0001a4:
 	move.b	d0,(a0)+
 	subq.l	#1,d3
 	subq.w	#1,d7
-	bmi.w	L0008d4
+	bmi	L0008d4
 L0001ae:
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_FGETC
-	addq.w	#2,sp
+	addq.w	#2,a7
 	cmp.b	#$0d,d0
-	bne.s	L0001a4
+	bne	L0001a4
 	move.b	d0,(a0)+
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_FGETC
-	addq.w	#2,sp
+	addq.w	#2,a7
 	cmp.b	#$0a,d0
-	bne.s	L0001a0
+	bne	L0001a0
 	move.b	d0,(a0)+
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_FGETC
-	addq.w	#2,sp
+	addq.w	#2,a7
 	cmp.b	#$1a,d0
-	bne.s	L00019c
+	bne	L00019c
 	clr.b	(-$0002,a0)
 	subq.l	#4,d3
 	lea.l	(L00116c+$00122e,pc),a2
 	move.w	#$03ff,d7
-	bra.s	L0001ee
+	bra	L0001ee
 
 L0001e6:
 	subq.l	#1,d3
 	subq.w	#1,d7
-	bmi.w	L0008d4
+	bmi	L0008d4
 L0001ee:
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_FGETC
-	addq.w	#2,sp
+	addq.w	#2,a7
 	move.b	d0,(a2)+
-	bne.s	L0001e6
+	bne	L0001e6
 	suba.l	a1,a0
 	move.l	a0,d7
 	addq.l	#8,d7
 	addq.l	#1,d7
 	bclr.l	#$00,d7
-	move.l	d3,-(sp)
-	add.l	d7,(sp)
+	move.l	d3,-(a7)
+	add.l	d7,(a7)
 	DOS	_MALLOC
-	addq.l	#4,sp
+	addq.l	#4,a7
 	tst.l	d0
-	bmi.w	L0008fe
+	bmi	L0008fe
 	move.l	d0,($115a,a6)
-	bsr.w	L0007e6
+	bsr	L0007e6
 	movea.l	($115a,a6),a3
 	clr.w	(a3)+
 	move.w	#$ffff,(a3)+
@@ -199,56 +199,56 @@ L0001ee:
 	lea.l	(L00116c+$000a2e,pc),a4
 L00022e:
 	move.b	(a4)+,(a3)+
-	bne.s	L00022e
+	bne	L00022e
 	movea.l	($115a,a6),a3
 	move.l	d3,($1168,a6)
-	move.l	d3,-(sp)
+	move.l	d3,-(a7)
 	pea.l	(a3,d7.l)
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_READ
-	lea.l	($000a,sp),sp
+	lea.l	($000a,a7),a7
 	cmp.l	d0,d3
-	bne.w	L0008e0
-	move.w	d5,-(sp)
+	bne	L0008e0
+	move.w	d5,-(a7)
 	DOS	_CLOSE
-	addq.l	#2,sp
+	addq.l	#2,a7
 	lea.l	(a3,d7.w),a1
 	cmpi.l	#$4c5a5820,($0004,a1)	;'LZX '
-	bne.s	L00026e
+	bne	L00026e
 	sf.b	($1166,a6)
 	pea.l	(L000f9b,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
+	addq.l	#4,a7
 L00026e:
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
-	bsr.w	L0007c2
+	addq.l	#4,a7
+	bsr	L0007c2
 	move.l	d7,d1
 	add.l	d3,d1
 	move.l	d1,($1150,a6)
 L000282:
 	tst.b	($239a,a6)
-	beq.w	L000498
+	beq	L000498
 	pea.l	(L00116c+$0001d2,pc)
 	pea.l	(L00116c+$00122e,pc)
 	DOS	_NAMECK
-	addq.l	#8,sp
+	addq.l	#8,a7
 	tst.l	d0
-	bmi.w	L0008e6
-	bsr.w	L0007f6
+	bmi	L0008e6
+	bsr	L0007f6
 	pea.l	(L000f59,pc)
 	DOS	_PRINT
 	pea.l	(L00116c+$00122e,pc)
 	DOS	_PRINT
-	addq.l	#8,sp
+	addq.l	#8,a7
 	tst.b	($115f,a6)
-	beq.s	L000304
+	beq	L000304
 	moveq.l	#$00,d0
 	moveq.l	#$00,d7
 	movea.l	a4,a1
 	tst.b	($0025,a5)
-	beq.s	L000304
+	beq	L000304
 	lea.l	(-$03d4,a5),a0
 	movea.l	(a0),a0
 	move.w	($0006,a0),d0
@@ -261,52 +261,52 @@ L0002d8:
 	move.b	(a0)+,d0
 	move.b	(a3)+,d5
 	tst.b	($1161,a6)
-	beq.s	L0002ea
+	beq	L0002ea
 	and.b	#$df,d0
 	and.b	#$df,d5
 L0002ea:
 	sub.b	d5,d0
-	bne.s	L000304
-	dbra.w	d7,L0002d8
+	bne	L000304
+	dbra	d7,L0002d8
 	pea.l	(L000fdb,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
+	addq.l	#4,a7
 	move.l	(-$03d4,a5),($0010,a5)
-	bra.w	L000472
+	bra	L000472
 
 L000304:
-	move.w	#$0000,-(sp)
+	move.w	#$0000,-(a7)
 	pea.l	(L00116c+$00122e,pc)
 	DOS	_OPEN
-	addq.l	#6,sp
+	addq.l	#6,a7
 	move.l	d0,d5
-	bge.w	L0003c0
-	bra.s	L000328
+	bge	L0003c0
+	bra	L000328
 
 L000318:
 	sf.b	($115e,a6)
 	pea.l	(L00116c+$00022e,pc)
-	clr.l	-(sp)
+	clr.l	-(a7)
 	pea.l	(L00112a,pc)
-	bra.s	L000332
+	bra	L000332
 
 L000328:
 	pea.l	(L00116c+$00022e,pc)
-	clr.l	-(sp)
+	clr.l	-(a7)
 	pea.l	(L00112e,pc)
 L000332:
 	DOS	_VERNUM
 	cmp.w	#$0300,d0
-	bcs.s	L00033e
+	bcs	L00033e
 	DOS	_GETENV
-	bra.s	L000340
+	bra	L000340
 
 L00033e:
 	DOS	_GETENV
 L000340:
-	lea.l	($000c,sp),sp
+	lea.l	($000c,a7),a7
 	tst.l	d0
-	bmi.s	L0003b4
+	bmi	L0003b4
 	lea.l	(L00116c+$00022e,pc),a0
 	lea.l	(L00116c+$000e2e,pc),a3
 L000350:
@@ -314,51 +314,51 @@ L000350:
 	lea.l	(L00116c+$00122e,pc),a2
 L000356:
 	move.b	(a0)+,d7
-	beq.s	L00036a
+	beq	L00036a
 	cmp.b	#$3b,d7			;';'
-	beq.s	L00036a
+	beq	L00036a
 	cmp.b	#$2c,d7			;','
-	beq.s	L00036a
+	beq	L00036a
 	move.b	d7,(a1)+
-	bra.s	L000356
+	bra	L000356
 
 L00036a:
 	cmpi.b	#$5c,(-$0002,a0)	;'\'
-	beq.s	L00037e
+	beq	L00037e
 	cmpi.b	#$2f,(-$0002,a0)	;'/'
-	beq.s	L00037e
+	beq	L00037e
 	move.b	#$5c,(a1)+		;'\'
 L00037e:
 	move.b	(a2)+,(a1)+
-	bne.s	L00037e
+	bne	L00037e
 	cmpi.b	#$3a,($0001,a3)		;':'
-	bne.s	L0003a2
+	bne	L0003a2
 	moveq.l	#$00,d5
 	move.b	(a3),d5
 	and.b	#$1f,d5
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_DRVCTRL
-	addq.l	#2,sp
+	addq.l	#2,a7
 	eori.b	#$02,d0
 	and.b	#$0a,d0
-	bne.s	L0003ae
+	bne	L0003ae
 L0003a2:
-	clr.w	-(sp)
+	clr.w	-(a7)
 	pea.l	(a3)
 	DOS	_OPEN
-	addq.l	#6,sp
+	addq.l	#6,a7
 	move.l	d0,d5
-	bge.s	L0003c0
+	bge	L0003c0
 L0003ae:
 	tst.b	(-$0001,a0)
-	bne.s	L000350
+	bne	L000350
 L0003b4:
 	tst.b	($115e,a6)
-	bne.w	L000318
-	bra.w	L000488
+	bne	L000318
+	bra	L000488
 
 L0003c0:
-	bsr.w	L0007a2
+	bsr	L0007a2
 	lea.l	(L00116c+$00122e,pc),a3
 	suba.l	a3,a4
 	move.l	a4,d3
@@ -369,11 +369,11 @@ L0003c0:
 	add.l	d3,d2
 	move.l	($0018,a5),d0
 	cmp.l	d2,d0
-	bge.s	L0003ec
+	bge	L0003ec
 	pea.l	(L000fb9,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
-	bra.w	L000498
+	addq.l	#4,a7
+	bra	L000498
 
 L0003ec:
 	movea.l	(-$03d4,a5),a2
@@ -385,70 +385,70 @@ L0003ec:
 	lea.l	(L00116c+$00122e,pc),a0
 L000408:
 	move.b	(a0)+,(a1)+
-	bne.s	L000408
-	move.l	d4,-(sp)
+	bne	L000408
+	move.l	d4,-(a7)
 	pea.l	(a2,d3.l)
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_READ
-	lea.l	($000a,sp),sp
+	lea.l	($000a,a7),a7
 	move.l	d0,d7
-	move.w	d5,-(sp)
+	move.w	d5,-(a7)
 	DOS	_CLOSE
-	addq.l	#2,sp
+	addq.l	#2,a7
 	cmp.l	d4,d7
-	bne.s	L000488
+	bne	L000488
 	lea.l	(a2,d3.l),a0
 	movea.l	a0,a1
 	cmpi.l	#$4c5a5820,($0004,a0)	;'LZX '
-	bne.s	L000472
+	bne	L000472
 	pea.l	(L000f9b,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
-	movem.l	a5-a6,-(sp)
+	addq.l	#4,a7
+	movem.l	a5-a6,-(a7)
 	lea.l	(L00046a,pc),a4
 	adda.l	d4,a1
 	add.l	($0022,a0),d4
 	cmp.l	($0018,a5),d4
-	bcc.s	L000490
+	bcc	L000490
 	move.l	($0010,a5),d4
 	add.l	($0018,a5),d4
 	move.l	d4,($0004,a0)
 	move.l	a0,($0008,a0)
-	bsr.w	L00083a
+	bsr	L00083a
 	jmp	($0002,a0)
 
 L00046a:
 	.dc.b	'Lß`',$00
 L00046e:
-	bsr.w	L000858
+	bsr	L000858
 L000472:
 	st.b	($0025,a5)
 	movea.l	($115a,a6),a2
 	move.w	#$0000,($0002,a2)
 	move.w	#$0000,($1164,a6)
-	bra.s	L000490
+	bra	L000490
 
 L000488:
 	pea.l	(L000f83,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
+	addq.l	#4,a7
 L000490:
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
+	addq.l	#4,a7
 L000498:
 	movea.l	($115a,a6),a1
 	move.l	($1150,a6),d1
 	moveq.l	#$02,d0
 	trap	#4
 	tst.l	d0
-	bmi.w	L0008ec
+	bmi	L0008ec
 	movea.l	($0090),a2
 	move.l	(-$0010,a2),d2
 	cmp.l	#$4c5a4d58,d2		;'LZMX'
-	beq.s	L000500
+	beq	L000500
 	tst.b	($1166,a6)
-	bne.s	L000500
+	bne	L000500
 	moveq.l	#$00,d7
 	lea.l	(L0004fc,pc),a4
 	movea.l	(-$03d8,a5),a0
@@ -459,16 +459,16 @@ L000498:
 	adda.l	d5,a1
 	add.l	($0022,a0),d5
 	cmp.l	($0014,a5),d5
-	bcc.w	L0008f2
+	bcc	L0008f2
 	move.l	($000c,a5),d6
 	add.l	($0014,a5),d6
 	move.l	d6,($0004,a0)
 	move.l	a0,($0008,a0)
-	bsr.w	L00083a
+	bsr	L00083a
 	jmp	($0002,a0)
 
 L0004fc:
-	bsr.w	L000858
+	bsr	L000858
 L000500:
 	move.w	(L001164,pc),d1
 	or.w	(L001162,pc),d1
@@ -478,14 +478,14 @@ L00050c:
 	moveq.l	#$00,d2
 	move.w	#$ff00,d1
 	tst.b	($239a,a6)
-	beq.s	L000536
+	beq	L000536
 	move.w	#$fe00,d1
 	movea.l	($000c,a5),a2
 	move.w	($0004,a2),d2
 	lea.l	(a2,d2.l),a2
 	adda.w	($0002,a2),a2
 	cmpi.b	#$e8,(a2)
-	bne.s	L000536
+	bne	L000536
 	move.w	#$0000,d1
 L000536:
 	moveq.l	#$f0,d2
@@ -493,17 +493,17 @@ L000538:
 	nop
 	move.w	(-$0406,a5),d4
 	cmp.w	#$01ff,d4
-	bne.s	L00054a
+	bne	L00054a
 	nop
-	dbra.w	d2,L000538
+	dbra	d2,L000538
 L00054a:
 	not.w	d4
 	tst.b	($239a,a6)
-	bne.s	L00055a
+	bne	L00055a
 	tst.b	d4
-	beq.s	L00055a
+	beq	L00055a
 	move.w	d4,d1
-	bra.s	L000570
+	bra	L000570
 
 L00055a:
 	or.w	d4,d1
@@ -518,26 +518,26 @@ L000570:
 	moveq.l	#$0f,d0
 L000576:
 	btst.l	d0,d1
-	beq.s	L00058e
+	beq	L00058e
 	cmp.b	#$08,d0
-	bcc.s	L000588
+	bcc	L000588
 	move.b	#$20,(a3,d0.w)		;' '
-	bra.s	L00058e
+	bra	L00058e
 
 L000588:
 	move.b	#$20,($01,a3,d0.w)	;' '
 L00058e:
-	dbra.w	d0,L000576
+	dbra	d0,L000576
 	pea.l	(L001102,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
+	addq.l	#4,a7
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
-	move.l	($115a,a6),-(sp)
+	addq.l	#4,a7
+	move.l	($115a,a6),-(a7)
 	DOS	_MFREE
-	addq.l	#4,sp
-	move.w	#$0000,-(sp)
+	addq.l	#4,a7
+	move.w	#$0000,-(a7)
 	DOS	_EXIT2
 
 L0005b0:
@@ -545,65 +545,65 @@ L0005b0:
 L0005c0:
 	move.b	(a2)+,d6
 	cmp.b	#$3f,d6			;'?'
-	beq.w	L0008f8
+	beq	L0008f8
 	and.b	#$df,d6
 	cmp.b	#$50,d6			;'P'
-	beq.w	L0006a6
+	beq	L0006a6
 	cmp.b	#$4d,d6			;'M'
-	beq.w	L0006a2
+	beq	L0006a2
 	cmp.b	#$4c,d6			;'L'
-	beq.w	L00068a
+	beq	L00068a
 	cmp.b	#$55,d6			;'U'
-	beq.w	L000692
+	beq	L000692
 	cmp.b	#$49,d6			;'I'
-	beq.w	L00069a
+	beq	L00069a
 	cmp.b	#$45,d6			;'E'
-	beq.s	L00065c
+	beq	L00065c
 	cmp.b	#$53,d6			;'S'
-	beq.s	L000654
+	beq	L000654
 	cmp.b	#$43,d6			;'C'
-	beq.s	L000638
+	beq	L000638
 	cmp.b	#$46,d6			;'F'
-	beq.s	L00064a
+	beq	L00064a
 	cmp.b	#$48,d6			;'H'
-	beq.w	L0008f8
+	beq	L0008f8
 	cmp.b	#$54,d6			;'T'
-	bne.w	L0008b6
+	bne	L0008b6
 	pea.l	(L0010d5,pc)
-	bra.s	L00066a
+	bra	L00066a
 
 L000624:
 	pea.l	(L0010c2,pc)
-	bra.s	L00066a
+	bra	L00066a
 
 L00062a:
 	ror.w	#8,d0
 	tst.b	d0
-	beq.s	L000624
+	beq	L000624
 	pea.l	(L0010a2,pc)
 	moveq.l	#$04,d0
-	bra.s	L000668
+	bra	L000668
 
 L000638:
 	moveq.l	#$12,d0
 	trap	#4
 	ror.w	#8,d0
 	tst.b	d0
-	beq.s	L00062a
+	beq	L00062a
 	pea.l	(L001091,pc)
 	moveq.l	#$07,d0
-	bra.s	L000668
+	bra	L000668
 
 L00064a:
 	pea.l	(L00106d,pc)
 	moveq.l	#$0c,d0
 	moveq.l	#$1e,d1
-	bra.s	L000668
+	bra	L000668
 
 L000654:
 	pea.l	(L001078,pc)
 	moveq.l	#$06,d0
-	bra.s	L000662
+	bra	L000662
 
 L00065c:
 	pea.l	(L001085,pc)
@@ -617,106 +617,106 @@ L00066a:
 	DOS	_PRINT
 	pea.l	(L001064,pc)
 	DOS	_PRINT
-	addq.l	#8,sp
+	addq.l	#8,a7
 	DOS	_PRINT
 	pea.l	(L001069,pc)
 	DOS	_PRINT
-	addq.l	#8,sp
-	bsr.w	L000732
-	bra.w	L00050c
+	addq.l	#8,a7
+	bsr	L000732
+	bra	L00050c
 
 L00068a:
 	sf.b	($115f,a6)
-	bra.w	L0000b6
+	bra	L0000b6
 
 L000692:
 	sf.b	($1160,a6)
-	bra.w	L0000b6
+	bra	L0000b6
 
 L00069a:
 	sf.b	($1161,a6)
-	bra.w	L0000b6
+	bra	L0000b6
 
 L0006a2:
 	moveq.l	#$00,d1
-	bra.s	L0006a8
+	bra	L0006a8
 
 L0006a6:
 	moveq.l	#$ff,d1
 L0006a8:
 	move.b	(a2),d6
-	bne.s	L0006b0
+	bne	L0006b0
 	moveq.l	#$00,d1
-	bra.s	L000704
+	bra	L000704
 
 L0006b0:
 	cmpi.b	#$20,d6			;' '
-	bls.w	L0000b6
+	bls	L0000b6
 L0006b8:
 	move.b	(a2),d6
-	beq.s	L000704
+	beq	L000704
 	and.b	#$df,d6
 	cmp.b	#$20,d6			;' '
-	bls.s	L0006fc
+	bls	L0006fc
 	cmp.b	#$50,d6			;'P'
-	bge.s	L0006e8
+	bge	L0006e8
 	cmp.b	#$41,d6			;'A'
-	bcs.w	L0008bc
+	bcs	L0008bc
 	cmp.b	#$49,d6			;'I'
-	bcc.w	L0008bc
+	bcc	L0008bc
 	and.w	#$000f,d6
 	subq.b	#1,d6
 	bchg.l	d6,d1
 	addq.w	#1,a2
-	bra.s	L0006b8
+	bra	L0006b8
 
 L0006e8:
 	cmp.b	#$58,d6			;'X'
-	bcc.w	L0008bc
+	bcc	L0008bc
 	and.w	#$000f,d6
 	addq.w	#8,d6
 	bchg.l	d6,d1
 	addq.w	#1,a2
-	bra.s	L0006b8
+	bra	L0006b8
 
 L0006fc:
 	move.w	d1,($1162,a6)
-	bra.w	L0000b6
+	bra	L0000b6
 
 L000704:
-	bsr.s	L000716
+	bsr	L000716
 	or.w	d2,d1
 	move.w	d1,($1162,a6)
 	moveq.l	#$0e,d0
 	pea.l	(L0010ed,pc)
-	bra.w	L000668
+	bra	L000668
 
 L000716:
-	bsr.w	L0007ea
+	bsr	L0007ea
 	move.w	#$ff00,d2
 	tst.b	($0024,a5)
-	beq.s	L000730
+	beq	L000730
 	movea.l	(-$03d8,a5),a3
 	tst.w	($0002,a3)
-	bmi.s	L000730
+	bmi	L000730
 	moveq.l	#$00,d2
 L000730:
 	rts
 
 L000732:
-	movem.l	d0-d1/a0,-(sp)
+	movem.l	d0-d1/a0,-(a7)
 	moveq.l	#$00,d1
 	pea.l	(L000f44,pc)
 	DOS	_PRINT
 	moveq.l	#$08,d0
 	trap	#4
 	tst.l	d0
-	beq.s	L000750
+	beq	L000750
 	movea.l	d0,a0
 	tst.b	(a0)
-	beq.s	L000750
-	move.l	d0,-(sp)
-	bra.s	L000754
+	beq	L000750
+	move.l	d0,-(a7)
+	bra	L000754
 
 L000750:
 	pea.l	(L001036,pc)
@@ -724,20 +724,20 @@ L000754:
 	DOS	_PRINT
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	lea.l	($000c,sp),sp
+	lea.l	($000c,a7),a7
 	pea.l	(L000f6e,pc)
 	DOS	_PRINT
 	moveq.l	#$09,d0
 	trap	#4
 	tst.l	d0
-	beq.s	L000784
+	beq	L000784
 	movea.l	d0,a0
 	tst.b	(a0)
-	beq.s	L000784
+	beq	L000784
 	move.w	#$0000,($1164,a6)
 	move.b	#$40,($239a,a6)		;'@'
-	move.l	d0,-(sp)
-	bra.s	L00078e
+	move.l	d0,-(a7)
+	bra	L00078e
 
 L000784:
 	move.b	#$00,($239a,a6)
@@ -746,34 +746,34 @@ L00078e:
 	DOS	_PRINT
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	lea.l	($000c,sp),sp
-	bsr.s	L0007ea
-	movem.l	(sp)+,d0-d1/a0
+	lea.l	($000c,a7),a7
+	bsr	L0007ea
+	movem.l	(a7)+,d0-d1/a0
 	rts
 
 L0007a2:
-	move.w	#$0002,-(sp)
-	clr.l	-(sp)
-	move.w	d5,-(sp)
+	move.w	#$0002,-(a7)
+	clr.l	-(a7)
+	move.w	d5,-(a7)
 	DOS	_SEEK
-	addq.l	#8,sp
+	addq.l	#8,a7
 	move.l	d0,d4
-	clr.w	-(sp)
-	clr.l	-(sp)
-	move.w	d5,-(sp)
+	clr.w	-(a7)
+	clr.l	-(a7)
+	move.w	d5,-(a7)
 	DOS	_SEEK
-	addq.l	#8,sp
+	addq.l	#8,a7
 	tst.l	d4
-	beq.w	L0008b0
+	beq	L0008b0
 	rts
 
 L0007c2:
 	pea.l	(L000f44,pc)
 	DOS	_PRINT
 	tst.b	($1b9a,a6)
-	beq.s	L0007d4
+	beq	L0007d4
 	pea.l	(L00116c+$000a2e,pc)
-	bra.s	L0007d8
+	bra	L0007d8
 
 L0007d4:
 	pea.l	(L001036,pc)
@@ -781,7 +781,7 @@ L0007d8:
 	DOS	_PRINT
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	lea.l	($000c,sp),sp
+	lea.l	($000c,a7),a7
 	rts
 
 L0007e6:
@@ -800,24 +800,24 @@ L0007f6:
 	lea.l	(L00116c+$00122e,pc),a4
 L000802:
 	move.b	(a3)+,(a4)+
-	bne.s	L000802
+	bne	L000802
 	subq.l	#1,a4
 	tst.b	(a2)
-	beq.s	L000816
+	beq	L000816
 	lea.l	(-$0001,a2),a3
 L000810:
 	move.b	(a3)+,(a4)+
-	bne.s	L000810
-	bra.s	L00081e
+	bne	L000810
+	bra	L00081e
 
 L000816:
 	lea.l	(L00114a,pc),a2
 L00081a:
 	move.b	(a2)+,(a4)+
-	bne.s	L00081a
+	bne	L00081a
 L00081e:
 	tst.b	($1160,a6)
-	beq.s	L000826
+	beq	L000826
 	rts
 
 L000826:
@@ -828,131 +828,131 @@ L000826:
 
 L00083a:
 	cmpi.b	#$03,($0cbc)
-	bcs.s	L000856
-	movem.l	d0-d2,-(sp)
+	bcs	L000856
+	movem.l	d0-d2,-(a7)
 	moveq.l	#$00,d2
 	moveq.l	#$04,d1
 	moveq.l	#$ac,d0
 	trap	#15
 	move.l	d0,($133a,a6)
-	movem.l	(sp)+,d0-d2
+	movem.l	(a7)+,d0-d2
 L000856:
 	rts
 
 L000858:
 	cmpi.b	#$03,($0cbc)
-	bcs.s	L000872
-	movem.l	d0-d2,-(sp)
+	bcs	L000872
+	movem.l	d0-d2,-(a7)
 	move.l	($133a,a6),d2
 	moveq.l	#$04,d1
 	moveq.l	#$ac,d0
 	trap	#15
-	movem.l	(sp)+,d0-d2
+	movem.l	(a7)+,d0-d2
 L000872:
 	rts
 
 L000874:
 	pea.l	($0000)
 	DOS	_MFREE
-	addq.l	#4,sp
+	addq.l	#4,a7
 	rts
 
 L00087e:
-	bsr.s	L000874
+	bsr	L000874
 	pea.l	(L000e69,pc)
-	bra.w	L00090a
+	bra	L00090a
 
 L000888:
-	bsr.s	L000874
+	bsr	L000874
 	pea.l	(L000eab,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L000890:
-	bsr.s	L000874
+	bsr	L000874
 	pea.l	(L000ecc,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L000898:
-	bsr.s	L000874
+	bsr	L000874
 	pea.l	(L000eed,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008a0:
-	bsr.s	L000874
+	bsr	L000874
 	pea.l	(L000e8a,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008a8:
-	bsr.s	L000874
+	bsr	L000874
 	pea.l	(L000f0e,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008b0:
 	pea.l	(L000da4,pc)
-	bra.s	L000902
+	bra	L000902
 
 L0008b6:
 	pea.l	(L000e48,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008bc:
 	pea.l	(L000e27,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008c2:
 	pea.l	(L000cfe,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008c8:
 	pea.l	(L000cdd,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008ce:
 	pea.l	(L000cbc,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008d4:
 	pea.l	(L000d62,pc)
-	bra.s	L000902
+	bra	L000902
 
 L0008da:
 	pea.l	(L000d20,pc)
-	bra.s	L000902
+	bra	L000902
 
 L0008e0:
 	pea.l	(L000d41,pc)
-	bra.s	L000902
+	bra	L000902
 
 L0008e6:
 	pea.l	(L000dc4,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008ec:
 	pea.l	(L000de5,pc)
-	bra.s	L00090a
+	bra	L00090a
 
 L0008f2:
 	pea.l	(L000e06,pc)
-	bra.s	L000902
+	bra	L000902
 
 L0008f8:
 	pea.l	(L000bff,pc)
-	bra.s	L000912
+	bra	L000912
 
 L0008fe:
 	pea.l	(L000d83,pc)
 L000902:
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
+	addq.l	#4,a7
 L00090a:
 	pea.l	(L00100b,pc)
 	DOS	_PRINT
-	addq.l	#4,sp
+	addq.l	#4,a7
 L000912:
 	DOS	_PRINT
-	addq.l	#4,sp
-	move.w	#$ffff,-(sp)
+	addq.l	#4,a7
+	move.w	#$ffff,-(a7)
 	DOS	_EXIT2
 
 L00091c:
@@ -960,31 +960,31 @@ L00091c:
 	DOS	_PRINT
 	pea.l	(L001061,pc)
 	DOS	_PRINT
-	addq.l	#8,sp
-	move.l	d4,-(sp)
+	addq.l	#8,a7
+	move.l	d4,-(a7)
 	DOS	_MALLOC
-	addq.l	#4,sp
+	addq.l	#4,a7
 	tst.l	d0
-	bmi.w	L00087e
+	bmi	L00087e
 	move.l	d0,($0bba,a6)
-	move.l	d4,-(sp)
-	move.l	d0,-(sp)
-	move.w	d5,-(sp)
+	move.l	d4,-(a7)
+	move.l	d0,-(a7)
+	move.w	d5,-(a7)
 	DOS	_READ
-	lea.l	($000a,sp),sp
+	lea.l	($000a,a7),a7
 	cmp.l	d0,d4
-	bne.s	L0008e0
-	move.w	d5,-(sp)
+	bne	L0008e0
+	move.w	d5,-(a7)
 	DOS	_CLOSE
-	addq.l	#2,sp
-	bsr.w	L000a5c
+	addq.l	#2,a7
+	bsr	L000a5c
 	move.l	(L00116c+$000004,pc),d0
 	movea.l	(L00116c,pc),a4
 	lea.l	(L00116c+$000a2e,pc),a0
 	move.l	d0,d1
 	movea.l	a0,a1
 	movea.l	(-$03d4,a5),a2
-	bra.s	L00096e
+	bra	L00096e
 
 L00096a:
 	move.b	d7,(a0)+
@@ -992,24 +992,24 @@ L00096a:
 L00096e:
 	move.b	(a4)+,d7
 	cmp.b	#$0d,d7
-	bne.s	L00096a
+	bne	L00096a
 	move.b	(a4)+,d7
 	cmp.b	#$0a,d7
-	bne.s	L00096a
+	bne	L00096a
 	move.b	(a4)+,d7
 	cmp.b	#$1a,d7
-	bne.s	L00096a
+	bne	L00096a
 	clr.b	(a0)+
 	subq.l	#4,d0
 	lea.l	(L00116c+$00122e,pc),a3
-	bra.s	L000992
+	bra	L000992
 
 L000990:
 	subq.l	#1,d0
 L000992:
 	move.b	(a4)+,d6
 	move.b	d6,(a3)+
-	bne.s	L000990
+	bne	L000990
 	move.l	d0,($1150,a6)
 	suba.l	a1,a0
 	move.l	a0,d7
@@ -1018,77 +1018,77 @@ L000992:
 	bclr.l	#$00,d7
 	add.l	d7,($1150,a6)
 	move.l	d0,d1
-	move.l	d0,-(sp)
-	add.l	d7,(sp)
+	move.l	d0,-(a7)
+	add.l	d7,(a7)
 	DOS	_MALLOC
-	addq.l	#4,sp
+	addq.l	#4,a7
 	tst.l	d0
-	bmi.w	L00087e
+	bmi	L00087e
 	move.l	d0,($115a,a6)
 	movea.l	d0,a3
 	lea.l	(L00116c+$000a2e,pc),a0
 	lea.l	($0008,a3),a1
 L0009ca:
 	move.b	(a0)+,(a1)+
-	bne.s	L0009ca
+	bne	L0009ca
 	lea.l	(a3,d7.l),a3
 L0009d2:
 	move.b	(a4)+,(a3)+
 	subq.l	#1,d1
-	bne.s	L0009d2
+	bne	L0009d2
 	movea.l	d0,a4
 	clr.w	(a4)
 	tst.l	($0bbe,a6)
-	bne.s	L0009ea
+	bne	L0009ea
 	move.w	#$ffff,($0002,a4)
-	bra.s	L0009f0
+	bra	L0009f0
 
 L0009ea:
 	move.w	#$0000,($0002,a4)
 L0009f0:
 	move.w	d7,($0004,a4)
 	move.w	#$0008,($0006,a4)
-	move.l	(L00116c,pc),-(sp)
+	move.l	(L00116c,pc),-(a7)
 	DOS	_MFREE
-	addq.l	#4,sp
-	bsr.w	L0007c2
+	addq.l	#4,a7
+	bsr	L0007c2
 	tst.b	($239a,a6)
-	beq.w	L000498
+	beq	L000498
 	tst.b	($115f,a6)
-	beq.w	L000282
+	beq	L000282
 	tst.l	($0bbe,a6)
-	beq.w	L000282
+	beq	L000282
 	pea.l	(L00116c+$0001d2,pc)
 	pea.l	(L00116c+$00122e,pc)
 	DOS	_NAMECK
-	addq.l	#8,sp
+	addq.l	#8,a7
 	tst.l	d0
-	bmi.w	L0008e6
-	bsr.w	L0007f6
+	bmi	L0008e6
+	bsr	L0007f6
 	movea.l	(-$03d4,a5),a2
 	addq.l	#8,a2
 	lea.l	(L00116c+$00122e,pc),a3
 L000a3e:
 	move.b	(a3)+,(a2)+
-	bne.s	L000a3e
+	bne	L000a3e
 	pea.l	(L000f6e,pc)
 	DOS	_PRINT
 	pea.l	(L00116c+$00122e,pc)
 	DOS	_PRINT
 	pea.l	(L000ff3,pc)
 	DOS	_PRINT
-	lea.l	($000c,sp),sp
-	bra.w	L000472
+	lea.l	($000c,a7),a7
+	bra	L000472
 
 L000a5c:
 	movea.l	(L000bba,pc),a0
 	cmpi.l	#$5a444630,(a0)		;'ZDF0'
-	bne.w	L000888
+	bne	L000888
 	cmpi.w	#$0d0a,($0004,a0)
-	bne.w	L000888
+	bne	L000888
 	moveq.l	#$01,d2
 	lea.l	(L001134,pc),a0
-	bra.s	L000a80
+	bra	L000a80
 
 L000a7c:
 	lea.l	(L00113a,pc),a0
@@ -1096,82 +1096,82 @@ L000a80:
 	lea.l	(L00116c+$00004e,pc),a1
 L000a84:
 	move.b	(a0)+,(a1)+
-	bne.s	L000a84
-	clr.l	-(sp)
+	bne	L000a84
+	clr.l	-(a7)
 	pea.l	(L00116c+$0000ce,pc)
 	pea.l	(L00116c+$00004e,pc)
-	move.w	#$0002,-(sp)
+	move.w	#$0002,-(a7)
 	DOS	_EXEC
-	lea.l	($000e,sp),sp
+	lea.l	($000e,a7),a7
 	tst.l	d0
-	bpl.s	L000aa8
-	dbra.w	d2,L000a7c
-	bra.w	L000890
+	bpl	L000aa8
+	dbra	d2,L000a7c
+	bra	L000890
 
 L000aa8:
 	pea.l	(-$0001)
 	DOS	_MALLOC
 	and.l	#$00fffff0,d0
-	beq.w	L000890
+	beq	L000890
 	move.l	d0,d1
-	move.l	d0,(sp)
+	move.l	d0,(a7)
 	DOS	_MALLOC
-	addq.l	#4,sp
+	addq.l	#4,a7
 	tst.l	d0
-	bmi.w	L000890
+	bmi	L000890
 	movea.l	d0,a4
 	add.l	d0,d1
-	move.l	d1,-(sp)
-	move.l	d0,-(sp)
+	move.l	d1,-(a7)
+	move.l	d0,-(a7)
 	pea.l	(L00116c+$00004e,pc)
-	move.b	#$01,(sp)
-	move.w	#$0003,-(sp)
+	move.b	#$01,(a7)
+	move.w	#$0003,-(a7)
 	DOS	_EXEC
-	lea.l	($000e,sp),sp
+	lea.l	($000e,a7),a7
 	tst.l	d0
-	bmi.w	L000890
+	bmi	L000890
 	cmpi.l	#$4c7a7a52,($0008,a4)	;'LzzR'
-	bne.w	L000898
-	move.l	($0004,a4),-(sp)
+	bne	L000898
+	move.l	($0004,a4),-(a7)
 	pea.l	(a4)
 	DOS	_SETBLOCK
-	addq.l	#8,sp
+	addq.l	#8,a7
 	pea.l	(L00116c+$000008,pc)
-	move.l	(L000bba,pc),-(sp)
+	move.l	(L000bba,pc),-(a7)
 	jsr	($000c,a4)
-	addq.l	#8,sp
+	addq.l	#8,a7
 	tst.l	d0
-	bmi.w	L000888
+	bmi	L000888
 	lea.l	(L00116c+$000008,pc),a1
 	cmpi.w	#$0001,($0002,a1)
-	bne.w	L0008a0
+	bne	L0008a0
 	move.l	($0008,a1),d0
 	move.l	d0,($1170,a6)
-	move.l	d0,-(sp)
+	move.l	d0,-(a7)
 	DOS	_MALLOC
-	addq.l	#4,sp
+	addq.l	#4,a7
 	tst.l	d0
-	bmi.w	L00087e
+	bmi	L00087e
 	move.l	d0,($116c,a6)
-	move.l	d0,-(sp)
-	move.l	($0004,a1),-(sp)
+	move.l	d0,-(a7)
+	move.l	($0004,a1),-(a7)
 	jsr	($0010,a4)
-	addq.l	#8,sp
+	addq.l	#8,a7
 	tst.l	d0
-	bmi.w	L0008a8
-	bsr.w	L0007e6
+	bmi	L0008a8
+	bsr	L0007e6
 	cmpi.w	#$0001,(a1)
-	beq.s	L000bac
+	beq	L000bac
 	lea.l	($000a,a1),a1
 	cmpi.w	#$0021,($0002,a1)	;'!'
-	bne.s	L000bac
+	bne	L000bac
 	tst.b	($115f,a6)
-	beq.s	L000bac
+	beq	L000bac
 	move.l	($0008,a1),d0
 	add.l	#$0000020a,d0
 	move.l	d0,($0bbe,a6)
 	cmp.l	($0018,a5),d0
-	bcc.s	L000bac
+	bcc	L000bac
 	movea.l	(-$03d4,a5),a2
 	move.l	a2,($0010,a5)
 	clr.l	(a2)
@@ -1179,18 +1179,18 @@ L000aa8:
 	move.w	#$0008,($0006,a2)
 	move.w	#$0000,($0008,a2)
 	pea.l	(a2)
-	addi.l	#$0000020a,(sp)
-	move.l	($0004,a1),-(sp)
+	addi.l	#$0000020a,(a7)
+	move.l	($0004,a1),-(a7)
 	jsr	($0010,a4)
-	addq.l	#8,sp
+	addq.l	#8,a7
 	tst.l	d0
-	bmi.w	L00087e
+	bmi	L00087e
 L000bac:
-	move.l	(L000bba,pc),-(sp)
+	move.l	(L000bba,pc),-(a7)
 	DOS	_MFREE
 	pea.l	(a4)
 	DOS	_MFREE
-	addq.l	#8,sp
+	addq.l	#8,a7
 	rts
 
 L000bba:
@@ -1333,8 +1333,7 @@ L001145:
 L00114a:
 	.dc.b	'.pdx',$00,$00,$00,$00,$00,$00,$00,$00
 L001156:
-	.dc.l	$00000000,$00000000
-	.dc.l	$ffffffff
+	.dc.l	$00000000,$00000000,$ffffffff
 L001162:
 	.dc.w	$0000
 L001164:
