@@ -1,6 +1,6 @@
 ;=============================================
 ;  Filename bind.x
-;  Time Stamp Mon Oct  2 12:00:00 1989
+;  Time Stamp Mon Aug 24 00:26:25 2020
 ;
 ;  Base address 000000
 ;  Exec address 000000
@@ -21,10 +21,10 @@
 
 	.text
 
-L000000:
-	lea.l	(L002bbc),sp
-	lea.l	(L000000-$0000f0),a0
-	lea.l	(L002bbc),a1
+Start:
+	lea.l	(End),sp
+	lea.l	(Start-$0000f0),a0
+	lea.l	(End),a1
 	suba.l	a0,a1
 	move.l	a1,-(sp)
 	move.l	a0,-(sp)
@@ -59,7 +59,7 @@ L000000:
 	clr.b	(L001fae)
 	move.w	#$ffff,(L001b44)
 	move.w	#$ffff,(L001b46)
-	movea.l	(L000000-$0000e0),a0
+	movea.l	(Start-$0000e0),a0
 	addq.l	#1,a0
 	lea.l	(L001b4a),a1
 	lea.l	(L001c62),a2
@@ -2102,6 +2102,6 @@ L001fba:
 	.ds.b	1
 L001fbb:
 	.ds.b	3073
-L002bbc:
+End:
 
-	.end	L000000
+	.end	Start
