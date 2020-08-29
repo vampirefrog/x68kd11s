@@ -1,0 +1,14 @@
+使い方: mxdrv [switch]	Usage: mxdrv [switch]
+MMLバッファサイズ	MML buffer size
+省略時 64	Default 64
+PCMバッファサイズ	PCM buffer size
+省略時312	Default 312
+LINKバッファサイズ	LINK buffer size
+省略時  2	Default  2
+省略時 23	Default 23
+mxdrv解除'	Release mxdrv'
+メモリが不足しています	Out of memory
+mxdrvを解除しました	mxdrv released
+mxdrvはすでに組み込まれています	mxdrv is already loaded
+mxdrvは組み込まれていません'	mxdrv is not loaded'
+mxdrvを解除出来ませんでした	Could not unload mxdrv
