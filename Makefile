@@ -21,6 +21,8 @@ all: \
 	commando.s \
 	cmd.s \
 	process.s \
+	has.s \
+	hlk.s \
 	bind.s \
 	opmdrv3.s \
 	mopmdrv.s \
@@ -77,7 +79,7 @@ iplromxv.s: iplromxv.dat iplromxv.lab iplromxv.tab
 	sed -i -e 's/;  Commandline\s[^ ]\+\s/;  Commandline dis /' $@
 
 # Useful for new .x files
-%.new.s: %.x
+%.new.s: %.[xr]
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -e$(patsubst %.s,%.lab,$@) --overwrite $< $@
 	sed -i -e 's/;  Code Generate date .\+/;/' $@
 	sed -i -e 's/;  Time Stamp .\+/;/' $@
