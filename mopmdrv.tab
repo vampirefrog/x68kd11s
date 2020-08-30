@@ -1,0 +1,9 @@
+002872
+	dc.b	(peek.b(pc)/8)%16," << 3 | ",peek.b(pc)%8," ; Feedback << 3 | Connection"
+	dc.b	peek.b(pc)," ; Slot Mask"
+	byte[9]
+	byte[11]
+	byte[11]
+	byte[11]
+	byte[11]
+end[68]
