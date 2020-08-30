@@ -174,8 +174,8 @@ fe0af2	P
 fe0b44	DBF
 fe0b5a	P
 fe0b6a	P
-fe0bfe	DB
-fe0c08	DB
+fe0bfe	DW
+fe0c08	DW
 fe0c16	P
 fe16d0	P
 fe16dc	P
