@@ -1,0 +1,7 @@
+使用法：attrib [スイッチ] ファイル名	Usage: attrib [switch] filename
+ファイルが見つかりません	File not found
+読み出し専用属性設定	Read-only attribute setting
+読み出し専用属性解除	Release read-only attribute
+ファイル名が異常です	The file name is abnormal
+不可視属性設定	Invisible attribute setting
+不可視属性解除	Release invisible attribute
