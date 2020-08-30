@@ -1,0 +1,20 @@
+使用法：fc［スイッチ］ファイル１　ファイル２	Usage: fc [switch] file 1 file 2
+タブをタブカラムまでのスペースとする(2,4,8,16)	Set tab to space to tab column (2,4,8,16)
+ブランク文字を圧縮比較する	Compress comparison of blank characters
+大文字小文字を区別しない	Case insensitive
+比較する最大行数の指定	Specify maximum number of rows to compare
+比較結果を省略表示する	Display comparison results in abbreviated form
+バイナリーモードで比較する	Compare in binary mode
+アスキーモードで比較する	Compare in ASCII mode
+違いは見つかりません	No difference  found
+より大きいファイルです	Is a larger file
+は不正なファイルです Is an invalid file
+メモリーが足りません	Not enough memory
+をオープンできません	Can't open
+行番号を表示する	Display line numbers
+違いが多すぎます	Too many differences
+一致行数の指定	Specifying the number of matching lines
+/t数値	/t number
+/l数値	/l number
+/数値	/number
+は	Is
