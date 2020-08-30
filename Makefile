@@ -91,6 +91,10 @@ opmdrv3.s: opmdrv3.x opmdrv3.lab opmdrv3.tab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -w16 -g$(patsubst %.s,%.lab,$@) -T$(patsubst %.s,%.tab,$@) --overwrite $< $@
 	sed -i -f const.sed -f clean-s.sed $@
 
+mopmdrv.s: mopmdrv.x mopmdrv.lab mopmdrv.tab
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -w16 -g$(patsubst %.s,%.lab,$@) -T$(patsubst %.s,%.tab,$@) --overwrite $< $@
+	sed -i -f const.sed -f clean-s.sed $@
+
 xlate: xlate.c
 	gcc xlate.c -o xlate
 
