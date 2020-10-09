@@ -1,0 +1,26 @@
+作者にお知らせ下さい．できる限りの事はやってみます．(;_;)	Please let the author know. I will try as much as I can. (; _;)
+環境変数 HLK の内容がコマンドラインの手前に挿入されます.	The contents of the environment variable HLK are inserted just before the command line.
+ファイル名先頭に + をつけたオブジェクトを先頭にリンクします.	Link the object with + at the beginning of the file name.
+このエラーはプログラムのバグによって発生した可能性が大です．	This error is most likely caused by a bug in the program.
+ライブラリのパスとして環境変数 lib を使用する	Use the environment variable `lib' as the library path
+実行ファイルの拡張子省略時に .x を付けない	Do not add .x when the extension of the executable file is omitted
+セクション情報を実行ファイルに埋め込む	Embed section information in executable file
+--verbose (-v) オプションを取り消す	Undo the --verbose (-v) option
+.ctor/.dtor に対応しない / する	Does not support / .dtor / .dtor
+.r 形式実行ファイルの作成	Creating an .r format executable file
+起動時にタイトルを表示する	Display title at startup
+シンボルテーブルの出力禁止	Symbol table output prohibited
+lib<lib>.a をリンクする	Link lib <lib> .a
+インダイレクトファイルの指定	Specifying an indirect file
+ロードモードの設定(0～2)	Load mode setting (0 to 2)
+ライブラリ検索パスの指定	Specify library search path
+実行ファイル名の指定	Specifying the executable file name
+アライメント値の設定	Alignment value setting
+ベースアドレスの設定	Base address setting
+マップファイルの作成	Creating a map file
+警告の出力禁止	Prohibition of warning output
+シンボルの定義	Symbol definition
+バージョン表示	Version display
+使用法表示	Usage indication
+立花えり子	Eriko Tachibana
+詳細表示	Detail View

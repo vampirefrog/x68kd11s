@@ -7,7 +7,7 @@
 ;  Text size    0068d4 byte(s)
 ;  Data size    000000 byte(s)
 ;  Bss  size    000000 byte(s)
-;  1281 Labels
+;  1284 Labels
 ;
 ;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -ghlk.lab --overwrite hlk.r hlk.s
 ;          DIS version 3.16
@@ -8880,8 +8880,11 @@ L006106:
 
 L006110:
 	addq.l	#2,a0
+L006112:
 	addq.l	#2,a0
+L006114:
 	addq.l	#2,a0
+L006116:
 	addq.l	#4,a0
 	cmp.w	#$0005,d5
 	beq.s	L006124
