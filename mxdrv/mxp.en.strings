@@ -1,0 +1,17 @@
+使い方: mxp {<コマンド>|<MDXファイル名> [PDXファイル名]}	Usage: mxp {<command>|<MDX filename> [PDX filename]}
+v2.00以上のmxdrvを使用してください。	Please use mxdrv v2.00 or higher.
+MMLデータバッファが不足しています。	Insufficient MML data buffer.
+PCMデータバッファが不足しています。	Insufficient PCM data buffer.
+mxdrvが組み込まれていません。	mxdrv is not loaded.
+ファイルが読み込めません。	Could not read file.
+メモリが確保できません。	Could not allocate memory.
+演奏を開始します。	Play.
+演奏を終了します。	Stop.
+演奏を中断します。	Pause.
+演奏を再開します。	Unpause.
+が見つかりません。	Not found.
+-c  演奏再開	-c  Unpause
+-s  演奏中断	-s  Pause
+-e  演奏終了	-e  Stop
+-p  演奏開始	-p  Resume
+"の	"'s

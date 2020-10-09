@@ -43,6 +43,7 @@ translations: \
 	en/bind.x \
 	en/process.x \
 	en/mxdrv/mxc.x \
+	en/mxdrv/mxp.x \
 	en/mxdrv/2.06+17_Rel.X5-S/mxdrv17.x
 
 en/%.s: %.s en/%.sed
