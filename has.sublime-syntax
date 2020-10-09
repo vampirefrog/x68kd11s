@@ -4,6 +4,9 @@ name: X68000 HAS assembly
 file_extensions: [s, S]
 scope: source.s
 
+# https://www.sublimetext.com/docs/3/scope_naming.html#markup
+# https://www.sublimetext.com/docs/3/syntax.html
+
 contexts:
   main:
     - match: \b([ad][0-7]|sp|pc|sr)\b
