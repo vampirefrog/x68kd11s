@@ -20,6 +20,7 @@ all: \
 	human.s \
 	commando.s \
 	cmd.s \
+	float2.s \
 	process.s \
 	has.s \
 	hlk.s \
@@ -42,6 +43,7 @@ all: \
 translations: \
 	en/bind.x \
 	en/process.x \
+	en/float2.x \
 	en/mxdrv/mxc.x \
 	en/mxdrv/mxp.x \
 	en/mxdrv/2.06+17_Rel.X5-S/mxdrv17.x
