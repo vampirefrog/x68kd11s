@@ -5,10 +5,10 @@
 *	DIS version 3.16
 *
 *********************************************
-000000	P
+000000	P	Start
 00001e	P
-000028	P
-000034	P
+000028	P	PrintErrorAndExit
+000034	P	DetectMxdrv
 00007c	P
 00009e	P
 0000a2	P
@@ -43,7 +43,7 @@
 00040a	P
 00042e	P
 000436	P
-00043e	P
+00043e	P	InitMxp
 00047c	P
 000494	P
 0004d2	P
@@ -58,10 +58,10 @@
 000582	P
 000584	P
 0005b6	P
-0005da	P
-0005ec	P
+0005da	P	MemCopy
+0005ec	P	PrintSomething
 0005f6	P
-000600	P
+000600	P	GetIntVec
 00060a	P
 000618	P
 00062c	P
@@ -85,7 +85,7 @@
 0006e6	P
 0006ec	P
 0006f2	P
-0006fe	P
+0006fe	P	StringCompare
 000710	P
 000722	P
 000724	P
@@ -98,33 +98,33 @@
 00077a	P
 00077c	DL
 000780	DU
-000790	DS
-000808	DS
-000826	DS
-000842	DS
-000857	DS
-00086c	DS
-000881	DS
-000896	DS
-00089c	DS
-0008bd	DS
-0008c1	DS
-0008e9	DS
+000790	DS	UsageString
+000808	DS	CouldNotReadFileString
+000826	DS	CouldNotAllocateMemory
+000842	DS	PlayString
+000857	DS	StopString
+00086c	DS	PauseString
+000881	DS	UnpauseString
+000896	DS	MxdrvString
+00089c	DS	MxdrvIsNotLoadedString
+0008bd	DS	TwoHundredString
+0008c1	DS	VersionErrorString
+0008e9	DS	MxpString
 0008ed	DU
 0008ef	DU
 0008f1	DU
 0008f3	DU
-0008f6	DS
-00090c	DS
-000933	DS
-00095a	DS
+0008f6	DS	NotFoundString
+00090c	DS	SmallMMLString
+000933	DS	SmallPCMString
+00095a	DS	VersionString
 000984	DU
-000987	DS
+000987	DS	MdxExtensionString
 00098c	DU
-00098f	DS
+00098f	DS	PdxExtensionString
 000994	DU
 000996	DU
-000998	DS
+000998	DS	QuoteSString
 00099c	DL
 0009a0	DB
 000aa0	DB

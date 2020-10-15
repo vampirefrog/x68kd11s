@@ -21,7 +21,7 @@
 
 	.text
 
-L000000:
+Start:
 	lea.l	(L004ba0,pc),a7
 	lea.l	($0010,a0),a0
 	suba.l	a0,a1
@@ -30,7 +30,7 @@ L000000:
 	DOS	_SETBLOCK
 	addq.l	#8,a7
 	pea.l	($0001,a2)
-	bsr	L00043e
+	bsr	InitMxp
 	clr.w	-(a7)
 	DOS	_EXIT2
 
@@ -39,43 +39,43 @@ L00001e:
 	trap	#4
 	rts
 
-L000028:
+PrintErrorAndExit:
 	move.l	($0004,a7),-(a7)
 	DOS	_PRINT
 	move.w	#$ffff,(a7)
 	DOS	_EXIT2
 
-L000034:
+DetectMxdrv:
 	link.w	a6,#-$0100
 	move.l	#$00000008,-(a7)
 	pea.l	(-$0100,a6)
 	move.l	#$00000024,-(a7)
-	bsr	L000600
+	bsr	GetIntVec
 	addq.l	#4,a7
 	subq.l	#8,d0
 	move.l	d0,-(a7)
-	bsr	L0005da
+	bsr	MemCopy
 	lea.l	($000c,a7),a7
 	move.l	#$00000005,-(a7)
-	pea.l	(L000896,pc)
+	pea.l	(MxdrvString,pc)
 	pea.l	(-$0100,a6)
-	bsr	L0006fe
+	bsr	StringCompare
 	lea.l	($000c,a7),a7
 	tst.l	d0
 	beq	L00007c
-	pea.l	(L00089c,pc)
-	bsr	L000028
+	pea.l	(MxdrvIsNotLoadedString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L00007c:
 	move.l	#$00000003,-(a7)
-	pea.l	(L0008bd,pc)
+	pea.l	(TwoHundredString,pc)
 	pea.l	(-$00fb,a6)
-	bsr	L0006fe
+	bsr	StringCompare
 	lea.l	($000c,a7),a7
 	tst.l	d0
 	bge	L00009e
-	pea.l	(L0008c1,pc)
-	bsr	L000028
+	pea.l	(VersionErrorString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L00009e:
 	unlk	a6
@@ -171,7 +171,7 @@ L000148:
 	bge	L0001fc
 	pea.l	(-$0100,a6)
 	clr.l	-(a7)
-	pea.l	(L0008e9,pc)
+	pea.l	(MxpString,pc)
 	bsr	L000652
 	lea.l	($000c,a7),a7
 	tst.l	d0
@@ -214,13 +214,13 @@ L0001dc:
 	move.l	d7,d0
 	bge	L0001fc
 	pea.l	(L0008f3,pc)
-	bsr	L0005ec
+	bsr	PrintSomething
 	addq.l	#4,a7
 	move.l	a5,-(a7)
-	bsr	L0005ec
+	bsr	PrintSomething
 	addq.l	#4,a7
-	pea.l	(L0008f6,pc)
-	bsr	L000028
+	pea.l	(NotFoundString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L0001fc:
 	move.l	d7,d0
@@ -307,8 +307,8 @@ L000290:
 	movea.l	d0,a5
 	move.l	d0,d4
 	bgt	L0002d4
-	pea.l	(L000826,pc)
-	bsr	L000028
+	pea.l	(CouldNotAllocateMemory,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L0002d4:
 	clr.w	(a5)
@@ -341,8 +341,8 @@ L0002e6:
 	lea.l	($000c,a7),a7
 	cmp.l	d6,d0
 	bge	L000324
-	pea.l	(L000808,pc)
-	bsr	L000028
+	pea.l	(CouldNotReadFileString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L000324:
 	move.l	a5,-(a7)
@@ -354,8 +354,8 @@ L000324:
 	lea.l	($000c,a7),a7
 	tst.l	d0
 	beq	L000348
-	pea.l	(L00090c,pc)
-	bsr	L000028
+	pea.l	(SmallMMLString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L000348:
 	move.l	a5,-(a7)
@@ -405,8 +405,8 @@ L000386:
 	movea.l	d0,a5
 	move.l	d0,d4
 	bge	L0003ce
-	pea.l	(L000826,pc)
-	bsr	L000028
+	pea.l	(CouldNotAllocateMemory,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L0003ce:
 	clr.l	(a5)
@@ -428,8 +428,8 @@ L0003ce:
 	lea.l	($000c,a7),a7
 	cmp.l	d7,d0
 	bge	L00040a
-	pea.l	(L000808,pc)
-	bsr	L000028
+	pea.l	(CouldNotReadFileString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L00040a:
 	move.l	a5,-(a7)
@@ -441,8 +441,8 @@ L00040a:
 	lea.l	($000c,a7),a7
 	tst.l	d0
 	beq	L00042e
-	pea.l	(L000933,pc)
-	bsr	L000028
+	pea.l	(SmallPCMString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L00042e:
 	move.l	a5,-(a7)
@@ -453,25 +453,25 @@ L000436:
 	unlk	a6
 	rts
 
-L00043e:
+InitMxp:
 	link.w	a6,#-$0200
 	movem.l	d5-d7/a5,-(a7)
 	moveq.l	#$00,d6
 	moveq.l	#$00,d5
 	clr.b	(L0009a0)
 	clr.b	(L000aa0)
-	pea.l	(L00095a,pc)
-	bsr	L0005ec
+	pea.l	(VersionString,pc)
+	bsr	PrintSomething
 	addq.l	#4,a7
-	bsr	L000034
+	bsr	DetectMxdrv
 	move.l	($0008,a6),d0
 	movea.l	d0,a0
 	moveq.l	#$00,d0
 	move.b	(a0),d0
 	tst.l	d0
 	bne	L00047c
-	pea.l	(L000790,pc)
-	bsr	L000028
+	pea.l	(UsageString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L00047c:
 	move.l	($0008,a6),d0
@@ -497,8 +497,8 @@ L000494:
 	beq	L0004d6
 	cmpi.l	#$00000073,d0
 	beq	L0004de
-	pea.l	(L000790,pc)
-	bsr	L000028
+	pea.l	(UsageString,pc)
+	bsr	PrintErrorAndExit
 	addq.l	#4,a7
 L0004d2:
 	bra	L000584
@@ -533,7 +533,7 @@ L0004e6:
 	addq.l	#8,a7
 	tst.l	d0
 	bne	L000520
-	pea.l	(L000987,pc)
+	pea.l	(MdxExtensionString,pc)
 	pea.l	(-$0100,a6)
 	bsr	L000698
 	addq.l	#8,a7
@@ -563,7 +563,7 @@ L00054e:
 	addq.l	#8,a7
 	tst.l	d0
 	bne	L000578
-	pea.l	(L00098f,pc)
+	pea.l	(PdxExtensionString,pc)
 	pea.l	(L000aa0,pc)
 	bsr	L000698
 	addq.l	#8,a7
@@ -575,20 +575,20 @@ L000582:
 	moveq.l	#$04,d7
 L000584:
 	pea.l	(L000994,pc)
-	bsr.w	L0005ec
+	bsr.w	PrintSomething
 	addq.l	#4,a7
 	moveq.l	#$00,d0
 	move.b	(L0009a0,pc),d0
 	tst.l	d0
 	beq	L0005b6
 	pea.l	(L000996,pc)
-	bsr.w	L0005ec
+	bsr.w	PrintSomething
 	addq.l	#4,a7
 	pea.l	(L0009a0,pc)
-	bsr.w	L0005ec
+	bsr.w	PrintSomething
 	addq.l	#4,a7
-	pea.l	(L000998,pc)
-	bsr.w	L0005ec
+	pea.l	(QuoteSString,pc)
+	bsr.w	PrintSomething
 	addq.l	#4,a7
 L0005b6:
 	move.l	d7,d0
@@ -597,7 +597,7 @@ L0005b6:
 	lea.l	(L000780,pc),a0
 	adda.l	d0,a0
 	move.l	(a0),-(a7)
-	bsr.w	L0005ec
+	bsr.w	PrintSomething
 	addq.l	#4,a7
 	move.l	d7,-(a7)
 	bsr	L00001e
@@ -606,14 +606,14 @@ L0005b6:
 	unlk	a6
 	rts
 
-L0005da:
+MemCopy:
 	movea.l	($0004,a7),a1
 	movea.l	($0008,a7),a2
 	move.l	($000c,a7),d1
 	IOCS	_B_MEMSTR
 	rts
 
-L0005ec:
+PrintSomething:
 	move.l	($0004,a7),-(a7)
 	DOS	_PRINT
 	addq.l	#4,a7
@@ -625,7 +625,7 @@ L0005f6:
 	addq.l	#2,a7
 	rts
 
-L000600:
+GetIntVec:
 	move.w	($0006,a7),-(a7)
 	DOS	_INTVCG
 	addq.l	#2,a7
@@ -762,7 +762,7 @@ L0006f2:
 	sub.l	a0,d0
 	rts
 
-L0006fe:
+StringCompare:
 	clr.l	d0
 	movea.l	($0004,a7),a0
 	movea.l	($0008,a7),a1
@@ -831,37 +831,37 @@ L00077c:
 	.data
 
 L000780:
-	.dc.l	L000842
-	.dc.l	L000857
-	.dc.l	L00086c
-	.dc.l	L000881
-L000790:
+	.dc.l	PlayString
+	.dc.l	StopString
+	.dc.l	PauseString
+	.dc.l	UnpauseString
+UsageString:
 	.dc.b	'使い方: mxp {<コマンド>|<MDXファイル名> [PDXファイル名]}',$0d,$0a
 	.dc.b	$09,'-p  演奏開始',$0d,$0a
 	.dc.b	$09,'-e  演奏終了',$0d,$0a
 	.dc.b	$09,'-s  演奏中断',$0d,$0a
 	.dc.b	$09,'-c  演奏再開',$0d,$0a,$00,$00
-L000808:
+CouldNotReadFileString:
 	.dc.b	$09,'ファイルが読み込めません。',$0d,$0a,$00
-L000826:
+CouldNotAllocateMemory:
 	.dc.b	$09,'メモリが確保できません。',$0d,$0a,$00
-L000842:
+PlayString:
 	.dc.b	'演奏を開始します。',$0d,$0a,$00
-L000857:
+StopString:
 	.dc.b	'演奏を終了します。',$0d,$0a,$00
-L00086c:
+PauseString:
 	.dc.b	'演奏を中断します。',$0d,$0a,$00
-L000881:
+UnpauseString:
 	.dc.b	'演奏を再開します。',$0d,$0a,$00
-L000896:
+MxdrvString:
 	.dc.b	'mxdrv',$00
-L00089c:
+MxdrvIsNotLoadedString:
 	.dc.b	$09,'mxdrvが組み込まれていません。',$0d,$0a,$00
-L0008bd:
+TwoHundredString:
 	.dc.b	'200',$00
-L0008c1:
+VersionErrorString:
 	.dc.b	$09,'v2.00以上のmxdrvを使用してください。',$0d,$0a,$00
-L0008e9:
+MxpString:
 	.dc.b	'mxp',$00
 L0008ed:
 	.dc.b	$2c,$00
@@ -871,27 +871,27 @@ L0008f1:
 	.dc.b	$5c,$00
 L0008f3:
 	.dc.b	$09,$27,$00
-L0008f6:
+NotFoundString:
 	.dc.b	$27,'が見つかりません。',$0d,$0a,$00
-L00090c:
+SmallMMLString:
 	.dc.b	$09,'MMLデータバッファが不足しています。',$0d,$0a,$00
-L000933:
+SmallPCMString:
 	.dc.b	$09,'PCMデータバッファが不足しています。',$0d,$0a,$00
-L00095a:
+VersionString:
 	.dc.b	'music player version 2.01 (c)1989 milk.',$0d,$0a,$00
 L000984:
 	.dc.b	$20,$09,$00
-L000987:
+MdxExtensionString:
 	.dc.b	'.mdx',$00
 L00098c:
 	.dc.b	$20,$09,$00
-L00098f:
+PdxExtensionString:
 	.dc.b	'.pdx',$00
 L000994:
 	.dc.b	$09,$00
 L000996:
 	.dc.b	$22,$00
-L000998:
+QuoteSString:
 	.dc.b	'"の',$00
 
 	.bss
@@ -904,4 +904,4 @@ L000aa0:
 	.ds.b	16640
 L004ba0:
 
-	.end	L000000
+	.end	Start
