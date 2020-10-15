@@ -7,7 +7,7 @@
 ;  Text size    005174 byte(s)
 ;  Data size    00001c byte(s)
 ;  Bss  size    00014a byte(s)
-;  981 Labels
+;  982 Labels
 ;
 ;  Commandline dis  -b2 -h -m68000 --sp -q1 -B -M -o120 -gfloat2.lab --overwrite float2.x float2.s
 ;          DIS version 3.16
@@ -68,7 +68,7 @@ L00006e:
 	bne.s	L000078
 	bsr.w	L000140
 L000078:
-	bsr.s	L0000b0
+	bsr.s	SetupVectors
 	beq.s	L00008a
 	bsr.s	L000096
 	move.l	#L0052da,($000e,a5)
@@ -87,7 +87,7 @@ L000092:
 
 L000096:
 	moveq.l	#$08,d1
-	lea.l	(L0001aa,pc),a1
+	lea.l	(LineFHandler,pc),a1
 	IOCS	_B_INTVCS
 	tst.b	($0cbc)
 	bne.s	L0000ae
@@ -95,9 +95,9 @@ L000096:
 L0000ae:
 	rts
 
-L0000b0:
+SetupVectors:
 	moveq.l	#$0b,d1
-	lea.l	(L0001aa,pc),a1
+	lea.l	(LineFHandler,pc),a1
 	IOCS	_B_INTVCS
 	move.l	d0,(L0001a0+$000002)
 	movea.l	d0,a1
@@ -123,11 +123,11 @@ L0000e8:
 	rts
 
 Start:
-	bsr.s	L000118
+	bsr.s	ParseCmdLine
 	clr.l	-(sp)
 	DOS	_SUPER
 	move.l	d0,(sp)
-	bsr.s	L0000b0
+	bsr.s	SetupVectors
 	beq.s	L000110
 	bsr.s	L000096
 	DOS	_SUPER
@@ -140,7 +140,7 @@ L000110:
 	move.w	#$ffff,-(sp)
 	DOS	_EXIT2
 
-L000118:
+ParseCmdLine:
 	bsr.s	L000152
 	cmp.w	#$002f,d0		;'/'
 	beq.s	L000126
@@ -181,8 +181,9 @@ L0001a0:
 	jmp	($00000000).l
 
 L0001a6:
-	.dc.l	$4645666e
-L0001aa:
+	not.w	d5
+	bne.s	L000218
+LineFHandler:
 	movem.l	d6/a5-a6,-(sp)
 	lea.l	($000e,sp),a6
 	movea.l	(a6),a5
@@ -229,6 +230,7 @@ __FEVECS:
 	adda.l	d0,a1
 	move.l	(a1),d0
 	move.l	a0,(a1)
+L000218:
 	movea.l	(sp)+,a1
 	rts
 
@@ -1585,12 +1587,12 @@ L000f94:
 	rts
 
 L000fae:
-	.dc.b	$3b,$9a,$ca,$00,$05,$f5,$e1,$00
-	.dc.b	$00,$98,$96,$80,$00,$0f,$42,$40
-	.dc.b	$00,$01,$86,$a0,$00,$00,$27,$10
-	.dc.b	$00,$00,$03,$e8,$00,$00,$00,$64
-	.dc.b	$00,$00,$00,$0a,$00,$00,$00,$01
-	.dc.b	$00,$00,$00,$00
+	.dc.l	$3b9aca00,$05f5e100
+	.dc.l	$00989680,$000f4240
+	.dc.l	$000186a0,$00002710
+	.dc.l	$000003e8,$00000064
+	.dc.l	$0000000a,$00000001
+	.dc.l	$00000000
 __OTOS:
 	movem.l	d0-d2/a1,-(sp)
 	link.w	a6,#-$0022
@@ -5973,22 +5975,22 @@ L0038f0:
 	rts
 
 L0038f6:
-	.dc.l	$00000000,$00000000
-	.dc.l	$3fe62e42,$fefa39ef
-	.dc.l	$3ff62e42,$fefa39ef
-	.dc.l	$4000a2b2,$3f3bab73
-	.dc.l	$40062e42,$fefa39f0
-	.dc.l	$400bb9d3,$beb8c86b
-	.dc.l	$4010a2b2,$3f3bab73
-	.dc.l	$4013687a,$9f1af2b1
-	.dc.l	$40162e42,$fefa39ef
-	.dc.l	$4018f40b,$5ed9812d
-	.dc.l	$401bb9d3,$beb8c86b
-	.dc.l	$401e7f9c,$1e980fa9
-	.dc.l	$4020a2b2,$3f3bab73
-	.dc.l	$40220596,$6f2b4f12
-	.dc.l	$4023687a,$9f1af2b1
-	.dc.l	$4024cb5e,$cf0a9650
+	.dc.d	0f0
+	.dc.d	0f-6.1546488229599023e+227
+	.dc.d	0f-6.1546488229633495e+227
+	.dc.d	0f1.5232004175765733e+249
+	.dc.d	0f-4.0335106525833731e+232
+	.dc.d	0f1.6254912590667125e+211
+	.dc.d	0f1.5232004175773872e+249
+	.dc.d	0f-4.1969658190937553e-068
+	.dc.d	0f-6.1546488229150884e+227
+	.dc.d	0f1.7524571481328455e-089
+	.dc.d	0f1.6254912590676693e+211
+	.dc.d	0f-6.5686966578371136e-111
+	.dc.d	0f1.5232004175782012e+249
+	.dc.d	0f1.7245882032427077e-220
+	.dc.d	0f-4.1969658190971288e-068
+	.dc.d	0f1.6334819093056265e+080
 L003976:
 	movea.l	d1,a6
 	moveq.l	#$0d,d1
