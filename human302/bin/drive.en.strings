@@ -1,0 +1,48 @@
+使用法：drive［スイッチ］［ドライブ名１］［ドライブ名２］	Usage: drive [switch] [drive name 1] [drive name 2]
+ボリュームラベルを表示する	Display volume label
+すべてのドライブ名を初期状態に戻す	Reset all drive names to initial state
+その他のタイプ	Other types
+ボリュームラベルを表示する	Display volume label
+すべてのドライブ名を初期状態に戻す	Reset all drive names to initial state
+/dのスイッチを付けた場合ドライブ名は指定しない	If the /d switch is attached, the drive name is not specified
+ドライブ名の指定が無いと全ドライブのタイプを表示する	If no drive name is specified, all drive types are displayed.
+ドライブ名１のみ指定するとステ－タスを表示する	If only drive name 1 is specified, the status will be displayed.
+ドライブ名１，２を指定するとドライブ名を交換する	Exchange drive names when drive names 1 and 2 are specified
+drive: ドライブ指定が無効です	drive: drive specification is invalid
+このＯＳでは使用できません	Cannot be used with this OS
+を入れ替えました	Replaced
+:に切り替えました	Switched to:
+すべてのドライブ名を初期状態に戻しました	All drive names have been reset
+ハードディスク	hard disk
+光磁気ディスク	Magneto-optical disk
+ＣＤＲＯＭ	CD ROM
+ＤＡＴドライブ	DAT drive
+２ＨＣ（１ＭＢ）	2HC (1MB)
+２ＨＤ（１ＭＢ）	2HD (1MB)
+ＲＡＭ　ＤＩＳＫ	RAM Disk
+２ＤＤ（６４０ＫＢ）	2DD (640KB)
+２ＤＤ（７２０ＫＢ）	2DD (720KB)
+２ＨＤ（１.４４ＭＢ）	2HD (1.44MB)
+その他のタイプ　	Other types
+ユニット番号････	Unit number...
+: ドライブの装置情報が存在しません	Device information for drive: does not exist
+: 仮想ドライブです	: Virtual drive
+１セクタあたりのバイト数････････････････	Number of bytes per sector .................
+１クラスタあたりのセクタ数･･････････････	Number of sectors per cluster...............
+総クラスタ数････････････････････････････	Total number of clusters....................
+ファイルアロケーションの先頭セクタ番号･･	First sector number of file allocation......
+ファイルアロケーションのセクタ数････････	Number of file allocation sectors...........
+ルートディレクトリの先頭セクタ番号･･････	Start sector number of the root directory...
+ルートディレクトリの最大個数････････････	Maximum number of root directories..........
+データ領域の先頭セクタ番号･･････････････	First sector number of data area............
+アクセス････････････････････････････････	Access......................................
+イジェクト･･････････････････････････････	Eject.......................................
+書き込み････････････････････････････････	Writing.....................................
+ボリュ－ムラベルは	The volume label is
+カレント	current
+:をドライブ	Drive:
+ドライブ	drive
+:と	:When
+です	is
+不可	  No
+  可	 Yes

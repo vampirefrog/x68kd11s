@@ -1,0 +1,158 @@
+*********************************************
+*
+*  Label file for drive.x
+*
+*	DIS version 3.16
+*
+*********************************************
+000000	P	Start
+000040	P
+000048	P
+000064	P
+000078	P
+0000cc	P
+000114	P
+000198	P
+0001d0	P
+0001d2	P
+000222	P
+000228	P
+00024a	P
+00025c	P
+000272	P
+000284	P
+0002a2	P
+0002b4	P
+0002b6	P
+0002c8	P
+000346	P
+0003de	P
+0004f8	P
+000516	P
+000528	P
+00052a	P	BadDriveExit
+00053a	P
+00054e	P
+00056e	P	BadOSVersionExit
+00057e	P	UnknownSubroutine5
+0005ae	P	UnknownSubroutine6
+0005c4	P
+0005ca	P
+0005d0	P	PrintVolumeLabel
+0005e6	P
+0005fe	P
+000606	P
+00060a	P
+000616	P	ParseCmdLine
+00061c	P
+000634	P
+000646	P
+00064a	P
+00064c	P
+000654	P
+000662	P
+000668	P
+000674	P
+000694	P
+000698	P
+0006a8	P	SkipWhitespace
+0006aa	P
+0006c2	P	StrCpy
+0006c6	P
+0006d0	P	UnknownSubroutine1
+0006d6	P
+0006e2	P
+0006f4	P
+0006f8	P
+0006fc	P
+00070c	P
+000710	P
+000716	P	DecimalString
+000724	P
+00072a	P
+00073a	P
+000740	P
+000756	P
+00075c	P	UnknownSubroutine4
+00077a	P
+00077e	P
+000786	DL	PowersOfTenTable
+0007b2	DS	AWildcardString
+0007b9	DS	UsageString
+00084f	DS	UsageString2
+0008a8	DS	CRLFString
+0008ab	DS	DetailsHelpString
+000947	DS	TheVolumeLabelIsString
+00095c	DS	IsString
+000962	DS	DriveSpecificationIsInvalidString
+000982	DS	CannotBeUsedWithThisOSString
+00099f	DS	WhenString
+0009a2	DS	DriveString
+0009ac	DS	ReplacedString
+0009c0	DS	CurrentString
+0009ca	DS	DriveSemicolonString
+0009d7	DS	SwitchedToString
+0009eb	DS	AllDriveNamesResetString
+000a16	DS	PipeString
+000a1a	DS	TwoHD1MBString
+000a2e	DS	RamDiskString
+000a42	DS	HardDiskString
+000a54	DS	HardDiskSCSIString
+000a6c	DS	MODiskSCSIString
+000a84	DS	CDROMSCSIString
+000a98	DS	DATDriveSCSIString
+000ab0	DS	TwoHCString
+000ac4	DS	TwoDDS640tring
+000adc	DS	TwoDD720String
+000af4	DS	TwoHD144String
+000b0c	DS	OtherTypesString
+000b20	DS	UnitNumberString
+000b34	DS	DriveInfoDoesNotExistString
+000b59	DS	VirtualDriveString
+000b6e	DS	BytesPerSectorString
+000b97	DS	SectorsPerClusterString
+000bc0	DS	TotalClustersString
+000be9	DS	FirstFileSectorString
+000c12	DS	NumberOfFileSectorString
+000c3b	DS	RootDirStartSectorString
+000c64	DS	MaximumRootDirsString
+000c8d	DS	FirstSectorString
+000cb6	DS	AccessString
+000ce0	DS	EjectString
+000d0a	DS	WritingString
+000d34	DS	YesString
+000d3b	DS	NoString
+000d3f	DU	CRLFString2
+000d42	DL	UnknownLongVar1
+000d46	DB	UnknownBuffer1
+000e5e	DU	UnknownBuffer2
+000f76	DB	DPBBuffer
+000f77	DB	DPBUnitNumber
+000f78	DW	DPBBytesPerSector
+000f7a	DB	DPBSectorsPerCluster
+000f7b	DB	DPBSectorsPerClusterShift
+000f7c	DW	DPBFirstFATSector
+000f7e	DB	DPBNumFATAreas
+000f7f	DB	DPBFATSectors
+000f80	DW	DPBRootDirFiles
+000f82	DW	DPBFirstDataSector
+000f84	DW	DPBTotalClustersPlusOne
+000f86	DW	DPBFirstRootSector
+000f88	DL	DPBDeviceDriverPointer
+000f8c	DB	DPBMediaBytes
+000f8d	DB	DPBUsageFlag
+000f8e	DL	DPBNextDPB
+000f92	DW	DPBCurDirClusterNumber
+000f94	DB	DPBCurDirStr
+000fda	DB	UnknownBuffer2
+000fdf	DU
+000fe2	DU
+000fe4	DB	UnknownByteVar1
+000fe6	DU
+001004	DU
+001022	DB	UnknownByteVar2
+001023	DB	UnknownByteVar3
+001024	DB	UnknownByteVar4
+001026	DB	Stack
+00142a	DB	StackTop
+00142c	DU	End

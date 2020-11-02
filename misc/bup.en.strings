@@ -1,0 +1,5 @@
+新ファイルを作成するディレクトリを指定する	Specify the directory to create the new file
+元ファイルのあるディレクトリを指定する	Specify the directory containing the original file
+タイムスタンプを無視する	Ignore timestamps
+逆アップデートを行なう	Reverse update
+差分情報を表示する	Display difference information

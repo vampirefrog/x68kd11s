@@ -1,0 +1,103 @@
+ECHO OFF
+IF %1 == OK GOTO INS2
+IF %1 == ok GOTO INS2
+CLS
+ECHO ***** Œ»Ý‚Ìƒhƒ‰ƒCƒuó‹µ *****
+ECHO  
+DRIVE
+ECHO  
+ECHO „[38mƒhƒ‰ƒCƒu‚ª‰º‚Ì‚æ‚¤‚É‚È‚Á‚Ä‚¢‚é‚©Šm”F‚µ‚Ä‚­‚¾‚³‚¢[m
+ECHO       
+ECHO A: ‚Q‚g‚ci‚P‚l‚aj
+ECHO B: ‚Q‚g‚ci‚P‚l‚aj
+ECHO C: ƒn[ƒhƒfƒBƒXƒN
+ECHO         F  
+ECHO         F
+ECHO    
+ECHO [27;50H[36m¦’†Ž~‚·‚éê‡‚Í¶ã‚Ì[BREAK]ƒL[‚ð‰Ÿ‚µA
+ECHO [28;50H@ŽŸ‚É[Y]ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢[m[27;1H 
+PAUSE „³‚µ‚¯‚ê‚ÎA‰½‚©ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢ 
+CLS
+ECHO [2;1H„[38mŽŸ‚Ì‚æ‚¤‚ÉAƒtƒƒbƒs[ƒfƒBƒXƒN‚ðƒZƒbƒg‚µ‚Ä‚­‚¾‚³‚¢[m
+ECHO [5;1H  A:ƒVƒXƒeƒ€ƒfƒBƒXƒN © Šù‚É“ü‚Á‚Ä‚¢‚é‚Í‚¸‚Å‚·
+ECHO [6;1H  B:Ž«‘ƒfƒBƒXƒN      
+ECHO  
+ECHO [27;50H[36m¦’†Ž~‚·‚éê‡‚Í¶ã‚Ì[BREAK]ƒL[‚ð‰Ÿ‚µA
+ECHO [28;50H@ŽŸ‚É[Y]ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢[m[27;1H 
+PAUSE „ƒRƒs[‚ðŽn‚ß‚Ü‚·A‰½‚©ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢ 
+IF EXIST C:\CONFIG.SYS GOTO INS1
+:CP
+CLS
+ECHO ***** ƒRƒs[’†‚Å‚· *****
+VOL C:Human68k_Ver3/S
+COPYALL A:\*.* C:\ /t /s
+COPY A:\ETC\CONFIG.HD C:\CONFIG.SYS
+COPY A:\ETC\AUTOEXEC.HD C:\AUTOEXEC.BAT
+MD C:\DIC
+COPY B: C:\DIC
+ECHO ***** ƒRƒs[‚ðI—¹‚µ‚Ü‚µ‚½ *****
+SWITCH BOOT=SCSI0
+ECHO @ 
+ECHO [46m¦ ’ˆÓ [m
+ECHO ƒn[ƒhƒfƒBƒXƒN‚©‚ç‹N“®‚·‚é‚æ‚¤‚É‚µ‚Ü‚µ‚½D
+ECHO ƒtƒƒbƒs[ƒfƒBƒXƒN‚©‚ç‚Í‹N“®‚Å‚«‚Ü‚¹‚ñD
+ECHO [36mƒtƒƒbƒs[ƒfƒBƒXƒN‚©‚ç‹N“®‚µ‚½‚¢ê‡‚ÍA[OPT.1]ƒL[‚ð‰Ÿ‚µ‚È‚ª‚ç“dŒ¹ƒXƒCƒbƒ`‚ð
+ECHO “ü‚ê‚Ä‚­‚¾‚³‚¢D[m
+ECHO ‹N“®‘•’u‚ðƒtƒƒbƒs[ƒfƒBƒXƒN‚É–ß‚·‚É‚Í SWITCH –½—ß‚ðŽg‚Á‚ÄAƒL[ƒ[ƒh"BOOT"
+ECHO ‚ð"SCSI0" ‚©‚ç"STD" ‚É•ÏX‚µ‚Ä‚­‚¾‚³‚¢D
+ECHO @
+GOTO END
+:INS1
+CLS
+ECHO  
+ECHO ‚·‚Å‚ÉƒVƒXƒeƒ€‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚é‚æ‚¤‚Å‚·.
+ECHO V‚µ‚¢ƒVƒXƒeƒ€‚ðƒCƒ“ƒXƒg[ƒ‹‚·‚é‚½‚ß‚ÉAŒÃ‚¢ƒVƒXƒeƒ€‚ðÁ‹Ž‚µ‚Ü‚·.
+ECHO COMMAND.X ‚ª HUMAN.SYS ‚Ì’¼Œã‚Ì—Ìˆæ‚É‚ ‚é‚±‚Æ‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢.
+ECHO @
+ECHO CHKDSK C: /AbMORE ‚Æ“ü—Í‚µ‚Ä
+ECHO @ 
+ECHO         A--S--  HUMAN.SYS     $000000B5`$000000EE
+ECHO         A-----  COMMAND.X     $000000EF`$0000010A
+ECHO         F  
+ECHO         F
+ECHO         F  
+ECHO         F
+ECHO @
+ECHO ã‹L‚Ì‚æ‚¤‚É—Ìˆæ‚ª˜A‘±‚µ‚Ä‚¢‚é‚±‚Æ‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢.
+ECHO ˜A‘±‚µ‚Ä‚¢‚È‚¢Žž‚ÍAƒn[ƒhƒfƒBƒXƒN‚Ì‰Šú‰»‚ª•K—v‚Æ‚È‚è‚Ü‚·.
+ECHO —Ìˆæ‚ª˜A‘±‚µ‚Ä‚¢‚é‚È‚çA
+ECHO @
+ECHO INSTALL OK ‚Æ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢.
+ECHO @
+TEMP C:
+GOTO END
+:INS2
+CLS
+ECHO @
+ECHO „[38mŒÃ‚¢ƒVƒXƒeƒ€‚ðÁ‹Ž‚µ‚ÄƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·B[m
+ECHO @
+ECHO @
+ECHO [46m¦ ’ˆÓ ¦
+ECHO COMMAND.X ‚Í HUMAN.SYS ‚Ì’¼Œã‚Ì—Ìˆæ‚É‚ ‚è‚Ü‚µ‚½‚©H[m
+ECHO [27;50H[36m¦’†Ž~‚·‚éê‡‚Í¶ã‚Ì[BREAK]ƒL[‚ð‰Ÿ‚µA
+ECHO [28;50H@ŽŸ‚É[Y]ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢[m[27;1H 
+PAUSE „ì‹Æ‚ðŽn‚ß‚Ü‚·A‰½‚©ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢
+ATTRIB -S C:\HUMAN.SYS
+COPY C:\HUMAN.SYS C:\HUMAN.OLD
+COPY C:\COMMAND.X C:\COMMAND.OLD
+DEL C:\COMMAND.X
+SYS C:
+IF NOT EXITCODE 0 GOTO BAD
+COPY A:\COMMAND.X C:\
+GOTO CP
+:BAD
+CLS
+ECHO @
+ECHO HUMAN.SYS ‚ª˜A‘±—Ìˆæ‚ÉƒRƒs[‚³‚ê‚Ü‚¹‚ñ‚Å‚µ‚½.
+ECHO ƒn[ƒhƒfƒBƒXƒN‚©‚çƒVƒXƒeƒ€‚ð‹N“®‚Å‚«‚Ü‚¹‚ñ‚Ì‚ÅA
+ECHO ƒtƒƒbƒs[ƒfƒBƒXƒN‚©‚ç‹N“®‚µAƒn[ƒhƒfƒBƒXƒNƒtƒ@ƒCƒ‹‚Ì
+ECHO ƒoƒbƒNƒAƒbƒvŒãAƒn[ƒhƒfƒBƒXƒN‚Ì‰Šú‰»‚ðs‚¢A
+ECHO ƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢.
+SWITCH BOOT=STD
+:END
+
