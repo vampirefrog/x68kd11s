@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: X68000 HAS assembly
-file_extensions: [s, S]
+file_extensions: [s, S, has, HAS]
 scope: source.s
 
 # https://www.sublimetext.com/docs/3/scope_naming.html#markup
@@ -38,8 +38,8 @@ contexts:
       scope: entity.name.function
   string:
     - meta_scope: string.quoted.single.c
-    - match: \\.
-      scope: constant.character.escape.c
+    # - match: \\.
+    #   scope: constant.character.escape.c
     - match: \'
       pop: true
   include:
