@@ -122,8 +122,8 @@ sound/mxdrv/mdxp.s: sound/mxdrv/mdxp.r sound/mxdrv/mdxp.lab
 	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68000 --sp -q1 -B -M -o$(COLUMNS) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
 	sed -i -f const.sed -f clean-s.sed $@
 
-human302/human.s: human302/human.sys human302/human.lab
-	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68030 --sp -q1 -B -M -o$(COLUMNS) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
+human302/human.s: human302/human.sys human302/human.lab human302/human.tab
+	dis_include=$(DIS_INCLUDE) $(DIS) $(DIS_DEBUG) -b2 -h -m68030 --sp -q1 -B -M -o$(COLUMNS) -T$(patsubst %.s,%.tab,$@) -g$(patsubst %.s,%.lab,$@) --overwrite $< $@
 	sed -i -f const.sed -f clean-s.sed $@
 
 sound/opmdrv3.s: sound/opmdrv3.x sound/opmdrv3.lab sound/opmdrv3.tab
