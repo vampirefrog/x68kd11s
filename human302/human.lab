@@ -1,9 +1,6 @@
-*********************************************
-*
-*  Label file for human.sys
 *
 *	DIS version 3.16
-*
+*  Label file for human.sys
 *********************************************
 006800	P	Start
 006804	DB
@@ -29,100 +26,100 @@
 0068a2	P	Start2
 006928	P	CTRLVCHandler
 006940	P
-00694a	P
+00694a	P	UnknownSubroutine0694a
 00694c	P
-006954	P
-00695c	P
+006954	P	UnknownSubroutine06954
+00695c	P	UnknownSubroutine0695c
 006968	P
 006978	P
 006986	P
-006988	P
+006988	P	UnknownSubroutine06988
 006992	P
 006998	P
 00699c	P
 0069a8	P
 0069b4	P
-0069bc	P
+0069bc	P	UnknownSubroutine069bc
 0069c0	P
 0069cc	P
-0069d4	P
-0069d8	P
+0069d4	P	UnknownSubroutine069d4
+0069d8	P	UnknownSubroutine069d8
 0069da	P
 0069e4	P
 0069f2	P
-0069f8	P
+0069f8	P	UnknownSubroutine069f8
 0069fc	P
 006a04	P
 006a18	P
-006a1c	P
-006a2a	P
+006a1c	P	UnknownSubroutine06a1c
+006a2a	P	UnknownSubroutine06a2a
 006a2c	P
 006a3c	P
 006a50	P
 006a52	P
 006a5e	P
-006a66	P
+006a66	P	UnknownSubroutine06a66
 006a82	P
-006a88	P
-006a96	P
+006a88	P	UnknownSubroutine06a88
+006a96	P	UnknownSubroutine06a96
 006aba	P
-006ac2	P
+006ac2	P	UnknownSubroutine06ac2
 006af2	P
 006b1a	P
 006b3a	P
-006b3c	P
+006b3c	P	UnknownSubroutine06b3c
 006b6e	P
 006bc8	P
 006bd0	P
 006bd2	P
 006bda	P
-006bdc	P
+006bdc	P	UnknownSubroutine06bdc
 006c36	P
-006c6e	P
-006cb0	P
+006c6e	P	UnknownSubroutine06c6e
+006cb0	P	UnknownSubroutine06cb0
 006cb6	P
-006cc8	P
+006cc8	P	UnknownSubroutine06cc8
 006cda	P
 006ce4	P
 006cea	P
 006cf2	P
-006cf8	P
-006d10	P
+006cf8	P	UnknownSubroutine06cf8
+006d10	P	UnknownSubroutine06d10
 006d3c	P
-006d56	P
+006d56	P	UnknownSubroutine06d56
 006db2	P
 006dbc	P
 006de0	P
 006df2	P
 006dfe	P
 006e08	P
-006e0a	P
+006e0a	P	UnknownSubroutine06e0a
 006e0e	P
 006e6c	P
 006e7e	P
-006e80	P
-006e8e	P
-006e9c	P
+006e80	P	UnknownSubroutine06e80
+006e8e	P	UnknownSubroutine06e8e
+006e9c	P	UnknownSubroutine06e9c
 006ea8	P
 006eb6	P
-006eb8	P
+006eb8	P	UnknownSubroutine06eb8
 006ed6	P
 006ede	P
-006ee0	P
+006ee0	P	UnknownSubroutine06ee0
 006f04	P
 006f1a	P
-006f20	P
+006f20	P	UnknownSubroutine06f20
 006f36	P
-006f38	P
-006f6c	P
+006f38	P	UnknownSubroutine06f38
+006f6c	P	UnknownSubroutine06f6c
 006fa6	P
 006fc6	P
 006fce	P
 006fe0	P
 006fe4	P
-006fea	P
+006fea	P	UnknownSubroutine06fea
 007028	P
-00702e	P
+00702e	P	UnknownSubroutine0702e
 007052	P
 007056	DL
 00707e	P
@@ -130,7 +127,7 @@
 0070aa	P
 0070ac	P
 0070b8	P
-0070ba	P
+0070ba	P	UnknownSubroutine070ba
 0070e0	P
 0070f8	P
 007104	P
@@ -140,31 +137,31 @@
 007122	P
 007126	P
 007128	P
-007134	P
+007134	P	UnknownSubroutine07134
 00713e	P
-007140	P
+007140	P	UnknownSubroutine07140
 00715a	P
-007170	P
-00718e	P
+007170	P	UnknownSubroutine07170
+00718e	P	UnknownSubroutine0718e
 0071f8	P
 0071fa	P
-007204	P
+007204	P	UnknownSubroutine07204
 007220	P
 00722a	P
 00722c	P
-007236	P
+007236	P	UnknownSubroutine07236
 007250	P
 007252	P
-00725c	P
+00725c	P	UnknownSubroutine0725c
 007278	P
 00727a	P
-007284	P
+007284	P	UnknownSubroutine07284
 00729e	P
 0072a0	P
-0072aa	P
+0072aa	P	UnknownSubroutine072aa
 0072d8	P
 0072dc	P
-0072e0	P
+0072e0	P	UnknownSubroutine072e0
 0072f0	P
 007332	P
 00733a	P
@@ -172,43 +169,43 @@
 00734a	P
 007352	P
 00735a	P
-00735c	P
+00735c	P	UnknownSubroutine0735c
 00739c	P
 0073a6	P
 0073ae	P
 0073b8	P
-0073e6	P
-00742c	P
+0073e6	P	UnknownSubroutine073e6
+00742c	P	UnknownSubroutine0742c
 007452	P
 00745a	P
 00746e	P
 007470	P
-00748c	P
-0074b0	P
+00748c	P	UnknownSubroutine0748c
+0074b0	P	UnknownSubroutine074b0
 0074dc	P
 0074de	P
-0074ea	P
+0074ea	P	UnknownSubroutine074ea
 007534	P
-00755a	P
+00755a	P	UnknownSubroutine0755a
 007568	P
-00758c	P
+00758c	P	UnknownSubroutine0758c
 0075d2	P
 0075d4	P
-0075e0	P
+0075e0	P	UnknownSubroutine075e0
 007604	P
 007606	P
-007614	P
+007614	P	UnknownSubroutine07614
 007632	P
 007634	P
-00763c	P
+00763c	P	UnknownSubroutine0763c
 007656	P
-007658	P
-007662	P
+007658	P	UnknownSubroutine07658
+007662	P	UnknownSubroutine07662
 007684	P
 007686	P
-00768c	P
-00769c	P
-0076aa	P
+00768c	P	UnknownSubroutine0768c
+00769c	P	UnknownSubroutine0769c
+0076aa	P	UnknownSubroutine076aa
 00775e	P
 007776	P
 007782	P
@@ -217,9 +214,9 @@
 0077ac	P
 0077b8	P
 0077be	P
-0077c0	P
+0077c0	P	UnknownSubroutine077c0
 0077fa	P
-0077fc	P
+0077fc	P	UnknownSubroutine077fc
 007858	P
 0078a6	P
 0078c4	P
@@ -227,19 +224,19 @@
 0078de	P
 0078e6	P
 0078ec	P
-0078f6	P
+0078f6	P	UnknownSubroutine078f6
 0078fa	P
-0078fc	P
+0078fc	P	CursorOff
 007902	P	SetupCallHandlers
 007910	P
 00791e	P
 00793a	P
 007a3a	P
-007a3c	P
+007a3c	P	UnknownSubroutine07a3c
 007a42	P
 007a74	P
 007a7a	P
-007a7c	P
+007a7c	P	UnknownSubroutine07a7c
 007a8c	DU
 007a90	DB
 007a91	DS	ClockStr
@@ -302,23 +299,23 @@
 007def	DS
 007e32	DS
 007e6b	DU
-007e70	P
+007e70	P	UnknownSubroutine07e70
 007e8a	P
-007e9a	P
+007e9a	P	UnknownSubroutine07e9a
 007ed4	P
 007ef0	P
 007ef6	P
-007f0c	P
+007f0c	P	UnknownSubroutine07f0c
 007f34	P
 007f6e	P
 007f76	DU
-007f78	P
+007f78	P	UnknownSubroutine07f78
 007fa8	P
 007fac	P
 007fb6	P
 007fce	P
 007ff6	P
-008008	P
+008008	P	UnknownSubroutine08008
 008028	P
 00805c	P
 0080b2	P
@@ -333,22 +330,22 @@
 0081a6	P
 0081c6	P
 0081d0	P
-0081e2	P
-008202	P
-008216	P
+0081e2	P	UnknownSubroutine081e2
+008202	P	UnknownSubroutine08202
+008216	P	UnknownSubroutine08216
 00822a	P
 008236	P
 008238	P
 008242	P
-008248	P
+008248	P	UnknownSubroutine08248
 008264	P
 008272	P
 00828a	P
-008290	P
+008290	P	UnknownSubroutine08290
 0082a4	P
-0082b2	P
+0082b2	P	UnknownSubroutine082b2
 0082bc	P
-0082d0	P
+0082d0	P	UnknownSubroutine082d0
 0082e6	P
 0082fc	P
 008310	P
@@ -357,11 +354,38 @@
 008358	P
 008370	P
 008371	DU
-008372	DL
-00837a	DL
-008382	DL
-0083be	DL
-0083f2	DS
+008372	DL	DOSMEMPrev
+008376	DL	DOSMEMParent
+00837a	DL	DOSMEMLast
+00837e	DL	DOSMEMNext
+008382	DL	DOSPSPEnvPtr
+008386	DL	DOSPSPRetAddr
+00838a	DL	DOSPSPCtrlCAddr
+00838e	DL	DOSPSPErrorAddr
+008392	DL	DOSPSPCmdLineAddr
+008396	DB	DOSPSPFileHandleMask
+0083a2	DL	DOSPSPBSSStart
+0083a6	DL	DOSPSPHeapStart
+0083aa	DL	DOSPSPStackTop
+0083ae	DL	DOSPSPParentUSP
+0083b2	DL	DOSPSPParentSSP
+0083b6	DW	DOSPSPParentSR
+0083b8	DW	DOSPSPAbortSR
+0083ba	DL	DOSPSPAbortSSP
+0083be	DL	DOSPSPTrap10Vec
+0083c2	DL	DOSPSPTrap11Vec
+0083c6	DL	DOSPSPTrap12Vec
+0083ca	DL	DOSPSPTrap13Vec
+0083ce	DL	DOSPSPTrap14Vec
+0083d2	DL	DOSPSPShellFlag
+0083d6	DB	DOSPSPModuleNumber
+0083d7	DB	DOSPSPUnused3Bytes
+0083da	DL	DOSPSPChildPSP
+0083de	DL	DOSPSPUnused5Longs
+0083f2	DS	DPSPSPExecDriveName
+0083f4	DS	DPSPSPExecPathName
+008436	DS	DPSPSPExecFileName
+00844e	DS	DPSPSPUnused9Longs
 008472	P
 008484	P
 00848a	P
@@ -370,7 +394,7 @@
 008524	P
 00852c	P
 008532	P
-00855a	P
+00855a	P	UnknownSubroutine0855a
 008566	P	Call_CTRLVC_ERRJVC_EXITVC
 008596	P
 008598	P	LineFExceptionHandler
@@ -395,39 +419,39 @@
 00870a	P
 008716	P
 008730	P
-008740	P
+008740	P	UnknownSubroutine08740
 008750	P
-008752	P
+008752	P	UnknownSubroutine08752
 00875e	P
-008760	P
+008760	P	UnknownSubroutine08760
 008778	P
 008780	P
 008790	P
-008798	P
+008798	P	UnknownSubroutine08798
 0087b4	P
-0087c0	P
+0087c0	P	UnknownSubroutine087c0
 0087c4	P
-0087d4	P
+0087d4	P	UnknownSubroutine087d4
 0087ec	P
 00880c	P
 008814	P
 008816	P
-008818	P
+008818	P	UnknownSubroutine08818
 00881a	P
 008824	P
 008826	P
-00882e	P
-008834	P
+00882e	P	UnknownSubroutine0882e
+008834	P	UnknownSubroutine08834
 00884c	P
 00884e	P
 00885e	P	Call_GETCHAR
 00887c	P
 008882	P
 008888	P	Call_PUTCHAR
-00888a	P
+00888a	P	UnknownSubroutine0888a
 00888e	P
 008898	P
-0088a6	P
+0088a6	P	UnknownSubroutine088a6
 0088be	P
 0088c0	P
 0088cc	P
@@ -452,7 +476,7 @@
 00899e	P	Call_PRINT
 0089a0	P
 0089ac	P
-0089ae	P
+0089ae	P	UnknownSubroutine089ae
 0089c6	P	Call_GETSS
 0089cc	P	Call_GETS
 0089ce	P
@@ -473,26 +497,26 @@
 008aae	P
 008ad0	P
 008ad8	RW
-008afc	P
+008afc	P	UnknownSubroutine08afc
 008b06	P
-008b1a	P
+008b1a	P	UnknownSubroutine08b1a
 008b22	P
 008b44	P
-008b46	P
+008b46	P	UnknownSubroutine08b46
 008b50	P
 008b64	P
 008b68	P
-008b76	P
+008b76	P	UnknownSubroutine08b76
 008b96	P
 008b9e	P
 008ba6	P
 008bae	P
-008bb6	P
+008bb6	P	UnknownSubroutine08bb6
 008bc8	P
 008bcc	P
-008bd0	P
+008bd0	P	UnknownSubroutine08bd0
 008be8	P
-008bea	P
+008bea	P	UnknownSubroutine08bea
 008c06	P
 008c0c	P
 008c12	P
@@ -513,34 +537,34 @@
 008cc6	P
 008cdc	P
 008cec	P
-008d0c	P
+008d0c	P	UnknownSubroutine08d0c
 008d14	P
 008d30	P
 008d4e	P
-008d60	P
+008d60	P	UnknownSubroutine08d60
 008d6e	P
 008d72	P
 008d8a	P
 008d94	P
-008da0	P
+008da0	P	UnknownSubroutine08da0
 008da6	P
-008db2	P
+008db2	P	UnknownSubroutine08db2
 008e0a	P
-008e26	P
+008e26	P	UnknownSubroutine08e26
 008e2a	P
-008e2c	P
-008e2e	P
+008e2c	P	UnknownSubroutine08e2c
+008e2e	P	UnknownSubroutine08e2e
 008e36	P
-008e40	P
+008e40	P	UnknownSubroutine08e40
 008e50	P
-008e52	P
+008e52	P	UnknownSubroutine08e52
 008e5e	P
-008e60	P
-008e72	P
+008e60	P	UnknownSubroutine08e60
+008e72	P	UnknownSubroutine08e72
 008e8c	P
 008e98	P
 008e9e	P
-008ea4	P
+008ea4	P	UnknownSubroutine08ea4
 008eb0	P
 008eba	P
 008ebc	P
@@ -550,35 +574,35 @@
 008efe	P
 008f0a	P
 008f16	P	Call_KFLUSH
-008f48	P
+008f48	P	UnknownSubroutine08f48
 008f52	P
-008f54	P
+008f54	P	UnknownSubroutine08f54
 008f5e	P
-008f62	P
+008f62	P	UnknownSubroutine08f62
 008f6e	P
-008f70	P
-008f74	P
-008f78	P
-008f7c	P
-008f7e	P
-008f98	P
-008f9a	P
+008f70	P	UnknownSubroutine08f70
+008f74	P	UnknownSubroutine08f74
+008f78	P	UnknownSubroutine08f78
+008f7c	P	UnknownSubroutine08f7c
+008f7e	P	UnknownSubroutine08f7e
+008f98	P	UnknownSubroutine08f98
+008f9a	P	UnknownSubroutine08f9a
 008fb6	P
-008fbc	P
+008fbc	P	UnknownSubroutine08fbc
 008fc2	P
-008fc8	P
+008fc8	P	UnknownSubroutine08fc8
 008fce	P
 008fd2	P
 00900c	P
-009014	P
-009020	P
-009022	P
-009030	P
+009014	P	UnknownSubroutine09014
+009020	P	UnknownSubroutine09020
+009022	P	UnknownSubroutine09022
+009030	P	UnknownSubroutine09030
 009040	P	Call_CONSNS
 009046	P	Call_PRNSNS
 00904c	P	Call_CINSNS
 009052	P	Call_COUTSNS
-009058	P
+009058	P	UnknownSubroutine09058
 009088	P
 009092	P
 00909a	P
@@ -614,14 +638,14 @@
 00928e	P
 0092a8	P
 0092ac	P
-0092b8	P
+0092b8	P	UnknownSubroutine092b8
 0092c0	P
 0092d4	P
 0092e0	P
-0092e6	P
+0092e6	P	UnknownSubroutine092e6
 0092ea	P
 009310	P
-00931e	P
+00931e	P	UnknownSubroutine0931e
 00932a	P
 00932c	P	Call_SETBLOCK
 00933a	P
@@ -630,8 +654,8 @@
 00936a	P
 00937c	P	Call_PSPSET
 009383	DU
-009384	P
-00938c	P
+009384	P	UnknownSubroutine09384
+00938c	P	UnknownSubroutine0938c
 0093be	P
 0093e6	P
 00940c	P	Call_EXEC
@@ -654,7 +678,7 @@
 00958c	P
 0095fe	P
 00960c	P
-00961a	P
+00961a	P	UnknownSubroutine0961a
 00964e	P
 00967e	P
 0096c2	P
@@ -673,19 +697,19 @@
 0097b6	P
 0097ca	P
 009812	P
-0098a0	P
+0098a0	P	UnknownSubroutine098a0
 0098b0	P
 0098b2	P
 0098be	P
-0098c0	P
+0098c0	P	UnknownSubroutine098c0
 0098d8	P
 0098ea	P
 0098f6	P
 0098fa	P
 0098fc	P
-009908	P
+009908	P	UnknownSubroutine09908
 009916	P
-009918	P
+009918	P	UnknownSubroutine09918
 009942	P
 00994c	P
 009950	P
@@ -694,30 +718,30 @@
 00995a	P
 00995c	P
 00996c	P
-00997c	P
+00997c	P	UnknownSubroutine0997c
 009982	P
 00998a	P
 0099aa	P
-0099b2	P
+0099b2	P	UnknownSubroutine099b2
 0099ca	P
-0099d8	P
+0099d8	P	UnknownSubroutine099d8
 0099dc	P
 0099fa	P
 009a06	P
-009a0e	P
+009a0e	P	UnknownSubroutine09a0e
 009a58	P
-009a5a	P
+009a5a	P	UnknownSubroutine09a5a
 009a60	P
-009a62	P
-009a80	P
-009a94	P
-009ab4	P
-009ac6	P
+009a62	P	UnknownSubroutine09a62
+009a80	P	UnknownSubroutine09a80
+009a94	P	UnknownSubroutine09a94
+009ab4	P	UnknownSubroutine09ab4
+009ac6	P	UnknownSubroutine09ac6
 009b36	P
 009b3a	P
-009b40	P
+009b40	P	UnknownSubroutine09b40
 009b74	P
-009b7a	P
+009b7a	P	UnknownSubroutine09b7a
 009b8c	P
 009bae	P
 009bc0	P
@@ -726,7 +750,7 @@
 009be8	P
 009c0e	P
 009c10	P
-009c16	P
+009c16	P	UnknownSubroutine09c16
 009c1c	P
 009c24	P
 009c4c	P
@@ -746,7 +770,7 @@
 009d2a	P
 009d36	P
 009d3e	P
-009d42	P
+009d42	P	UnknownSubroutine09d42
 009d5c	P
 009d72	P
 009d7e	P
@@ -757,7 +781,7 @@
 009dc4	P
 009de8	P
 009df6	P
-009dfa	P
+009dfa	P	UnknownSubroutine09dfa
 009e00	P
 009e1c	P
 009e1e	P
@@ -766,33 +790,33 @@
 009e38	P
 009e48	P
 009e4c	P
-009e56	P
+009e56	P	UnknownSubroutine09e56
 009e60	P
 009e6e	P
 009e80	P
 009e8a	P
 009e96	P
 009ea0	P
-009ea2	P
+009ea2	P	UnknownSubroutine09ea2
 009eae	P
 009eba	P
 009ebc	P
-009ec2	P
+009ec2	P	UnknownSubroutine09ec2
 009ec6	P
-009ed4	P
+009ed4	P	UnknownSubroutine09ed4
 009ed8	P
-009ee2	P
+009ee2	P	UnknownSubroutine09ee2
 009ee6	P
 009eec	P
-009ef6	P
+009ef6	P	UnknownSubroutine09ef6
 009efc	P
 009f00	P
 009f08	P
 009f0e	P
 009f10	P
-009f18	P
+009f18	P	UnknownSubroutine09f18
 009f1a	P
-009f32	P
+009f32	P	UnknownSubroutine09f32
 009f3c	P
 009f48	P
 009f5a	P
@@ -800,15 +824,15 @@
 009f62	P
 009f72	P
 009f76	P
-009f7c	P
-009f8c	P
-009f94	P
+009f7c	P	UnknownSubroutine09f7c
+009f8c	P	UnknownSubroutine09f8c
+009f94	P	UnknownSubroutine09f94
 009f9e	P
 009fb2	P
 009fb8	P
 009fbc	P
 009fc8	P
-009fce	P
+009fce	P	UnknownSubroutine09fce
 009fec	P
 009ff0	P
 009ff8	P	Call_EXIT
@@ -824,17 +848,17 @@
 00a0d0	DS
 00a0d9	DU
 00a0dc	P	Call_GETPDB
-00a0ec	P
+00a0ec	P	UnknownSubroutine0a0ec
 00a0fa	P
 00a112	P
-00a11e	P
+00a11e	P	UnknownSubroutine0a11e
 00a12c	P
 00a144	P
-00a150	P
+00a150	P	UnknownSubroutine0a150
 00a15e	P
 00a176	P
 00a17e	P
-00a18c	P
+00a18c	P	UnknownSubroutine0a18c
 00a190	P
 00a19e	P
 00a1a4	P
@@ -844,14 +868,14 @@
 00a1d0	P
 00a1d4	P	Call_SETENV
 00a1e4	P
-00a1fa	P
+00a1fa	P	UnknownSubroutine0a1fa
 00a208	P
 00a222	P
 00a236	P
 00a23c	P
 00a240	P
 00a24c	P
-00a254	P
+00a254	P	UnknownSubroutine0a254
 00a268	P
 00a27e	P
 00a280	P
@@ -864,14 +888,14 @@
 00a2fc	P
 00a300	P
 00a302	P
-00a30a	P
+00a30a	P	UnknownSubroutine0a30a
 00a314	P
 00a324	P
-00a32c	P
+00a32c	P	UnknownSubroutine0a32c
 00a334	P
 00a33c	P
 00a33e	P
-00a340	P
+00a340	P	UnknownSubroutine0a340
 00a344	P
 00a34a	P
 00a34c	P	Call_BREAKCK
@@ -880,11 +904,11 @@
 00a378	P
 00a37c	P
 00a3a4	P
-00a3b2	P
+00a3b2	P	UnknownSubroutine0a3b2
 00a3be	P	Call_GETDATE
 00a3c6	P
 00a3ea	P	Call_SETDATE
-00a400	P
+00a400	P	UnknownSubroutine0a400
 00a40c	P	Call_GETTIME
 00a416	P	Call_GETTIM2
 00a424	P	Call_SETTIME
@@ -909,7 +933,7 @@
 00a54e	P
 00a554	P
 00a55a	P	Call_INTVCG
-00a562	P
+00a562	P	UnknownSubroutine0a562
 00a576	P
 00a57e	P	Call_FGETC
 00a596	P
@@ -929,37 +953,37 @@
 00a65a	P	Call_ALLCLOSE
 00a660	P
 00a676	P
-00a678	P
+00a678	P	UnknownSubroutine0a678
 00a680	P
 00a682	P
 00a694	P
 00a6a8	P	Call_DRVXCHG
 00a6d2	P
 00a6d6	P
-00a6ea	P
+00a6ea	P	UnknownSubroutine0a6ea
 00a6f0	P
-00a6fa	P
+00a6fa	P	UnknownSubroutine0a6fa
 00a704	P
-00a70c	P
+00a70c	P	UnknownSubroutine0a70c
 00a726	P
-00a728	P
+00a728	P	UnknownSubroutine0a728
 00a738	P
 00a744	P
 00a74c	P	Call_CURDIR
 00a766	P
-00a768	P
+00a768	P	UnknownSubroutine0a768
 00a774	P
 00a77e	P
-00a780	P
+00a780	P	UnknownSubroutine0a780
 00a78a	P
-00a792	P
-00a79e	P
+00a792	P	UnknownSubroutine0a792
+00a79e	P	UnknownSubroutine0a79e
 00a7d2	P
-00a7d6	P
+00a7d6	P	UnknownSubroutine0a7d6
 00a7f2	P
 00a7f6	P
 00a7f8	P
-00a800	P
+00a800	P	UnknownSubroutine0a800
 00a80e	P
 00a81c	P
 00a820	P
@@ -972,10 +996,10 @@
 00a894	P
 00a898	P
 00a89c	P
-00a8ba	P
-00a8be	P
+00a8ba	P	UnknownSubroutine0a8ba
+00a8be	P	UnknownSubroutine0a8be
 00a8d8	P
-00a8dc	P
+00a8dc	P	UnknownSubroutine0a8dc
 00a8e4	P
 00a8f6	P
 00a8fe	P	Call_CHGDRV
@@ -992,28 +1016,28 @@
 00a9c8	P
 00a9ca	P	Call_GETFCB
 00a9d6	P
-00a9d8	P
+00a9d8	P	UnknownSubroutine0a9d8
 00a9f0	P
 00aa18	P
 00aa26	P
 00aa2a	P
-00aa2e	P
+00aa2e	P	UnknownSubroutine0aa2e
 00aa4c	P
 00aa58	P
 00aa5c	P
 00aa66	P
-00aa68	P
+00aa68	P	UnknownSubroutine0aa68
 00aa84	P
 00aa92	P
 00aa96	P
 00aa9e	P
-00aaa0	P
+00aaa0	P	UnknownSubroutine0aaa0
 00aaac	P
 00aaca	P
-00aad0	P
+00aad0	P	UnknownSubroutine0aad0
 00aadc	P
 00aafa	P
-00ab00	P
+00ab00	P	UnknownSubroutine0ab00
 00ab1c	P
 00ab26	P
 00ab2e	P
@@ -1022,7 +1046,7 @@
 00ab54	P
 00ab76	P
 00ab7a	P
-00aba4	P
+00aba4	P	UnknownSubroutine0aba4
 00abba	P
 00abd0	P
 00abdc	P
@@ -1030,14 +1054,14 @@
 00abe6	P
 00ac06	P
 00ac08	P
-00ac0a	P
+00ac0a	P	UnknownSubroutine0ac0a
 00ac20	P
 00ac3e	P
 00ac4c	P
 00ac5a	P
-00ac5c	P
+00ac5c	P	UnknownSubroutine0ac5c
 00ac66	P
-00ac6e	P
+00ac6e	P	UnknownSubroutine0ac6e
 00ac78	P
 00ac80	P	Call_FFLUSH_SET
 00ac92	P
@@ -1045,9 +1069,9 @@
 00aca6	P
 00acb2	P
 00acb8	P
-00acbc	P
-00acce	P
-00acd8	P
+00acbc	P	UnknownSubroutine0acbc
+00acce	P	UnknownSubroutine0acce
+00acd8	P	UnknownSubroutine0acd8
 00acfe	P
 00ad04	P
 00ad08	P	Call_VERIFY
@@ -1056,20 +1080,20 @@
 00ad36	P
 00ad38	P	Call_NAMECK
 00ad62	P
-00ad64	P
-00ad68	P
+00ad64	P	UnknownSubroutine0ad64
+00ad68	P	UnknownSubroutine0ad68
 00ad6a	P
 00ad70	P
 00ad7c	P
 00ad86	P
-00ad90	P
+00ad90	P	UnknownSubroutine0ad90
 00adce	P
 00ade0	P
 00adf0	P
 00ae04	P
 00ae12	P
 00ae14	P
-00ae1e	P
+00ae1e	P	UnknownSubroutine0ae1e
 00ae40	P
 00ae44	P
 00ae7e	P
@@ -1132,12 +1156,12 @@
 00b204	P
 00b208	P
 00b20a	P
-00b210	P
+00b210	P	UnknownSubroutine0b210
 00b21c	P
 00b226	P
-00b22e	P
+00b22e	P	UnknownSubroutine0b22e
 00b246	P
-00b24e	P
+00b24e	P	UnknownSubroutine0b24e
 00b252	P
 00b278	P
 00b28e	P
@@ -1148,7 +1172,7 @@
 00b2e6	P
 00b2f2	P
 00b2f4	P
-00b2fa	P
+00b2fa	P	UnknownSubroutine0b2fa
 00b30a	P
 00b31c	P
 00b320	P
@@ -1156,11 +1180,11 @@
 00b32a	P
 00b34c	P
 00b350	P
-00b352	P
+00b352	P	UnknownSubroutine0b352
 00b36a	P
-00b372	P
+00b372	P	UnknownSubroutine0b372
 00b386	P
-00b38a	P
+00b38a	P	UnknownSubroutine0b38a
 00b3a8	P
 00b3ac	P
 00b3ce	P
@@ -1168,16 +1192,16 @@
 00b3e0	P
 00b3f2	P
 00b404	P
-00b40a	P
+00b40a	P	UnknownSubroutine0b40a
 00b420	P
 00b432	P
 00b464	P
 00b466	P
 00b46a	P
-00b476	P
+00b476	P	UnknownSubroutine0b476
 00b482	P
 00b48a	P
-00b48c	P
+00b48c	P	UnknownSubroutine0b48c
 00b49e	P
 00b4b0	P
 00b4b6	P
@@ -1185,14 +1209,14 @@
 00b4d2	P
 00b4d4	P
 00b4d8	P
-00b4de	P
+00b4de	P	UnknownSubroutine0b4de
 00b4f0	P
 00b4f2	P
-00b4f4	P
+00b4f4	P	UnknownSubroutine0b4f4
 00b4fa	P
 00b4fe	P
 00b518	P
-00b520	P
+00b520	P	UnknownSubroutine0b520
 00b546	P
 00b556	P
 00b566	P
@@ -1205,37 +1229,37 @@
 00b626	P
 00b628	P
 00b634	P
-00b658	P
+00b658	P	UnknownSubroutine0b658
 00b66a	P
 00b66c	P
 00b674	P
 00b68e	DL
 00b692	P
 00b6aa	DL
-00b6ba	P
 00b6ae	DL
 00b6b2	DL
-00b6d8	P
+00b6ba	P	UnknownSubroutine0b6ba
+00b6d8	P	UnknownSubroutine0b6d8
 00b6de	DU
 00b6f2	P
-00b71a	P
-00b730	P
+00b71a	P	UnknownSubroutine0b71a
+00b730	P	UnknownSubroutine0b730
 00b746	P
-00b75c	P
+00b75c	P	UnknownSubroutine0b75c
 00b78a	P
-00b790	P
-00b7a6	P
-00b7bc	P
-00b7d2	P
-00b7e4	P
+00b790	P	UnknownSubroutine0b790
+00b7a6	P	UnknownSubroutine0b7a6
+00b7bc	P	UnknownSubroutine0b7bc
+00b7d2	P	UnknownSubroutine0b7d2
+00b7e4	P	UnknownSubroutine0b7e4
 00b7fe	P
-00b808	P
+00b808	P	UnknownSubroutine0b808
 00b814	P
-00b81e	P
+00b81e	P	UnknownSubroutine0b81e
 00b838	P
 00b840	P
-00b848	P
-00b84e	P
+00b848	P	UnknownSubroutine0b848
+00b84e	P	UnknownSubroutine0b84e
 00b876	P
 00b87e	P
 00b886	P
@@ -1245,11 +1269,11 @@
 00b8ba	P
 00b8ca	P
 00b8dc	P
-00b8e2	P
+00b8e2	P	UnknownSubroutine0b8e2
 00b8f0	P
 00b902	P
 00b904	P
-00b906	P
+00b906	P	UnknownSubroutine0b906
 00b926	P
 00b940	P
 00b944	P	Call_CHDIR
@@ -1260,9 +1284,9 @@
 00b9b6	P
 00b9bc	P
 00b9be	P
-00b9c4	P
+00b9c4	P	UnknownSubroutine0b9c4
 00b9d8	P
-00b9e0	P
+00b9e0	P	UnknownSubroutine0b9e0
 00b9e6	P
 00ba0e	P
 00ba1c	P
@@ -1271,17 +1295,17 @@
 00ba3e	P
 00ba6c	P
 00ba6e	P
-00ba74	P
+00ba74	P	UnknownSubroutine0ba74
 00bb0c	P
 00bb0e	P
 00bb14	P
-00bb1a	P
-00bb34	P
+00bb1a	P	UnknownSubroutine0bb1a
+00bb34	P	UnknownSubroutine0bb34
 00bb40	P
 00bb54	P
-00bb56	P
+00bb56	P	UnknownSubroutine0bb56
 00bb5e	P
-00bb66	P
+00bb66	P	UnknownSubroutine0bb66
 00bb6e	P
 00bb78	P
 00bb80	P	Call_FILES
@@ -1290,18 +1314,18 @@
 00bbf4	P
 00bbfa	P
 00bc02	P
-00bc08	P
+00bc08	P	UnknownSubroutine0bc08
 00bc24	P
 00bc32	P
 00bc3c	P
-00bc48	P
+00bc48	P	UnknownSubroutine0bc48
 00bc86	P
 00bc90	P	Call_NFILES
 00bcce	P
 00bcd2	P
 00bcda	P
-00bce0	P
-00bcec	P
+00bce0	P	UnknownSubroutine0bce0
+00bcec	P	UnknownSubroutine0bcec
 00bcfa	P
 00bd0e	P
 00bd2c	P
@@ -1323,12 +1347,12 @@
 00bdfa	P
 00be00	P
 00be06	P
-00be12	P
+00be12	P	UnknownSubroutine0be12
 00be22	P
 00be34	P
 00be3c	P
-00be48	P
-00be7c	P
+00be48	P	UnknownSubroutine0be48
+00be7c	P	UnknownSubroutine0be7c
 00be96	P	Call_MAKETMP
 00be98	P
 00be9a	P
@@ -1347,7 +1371,7 @@
 00bf30	P
 00bf5e	P
 00bf60	P
-00bf66	P
+00bf66	P	UnknownSubroutine0bf66
 00bf7e	P
 00bf8a	P
 00bfca	P
@@ -1362,10 +1386,10 @@
 00c03c	P
 00c04a	P
 00c054	P
-00c058	P
+00c058	P	UnknownSubroutine0c058
 00c07c	P
-00c07e	P
-00c082	P
+00c07e	P	UnknownSubroutine0c07e
+00c082	P	UnknownSubroutine0c082
 00c084	P
 00c0ba	P
 00c0c8	P
@@ -1377,30 +1401,30 @@
 00c160	P
 00c164	P
 00c168	P
-00c1a0	P
+00c1a0	P	UnknownSubroutine0c1a0
 00c1ac	P
-00c1b4	P
+00c1b4	P	UnknownSubroutine0c1b4
 00c1ba	P
 00c1f2	P
 00c1f6	P
 00c1f8	P
-00c1fe	P
+00c1fe	P	UnknownSubroutine0c1fe
 00c210	P
 00c212	P
 00c21a	P
 00c234	P	Call_CLOSE
-00c236	P
+00c236	P	UnknownSubroutine0c236
 00c258	P
 00c26c	P
 00c26e	P
 00c278	P
-00c27e	P
+00c27e	P	UnknownSubroutine0c27e
 00c29e	P
 00c2ac	P	Call_READ
 00c2ca	P
 00c2fa	P
-00c302	P
-00c30c	P
+00c302	P	UnknownSubroutine0c302
+00c30c	P	UnknownSubroutine0c30c
 00c31c	P
 00c320	P
 00c322	P
@@ -1419,12 +1443,12 @@
 00c424	P
 00c430	P
 00c434	P
-00c438	P
+00c438	P	UnknownSubroutine0c438
 00c45e	P
 00c464	P
 00c47a	P
 00c48c	P
-00c490	P
+00c490	P	UnknownSubroutine0c490
 00c4b0	P
 00c4d4	P
 00c4dc	P
@@ -1436,7 +1460,7 @@
 00c55c	P
 00c564	P
 00c570	P
-00c576	P
+00c576	P	UnknownSubroutine0c576
 00c59c	P
 00c5a0	P
 00c5c4	P
@@ -1444,20 +1468,20 @@
 00c61e	P
 00c622	P
 00c64e	P
-00c652	P
+00c652	P	UnknownSubroutine0c652
 00c686	P
 00c68a	P
-00c69c	P
+00c69c	P	UnknownSubroutine0c69c
 00c6a2	P
 00c6ba	P
 00c6be	P
 00c6c0	P
-00c6c8	P
+00c6c8	P	UnknownSubroutine0c6c8
 00c6ea	P
 00c708	P
 00c71e	P
 00c724	P
-00c72e	P
+00c72e	P	UnknownSubroutine0c72e
 00c762	P
 00c76a	P
 00c780	P
@@ -1470,7 +1494,7 @@
 00c816	P
 00c81c	P
 00c820	P
-00c83c	P
+00c83c	P	UnknownSubroutine0c83c
 00c862	P
 00c866	P
 00c88a	P
@@ -1478,12 +1502,12 @@
 00c8e4	P
 00c8e8	P
 00c914	P
-00c918	P
+00c918	P	UnknownSubroutine0c918
 00c93c	P
 00c94e	P
 00c952	P
 00c964	P
-00c974	P
+00c974	P	UnknownSubroutine0c974
 00c97a	P
 00c994	P
 00c998	P
@@ -1504,42 +1528,42 @@
 00ca9e	P
 00caa0	P
 00caa4	P
-00caa8	P
-00caac	P
+00caa8	P	UnknownSubroutine0caa8
+00caac	P	UnknownSubroutine0caac
 00caae	P
 00cae0	P
 00cb0a	P
 00cb2c	P
 00cb32	P
-00cb46	P
+00cb46	P	UnknownSubroutine0cb46
 00cb52	P
 00cb5c	P
 00cb5e	P
 00cb9c	P
-00cba6	P
+00cba6	P	UnknownSubroutine0cba6
 00cbb4	P
-00cbb8	P
-00cbe2	P
+00cbb8	P	UnknownSubroutine0cbb8
+00cbe2	P	UnknownSubroutine0cbe2
 00cbe6	P
 00cc0e	P
 00cc14	DL
 00cc18	P
 00cc2a	DW
-00cc2c	P
-00cc38	P
-00cc44	P
-00cc50	P
-00cc72	P
-00cc94	P
-00ccae	P
-00ccc6	P
-00ccde	P
+00cc2c	P	UnknownSubroutine0cc2c
+00cc38	P	UnknownSubroutine0cc38
+00cc44	P	UnknownSubroutine0cc44
+00cc50	P	UnknownSubroutine0cc50
+00cc72	P	UnknownSubroutine0cc72
+00cc94	P	UnknownSubroutine0cc94
+00ccae	P	UnknownSubroutine0ccae
+00ccc6	P	UnknownSubroutine0ccc6
+00ccde	P	UnknownSubroutine0ccde
 00ccf6	P
-00cd0e	P
-00cd26	P
+00cd0e	P	UnknownSubroutine0cd0e
+00cd26	P	UnknownSubroutine0cd26
 00cd3e	P
-00cd4c	P
-00cd5a	P
+00cd4c	P	UnknownSubroutine0cd4c
+00cd5a	P	UnknownSubroutine0cd5a
 00cd70	P
 00cd9a	P
 00cda0	P	Call_DRVCTRL
@@ -1552,7 +1576,7 @@
 00ce20	P
 00ce32	P
 00ce3e	P
-00ce44	P
+00ce44	P	UnknownSubroutine0ce44
 00ce4e	P
 00ce66	P
 00ce72	P	Call_CHMOD
@@ -1566,7 +1590,7 @@
 00cef6	P
 00cf1e	P
 00cf24	P
-00cf28	P
+00cf28	P	UnknownSubroutine0cf28
 00cf6c	P
 00cf72	P
 00cf78	P
@@ -1588,24 +1612,24 @@
 00d0dc	P
 00d0e2	P
 00d0e6	P
-00d0ea	P
+00d0ea	P	UnknownSubroutine0d0ea
 00d10c	P
 00d112	P	Call_RMDIR
 00d11c	P
 00d13e	P
 00d144	P
-00d148	P
+00d148	P	UnknownSubroutine0d148
 00d18e	P
 00d1a0	P
 00d1a2	P
 00d1a6	P
-00d1ac	P
+00d1ac	P	UnknownSubroutine0d1ac
 00d1d0	P
-00d1d6	P
+00d1d6	P	UnknownSubroutine0d1d6
 00d206	P
 00d216	P
 00d218	P
-00d222	P
+00d222	P	UnknownSubroutine0d222
 00d22e	P
 00d242	P
 00d24a	P
@@ -1615,13 +1639,13 @@
 00d28a	P
 00d290	P
 00d2a4	P
-00d2ae	P
+00d2ae	P	UnknownSubroutine0d2ae
 00d2b8	P
 00d2ee	P
 00d302	P
 00d30e	P
 00d318	P
-00d322	P
+00d322	P	UnknownSubroutine0d322
 00d32c	P
 00d330	P
 00d33c	P
@@ -1630,21 +1654,21 @@
 00d3aa	P
 00d3bc	P
 00d3f2	P
-00d3f6	P
+00d3f6	P	UnknownSubroutine0d3f6
 00d426	P
-00d428	P
+00d428	P	UnknownSubroutine0d428
 00d446	P
 00d448	P
 00d450	P
-00d460	P
+00d460	P	UnknownSubroutine0d460
 00d49c	P
-00d4a6	P
-00d4ec	P
+00d4a6	P	UnknownSubroutine0d4a6
+00d4ec	P	UnknownSubroutine0d4ec
 00d526	P
 00d52a	P
-00d534	P
+00d534	P	UnknownSubroutine0d534
 00d53a	P
-00d544	P
+00d544	P	UnknownSubroutine0d544
 00d548	P
 00d552	P
 00d584	P
@@ -1653,7 +1677,7 @@
 00d5c4	P
 00d5e4	P
 00d5ec	P
-00d5fa	P
+00d5fa	P	UnknownSubroutine0d5fa
 00d608	P
 00d620	P
 00d634	P	Call_ASSIGN
@@ -1680,27 +1704,27 @@
 00d7f6	P
 00d814	P
 00d820	P
-00d82a	P
-00d83e	P
-00d850	P
-00d862	P
-00d874	P
-00d888	P
-00d89c	P
-00d8b2	P
-00d8c4	P
-00d8d6	P
-00d8ec	P
-00d8fe	P
-00d910	P
-00d920	P
-00d932	P
-00d942	P
-00d952	P
-00d964	P
-00d974	P
-00d984	P
-00d990	P
+00d82a	P	UnknownSubroutine0d82a
+00d83e	P	UnknownSubroutine0d83e
+00d850	P	UnknownSubroutine0d850
+00d862	P	UnknownSubroutine0d862
+00d874	P	UnknownSubroutine0d874
+00d888	P	UnknownSubroutine0d888
+00d89c	P	UnknownSubroutine0d89c
+00d8b2	P	UnknownSubroutine0d8b2
+00d8c4	P	UnknownSubroutine0d8c4
+00d8d6	P	UnknownSubroutine0d8d6
+00d8ec	P	UnknownSubroutine0d8ec
+00d8fe	P	UnknownSubroutine0d8fe
+00d910	P	UnknownSubroutine0d910
+00d920	P	UnknownSubroutine0d920
+00d932	P	UnknownSubroutine0d932
+00d942	P	UnknownSubroutine0d942
+00d952	P	UnknownSubroutine0d952
+00d964	P	UnknownSubroutine0d964
+00d974	P	UnknownSubroutine0d974
+00d984	P	UnknownSubroutine0d984
+00d990	P	UnknownSubroutine0d990
 00d99e	P
 00d9a8	P
 00d9e4	P	Call_COMMON
@@ -1711,7 +1735,7 @@
 00da5c	P
 00da60	P
 00da66	P
-00da68	P
+00da68	P	UnknownSubroutine0da68
 00da9a	P
 00da9e	P
 00daa8	P
@@ -1738,13 +1762,13 @@
 00dbb0	P
 00dbca	P
 00dbd0	P
-00dbd2	P
+00dbd2	P	UnknownSubroutine0dbd2
 00dbdc	P
 00dbfa	P
 00dbfe	P
-00dc02	P
+00dc02	P	UnknownSubroutine0dc02
 00dc1e	P
-00dc20	P
+00dc20	P	UnknownSubroutine0dc20
 00dc40	P
 00dc46	P
 00dc54	P
@@ -1753,23 +1777,23 @@
 00dc80	P
 00dc8a	P
 00dcb2	P
-00dcb6	P
+00dcb6	P	UnknownSubroutine0dcb6
 00dcd4	P
 00dcea	P
 00dcf2	P
 00dcf8	P
 00dcfa	P
-00dd02	P
+00dd02	P	UnknownSubroutine0dd02
 00dd22	P
 00dd32	P
 00dd3e	P
 00dd48	P
-00dd4a	P
+00dd4a	P	UnknownSubroutine0dd4a
 00dd5e	P
 00dd70	P
 00dd76	P
 00dd78	P
-00dd7e	P
+00dd7e	P	UnknownSubroutine0dd7e
 00ddb0	P
 00ddb8	DL
 00de08	P	Call_LOCK
@@ -1786,11 +1810,11 @@
 00dea6	P
 00deae	P
 00ded8	P
-00dedc	P
+00dedc	P	UnknownSubroutine0dedc
 00def2	P
 00def8	P	Call_CHANGE_KILL_OPEN_PR
-00defa	P
-00df42	P
+00defa	P	UnknownSubroutine0defa
+00df42	P	UnknownSubroutine0df42
 00df50	P	Call_S_MALLOC
 00df72	P	Call_S_MFREE
 00dfb0	P
@@ -1818,14 +1842,14 @@
 00e1d2	P
 00e204	P
 00e20c	P
-00e216	P
+00e216	P	UnknownSubroutine0e216
 00e230	P
 00e236	P
 00e252	P
 00e254	P
 00e25e	P
 00e268	P
-00e28a	P
+00e28a	P	UnknownSubroutine0e28a
 00e2b2	P
 00e2b4	P
 00e2bc	P
@@ -1877,12 +1901,12 @@
 00e602	P
 00e604	P
 00e60c	P
-00e640	P
+00e640	P	UnknownSubroutine0e640
 00e654	P
 00e662	P
 00e678	P
 00e68a	P
-00e68c	P
+00e68c	P	UnknownSubroutine0e68c
 00e6b6	P
 00e6ba	P
 00e716	P
@@ -1898,10 +1922,10 @@
 00e791	DB
 00e792	DL
 00e7a6	DS
-00e7b6	P
+00e7b6	P	UnknownSubroutine0e7b6
 00e7c2	P
 00e7dc	P
-00e7ee	P
+00e7ee	P	UnknownSubroutine0e7ee
 00e81e	P
 00e82a	P
 00e832	P
@@ -1911,14 +1935,14 @@
 00e842	P
 00e848	DL
 00e84c	P
-00e858	P
-00e864	P
-00e870	P
-00e886	P
-00e89c	P
-00e8b2	P
-00e8c8	P
-00e8de	P
+00e858	P	UnknownSubroutine0e858
+00e864	P	UnknownSubroutine0e864
+00e870	P	UnknownSubroutine0e870
+00e886	P	UnknownSubroutine0e886
+00e89c	P	UnknownSubroutine0e89c
+00e8b2	P	UnknownSubroutine0e8b2
+00e8c8	P	UnknownSubroutine0e8c8
+00e8de	P	UnknownSubroutine0e8de
 00e8f4	P	Call_OS_PATCH
 00e90e	P
 00e924	P
@@ -1951,13 +1975,13 @@
 00eb28	P
 00eb30	P
 00eb4a	P
-00eb54	P
+00eb54	P	UnknownSubroutine0eb54
 00eb64	P
 00eb6c	P
 00eb74	P
 00eb7c	P
 00eb84	P
-00eb94	P
+00eb94	P	UnknownSubroutine0eb94
 00ebc2	P
 00ebce	P
 00ebd0	P
@@ -1991,16 +2015,16 @@
 00edc8	P
 00edd6	P
 00eddc	P
-00ede4	P
+00ede4	P	UnknownSubroutine0ede4
 00ee02	P
 00ee12	P
 00ee20	P
 00ee28	P
-00ee3a	P
-00ee44	P
-00ee50	P
-00ee6a	P
-00ee78	P
+00ee3a	P	UnknownSubroutine0ee3a
+00ee44	P	UnknownSubroutine0ee44
+00ee50	P	UnknownSubroutine0ee50
+00ee6a	P	UnknownSubroutine0ee6a
+00ee78	P	UnknownSubroutine0ee78
 00ee84	P
 00ee98	P
 00eeaa	P
@@ -2025,9 +2049,9 @@
 00f032	P
 00f03a	P
 00f04c	P
-00f04e	P
+00f04e	P	UnknownSubroutine0f04e
 00f054	P
-00f05e	P
+00f05e	P	UnknownSubroutine0f05e
 00f098	P
 00f0c4	P
 00f0e4	P
@@ -2049,19 +2073,18 @@
 00f1aE	DL
 00f1b2	DB
 00f1b3	DB
-00fa66	DL
-00f1b4	P
-00f1ca	P
-00f1e0	P
-00f1f6	P
+00f1b4	P	UnknownSubroutine0f1b4
+00f1ca	P	UnknownSubroutine0f1ca
+00f1e0	P	UnknownSubroutine0f1e0
+00f1f6	P	UnknownSubroutine0f1f6
 00f20c	P
-00f222	P
-00f238	P
-00f250	P
-00f266	P
-00f27c	P
-00f292	P
-00f2a8	P
+00f222	P	UnknownSubroutine0f222
+00f238	P	UnknownSubroutine0f238
+00f250	P	UnknownSubroutine0f250
+00f266	P	UnknownSubroutine0f266
+00f27c	P	UnknownSubroutine0f27c
+00f292	P	UnknownSubroutine0f292
+00f2a8	P	UnknownSubroutine0f2a8
 00f2be	P
 00f336	P
 00f33a	P
@@ -2069,7 +2092,7 @@
 00f34a	P
 00f356	P
 00f366	P
-00f36c	P
+00f36c	P	UnknownSubroutine0f36c
 00f380	P
 00f392	P
 00f3a8	P
@@ -2087,7 +2110,7 @@
 00f422	P
 00f432	P
 00f442	P
-00f448	P
+00f448	P	UnknownSubroutine0f448
 00f45e	P
 00f466	P
 00f46e	P
@@ -2125,13 +2148,13 @@
 00f60e	P
 00f618	P
 00f61c	P
-00f620	P
+00f620	P	UnknownSubroutine0f620
 00f62a	P
-00f634	P
+00f634	P	UnknownSubroutine0f634
 00f63a	P
 00f642	P
 00f668	P
-00f66e	P
+00f66e	P	UnknownSubroutine0f66e
 00f69e	P
 00f6aa	P
 00f6b2	P
@@ -2155,7 +2178,7 @@
 00f79c	P
 00f7a4	P
 00f7aa	P
-00f7b2	P
+00f7b2	P	UnknownSubroutine0f7b2
 00f7ca	P
 00f802	P
 00f814	P
@@ -2165,30 +2188,30 @@
 00f83e	P
 00f872	P
 00f89a	P
-00f8c4	P
-00f8d6	P
+00f8c4	P	UnknownSubroutine0f8c4
+00f8d6	P	UnknownSubroutine0f8d6
 00f8e4	P
-00f8ec	P
-00f8f2	P
-00f900	P
+00f8ec	P	UnknownSubroutine0f8ec
+00f8f2	P	UnknownSubroutine0f8f2
+00f900	P	UnknownSubroutine0f900
 00f90e	P
-00f918	P
+00f918	P	UnknownSubroutine0f918
 00f926	P
 00f92e	P
 00f942	P
 00f96e	P
 00f98e	P
-00f990	P
+00f990	P	UnknownSubroutine0f990
 00f9b0	P
-00f9c2	P
-00f9ea	P
+00f9c2	P	UnknownSubroutine0f9c2
+00f9ea	P	UnknownSubroutine0f9ea
 00f9fa	P
-00fa0a	P
-00fa16	P
+00fa0a	P	UnknownSubroutine0fa0a
+00fa16	P	UnknownSubroutine0fa16
 00fa1a	P
 00fa28	P
-00fa32	P
-00fa46	P
+00fa32	P	UnknownSubroutine0fa32
+00fa46	P	UnknownSubroutine0fa46
 00fa4a	P
 00fa50	DL
 00fa54	DW
@@ -2216,12 +2239,12 @@
 00fb62	P
 00fb6a	P
 00fb72	P
-00fb76	P
+00fb76	P	UnknownSubroutine0fb76
 00fb7c	P
 00fbcc	P
 00fbce	P
 00fbee	P
-00fbf4	P
+00fbf4	P	UnknownSubroutine0fbf4
 00fc0a	P
 00fc1a	P
 00fc24	P	Call_CONCTRL
@@ -2242,7 +2265,7 @@
 00fcda	P	CONCTRL_12
 00fce0	P	CONCTRL_13
 00fce6	P	CONCTRL_14
-00fd26	P
+00fd26	P	UnknownSubroutine0fd26
 00fd2a	P
 00fd30	P
 00fd46	P
@@ -2259,17 +2282,17 @@
 00fe04	DW
 00fe10	P	CONCTRL_17
 00fe16	P	CONCTRL_18
-00fe1c	P
-00fe20	P
+00fe1c	P	UnknownSubroutine0fe1c
+00fe20	P	UnknownSubroutine0fe20
 00fe4e	P
 00fe50	P
-00fe56	P
+00fe56	P	UnknownSubroutine0fe56
 00fe82	P
 00fe88	P
 00fe9e	P
-00fea4	P
+00fea4	P	UnknownSubroutine0fea4
 00fed6	P
-00fede	P
+00fede	P	UnknownSubroutine0fede
 00fef6	P
 00ff08	P	Call_HENDSP
 00ff1e	P
@@ -2290,7 +2313,7 @@
 00ffc4	P
 00ffd8	P
 00ffea	P
-010010	P
+010010	P	UnknownSubroutine10010
 010012	P
 01001e	P
 010020	P
@@ -2300,17 +2323,17 @@
 01003e	P
 010040	P
 010056	P
-01005c	P
-01008c	P
+01005c	P	UnknownSubroutine1005c
+01008c	P	UnknownSubroutine1008c
 01009a	P
-0100c8	P
-0100e4	P
+0100c8	P	UnknownSubroutine100c8
+0100e4	P	UnknownSubroutine100e4
 0100e8	P
-0100f6	P
+0100f6	P	UnknownSubroutine100f6
 010108	P
-010122	P
+010122	P	UnknownSubroutine10122
 010124	P
-010134	P
+010134	P	UnknownSubroutine10134
 010146	P
 010154	P
 010162	P
@@ -2323,28 +2346,28 @@
 0101b0	P
 0101ba	P
 0101be	P	Call_KNJCTRL
-0101c2	P
+0101c2	P	UnknownSubroutine101c2
 0101ee	P
 0101f4	P
-0101f8	P
+0101f8	P	UnknownSubroutine101f8
 010200	P
 010218	P
-01021c	P
+01021c	P	UnknownSubroutine1021c
 010220	P
 010238	P
-01023e	P
+01023e	P	UnknownSubroutine1023e
 010288	P
 010296	P
 01029c	P
 0102b8	P
 0102c0	P
-0102ca	P
+0102ca	P	UnknownSubroutine102ca
 0102e6	P
 010302	P
 010304	P
 01031e	P
 010324	P
-01032e	P
+01032e	P	UnknownSubroutine1032e
 010354	P
 010366	P
 010376	P
@@ -2358,20 +2381,20 @@
 0103f4	P
 0103f8	P
 010406	P
-01040a	P
+01040a	P	UnknownSubroutine1040a
 01042c	P
 010430	P
 010434	P
 01043a	P
-01045e	P
+01045e	P	UnknownSubroutine1045e
 010480	P
 010488	P
-010490	P
+010490	P	UnknownSubroutine10490
 0104a4	P
 0104a6	P
 0104bc	P
 0104c4	P
-0104cc	P
+0104cc	P	UnknownSubroutine104cc
 0104d8	P
 0104e0	P
 0104e8	P
@@ -2387,23 +2410,23 @@
 0105a4	P
 0105b0	P
 0105b6	P
-0105ca	P
-0105d0	P
-0105d6	P
-0105dc	P
+0105ca	P	UnknownSubroutine105ca
+0105d0	P	UnknownSubroutine105d0
+0105d6	P	UnknownSubroutine105d6
+0105dc	P	UnknownSubroutine105dc
 010600	P
 010604	P
 01060e	P
-01061a	P
+01061a	P	UnknownSubroutine1061a
 01063e	P
 010648	P
 010650	P
 010656	P
 010662	P
-01066a	P
+01066a	P	UnknownSubroutine1066a
 010676	P
 010680	P
-010686	P
+010686	P	UnknownSubroutine10686
 010694	DL
 0106a2	DS
 0106aa	DU
@@ -2456,7 +2479,7 @@
 01096e	P
 01097e	DW
 01098c	P
-010994	DU
+010994	P	UnknownSubroutine10994
 0109a0	DL
 0109a4	DU
 0109f4	P
@@ -2486,17 +2509,17 @@
 010bac	P
 010bbc	P
 010bf2	P
-010bf8	P
-010c0c	P
+010bf8	P	UnknownSubroutine10bf8
+010c0c	P	UnknownSubroutine10c0c
 010c1c	P
 010c60	P
 010c62	P
 010c68	P
 010c88	P
-010c8e	P
+010c8e	P	UnknownSubroutine10c8e
 010ccc	P
 010ce8	P
-010cee	P
+010cee	P	UnknownSubroutine10cee
 010d1e	P
 010d24	P
 010d2a	P
@@ -2529,7 +2552,7 @@
 010f3c	DL
 010f4c	P
 010f56	P
-010f5a	P
+010f5a	P	UnknownSubroutine10f5a
 010f78	P
 010f8c	P
 010f9a	P
@@ -2538,7 +2561,7 @@
 010fd4	P
 010fea	P
 011006	P
-01100c	P
+01100c	P	UnknownSubroutine1100c
 011012	P
 011044	P
 011070	P
@@ -2625,20 +2648,23 @@
 013d1a	DB
 013d24	DB
 013d2e	DU
-013d30	DW
-013d32	DL
-013d36	DW
-013d54	DS
+013d30	DB	File1
+013d30	DB	File1FCBFileHandles
+013d31	DB	File1DeviceInfo
+013d32	DL	File1DPBAddr
+013d36	DL	File1FileAddr
+013d3a	DL	File1ExclCtrlInfo
+013d54	DS	CONStr
 013d5c	DW
 013d90	DW
-013d92	DL
+013d92	DL	CON2Ptr
 013d96	DW
-013db4	DS
+013db4	DS	CON2Str
 013dbc	DW
 013df0	DW
-013df2	DL
+013df2	DL	CON3Ptr
 013df6	DW
-013e14	DS
+013e14	DS	CON3Str
 013e1c	DW
 013e50	DW
 013e74	DS

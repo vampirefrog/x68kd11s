@@ -1,0 +1,22 @@
+013d30
+	dc.b	peek.b(pc)," ; Number of FCB file handles"
+	dc.b	peek.b(pc)," ; Device information bits"
+	dc.l
+	dc.l
+	dc.l
+	dc.b
+	dc.b
+	dc.b
+	dc.b
+	dc.w
+	dc.l[4]
+	ascii[8]
+	ascii[3]
+	dc.b
+	ascii[10]
+	dc.w
+	dc.w
+	dc.w
+	dc.l
+	byte[28]
+end[5]
