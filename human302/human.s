@@ -7,7 +7,7 @@
 ;  Text size    00a890 byte(s)
 ;  Data size    0033ea byte(s)
 ;  Bss  size    000000 byte(s)
-;  2711 Labels
+;  2808 Labels
 ;
 ;  Commandline dis  -b2 -h -m68030 --sp -q1 -B -M -o120 -Thuman302/human.tab -ghuman302/human.lab --overwrite human302/human.sys human302/human.s
 ;          DIS version 3.16
@@ -726,7 +726,7 @@ UnknownSubroutine06f20:
 	lea.l	(ShellStr),a0
 	bsr.w	UnknownSubroutine06954
 	bne.s	L006f36
-	lea.l	(L011096),a0
+	lea.l	(StrCommandP),a0
 	bsr.w	UnknownSubroutine069d4
 L006f36:
 	rts
@@ -1634,7 +1634,7 @@ L007858:
 	movea.l	a0,a5
 	adda.l	#$00000034,a0
 	move.l	a0,-(sp)
-	lea.l	(L011096),a0
+	lea.l	(StrCommandP),a0
 	bsr.w	UnknownSubroutine069d4
 	movea.l	(sp),a0
 	move.w	(a0)+,d1
@@ -2451,7 +2451,7 @@ L00848a:
 	lea.l	(DOSMEMPrev),sp
 	move.l	(DOSPSPEnvPtr),-(sp)
 	move.l	(L011090),-(sp)
-	pea.l	(L011096)
+	pea.l	(StrCommandP)
 	move.w	#$0002,-(sp)
 	DOS	_EXEC
 	lea.l	($000e,sp),sp
@@ -2459,7 +2459,7 @@ L00848a:
 	bmi.s	L0084f4
 	move.l	(DOSPSPEnvPtr),-(sp)
 	move.l	(L011090),-(sp)
-	pea.l	(L011096)
+	pea.l	(StrCommandP)
 	move.w	#$0001,-(sp)
 	DOS	_EXEC
 	lea.l	($000e,sp),sp
@@ -2480,30 +2480,30 @@ L0084f4:
 	DOS	_CONCTRL
 	addq.l	#4,sp
 	bsr.s	UnknownSubroutine0855a
-	pea.l	(L011096)
+	pea.l	(StrCommandP)
 	DOS	_PRINT
 	addq.l	#4,sp
-	pea.l	(L011193)
+	pea.l	(StrCouldNotStart)
 	DOS	_PRINT
 	addq.l	#4,sp
 	bra.s	L008524
 
 L008518:
 	bsr.s	UnknownSubroutine0855a
-	pea.l	(L0111ae)
+	pea.l	(StrFinished)
 	DOS	_PRINT
 	addq.l	#4,sp
 L008524:
-	pea.l	(L0111bd)
+	pea.l	(StrPleaseEnterCommand)
 	bra.s	L008532
 
 L00852c:
-	pea.l	(L0111db)
+	pea.l	(StrHashSign)
 L008532:
 	DOS	_PRINT
 	addq.l	#4,sp
 	clr.b	(L011095)
-	clr.b	(L011096)
+	clr.b	(StrCommandP)
 	pea.l	(L011094)
 	DOS	_GETSS
 	addq.l	#4,sp
@@ -2530,7 +2530,7 @@ Call_CTRLVC_ERRJVC_EXITVC:
 	lea.l	($00f0,a0),a0
 	move.l	a0,usp
 	bsr.s	UnknownSubroutine0855a
-	pea.l	(L0111dd)
+	pea.l	(StrStopped)
 	DOS	_PRINT
 	addq.l	#4,sp
 	bra.s	L008524
@@ -2655,7 +2655,7 @@ L0086a4:
 L0086b0:
 	movea.l	($1c5c),sp
 	bsr.w	UnknownSubroutine09020
-	lea.l	(L0111ec),a1
+	lea.l	(StrCaretC),a1
 	bsr.w	UnknownSubroutine08818
 	move.l	($1bc4),d0
 	move.l	d0,($003a,sp)
@@ -5191,7 +5191,7 @@ UnknownSubroutine09d42:
 
 L009d5c:
 	movea.l	(-$0004,a6),a1
-	lea.l	(L0111f6),a0
+	lea.l	(StrPathEquals),a0
 	bsr.w	UnknownSubroutine09f94
 	bne.s	L009d72
 	lea.l	(L0111fc),a3
@@ -5316,7 +5316,7 @@ L009e6e:
 	beq.s	L009ea0
 	movea.l	d1,a0
 	move.b	#$03,d1
-	lea.l	(L0111fd),a1
+	lea.l	(StrRZX),a1
 	pea.l	(a0)
 L009e80:
 	pea.l	(a1)
@@ -6718,7 +6718,7 @@ L00a9f0:
 	cmp.b	#-$01,d0
 	beq.s	L00aa2a
 	move.l	d0,-(sp)
-	movea.l	#File1,a0
+	movea.l	#FCB1,a0
 	cmp.w	#$0006,d0
 	bcs.s	L00aa18
 	subq.w	#6,d0
@@ -6953,25 +6953,25 @@ UnknownSubroutine0ac0a:
 	move.w	($0004,a1),d0
 	btst.l	#$00,d0
 	beq.s	L00ac20
-	lea.l	(File1),a2
+	lea.l	(FCB1),a2
 	move.l	a1,($0002,a2)
 	bsr.s	UnknownSubroutine0ac6e
 L00ac20:
 	btst.l	#$01,d0
 	beq.s	L00ac3e
-	lea.l	(L013d90),a2
+	lea.l	(FCB2),a2
 	move.l	a1,($0002,a2)
 	bsr.s	UnknownSubroutine0ac6e
-	lea.l	(L013df0),a2
+	lea.l	(FCB3),a2
 	move.l	a1,($0002,a2)
 	bsr.s	UnknownSubroutine0ac6e
 L00ac3e:
-	lea.l	(L013e50),a2
+	lea.l	(FCB4),a2
 	bsr.s	UnknownSubroutine0ac5c
 	bne.s	L00ac4c
 	move.l	a1,($0002,a2)
 L00ac4c:
-	lea.l	(L013eb0),a2
+	lea.l	(FCB5),a2
 	bsr.s	UnknownSubroutine0ac5c
 	bne.s	L00ac5a
 	move.l	a1,($0002,a2)
@@ -8140,7 +8140,7 @@ L00b692:
 
 	jmp	(UnknownSubroutine0cb46)
 
-	jmp	(L00cd3e)
+	jmp	(UnknownSubroutine0cd3e)
 
 	jmp	(UnknownSubroutine0cd4c)
 
@@ -10562,7 +10562,7 @@ UnknownSubroutine0ccde:
 	movem.l	(sp)+,a4-a5
 	rts
 
-L00ccf6:
+UnknownSubroutine0ccf6:
 	movem.l	a4-a5,-(sp)
 	movea.l	(L00cc14,pc),a4
 	lea.l	(L00cc18,pc),a5
@@ -10589,7 +10589,7 @@ UnknownSubroutine0cd26:
 	movem.l	(sp)+,a4-a5
 	rts
 
-L00cd3e:
+UnknownSubroutine0cd3e:
 	movem.l	d0-d1/d7/a1/a4-a5,-(sp)
 	moveq.l	#$06,d7
 	bsr.s	UnknownSubroutine0cd5a
@@ -13613,13 +13613,13 @@ L00e9a4:
 	rts
 
 L00e9ba:
-	jmp	(L00ea32)
+	jmp	(ReturnFF)
 
-	jmp	(L00ea36)
+	jmp	(UnknownSubroutine0ea36)
 
-	jmp	(L00ea70)
+	jmp	(UnknownSubroutine0ea70)
 
-	jmp	(L00eabe)
+	jmp	(UnknownSubroutine0eabe)
 
 	jmp	(L00eb64)
 
@@ -13643,21 +13643,21 @@ L00e9ba:
 
 	jmp	(L00ec6a)
 
-	jmp	(L00ea32)
+	jmp	(ReturnFF)
 
-	jmp	(L00ea32)
+	jmp	(ReturnFF)
 
-	jmp	(L00ea32)
+	jmp	(ReturnFF)
 
-	jmp	(L00ea32)
+	jmp	(ReturnFF)
 
-	jmp	(L00ea32)
+	jmp	(ReturnFF)
 
-L00ea32:
+ReturnFF:
 	moveq.l	#$ff,d0
 	rts
 
-L00ea36:
+UnknownSubroutine0ea36:
 	movem.l	d0-d3/a1-a2,-(sp)
 	movea.l	($0018,a5),a0
 	move.l	($001c,a5),d2
@@ -13680,7 +13680,7 @@ L00ea4e:
 	movem.l	(sp)+,d0-d3/a1-a2
 	rts
 
-L00ea70:
+UnknownSubroutine0ea70:
 	movem.l	d0-d2/a0-a2,-(sp)
 	move.l	($0024,a5),d0
 L00ea78:
@@ -13707,7 +13707,7 @@ L00eab4:
 	movem.l	(sp)+,d0-d2/a0-a2
 	rts
 
-L00eabe:
+UnknownSubroutine0eabe:
 	move.w	#$0040,d0		;'@'
 L00eac2:
 	movem.l	d1-d3/a2,-(sp)
@@ -15135,7 +15135,7 @@ Trap14Handler:
 	moveq.l	#$16,d2
 	moveq.l	#$10,d3
 	moveq.l	#$33,d4			;'3'
-	lea.l	(L01124c),a1
+	lea.l	(StrCancelRetryIgnore),a1
 	bsr.w	UnknownSubroutine0f8d6
 	ror.w	#8,d7
 	cmp.b	#$80,d7
@@ -15200,12 +15200,12 @@ L00f7aa:
 	bra.s	L00f7a4
 
 UnknownSubroutine0f7b2:
-	lea.l	(L01134c),a1
+	lea.l	(StrInterruptPressed),a1
 	cmp.w	#$001f,d7
 	beq.s	L00f814
 	cmp.w	#$301f,d7
 	beq.s	L00f814
-	lea.l	(L011369),a1
+	lea.l	(StrCalcPackageNotReg),a1
 L00f7ca:
 	move.w	d7,d0
 	ror.w	#8,d0
@@ -15225,14 +15225,14 @@ L00f7ca:
 	bmi.s	L00f83a
 	cmp.b	#$0f,d0
 	bcc.s	L00f83e
-	lea.l	(L011386),a1
+	lea.l	(StrInvalidUnitNumber),a1
 	bra.s	L00f82a
 
 L00f802:
 	clr.l	d0
 	move.b	d7,d0
 	subq.w	#2,d0
-	lea.l	(L011281),a1
+	lea.l	(StrBusError),a1
 	mulu.w	#$001d,d0
 	adda.l	d0,a1
 L00f814:
@@ -15240,7 +15240,7 @@ L00f814:
 	moveq.l	#$0f,d3
 	moveq.l	#$1b,d4
 	bsr.w	UnknownSubroutine0f8d6
-	lea.l	(L01123d),a1
+	lea.l	(StrSREquals),a1
 	moveq.l	#$04,d4
 	moveq.l	#$32,d2			;'2'
 	bra.s	L00f872
@@ -15262,7 +15262,7 @@ L00f83e:
 	moveq.l	#$16,d2
 	moveq.l	#$0f,d3
 	moveq.l	#$08,d4
-	lea.l	(L011224),a1
+	lea.l	(StrError),a1
 	bsr.w	UnknownSubroutine0f8d6
 	move.w	d7,d2
 	lea.l	(L0123d2),a1
@@ -15272,7 +15272,7 @@ L00f83e:
 	moveq.l	#$03,d4
 	lea.l	(L0123d2),a1
 	bsr.s	UnknownSubroutine0f8d6
-	lea.l	(L01122e),a1
+	lea.l	(StrHasOccurred),a1
 	moveq.l	#$13,d4
 	moveq.l	#$23,d2			;'#'
 L00f872:
@@ -15289,7 +15289,7 @@ L00f872:
 	moveq.l	#$3b,d2			;';'
 	moveq.l	#$0f,d3
 	moveq.l	#$04,d4
-	lea.l	(L011243),a1
+	lea.l	(StrPCEquals),a1
 L00f89a:
 	bsr.s	UnknownSubroutine0f8d6
 	move.l	($0002,a6),d2
@@ -15303,7 +15303,7 @@ L00f89a:
 	moveq.l	#$48,d2			;'H'
 	moveq.l	#$0f,d3
 	moveq.l	#$01,d4
-	lea.l	(L011249),a1
+	lea.l	(StrCloseParenthesis),a1
 	bra.s	UnknownSubroutine0f8d6
 
 UnknownSubroutine0f8c4:
@@ -17706,7 +17706,7 @@ L011094:
 	.dc.b	$fa
 L011095:
 	.dc.b	$00
-L011096:
+StrCommandP:
 	.dc.b	'COMMAND /P',$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
@@ -17715,28 +17715,28 @@ L011096:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-L011193:
+StrCouldNotStart:
 	.dc.b	'が　起動できませんでした。',$00
-L0111ae:
+StrFinished:
 	.dc.b	'終了しました。',$00
-L0111bd:
+StrPleaseEnterCommand:
 	.dc.b	'コマンドを、入力してください',$0d,$0a
-L0111db:
+StrHashSign:
 	.dc.b	'#',$00
-L0111dd:
+StrStopped:
 	.dc.b	'停止しました。',$00
-L0111ec:
+StrCaretC:
 	.dc.b	'^C'
 L0111ee:
 	.dc.b	$0d,$0a,$00,$00
 L0111f2:
 	.dc.b	$00,$00,$00
 	.dc.b	$0b
-L0111f6:
+StrPathEquals:
 	.dc.b	'path=',$00
 L0111fc:
 	.dc.b	$00
-L0111fd:
+StrRZX:
 	.dc.b	'r',$00
 	.dc.b	'z',$00
 	.dc.b	'x',$00,$00
@@ -17763,59 +17763,65 @@ L011220:
 	.dc.b	$00
 	.dc.b	'B',$00
 	.dc.b	$10
-L011224:
+StrError:
 	.dc.b	' エラー($',$00
-L01122e:
+StrHasOccurred:
 	.dc.b	')が発生しました'
-L01123d:
+StrSREquals:
 	.dc.b	'(SR=$',$00
-L011243:
+StrPCEquals:
 	.dc.b	':PC=$',$00
-L011249:
+StrCloseParenthesis:
 	.dc.b	') ',$00
-L01124c:
+StrCancelRetryIgnore:
 	.dc.b	'　　　 中止＜Ａ＞ 再実行＜Ｒ＞ 無視＜Ｉ＞ ？　　　　',$00
-L011281:
+StrBusError:
 	.dc.b	'  バスエラーが発生しました  ',$00
-L01129e:
+StrAddressError:
 	.dc.b	'アドレスエラーが発生しました',$00
-L0112bb:
+StrUnknownInstruction:
 	.dc.b	' おかしな命令を実行しました ',$00
+StrDivisionByZero:
 	.dc.b	'　　 ０で除算しました       ',$00
-L0112f5:
+StrCHKExecuted:
 	.dc.b	'　ＣＨＫ命令を実行しました　',$00
-L011312:
+StrTrapVExecuted:
 	.dc.b	'ＴＲＡＰＶ命令を実行しました',$00
-L01132f:
+StrPrivilegedInstr:
 	.dc.b	'   特権命令を使用しました   ',$00
-L01134c:
+StrInterruptPressed:
 	.dc.b	' Interruptｽｲｯﾁが押されました',$00
-L011369:
+StrCalcPackageNotReg:
 	.dc.b	' 演算パッケージが未登録です ',$00
-L011386:
+StrInvalidUnitNumber:
 	.dc.b	'　　　　　無効なユニット番号を指定しました　　　　　',$00
-L0113bb:
+StrNoDisk:
 	.dc.b	'　　　ディスクが入っていません、入れてください　　　',$00
-L0113f0:
+StrInvalidDriverCmd:
 	.dc.b	'　 デバイスドライバに無効なコマンドを指定しました 　',$00
+StrCRCError:
 	.dc.b	'                    ＣＲＣエラー　　　　　　　　　　',$00
-L01145a:
+StrDiskMgmtAreaCorrupted:
 	.dc.b	' ディスクの管理領域が破壊されています、使用不能です ',$00
+StrSeekError:
 	.dc.b	'                    シークエラー　　　　　　　　　　',$00
-L0114c4:
+StrInvalidMedia:
 	.dc.b	'            無効なメディアを使用しました  　　　　　',$00
+StrSectorNotFound:
 	.dc.b	'　　　　　　　 セクタが見つかりません 　　　　　　　',$00
-L01152e:
+StrPrinterNotConnected:
 	.dc.b	'　　　　　　プリンタがつながっていません　　　　　　',$00
-L011563:
+StrWriteError:
 	.dc.b	'　　　　　　　　　 書き込みエラー 　　　　　　　　　',$00
+StrReadError:
 	.dc.b	'　　　　　　　　　 読み込みエラー 　　　　　　　　　',$00
-L0115cd:
+StrErrorOccurred:
 	.dc.b	'　　　　　　　エラーが発生しました　　　　　　　　　',$00
-L011602:
+StrRemoveProtectionAndReinsert:
 	.dc.b	' プロテクトをはずして、同じディスクを入れてください ',$00
+StrNotWritable:
 	.dc.b	'                 書き込み不可能です                 ',$00
-L01166c:
+StrFileSharingFile:
 	.dc.b	'     ファイル共有違反です。現在使用できません。     ',$00,$00
 L0116a2:
 	.dc.w	$000e,$0000,$f83e,$ffc0
@@ -17923,157 +17929,252 @@ L013d24:
 	.dc.b	$04,$04
 L013d2e:
 	.dc.b	$ff,$ff
-File1:
-File1FCBFileHandles:
+FCB1:
+FCB1NumHandles:
 	.dc.b	$01 ; Number of FCB file handles
-File1DeviceInfo:
+FCB1DeviceInfo:
 	.dc.b	$c1 ; Device information bits
-File1DPBAddr:
+FCB1DPBAddr:
 	.dc.l	L00fae8
-File1FileAddr:
+FCB1FileAddr:
 	.dc.l	$00000000
-File1ExclCtrlInfo:
+FCB1ExclCtrlInfo:
 	.dc.l	$00000000
+FCB1AccessMode:
 	.dc.b	$00
+FCB1DirLocation:
 	.dc.b	$00
+FCB1ClusterSectors:
 	.dc.b	$00
+FCB1Unused:
 	.dc.b	$00
+FCB1ClusterNumber:
 	.dc.w	$0000
+FCB1SectorNumber:
 	.dc.l	$00000000
+FCB1TopIOBuffer:
 	.dc.l	$00000000
+FCB1DirSector:
 	.dc.l	$00000000
+FCB1LastAccessAddr:
 	.dc.l	$00000000
-CONStr:
+FCB1FileName1:
 	.dc.b	'CON     '
-L013d5c:
+FCB1FileExt:
 	.dc.b	$00,$00,$00
+FCB1FileAttr:
 	.dc.b	$00
+FCB1FileName2:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+FCB1MTime:
 	.dc.w	$0000
+FCB1MDate:
 	.dc.w	$0000
+FCB1FirstFAT:
 	.dc.w	$0000
+FCB1FileSize:
 	.dc.l	$00000000
+FCB1FatCache:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00
-L013d90:
+FCB2:
+FCB2NumHandles:
 	.dc.b	$01 ; Number of FCB file handles
+FCB2DeviceInfo:
 	.dc.b	$c2 ; Device information bits
-CON2Ptr:
+FCB2DPBAddr:
 	.dc.l	L00fae8
-L013d96:
+FCB2FileAddr:
 	.dc.l	$00000000
+FCB2ExclCtrlInfo:
 	.dc.l	$00000000
+FCB2AccessMode:
 	.dc.b	$01
+FCB2DirLocation:
 	.dc.b	$00
+FCB2ClusterSectors:
 	.dc.b	$00
+FCB2Unused:
 	.dc.b	$00
+FCB2ClusterNumber:
 	.dc.w	$0000
+FCB2SectorNumber:
 	.dc.l	$00000000
+FCB2TopIOBuffer:
 	.dc.l	$00000000
+FCB2DirSector:
 	.dc.l	$00000000
+FCB2LastAccessAddr:
 	.dc.l	$00000000
-CON2Str:
+FCB2FileName1:
 	.dc.b	'CON     '
-L013dbc:
+FCB2FileExt:
 	.dc.b	$00,$00,$00
+FCB2FileAttr:
 	.dc.b	$00
+FCB2FileName2:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+FCB2MTime:
 	.dc.w	$0000
+FCB2MDate:
 	.dc.w	$0000
+FCB2FirstFAT:
 	.dc.w	$0000
+FCB2FileSize:
 	.dc.l	$00000000
+FCB2FatCache:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00
-L013df0:
+FCB3:
+FCB3NumHandles:
 	.dc.b	$01 ; Number of FCB file handles
+FCB3DeviceInfo:
 	.dc.b	$c2 ; Device information bits
-CON3Ptr:
+FCB3DPBAddr:
 	.dc.l	L00fae8
-L013df6:
+FCB3FileAddr:
 	.dc.l	$00000000
+FCB3ExclCtrlInfo:
 	.dc.l	$00000000
+FCB3AccessMode:
 	.dc.b	$02
+FCB3DirLocation:
 	.dc.b	$00
+FCB3ClusterSectors:
 	.dc.b	$00
+FCB3Unused:
 	.dc.b	$00
+FCB3ClusterNumber:
 	.dc.w	$0000
+FCB3SectorNumber:
 	.dc.l	$00000000
+FCB3TopIOBuffer:
 	.dc.l	$00000000
+FCB3DirSector:
 	.dc.l	$00000000
+FCB3LastAccessAddr:
 	.dc.l	$00000000
-CON3Str:
+FCB3FileName1:
 	.dc.b	'CON     '
-L013e1c:
+FCB3FileExt:
 	.dc.b	$00,$00,$00
+FCB3FileAttr:
 	.dc.b	$00
+FCB3FileName2:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+FCB3MTime:
 	.dc.w	$0000
+FCB3MDate:
 	.dc.w	$0000
+FCB3FirstFAT:
 	.dc.w	$0000
+FCB3FileSize:
 	.dc.l	$00000000
+FCB3FatCache:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00
-L013e50:
+FCB4:
+FCB4NumHandles:
 	.dc.b	$01 ; Number of FCB file handles
+FCB4DeviceInfo:
 	.dc.b	$c0 ; Device information bits
+FCB4DPBAddr:
 	.dc.l	L010694
+FCB4FileAddr:
 	.dc.l	$00000000
+FCB4ExclCtrlInfo:
 	.dc.l	$00000000
+FCB4AccessMode:
 	.dc.b	$02
+FCB4DirLocation:
 	.dc.b	$00
+FCB4ClusterSectors:
 	.dc.b	$00
+FCB4Unused:
 	.dc.b	$00
+FCB4ClusterNumber:
 	.dc.w	$0000
+FCB4SectorNumber:
 	.dc.l	$00000000
+FCB4TopIOBuffer:
 	.dc.l	$00000000
+FCB4DirSector:
 	.dc.l	$00000000
+FCB4LastAccessAddr:
 	.dc.l	$00000000
-L013e74:
+FCB4FileName1:
 	.dc.b	'AUX     '
-L013e7c:
+FCB4FileExt:
 	.dc.b	$00,$00,$00
+FCB4FileAttr:
 	.dc.b	$00
+FCB4FileName2:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+FCB4MTime:
 	.dc.w	$0000
+FCB4MDate:
 	.dc.w	$0000
+FCB4FirstFAT:
 	.dc.w	$0000
+FCB4FileSize:
 	.dc.l	$00000000
+FCB4FatCache:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00
-L013eb0:
+FCB5:
+FCB5NumHandles:
 	.dc.b	$01 ; Number of FCB file handles
+FCB5DeviceInfo:
 	.dc.b	$c0 ; Device information bits
-L013eb2:
+FCB5DPBAddr:
 	.dc.l	L01076e
+FCB5FileAddr:
 	.dc.l	$00000000
+FCB5ExclCtrlInfo:
 	.dc.l	$00000000
+FCB5AccessMode:
 	.dc.b	$01
+FCB5DirLocation:
 	.dc.b	$00
+FCB5ClusterSectors:
 	.dc.b	$00
+FCB5Unused:
 	.dc.b	$00
+FCB5ClusterNumber:
 	.dc.w	$0000
+FCB5SectorNumber:
 	.dc.l	$00000000
+FCB5TopIOBuffer:
 	.dc.l	$00000000
+FCB5DirSector:
 	.dc.l	$00000000
+FCB5LastAccessAddr:
 	.dc.l	$00000000
-L013ed4:
+FCB5FileName1:
 	.dc.b	'PRN     '
-L013edc:
+FCB5FileExt:
 	.dc.b	$00,$00,$00
+FCB5FileAttr:
 	.dc.b	$00
+FCB5FileName2:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+FCB5MTime:
 	.dc.w	$0000
+FCB5MDate:
 	.dc.w	$0000
+FCB5FirstFAT:
 	.dc.w	$0000
+FCB5FileSize:
 	.dc.l	$00000000
+FCB5FatCache:
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	.dc.b	$00,$00,$00,$00,$00,$00,$00,$00

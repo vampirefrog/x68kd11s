@@ -1558,10 +1558,10 @@
 00ccae	P	UnknownSubroutine0ccae
 00ccc6	P	UnknownSubroutine0ccc6
 00ccde	P	UnknownSubroutine0ccde
-00ccf6	P
+00ccf6	P	UnknownSubroutine0ccf6
 00cd0e	P	UnknownSubroutine0cd0e
 00cd26	P	UnknownSubroutine0cd26
-00cd3e	P
+00cd3e	P	UnknownSubroutine0cd3e
 00cd4c	P	UnknownSubroutine0cd4c
 00cd5a	P	UnknownSubroutine0cd5a
 00cd70	P
@@ -1960,14 +1960,14 @@
 00e99e	P
 00e9a4	P
 00e9ba	P
-00ea32	P
-00ea36	P
+00ea32	P	ReturnFF
+00ea36	P	UnknownSubroutine0ea36
 00ea4e	P
-00ea70	P
+00ea70	P	UnknownSubroutine0ea70
 00ea78	P
 00eaae	P
 00eab4	P
-00eabe	P
+00eabe	P	UnknownSubroutine0eabe
 00eac2	P
 00ead2	P
 00eaec	P
@@ -2573,18 +2573,18 @@
 011090	DL
 011094	DU
 011095	DB
-011096	DS
-011193	DS
-0111ae	DS
-0111bd	DS
-0111db	DS
-0111dd	DS
-0111ec	DS
+011096	DS	StrCommandP
+011193	DS	StrCouldNotStart
+0111ae	DS	StrFinished
+0111bd	DS	StrPleaseEnterCommand
+0111db	DS	StrHashSign
+0111dd	DS	StrStopped
+0111ec	DS	StrCaretC
 0111ee	DS
 0111f2	DS
-0111f6	DS
+0111f6	DS	StrPathEquals
 0111fc	DS
-0111fd	DS
+0111fd	DS	StrRZX
 011204	DS
 011208	DU
 01120a	DW
@@ -2592,30 +2592,36 @@
 011218	DS
 01121c	DS
 011220	DS
-011224	DS
-01122e	DS
-01123d	DS
-011243	DS
-011249	DS
-01124c	DS
-011281	DS
-01129e	DS
-0112bb	DS
-0112f5	DS
-011312	DS
-01132f	DS
-01134c	DS
-011369	DS
-011386	DS
-0113bb	DS
-0113f0	DS
-01145a	DS
-0114c4	DS
-01152e	DS
-011563	DS
-0115cd	DS
-011602	DS
-01166c	DS
+011224	DS	StrError
+01122e	DS	StrHasOccurred
+01123d	DS	StrSREquals
+011243	DS	StrPCEquals
+011249	DS	StrCloseParenthesis
+01124c	DS	StrCancelRetryIgnore
+011281	DS	StrBusError
+01129e	DS	StrAddressError
+0112bb	DS	StrUnknownInstruction
+0112d8	DS	StrDivisionByZero
+0112f5	DS	StrCHKExecuted
+011312	DS	StrTrapVExecuted
+01132f	DS	StrPrivilegedInstr
+01134c	DS	StrInterruptPressed
+011369	DS	StrCalcPackageNotReg
+011386	DS	StrInvalidUnitNumber
+0113bb	DS	StrNoDisk
+0113f0	DS	StrInvalidDriverCmd
+011425	DS	StrCRCError
+01145a	DS	StrDiskMgmtAreaCorrupted
+01148f	DS	StrSeekError
+0114c4	DS	StrInvalidMedia
+0114f9	DS	StrSectorNotFound
+01152e	DS	StrPrinterNotConnected
+011563	DS	StrWriteError
+011598	DS	StrReadError
+0115cd	DS	StrErrorOccurred
+011602	DS	StrRemoveProtectionAndReinsert
+011637	DS	StrNotWritable
+01166c	DS	StrFileSharingFile
 0116a2	DW
 0116c4	DU
 0116c6	DU
@@ -2648,31 +2654,133 @@
 013d1a	DB
 013d24	DB
 013d2e	DU
-013d30	DB	File1
-013d30	DB	File1FCBFileHandles
-013d31	DB	File1DeviceInfo
-013d32	DL	File1DPBAddr
-013d36	DL	File1FileAddr
-013d3a	DL	File1ExclCtrlInfo
-013d54	DS	CONStr
-013d5c	DW
-013d90	DW
-013d92	DL	CON2Ptr
-013d96	DW
-013db4	DS	CON2Str
-013dbc	DW
-013df0	DW
-013df2	DL	CON3Ptr
-013df6	DW
-013e14	DS	CON3Str
-013e1c	DW
-013e50	DW
-013e74	DS
-013e7C	DW
-013eb0	DW
-013eb2	DW
-013ed4	DS
-013edc	DW
+
+013d30	DB	FCB1
+013d30	DB	FCB1NumHandles
+013d31	DB	FCB1DeviceInfo
+013d32	DL	FCB1DPBAddr
+013d36	DL	FCB1FileAddr
+013d3a	DL	FCB1ExclCtrlInfo
+013d3e	DB	FCB1AccessMode
+013d3f	DB	FCB1DirLocation
+013d40	DB	FCB1ClusterSectors
+013d41	DB	FCB1Unused
+013d42	DW	FCB1ClusterNumber
+013d44	DL	FCB1SectorNumber
+013d48	DL	FCB1TopIOBuffer
+013d4c	DL	FCB1DirSector
+013d50	DL	FCB1LastAccessAddr
+013d54	DS	FCB1FileName1
+013d5c	DS	FCB1FileExt
+013d5f	DB	FCB1FileAttr
+013d60	DS	FCB1FileName2
+013d6a	DW	FCB1MTime
+013d6c	DW	FCB1MDate
+013d6e	DW	FCB1FirstFAT
+013d70	DL	FCB1FileSize
+013d74	DW	FCB1FatCache
+
+013d90	DB	FCB2
+013d90	DB	FCB2NumHandles
+013d91	DB	FCB2DeviceInfo
+013d92	DL	FCB2DPBAddr
+013d96	DL	FCB2FileAddr
+013d9a	DL	FCB2ExclCtrlInfo
+013d9e	DB	FCB2AccessMode
+013d9f	DB	FCB2DirLocation
+013da0	DB	FCB2ClusterSectors
+013da1	DB	FCB2Unused
+013da2	DW	FCB2ClusterNumber
+013da4	DL	FCB2SectorNumber
+013da8	DL	FCB2TopIOBuffer
+013dac	DL	FCB2DirSector
+013db0	DL	FCB2LastAccessAddr
+013db4	DS	FCB2FileName1
+013dbc	DS	FCB2FileExt
+013dbf	DB	FCB2FileAttr
+013dc0	DS	FCB2FileName2
+013dca	DW	FCB2MTime
+013dcc	DW	FCB2MDate
+013dce	DW	FCB2FirstFAT
+013dd0	DL	FCB2FileSize
+013dd4	DW	FCB2FatCache
+
+013df0	DB	FCB3
+013df0	DB	FCB3NumHandles
+013df1	DB	FCB3DeviceInfo
+013df2	DL	FCB3DPBAddr
+013df6	DL	FCB3FileAddr
+013dfa	DL	FCB3ExclCtrlInfo
+013dfe	DB	FCB3AccessMode
+013dff	DB	FCB3DirLocation
+013e00	DB	FCB3ClusterSectors
+013e01	DB	FCB3Unused
+013e02	DW	FCB3ClusterNumber
+013e04	DL	FCB3SectorNumber
+013e08	DL	FCB3TopIOBuffer
+013e0c	DL	FCB3DirSector
+013e10	DL	FCB3LastAccessAddr
+013e14	DS	FCB3FileName1
+013e1c	DS	FCB3FileExt
+013e1f	DB	FCB3FileAttr
+013e20	DS	FCB3FileName2
+013e2a	DW	FCB3MTime
+013e2c	DW	FCB3MDate
+013e2e	DW	FCB3FirstFAT
+013e30	DL	FCB3FileSize
+013e34	DW	FCB3FatCache
+
+013e50	DB	FCB4
+013e50	DB	FCB4NumHandles
+013e51	DB	FCB4DeviceInfo
+013e52	DL	FCB4DPBAddr
+013e56	DL	FCB4FileAddr
+013e5a	DL	FCB4ExclCtrlInfo
+013e5e	DB	FCB4AccessMode
+013e5f	DB	FCB4DirLocation
+013e60	DB	FCB4ClusterSectors
+013e61	DB	FCB4Unused
+013e62	DW	FCB4ClusterNumber
+013e64	DL	FCB4SectorNumber
+013e68	DL	FCB4TopIOBuffer
+013e6c	DL	FCB4DirSector
+013e70	DL	FCB4LastAccessAddr
+013e74	DS	FCB4FileName1
+013e7c	DS	FCB4FileExt
+013e7f	DB	FCB4FileAttr
+013e80	DS	FCB4FileName2
+013e8a	DW	FCB4MTime
+013e8c	DW	FCB4MDate
+013e8e	DW	FCB4FirstFAT
+013e90	DL	FCB4FileSize
+013e94	DW	FCB4FatCache
+
+013eb0	DB	FCB5
+013eb0	DB	FCB5NumHandles
+013eb1	DB	FCB5DeviceInfo
+013eb2	DL	FCB5DPBAddr
+013eb6	DL	FCB5FileAddr
+013eba	DL	FCB5ExclCtrlInfo
+013ebe	DB	FCB5AccessMode
+013ebf	DB	FCB5DirLocation
+013ec0	DB	FCB5ClusterSectors
+013ec1	DB	FCB5Unused
+013ec2	DW	FCB5ClusterNumber
+013ec4	DL	FCB5SectorNumber
+013ec8	DL	FCB5TopIOBuffer
+013ecc	DL	FCB5DirSector
+013ed0	DL	FCB5LastAccessAddr
+013ed4	DS	FCB5FileName1
+013edc	DS	FCB5FileExt
+013edf	DB	FCB5FileAttr
+013ee0	DS	FCB5FileName2
+013eea	DW	FCB5MTime
+013eec	DW	FCB5MDate
+013eee	DW	FCB5FirstFAT
+013ef0	DL	FCB5FileSize
+013ef4	DW	FCB5FatCache
+
+
 013f10	DB
 013f70	DB
 013f71	DB
